@@ -5,6 +5,8 @@
 
 import Foundation
 import UIKit
+import CryptoSwift
+import Security
 
 class PasswordVC: UIViewController, UITextFieldDelegate{
 
@@ -14,6 +16,10 @@ class PasswordVC: UIViewController, UITextFieldDelegate{
     var keyboardShown = false
     var showConstraint: NSLayoutConstraint?
     var hideConstraint: NSLayoutConstraint?
+
+    let service = "WalletPassword"
+    let account = ""
+
 
     let passwordText: UITextView = {
         let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 120))
@@ -35,6 +41,7 @@ class PasswordVC: UIViewController, UITextFieldDelegate{
         textField.layer.borderColor = UIColor.lightGray.cgColor
         textField.layer.borderWidth = 1.0
         textField.returnKeyType = .done
+        textField.isSecureTextEntry = true
         textField.translatesAutoresizingMaskIntoConstraints = false
 
         return textField
@@ -63,6 +70,7 @@ class PasswordVC: UIViewController, UITextFieldDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
+
 
         view.backgroundColor = .white
         view.addSubview(passwordText)
@@ -123,7 +131,22 @@ class PasswordVC: UIViewController, UITextFieldDelegate{
     }
 
     private func savePassword(){
+        let defaults = UserDefaults.standard
+        let passwordArray: Array<UInt8> = Array("\(password!)".utf8)
+        let hash = randomString(length: 32)
+        let salt: Array<UInt8> = Array(hash.utf8)
+        let saltString = salt.toHexString()
 
+        let key = try? PKCS5.PBKDF2(password: passwordArray, salt: salt, iterations: 4096, keyLength: 32, variant: .sha256).calculate()
+        let keyString = key?.toHexString()
+
+        defaults.set(saltString, forKey: "salt")
+        defaults.set(keyString, forKey: "key")
+    }
+
+    private func randomString(length: Int) -> String {
+        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        return String((0..<length).map{ _ in letters.randomElement()! })
     }
 
     @objc private func keyboardWillShow(_ sender: Notification){
@@ -163,7 +186,15 @@ class PasswordVC: UIViewController, UITextFieldDelegate{
             self.navigationController?.pushViewController(passwordVC, animated: true)
         }
         if(confirm && password == self.passwordField.text!){
-            print(123)
+            savePassword()
+
+            let mainVC = MainVC()
+            mainVC.signup = true
+
+            let appDelegate: AppDelegate = (UIApplication.shared.delegate as? AppDelegate)!
+            appDelegate.window?.rootViewController = mainVC
+
+            self.navigationController?.popToRootViewController(animated: true)
         }
     }
 }

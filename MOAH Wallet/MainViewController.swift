@@ -43,6 +43,13 @@ class MainViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        let nav1 = UINavigationController()
+        nav1.viewControllers = [self]
+
+        let appDelegate: AppDelegate = (UIApplication.shared.delegate as? AppDelegate)!
+        appDelegate.window?.rootViewController = nav1
+
         view.backgroundColor = .white
 
         view.addSubview(moahWalletText)
@@ -50,6 +57,9 @@ class MainViewController: UIViewController {
         view.addSubview(getWalletButton)
 
         setupLayout()
+
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
     }
 
     override func didReceiveMemoryWarning() {

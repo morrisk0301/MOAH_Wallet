@@ -8,7 +8,6 @@ import UIKit
 
 class AgreementVC: UIViewController {
 
-
     let agreementText: UITextView = {
         let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 60))
         textView.text = "MOAH Wallet \n서비스 약관에 동의해주세요"

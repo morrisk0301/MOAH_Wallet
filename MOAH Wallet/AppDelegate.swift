@@ -16,11 +16,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        let nav1 = UINavigationController()
-        let mainView = MainViewController(nibName: nil, bundle: nil) //ViewController = Name of your controller
-        nav1.viewControllers = [mainView]
-        self.window!.rootViewController = nav1
-        self.window?.makeKeyAndVisible()
+        let mainView = MainViewController(nibName: nil, bundle: nil)
+        let mainVC = MainVC()
+
+        let defaults = UserDefaults.standard
+        let salt = defaults.string(forKey: "salt")
+        if(salt != nil){
+            self.window!.rootViewController = mainVC
+            self.window?.makeKeyAndVisible()
+        }
+        else{
+            self.window!.rootViewController = mainView
+            self.window?.makeKeyAndVisible()
+        }
     // Override point for customization after application launch.
     return true
     }

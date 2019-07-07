@@ -8,10 +8,37 @@ import UIKit
 
 class MainVC: UIViewController{
 
+    var signup = true
+
+    let mainText: UITextView = {
+        let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 60))
+        textView.text = "메인화면 입니다."
+        textView.font = UIFont.boldSystemFont(ofSize: 40)
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.textAlignment = .center
+        textView.isEditable = false
+
+        return textView
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .yellow
+
+        view.backgroundColor = .white
+        view.addSubview(mainText)
+
+        setupLayout()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        if(signup){
+
+            let nemonicWarningVC = NemonicWarningVC()
+            let navigationController = UINavigationController(rootViewController: nemonicWarningVC)
+
+            self.present(navigationController, animated: true)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -20,5 +47,10 @@ class MainVC: UIViewController{
 
     private func setupLayout(){
 
+        mainText.topAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        mainText.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        mainText.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        mainText.heightAnchor.constraint(equalToConstant: 60).isActive = true
     }
+
 }
