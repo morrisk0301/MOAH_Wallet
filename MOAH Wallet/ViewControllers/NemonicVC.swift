@@ -1,19 +1,20 @@
 //
-// Created by 김경인 on 2019-07-01.
+// Created by 김경인 on 2019-07-07.
 // Copyright (c) 2019 Sejong University Alom. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-class NemonicWarningVC: UIViewController {
+class NemonicVC: UIViewController {
 
-    let nemonicText: UITextView = {
-        let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 120))
+    let explainText: UITextView = {
+        let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 150))
 
         let attrText = NSMutableAttributedString(string: "비밀 시드 구문",
                 attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)])
-        attrText.append(NSAttributedString(string: "\n\n비밀 시드 구문으로 지갑을 백업하고\n복원할 수 있습니다.",
+        attrText.append(NSAttributedString(
+                string: "\n\n다음은 회원님의 비밀 시드 구문입니다.\n\n비밀 시드 구문을 순서대로 입력하여, 지갑 인증을 진행해 주세요",
                 attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18)]))
 
         textView.attributedText = attrText
@@ -24,13 +25,13 @@ class NemonicWarningVC: UIViewController {
         return textView
     }()
 
-    let warningText: UITextView = {
-        let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 120))
-        textView.text = "주의: 비밀 시드 구문을 절대 공개하지 마십시오. 시드 구문으로 사용자의 암호화폐를 탈취할 수 있습니다."
-        textView.font = UIFont.systemFont(ofSize: 18)
-        textView.textColor = .red
+    let nemonicText: UITextView = {
+        let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 200))
+
         textView.isEditable = false
         textView.textAlignment = .left
+        textView.layer.borderWidth = 1.0
+        textView.layer.borderColor = UIColor.lightGray.cgColor
         textView.translatesAutoresizingMaskIntoConstraints = false
 
         return textView
@@ -48,33 +49,34 @@ class NemonicWarningVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let rightButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backPressed(_ :)))
-        self.navigationItem.leftBarButtonItem = rightButton
-
         view.backgroundColor = .white
+        view.addSubview(explainText)
         view.addSubview(nemonicText)
-        view.addSubview(warningText)
         view.addSubview(nextButton)
 
+        let nemonic: String = getNemonic()!
+
+        let attrText = NSMutableAttributedString(string: nemonic,
+                attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)])
+        nemonicText.attributedText = attrText
+
         setupLayout()
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 
-    private func setupLayout(){
-        nemonicText.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+    private func setupLayout() {
+        explainText.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        explainText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        explainText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        explainText.heightAnchor.constraint(equalToConstant: 150).isActive = true
+
+        nemonicText.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         nemonicText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         nemonicText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        nemonicText.heightAnchor.constraint(equalToConstant: 120).isActive = true
-
-        warningText.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        warningText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        warningText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        warningText.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        nemonicText.heightAnchor.constraint(equalToConstant: 200).isActive = true
 
         nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40).isActive = true
         nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
@@ -82,13 +84,14 @@ class NemonicWarningVC: UIViewController {
         nextButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
     }
 
-    @objc private func backPressed(_ sender: UIBarButtonItem){
-        let pMainVC = self.presentingViewController as! MainVC
-        pMainVC.signup = false
-        self.dismiss(animated: true)
+    private func getNemonic() -> String?{
+        let nemonic: String = "seed1 seed2 seed3 seed4 seed5 seed6 seed7 seed8 seed9 seed10 seed11 seed12"
+
+        return nemonic
     }
 
     @objc private func nextPressed(_ sender: UIButton){
-
+        let nemonicVerificationVc = NemonicVerificationVC()
+        self.navigationController?.pushViewController(nemonicVerificationVc, animated: true)
     }
 }

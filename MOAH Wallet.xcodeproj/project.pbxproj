@@ -8,20 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		67B70AA55FAF8312F39D1868 /* Pods_MOAH_Wallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56B3C7215E96EE4228941738 /* Pods_MOAH_Wallet.framework */; };
-		C051F0191882AB1D05489D38 /* AgreementVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F2CCC0EDCCCC1E71AB53 /* AgreementVC.swift */; };
+		C051F2666FCBD43EDDC03FD2 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F49F7A22AF8C42EA4D32 /* MainVC.swift */; };
 		C051F29405CB6CAEB8A90062 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C051FDE6CC50D5ED79E6F42C /* Main.storyboard */; };
 		C051F361ACB751354EDEFC01 /* MOAH_WalletUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FD3DE6EDBDC571CF0639 /* MOAH_WalletUITests.swift */; };
-		C051F63F0CA61F067210DEA1 /* PasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F58209C78A9881A105D6 /* PasswordVC.swift */; };
-		C051F6C74A7A66B9CF77DBB7 /* Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FA40F709E5945AA0A5CF /* Checkbox.swift */; };
-		C051F9141DB1F45E0529B54E /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F93D91F0EF99EAE31861 /* MainVC.swift */; };
-		C051F94A56A19950F1B6475D /* NemonicWarningVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F9DD8535E5ABFDC64CF4 /* NemonicWarningVC.swift */; };
+		C051F7AED57D4EF678F17D23 /* AgreementViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FC4D96E5C42E477C575F /* AgreementViewVC.swift */; };
+		C051F7FB92BF96B4D3144680 /* AgreementVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FBCD7A1BA2D9B4758AB9 /* AgreementVC.swift */; };
+		C051F8BA98265B7A066457C3 /* NemonicVerificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F5E412FDCE2C3CE99311 /* NemonicVerificationVC.swift */; };
+		C051F9CCA4B178C2CDB531A2 /* PasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FDA70B3196EAE1C0DE6B /* PasswordVC.swift */; };
 		C051F9D4CD5F97DE4AA25F2E /* MOAH_WalletTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FDAF143D94C8A37998D7 /* MOAH_WalletTests.swift */; };
-		C051FB3D45C7E6B0E18EC7E4 /* AgreementViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FB15FB083B4B61CB0D31 /* AgreementViewVC.swift */; };
 		C051FB5E23902398DEF96B30 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F7AC902DA14D067B4A7E /* AppDelegate.swift */; };
-		C051FB794DEF8EB797160870 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F8134222E640834AEB7A /* MainViewController.swift */; };
 		C051FBFDA8E8C9B908FD3E08 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C051F89569BDF7047923FAFE /* LaunchScreen.storyboard */; };
-		C051FD40B9CD936807512A13 /* LockVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F1DFF52A63F0C47890CA /* LockVC.swift */; };
-		C051FE907CA48696398BCEA4 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F3C512860DDFB0253E82 /* KeychainService.swift */; };
+		C051FC07BFCC39DD3F13BCF3 /* LockVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FCDFA9CC8D752BE3F74C /* LockVC.swift */; };
+		C051FCAEDB55EB1E50BAADE7 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FE099084213AC811870D /* MainViewController.swift */; };
+		C051FCD29155AA7ACFBCAA4C /* NemonicWarningVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FC01F06447338DDAAA8A /* NemonicWarningVC.swift */; };
+		C051FD40D3FA50FA0EA05607 /* Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FDA0FC51D0F453BB6377 /* Checkbox.swift */; };
+		C051FD4D235D13D355825375 /* NemonicVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F70D92E77E238F6DDC7E /* NemonicVC.swift */; };
+		C051FF1268E6D9BEF4B03283 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F33C240D00316B044671 /* KeychainService.swift */; };
 		C051FF1C878C1D2F73828402 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C051FBBA8231942BE490FCE6 /* Assets.xcassets */; };
 		F43B8A8080638E7FB0836B51 /* Pods_MOAH_WalletTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 619F240BCE1459DCC76322E1 /* Pods_MOAH_WalletTests.framework */; };
 		F6DA861A2C1324232861E78E /* Pods_MOAH_WalletUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F22EF85DF9E3D3A9C42B5753 /* Pods_MOAH_WalletUITests.framework */; };
@@ -54,24 +56,26 @@
 		73D951E74E5933E963F7880A /* Pods-MOAH WalletTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MOAH WalletTests.debug.xcconfig"; path = "Target Support Files/Pods-MOAH WalletTests/Pods-MOAH WalletTests.debug.xcconfig"; sourceTree = "<group>"; };
 		94B07115F177109E0F66E650 /* Pods-MOAH Wallet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MOAH Wallet.release.xcconfig"; path = "Target Support Files/Pods-MOAH Wallet/Pods-MOAH Wallet.release.xcconfig"; sourceTree = "<group>"; };
 		C051F15C5D2B49DE5637EBC5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		C051F1DFF52A63F0C47890CA /* LockVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockVC.swift; sourceTree = "<group>"; };
-		C051F2CCC0EDCCCC1E71AB53 /* AgreementVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgreementVC.swift; sourceTree = "<group>"; };
-		C051F3C512860DDFB0253E82 /* KeychainService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		C051F33C240D00316B044671 /* KeychainService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		C051F49F7A22AF8C42EA4D32 /* MainVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		C051F4A76C51AA93A6914007 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
-		C051F58209C78A9881A105D6 /* PasswordVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordVC.swift; sourceTree = "<group>"; };
+		C051F5E412FDCE2C3CE99311 /* NemonicVerificationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NemonicVerificationVC.swift; sourceTree = "<group>"; };
+		C051F70D92E77E238F6DDC7E /* NemonicVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NemonicVC.swift; sourceTree = "<group>"; };
 		C051F7AC902DA14D067B4A7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C051F8134222E640834AEB7A /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		C051F93D91F0EF99EAE31861 /* MainVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		C051F94D8F21FC113B4FD9F2 /* MOAH Wallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MOAH Wallet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C051F956AE867F6089FFE1BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
-		C051F9DD8535E5ABFDC64CF4 /* NemonicWarningVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NemonicWarningVC.swift; sourceTree = "<group>"; };
-		C051FA40F709E5945AA0A5CF /* Checkbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checkbox.swift; sourceTree = "<group>"; };
-		C051FB15FB083B4B61CB0D31 /* AgreementViewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgreementViewVC.swift; sourceTree = "<group>"; };
 		C051FBBA8231942BE490FCE6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C051FBCD7A1BA2D9B4758AB9 /* AgreementVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgreementVC.swift; sourceTree = "<group>"; };
+		C051FC01F06447338DDAAA8A /* NemonicWarningVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NemonicWarningVC.swift; sourceTree = "<group>"; };
+		C051FC4D96E5C42E477C575F /* AgreementViewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgreementViewVC.swift; sourceTree = "<group>"; };
+		C051FCDFA9CC8D752BE3F74C /* LockVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockVC.swift; sourceTree = "<group>"; };
 		C051FD3DE6EDBDC571CF0639 /* MOAH_WalletUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOAH_WalletUITests.swift; sourceTree = "<group>"; };
 		C051FD66F7A5E3DE5EF1F0B5 /* MOAH WalletUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MOAH WalletUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C051FD7C702D47C01C39269E /* MOAH WalletTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MOAH WalletTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C051FDA0FC51D0F453BB6377 /* Checkbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checkbox.swift; sourceTree = "<group>"; };
+		C051FDA70B3196EAE1C0DE6B /* PasswordVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordVC.swift; sourceTree = "<group>"; };
 		C051FDAF143D94C8A37998D7 /* MOAH_WalletTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOAH_WalletTests.swift; sourceTree = "<group>"; };
+		C051FE099084213AC811870D /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		C051FE634D5A6B9DF45C940E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C051FF117AB4DADC769782D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
 		F22EF85DF9E3D3A9C42B5753 /* Pods_MOAH_WalletUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MOAH_WalletUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -115,7 +119,6 @@
 				29B2922D406E0DC1E1293226 /* Pods-MOAH WalletUITests.debug.xcconfig */,
 				2086D63B32EE10EE4A1B9352 /* Pods-MOAH WalletUITests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -129,6 +132,22 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		C051F009C85EAAC761BD385F /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				C051FBCD7A1BA2D9B4758AB9 /* AgreementVC.swift */,
+				C051FE099084213AC811870D /* MainViewController.swift */,
+				C051F49F7A22AF8C42EA4D32 /* MainVC.swift */,
+				C051FC4D96E5C42E477C575F /* AgreementViewVC.swift */,
+				C051FC01F06447338DDAAA8A /* NemonicWarningVC.swift */,
+				C051FCDFA9CC8D752BE3F74C /* LockVC.swift */,
+				C051FDA70B3196EAE1C0DE6B /* PasswordVC.swift */,
+				C051F70D92E77E238F6DDC7E /* NemonicVC.swift */,
+				C051F5E412FDCE2C3CE99311 /* NemonicVerificationVC.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
 		C051F10289EE90F96384604E /* MOAH Wallet */ = {
 			isa = PBXGroup;
 			children = (
@@ -137,15 +156,8 @@
 				C051F89569BDF7047923FAFE /* LaunchScreen.storyboard */,
 				C051F7AC902DA14D067B4A7E /* AppDelegate.swift */,
 				C051FDE6CC50D5ED79E6F42C /* Main.storyboard */,
-				C051F8134222E640834AEB7A /* MainViewController.swift */,
-				C051F9DD8535E5ABFDC64CF4 /* NemonicWarningVC.swift */,
-				C051F2CCC0EDCCCC1E71AB53 /* AgreementVC.swift */,
-				C051FB15FB083B4B61CB0D31 /* AgreementViewVC.swift */,
-				C051FA40F709E5945AA0A5CF /* Checkbox.swift */,
-				C051F58209C78A9881A105D6 /* PasswordVC.swift */,
-				C051F93D91F0EF99EAE31861 /* MainVC.swift */,
-				C051F3C512860DDFB0253E82 /* KeychainService.swift */,
-				C051F1DFF52A63F0C47890CA /* LockVC.swift */,
+				C051F009C85EAAC761BD385F /* ViewControllers */,
+				C051F8EF9ECCBF70D1341548 /* utils */,
 			);
 			path = "MOAH Wallet";
 			sourceTree = "<group>";
@@ -170,6 +182,15 @@
 				C051FD66F7A5E3DE5EF1F0B5 /* MOAH WalletUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		C051F8EF9ECCBF70D1341548 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				C051FDA0FC51D0F453BB6377 /* Checkbox.swift */,
+				C051F33C240D00316B044671 /* KeychainService.swift */,
+			);
+			path = utils;
 			sourceTree = "<group>";
 		};
 		C051FB6918D76ABB9BC18032 /* MOAH WalletUITests */ = {
@@ -409,15 +430,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				C051FB5E23902398DEF96B30 /* AppDelegate.swift in Sources */,
-				C051FB794DEF8EB797160870 /* MainViewController.swift in Sources */,
-				C051F94A56A19950F1B6475D /* NemonicWarningVC.swift in Sources */,
-				C051F0191882AB1D05489D38 /* AgreementVC.swift in Sources */,
-				C051FB3D45C7E6B0E18EC7E4 /* AgreementViewVC.swift in Sources */,
-				C051F6C74A7A66B9CF77DBB7 /* Checkbox.swift in Sources */,
-				C051F63F0CA61F067210DEA1 /* PasswordVC.swift in Sources */,
-				C051F9141DB1F45E0529B54E /* MainVC.swift in Sources */,
-				C051FE907CA48696398BCEA4 /* KeychainService.swift in Sources */,
-				C051FD40B9CD936807512A13 /* LockVC.swift in Sources */,
+				C051F7FB92BF96B4D3144680 /* AgreementVC.swift in Sources */,
+				C051FCAEDB55EB1E50BAADE7 /* MainViewController.swift in Sources */,
+				C051F2666FCBD43EDDC03FD2 /* MainVC.swift in Sources */,
+				C051F7AED57D4EF678F17D23 /* AgreementViewVC.swift in Sources */,
+				C051FCD29155AA7ACFBCAA4C /* NemonicWarningVC.swift in Sources */,
+				C051FC07BFCC39DD3F13BCF3 /* LockVC.swift in Sources */,
+				C051F9CCA4B178C2CDB531A2 /* PasswordVC.swift in Sources */,
+				C051FD40D3FA50FA0EA05607 /* Checkbox.swift in Sources */,
+				C051FF1268E6D9BEF4B03283 /* KeychainService.swift in Sources */,
+				C051FD4D235D13D355825375 /* NemonicVC.swift in Sources */,
+				C051F8BA98265B7A066457C3 /* NemonicVerificationVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
