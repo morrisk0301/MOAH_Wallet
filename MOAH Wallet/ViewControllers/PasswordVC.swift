@@ -10,6 +10,7 @@ import Security
 
 class PasswordVC: UIViewController, UITextFieldDelegate{
 
+    var getWallet = false
     var password: String?
     var confirm = false
     var keyboardHeight: CGFloat?
@@ -181,6 +182,10 @@ class PasswordVC: UIViewController, UITextFieldDelegate{
         if(!confirm){
             let passwordVC = PasswordVC()
             passwordVC.confirm = true
+
+            if(getWallet){
+                passwordVC.getWallet = true
+            }
             passwordVC.password = self.passwordField.text!
 
             self.navigationController?.pushViewController(passwordVC, animated: true)
@@ -188,13 +193,22 @@ class PasswordVC: UIViewController, UITextFieldDelegate{
         if(confirm && password == self.passwordField.text!){
             savePassword()
 
-            let mainVC = MainVC()
-            mainVC.signup = true
+            if(getWallet){
+                let walletDoneVC = WalletDoneVC()
+                walletDoneVC.getWallet = true
 
-            let appDelegate: AppDelegate = (UIApplication.shared.delegate as? AppDelegate)!
-            appDelegate.window?.rootViewController = mainVC
+                self.present(walletDoneVC, animated: true)
+            }
+            else{
+                let mainVC = MainVC()
+                mainVC.signup = true
 
-            self.navigationController?.popToRootViewController(animated: true)
+                let appDelegate: AppDelegate = (UIApplication.shared.delegate as? AppDelegate)!
+                appDelegate.window?.rootViewController = mainVC
+
+                self.navigationController?.popToRootViewController(animated: true)
+            }
+
         }
     }
 }

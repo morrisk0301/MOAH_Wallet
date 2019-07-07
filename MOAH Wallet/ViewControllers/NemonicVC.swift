@@ -61,6 +61,8 @@ class NemonicVC: UIViewController {
         nemonicText.attributedText = attrText
 
         setupLayout()
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
     }
 
     override func didReceiveMemoryWarning() {
@@ -84,13 +86,13 @@ class NemonicVC: UIViewController {
         nextButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
     }
 
-    private func getNemonic() -> String?{
+    private func getNemonic() -> String? {
         let nemonic: String = "seed1 seed2 seed3 seed4 seed5 seed6 seed7 seed8 seed9 seed10 seed11 seed12"
 
         return nemonic
     }
 
-    @objc private func nextPressed(_ sender: UIButton){
+    @objc private func nextPressed(_ sender: UIButton) {
         let nemonicVerificationVc = NemonicVerificationVC()
         self.navigationController?.pushViewController(nemonicVerificationVc, animated: true)
     }

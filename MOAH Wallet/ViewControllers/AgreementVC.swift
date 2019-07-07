@@ -8,6 +8,8 @@ import UIKit
 
 class AgreementVC: UIViewController {
 
+    var getWallet = false
+
     let agreementText: UITextView = {
         let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 60))
         textView.text = "MOAH Wallet \n서비스 약관에 동의해주세요"
@@ -140,6 +142,9 @@ class AgreementVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let rightButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backPressed(_:)))
+        self.navigationItem.leftBarButtonItem = rightButton
+
         view.backgroundColor = .white
         view.addSubview(agreementText)
         view.addSubview(agreementCheckbox1)
@@ -250,8 +255,19 @@ class AgreementVC: UIViewController {
             return
         }
 
-        let passwordVC = PasswordVC()
-        self.navigationController?.pushViewController(passwordVC, animated: true)
+        if(getWallet){
+            let nemonicVerificationVC = NemonicVerificationVC()
+            nemonicVerificationVC.getWallet = true
+            self.navigationController?.pushViewController(nemonicVerificationVC, animated: true)
+        }
+        else{
+            let passwordVC = PasswordVC()
+            self.navigationController?.pushViewController(passwordVC, animated: true)
+        }
+    }
+
+    @objc private func backPressed(_ sender: UIButton){
+        self.dismiss(animated: true)
     }
 
 

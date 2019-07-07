@@ -27,7 +27,8 @@ class MainViewController: UIViewController {
         button.setTitle("새로운 지갑 만들기", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 20)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(newWalletButtonPressed(_:)), for: .touchUpInside)
+        button.tag = 1
+        button.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
 
         return button
     }()
@@ -37,18 +38,14 @@ class MainViewController: UIViewController {
         button.setTitle("기존 지갑 복원하기", for: .normal) 
         button.titleLabel?.font = UIFont.systemFont(ofSize: 20)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.tag = 2
+        button.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
 
         return button
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let nav1 = UINavigationController()
-        nav1.viewControllers = [self]
-
-        let appDelegate: AppDelegate = (UIApplication.shared.delegate as? AppDelegate)!
-        appDelegate.window?.rootViewController = nav1
 
         view.backgroundColor = .white
 
@@ -83,9 +80,15 @@ class MainViewController: UIViewController {
         newWalletButton.heightAnchor.constraint(equalToConstant: 180).isActive = true
     }
 
-    @objc private func newWalletButtonPressed(_ sender: UIButton!){
+    @objc private func buttonPressed(_ sender: UIButton){
         let agreementVC = AgreementVC()
-        self.navigationController?.pushViewController(agreementVC, animated: true)
+        if(sender.tag == 2){
+            agreementVC.getWallet = true
+        }
+        let nemonicWarningVC = NemonicWarningVC()
+        let navigationController = UINavigationController(rootViewController: agreementVC)
+
+        self.present(navigationController, animated: true)
     }
 }
 

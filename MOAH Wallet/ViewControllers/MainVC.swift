@@ -47,7 +47,7 @@ class MainVC: UIViewController{
 
     private func setupLayout(){
 
-        mainText.topAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        mainText.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         mainText.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         mainText.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         mainText.heightAnchor.constraint(equalToConstant: 60).isActive = true
