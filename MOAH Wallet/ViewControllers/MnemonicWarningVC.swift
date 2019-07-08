@@ -6,9 +6,9 @@
 import Foundation
 import UIKit
 
-class NemonicWarningVC: UIViewController {
+class MnemonicWarningVC: UIViewController {
 
-    let nemonicText: UITextView = {
+    let mnemonicText: UITextView = {
         let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 120))
 
         let attrText = NSMutableAttributedString(string: "비밀 시드 구문",
@@ -52,7 +52,7 @@ class NemonicWarningVC: UIViewController {
         self.navigationItem.leftBarButtonItem = rightButton
 
         view.backgroundColor = .white
-        view.addSubview(nemonicText)
+        view.addSubview(mnemonicText)
         view.addSubview(warningText)
         view.addSubview(nextButton)
 
@@ -66,10 +66,10 @@ class NemonicWarningVC: UIViewController {
     }
 
     private func setupLayout() {
-        nemonicText.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        nemonicText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        nemonicText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        nemonicText.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        mnemonicText.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        mnemonicText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        mnemonicText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        mnemonicText.heightAnchor.constraint(equalToConstant: 120).isActive = true
 
         warningText.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         warningText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
@@ -89,7 +89,7 @@ class NemonicWarningVC: UIViewController {
     }
 
     @objc private func nextPressed(_ sender: UIButton) {
-        let nemonicVC = NemonicVC()
-        self.navigationController?.pushViewController(nemonicVC, animated: true)
+        let mnemonicVC = MnemonicVC()
+        self.navigationController?.pushViewController(mnemonicVC, animated: true)
     }
 }

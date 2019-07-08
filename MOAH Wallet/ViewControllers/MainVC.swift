@@ -24,7 +24,6 @@ class MainVC: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
 
-
         view.backgroundColor = .white
         view.addSubview(mainText)
 
@@ -34,8 +33,8 @@ class MainVC: UIViewController{
     override func viewDidAppear(_ animated: Bool) {
         if(signup){
 
-            let nemonicWarningVC = NemonicWarningVC()
-            let navigationController = UINavigationController(rootViewController: nemonicWarningVC)
+            let mnemonicWarningVC = MnemonicWarningVC()
+            let navigationController = UINavigationController(rootViewController: mnemonicWarningVC)
 
             self.present(navigationController, animated: true)
         }
@@ -46,7 +45,6 @@ class MainVC: UIViewController{
     }
 
     private func setupLayout(){
-
         mainText.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         mainText.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         mainText.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true

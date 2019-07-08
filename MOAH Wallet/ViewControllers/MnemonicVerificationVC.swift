@@ -6,7 +6,7 @@
 import Foundation
 import UIKit
 
-class NemonicVerificationVC: UIViewController{
+class MnemonicVerificationVC: UIViewController{
 
     var getWallet = false
 

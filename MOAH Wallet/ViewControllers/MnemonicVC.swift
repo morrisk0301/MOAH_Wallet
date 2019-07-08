@@ -6,7 +6,7 @@
 import Foundation
 import UIKit
 
-class NemonicVC: UIViewController {
+class MnemonicVC: UIViewController {
 
     let explainText: UITextView = {
         let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 150))
@@ -25,7 +25,7 @@ class NemonicVC: UIViewController {
         return textView
     }()
 
-    let nemonicText: UITextView = {
+    let mnemonicText: UITextView = {
         let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 200))
 
         textView.isEditable = false
@@ -51,14 +51,14 @@ class NemonicVC: UIViewController {
 
         view.backgroundColor = .white
         view.addSubview(explainText)
-        view.addSubview(nemonicText)
+        view.addSubview(mnemonicText)
         view.addSubview(nextButton)
 
-        let nemonic: String = getNemonic()!
+        let mnemonic: String = getMnemonic()!
 
-        let attrText = NSMutableAttributedString(string: nemonic,
+        let attrText = NSMutableAttributedString(string: mnemonic,
                 attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)])
-        nemonicText.attributedText = attrText
+        mnemonicText.attributedText = attrText
 
         setupLayout()
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
@@ -75,10 +75,10 @@ class NemonicVC: UIViewController {
         explainText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         explainText.heightAnchor.constraint(equalToConstant: 150).isActive = true
 
-        nemonicText.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        nemonicText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        nemonicText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        nemonicText.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        mnemonicText.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        mnemonicText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        mnemonicText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        mnemonicText.heightAnchor.constraint(equalToConstant: 200).isActive = true
 
         nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40).isActive = true
         nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
@@ -86,14 +86,14 @@ class NemonicVC: UIViewController {
         nextButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
     }
 
-    private func getNemonic() -> String? {
-        let nemonic: String = "seed1 seed2 seed3 seed4 seed5 seed6 seed7 seed8 seed9 seed10 seed11 seed12"
+    private func getMnemonic() -> String? {
+        let mnemonic: String = "seed1 seed2 seed3 seed4 seed5 seed6 seed7 seed8 seed9 seed10 seed11 seed12"
 
-        return nemonic
+        return mnemonic
     }
 
     @objc private func nextPressed(_ sender: UIButton) {
-        let nemonicVerificationVc = NemonicVerificationVC()
-        self.navigationController?.pushViewController(nemonicVerificationVc, animated: true)
+        let mnemonicVerificationVc = MnemonicVerificationVC()
+        self.navigationController?.pushViewController(mnemonicVerificationVc, animated: true)
     }
 }

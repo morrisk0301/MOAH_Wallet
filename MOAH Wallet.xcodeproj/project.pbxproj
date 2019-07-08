@@ -7,13 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		67B70AA55FAF8312F39D1868 /* Pods_MOAH_Wallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56B3C7215E96EE4228941738 /* Pods_MOAH_Wallet.framework */; };
+		05420EDFE8066F95FF450720 /* Pods_MOAH_Wallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 812B68AEFA4BF918CB42A780 /* Pods_MOAH_Wallet.framework */; };
+		414E9B1CD0814E681ED5F8C1 /* Pods_MOAH_WalletUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EF9D3F80FDB01A105DBD08E /* Pods_MOAH_WalletUITests.framework */; };
+		6A53443E9BA1270E4CDF7AF0 /* Pods_MOAH_WalletTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E1E7B44C2914ADF41305D87 /* Pods_MOAH_WalletTests.framework */; };
 		C051F2666FCBD43EDDC03FD2 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F49F7A22AF8C42EA4D32 /* MainVC.swift */; };
 		C051F29405CB6CAEB8A90062 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C051FDE6CC50D5ED79E6F42C /* Main.storyboard */; };
 		C051F361ACB751354EDEFC01 /* MOAH_WalletUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FD3DE6EDBDC571CF0639 /* MOAH_WalletUITests.swift */; };
 		C051F7AED57D4EF678F17D23 /* AgreementViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FC4D96E5C42E477C575F /* AgreementViewVC.swift */; };
 		C051F7FB92BF96B4D3144680 /* AgreementVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FBCD7A1BA2D9B4758AB9 /* AgreementVC.swift */; };
-		C051F8BA98265B7A066457C3 /* NemonicVerificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F5E412FDCE2C3CE99311 /* NemonicVerificationVC.swift */; };
+		C051F8BA98265B7A066457C3 /* MnemonicVerificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F5E412FDCE2C3CE99311 /* MnemonicVerificationVC.swift */; };
 		C051F9CCA4B178C2CDB531A2 /* PasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FDA70B3196EAE1C0DE6B /* PasswordVC.swift */; };
 		C051F9D4CD5F97DE4AA25F2E /* MOAH_WalletTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FDAF143D94C8A37998D7 /* MOAH_WalletTests.swift */; };
 		C051F9E9395261263D08A9B4 /* WalletDoneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F84A730A2CB809A6A0ED /* WalletDoneVC.swift */; };
@@ -21,13 +23,11 @@
 		C051FBFDA8E8C9B908FD3E08 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C051F89569BDF7047923FAFE /* LaunchScreen.storyboard */; };
 		C051FC07BFCC39DD3F13BCF3 /* LockVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FCDFA9CC8D752BE3F74C /* LockVC.swift */; };
 		C051FCAEDB55EB1E50BAADE7 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FE099084213AC811870D /* MainViewController.swift */; };
-		C051FCD29155AA7ACFBCAA4C /* NemonicWarningVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FC01F06447338DDAAA8A /* NemonicWarningVC.swift */; };
+		C051FCD29155AA7ACFBCAA4C /* MnemonicWarningVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FC01F06447338DDAAA8A /* MnemonicWarningVC.swift */; };
 		C051FD40D3FA50FA0EA05607 /* Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FDA0FC51D0F453BB6377 /* Checkbox.swift */; };
-		C051FD4D235D13D355825375 /* NemonicVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F70D92E77E238F6DDC7E /* NemonicVC.swift */; };
+		C051FD4D235D13D355825375 /* MnemonicVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F70D92E77E238F6DDC7E /* MnemonicVC.swift */; };
 		C051FF1268E6D9BEF4B03283 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F33C240D00316B044671 /* KeychainService.swift */; };
 		C051FF1C878C1D2F73828402 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C051FBBA8231942BE490FCE6 /* Assets.xcassets */; };
-		F43B8A8080638E7FB0836B51 /* Pods_MOAH_WalletTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 619F240BCE1459DCC76322E1 /* Pods_MOAH_WalletTests.framework */; };
-		F6DA861A2C1324232861E78E /* Pods_MOAH_WalletUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F22EF85DF9E3D3A9C42B5753 /* Pods_MOAH_WalletUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,27 +48,28 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2086D63B32EE10EE4A1B9352 /* Pods-MOAH WalletUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MOAH WalletUITests.release.xcconfig"; path = "Target Support Files/Pods-MOAH WalletUITests/Pods-MOAH WalletUITests.release.xcconfig"; sourceTree = "<group>"; };
-		29B2922D406E0DC1E1293226 /* Pods-MOAH WalletUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MOAH WalletUITests.debug.xcconfig"; path = "Target Support Files/Pods-MOAH WalletUITests/Pods-MOAH WalletUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		3D5EABD40A26E2799703CB17 /* Pods-MOAH Wallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MOAH Wallet.debug.xcconfig"; path = "Target Support Files/Pods-MOAH Wallet/Pods-MOAH Wallet.debug.xcconfig"; sourceTree = "<group>"; };
-		410B221C1E8F3E075D22BBB0 /* Pods-MOAH WalletTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MOAH WalletTests.release.xcconfig"; path = "Target Support Files/Pods-MOAH WalletTests/Pods-MOAH WalletTests.release.xcconfig"; sourceTree = "<group>"; };
-		56B3C7215E96EE4228941738 /* Pods_MOAH_Wallet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MOAH_Wallet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		619F240BCE1459DCC76322E1 /* Pods_MOAH_WalletTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MOAH_WalletTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		73D951E74E5933E963F7880A /* Pods-MOAH WalletTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MOAH WalletTests.debug.xcconfig"; path = "Target Support Files/Pods-MOAH WalletTests/Pods-MOAH WalletTests.debug.xcconfig"; sourceTree = "<group>"; };
-		94B07115F177109E0F66E650 /* Pods-MOAH Wallet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MOAH Wallet.release.xcconfig"; path = "Target Support Files/Pods-MOAH Wallet/Pods-MOAH Wallet.release.xcconfig"; sourceTree = "<group>"; };
+		0E648184D5F32424B823508B /* Pods-MOAH WalletTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MOAH WalletTests.debug.xcconfig"; path = "Target Support Files/Pods-MOAH WalletTests/Pods-MOAH WalletTests.debug.xcconfig"; sourceTree = "<group>"; };
+		0EF9D3F80FDB01A105DBD08E /* Pods_MOAH_WalletUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MOAH_WalletUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1737CB4AFAA824B10FE0DB65 /* Pods-MOAH WalletUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MOAH WalletUITests.release.xcconfig"; path = "Target Support Files/Pods-MOAH WalletUITests/Pods-MOAH WalletUITests.release.xcconfig"; sourceTree = "<group>"; };
+		25D72DCCE23C1CCCFA10CE29 /* Pods-MOAH WalletTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MOAH WalletTests.release.xcconfig"; path = "Target Support Files/Pods-MOAH WalletTests/Pods-MOAH WalletTests.release.xcconfig"; sourceTree = "<group>"; };
+		283370360A1463067B52690A /* Pods-MOAH Wallet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MOAH Wallet.release.xcconfig"; path = "Target Support Files/Pods-MOAH Wallet/Pods-MOAH Wallet.release.xcconfig"; sourceTree = "<group>"; };
+		69C6482B282D4CC19C2C4C29 /* Pods-MOAH WalletUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MOAH WalletUITests.debug.xcconfig"; path = "Target Support Files/Pods-MOAH WalletUITests/Pods-MOAH WalletUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		812B68AEFA4BF918CB42A780 /* Pods_MOAH_Wallet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MOAH_Wallet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E1E7B44C2914ADF41305D87 /* Pods_MOAH_WalletTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MOAH_WalletTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		908A34CA5923A3A1D9426A42 /* Pods-MOAH Wallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MOAH Wallet.debug.xcconfig"; path = "Target Support Files/Pods-MOAH Wallet/Pods-MOAH Wallet.debug.xcconfig"; sourceTree = "<group>"; };
 		C051F15C5D2B49DE5637EBC5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C051F33C240D00316B044671 /* KeychainService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		C051F49F7A22AF8C42EA4D32 /* MainVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		C051F4A76C51AA93A6914007 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
-		C051F5E412FDCE2C3CE99311 /* NemonicVerificationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NemonicVerificationVC.swift; sourceTree = "<group>"; };
-		C051F70D92E77E238F6DDC7E /* NemonicVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NemonicVC.swift; sourceTree = "<group>"; };
+		C051F5E412FDCE2C3CE99311 /* MnemonicVerificationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicVerificationVC.swift; sourceTree = "<group>"; };
+		C051F70D92E77E238F6DDC7E /* MnemonicVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicVC.swift; sourceTree = "<group>"; };
 		C051F7AC902DA14D067B4A7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C051F84A730A2CB809A6A0ED /* WalletDoneVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletDoneVC.swift; sourceTree = "<group>"; };
 		C051F94D8F21FC113B4FD9F2 /* MOAH Wallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MOAH Wallet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C051F956AE867F6089FFE1BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
 		C051FBBA8231942BE490FCE6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C051FBCD7A1BA2D9B4758AB9 /* AgreementVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgreementVC.swift; sourceTree = "<group>"; };
-		C051FC01F06447338DDAAA8A /* NemonicWarningVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NemonicWarningVC.swift; sourceTree = "<group>"; };
+		C051FC01F06447338DDAAA8A /* MnemonicWarningVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicWarningVC.swift; sourceTree = "<group>"; };
 		C051FC4D96E5C42E477C575F /* AgreementViewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgreementViewVC.swift; sourceTree = "<group>"; };
 		C051FCDFA9CC8D752BE3F74C /* LockVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockVC.swift; sourceTree = "<group>"; };
 		C051FD3DE6EDBDC571CF0639 /* MOAH_WalletUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOAH_WalletUITests.swift; sourceTree = "<group>"; };
@@ -80,7 +81,6 @@
 		C051FE099084213AC811870D /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		C051FE634D5A6B9DF45C940E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C051FF117AB4DADC769782D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
-		F22EF85DF9E3D3A9C42B5753 /* Pods_MOAH_WalletUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MOAH_WalletUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,7 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F43B8A8080638E7FB0836B51 /* Pods_MOAH_WalletTests.framework in Frameworks */,
+				6A53443E9BA1270E4CDF7AF0 /* Pods_MOAH_WalletTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,7 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F6DA861A2C1324232861E78E /* Pods_MOAH_WalletUITests.framework in Frameworks */,
+				414E9B1CD0814E681ED5F8C1 /* Pods_MOAH_WalletUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,34 +104,34 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				67B70AA55FAF8312F39D1868 /* Pods_MOAH_Wallet.framework in Frameworks */,
+				05420EDFE8066F95FF450720 /* Pods_MOAH_Wallet.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		69767C46390E8ADA249FA0F6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				812B68AEFA4BF918CB42A780 /* Pods_MOAH_Wallet.framework */,
+				8E1E7B44C2914ADF41305D87 /* Pods_MOAH_WalletTests.framework */,
+				0EF9D3F80FDB01A105DBD08E /* Pods_MOAH_WalletUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		925FA85B9EEB7227F20D03AC /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3D5EABD40A26E2799703CB17 /* Pods-MOAH Wallet.debug.xcconfig */,
-				94B07115F177109E0F66E650 /* Pods-MOAH Wallet.release.xcconfig */,
-				73D951E74E5933E963F7880A /* Pods-MOAH WalletTests.debug.xcconfig */,
-				410B221C1E8F3E075D22BBB0 /* Pods-MOAH WalletTests.release.xcconfig */,
-				29B2922D406E0DC1E1293226 /* Pods-MOAH WalletUITests.debug.xcconfig */,
-				2086D63B32EE10EE4A1B9352 /* Pods-MOAH WalletUITests.release.xcconfig */,
+				908A34CA5923A3A1D9426A42 /* Pods-MOAH Wallet.debug.xcconfig */,
+				283370360A1463067B52690A /* Pods-MOAH Wallet.release.xcconfig */,
+				0E648184D5F32424B823508B /* Pods-MOAH WalletTests.debug.xcconfig */,
+				25D72DCCE23C1CCCFA10CE29 /* Pods-MOAH WalletTests.release.xcconfig */,
+				69C6482B282D4CC19C2C4C29 /* Pods-MOAH WalletUITests.debug.xcconfig */,
+				1737CB4AFAA824B10FE0DB65 /* Pods-MOAH WalletUITests.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		BFD01731FD5D33A081E58B5D /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				56B3C7215E96EE4228941738 /* Pods_MOAH_Wallet.framework */,
-				619F240BCE1459DCC76322E1 /* Pods_MOAH_WalletTests.framework */,
-				F22EF85DF9E3D3A9C42B5753 /* Pods_MOAH_WalletUITests.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		C051F009C85EAAC761BD385F /* ViewControllers */ = {
@@ -141,11 +141,11 @@
 				C051FE099084213AC811870D /* MainViewController.swift */,
 				C051F49F7A22AF8C42EA4D32 /* MainVC.swift */,
 				C051FC4D96E5C42E477C575F /* AgreementViewVC.swift */,
-				C051FC01F06447338DDAAA8A /* NemonicWarningVC.swift */,
+				C051FC01F06447338DDAAA8A /* MnemonicWarningVC.swift */,
 				C051FCDFA9CC8D752BE3F74C /* LockVC.swift */,
 				C051FDA70B3196EAE1C0DE6B /* PasswordVC.swift */,
-				C051F70D92E77E238F6DDC7E /* NemonicVC.swift */,
-				C051F5E412FDCE2C3CE99311 /* NemonicVerificationVC.swift */,
+				C051F70D92E77E238F6DDC7E /* MnemonicVC.swift */,
+				C051F5E412FDCE2C3CE99311 /* MnemonicVerificationVC.swift */,
 				C051F84A730A2CB809A6A0ED /* WalletDoneVC.swift */,
 			);
 			path = ViewControllers;
@@ -173,7 +173,7 @@
 				C051FC0CBA68754B2638FE0C /* MOAH WalletTests */,
 				C051FB6918D76ABB9BC18032 /* MOAH WalletUITests */,
 				925FA85B9EEB7227F20D03AC /* Pods */,
-				BFD01731FD5D33A081E58B5D /* Frameworks */,
+				69767C46390E8ADA249FA0F6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -221,7 +221,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C051F4B7F1F4DA0D998450B9 /* Build configuration list for PBXNativeTarget "MOAH WalletUITests" */;
 			buildPhases = (
-				0A33F62DF7AC6E324FD8A65B /* [CP] Check Pods Manifest.lock */,
+				FF29BED72454F1903C944AE1 /* [CP] Check Pods Manifest.lock */,
 				C051FAA9662B9D741B57BF62 /* Sources */,
 				C051F31CB7DA9954443FA601 /* Frameworks */,
 				C051FAD6C08ECAFCE23AC472 /* Resources */,
@@ -240,11 +240,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C051F58715B03DA77E28170F /* Build configuration list for PBXNativeTarget "MOAH Wallet" */;
 			buildPhases = (
-				0671D48E5943DC59AFC48079 /* [CP] Check Pods Manifest.lock */,
+				21EE529C7E74E4F4B2C79F5B /* [CP] Check Pods Manifest.lock */,
 				C051F66476844F22BA319E63 /* Sources */,
 				C051FCBA44B17162D3A70F37 /* Frameworks */,
 				C051FE160BD764E0F68B0B71 /* Resources */,
-				B7804BA482FF268827C03C3C /* [CP] Embed Pods Frameworks */,
+				36E889EF8CA23BBAB299B827 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -259,7 +259,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C051F98A3E7BCEE351F05CBE /* Build configuration list for PBXNativeTarget "MOAH WalletTests" */;
 			buildPhases = (
-				6D6FB7C3D64A23215E56BF88 /* [CP] Check Pods Manifest.lock */,
+				B878F363A249ADD7E53ED589 /* [CP] Check Pods Manifest.lock */,
 				C051FEFFFFBEE31683189F6A /* Sources */,
 				C051F133B4FA89E787B0438D /* Frameworks */,
 				C051FB3303731699D797ADDD /* Resources */,
@@ -331,7 +331,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0671D48E5943DC59AFC48079 /* [CP] Check Pods Manifest.lock */ = {
+		21EE529C7E74E4F4B2C79F5B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -353,29 +353,39 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		0A33F62DF7AC6E324FD8A65B /* [CP] Check Pods Manifest.lock */ = {
+		36E889EF8CA23BBAB299B827 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
+				"${PODS_ROOT}/Target Support Files/Pods-MOAH Wallet/Pods-MOAH Wallet-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework",
+				"${BUILT_PRODUCTS_DIR}/keccak.c/keccak.framework",
+				"${BUILT_PRODUCTS_DIR}/scrypt.c/scrypt.framework",
+				"${BUILT_PRODUCTS_DIR}/secp256k1.c/secp256k1.framework",
+				"${BUILT_PRODUCTS_DIR}/web3swift.pod/web3swift.framework",
 			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MOAH WalletUITests-checkManifestLockResult.txt",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigInt.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SipHash.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/keccak.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/scrypt.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/secp256k1.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/web3swift.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MOAH Wallet/Pods-MOAH Wallet-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6D6FB7C3D64A23215E56BF88 /* [CP] Check Pods Manifest.lock */ = {
+		B878F363A249ADD7E53ED589 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -397,32 +407,26 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B7804BA482FF268827C03C3C /* [CP] Embed Pods Frameworks */ = {
+		FF29BED72454F1903C944AE1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MOAH Wallet/Pods-MOAH Wallet-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
-				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
-				"${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework",
-				"${BUILT_PRODUCTS_DIR}/Web3/Web3.framework",
-				"${BUILT_PRODUCTS_DIR}/secp256k1.swift/secp256k1.framework",
+			inputFileListPaths = (
 			);
-			name = "[CP] Embed Pods Frameworks";
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigInt.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SipHash.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Web3.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/secp256k1.framework",
+				"$(DERIVED_FILE_DIR)/Pods-MOAH WalletUITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MOAH Wallet/Pods-MOAH Wallet-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -437,13 +441,13 @@
 				C051FCAEDB55EB1E50BAADE7 /* MainViewController.swift in Sources */,
 				C051F2666FCBD43EDDC03FD2 /* MainVC.swift in Sources */,
 				C051F7AED57D4EF678F17D23 /* AgreementViewVC.swift in Sources */,
-				C051FCD29155AA7ACFBCAA4C /* NemonicWarningVC.swift in Sources */,
+				C051FCD29155AA7ACFBCAA4C /* MnemonicWarningVC.swift in Sources */,
 				C051FC07BFCC39DD3F13BCF3 /* LockVC.swift in Sources */,
 				C051F9CCA4B178C2CDB531A2 /* PasswordVC.swift in Sources */,
 				C051FD40D3FA50FA0EA05607 /* Checkbox.swift in Sources */,
 				C051FF1268E6D9BEF4B03283 /* KeychainService.swift in Sources */,
-				C051FD4D235D13D355825375 /* NemonicVC.swift in Sources */,
-				C051F8BA98265B7A066457C3 /* NemonicVerificationVC.swift in Sources */,
+				C051FD4D235D13D355825375 /* MnemonicVC.swift in Sources */,
+				C051F8BA98265B7A066457C3 /* MnemonicVerificationVC.swift in Sources */,
 				C051F9E9395261263D08A9B4 /* WalletDoneVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -555,7 +559,7 @@
 		};
 		C051F3E0BB6FB83F32D526C0 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 73D951E74E5933E963F7880A /* Pods-MOAH WalletTests.debug.xcconfig */;
+			baseConfigurationReference = 0E648184D5F32424B823508B /* Pods-MOAH WalletTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MOAH Wallet.app/MOAH Wallet";
 				INFOPLIST_FILE = "MOAH WalletTests/Info.plist";
@@ -570,7 +574,7 @@
 		};
 		C051F781BC68956F65428520 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 94B07115F177109E0F66E650 /* Pods-MOAH Wallet.release.xcconfig */;
+			baseConfigurationReference = 283370360A1463067B52690A /* Pods-MOAH Wallet.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "MOAH Wallet/Info.plist";
@@ -584,7 +588,7 @@
 		};
 		C051F84E6E7205295EB67DAA /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3D5EABD40A26E2799703CB17 /* Pods-MOAH Wallet.debug.xcconfig */;
+			baseConfigurationReference = 908A34CA5923A3A1D9426A42 /* Pods-MOAH Wallet.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "MOAH Wallet/Info.plist";
@@ -598,7 +602,7 @@
 		};
 		C051F92B394FDA933382E13D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 29B2922D406E0DC1E1293226 /* Pods-MOAH WalletUITests.debug.xcconfig */;
+			baseConfigurationReference = 69C6482B282D4CC19C2C4C29 /* Pods-MOAH WalletUITests.debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = "MOAH WalletUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -612,7 +616,7 @@
 		};
 		C051F9D0C580DA6CCAB2A631 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2086D63B32EE10EE4A1B9352 /* Pods-MOAH WalletUITests.release.xcconfig */;
+			baseConfigurationReference = 1737CB4AFAA824B10FE0DB65 /* Pods-MOAH WalletUITests.release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = "MOAH WalletUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -626,7 +630,7 @@
 		};
 		C051FA3817226924DACA8C57 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 410B221C1E8F3E075D22BBB0 /* Pods-MOAH WalletTests.release.xcconfig */;
+			baseConfigurationReference = 25D72DCCE23C1CCCFA10CE29 /* Pods-MOAH WalletTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MOAH Wallet.app/MOAH Wallet";
 				INFOPLIST_FILE = "MOAH WalletTests/Info.plist";

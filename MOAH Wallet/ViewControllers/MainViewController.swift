@@ -85,7 +85,6 @@ class MainViewController: UIViewController {
         if(sender.tag == 2){
             agreementVC.getWallet = true
         }
-        let nemonicWarningVC = NemonicWarningVC()
         let navigationController = UINavigationController(rootViewController: agreementVC)
 
         self.present(navigationController, animated: true)
