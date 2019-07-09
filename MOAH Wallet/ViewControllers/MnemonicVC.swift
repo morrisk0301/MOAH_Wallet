@@ -87,7 +87,8 @@ class MnemonicVC: UIViewController {
     }
 
     private func getMnemonic() -> String? {
-        let mnemonic: String = "seed1 seed2 seed3 seed4 seed5 seed6 seed7 seed8 seed9 seed10 seed11 seed12"
+        let account = EthAccount()
+        let mnemonic = account.generateMnemonic()
 
         return mnemonic
     }

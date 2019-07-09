@@ -19,6 +19,7 @@
 		C051F9CCA4B178C2CDB531A2 /* PasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FDA70B3196EAE1C0DE6B /* PasswordVC.swift */; };
 		C051F9D4CD5F97DE4AA25F2E /* MOAH_WalletTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FDAF143D94C8A37998D7 /* MOAH_WalletTests.swift */; };
 		C051F9E9395261263D08A9B4 /* WalletDoneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F84A730A2CB809A6A0ED /* WalletDoneVC.swift */; };
+		C051FB49773A31D28AD3F7D8 /* EthAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F601F20283AD347350D8 /* EthAccount.swift */; };
 		C051FB5E23902398DEF96B30 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F7AC902DA14D067B4A7E /* AppDelegate.swift */; };
 		C051FBFDA8E8C9B908FD3E08 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C051F89569BDF7047923FAFE /* LaunchScreen.storyboard */; };
 		C051FC07BFCC39DD3F13BCF3 /* LockVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FCDFA9CC8D752BE3F74C /* LockVC.swift */; };
@@ -62,6 +63,7 @@
 		C051F49F7A22AF8C42EA4D32 /* MainVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		C051F4A76C51AA93A6914007 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
 		C051F5E412FDCE2C3CE99311 /* MnemonicVerificationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicVerificationVC.swift; sourceTree = "<group>"; };
+		C051F601F20283AD347350D8 /* EthAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthAccount.swift; sourceTree = "<group>"; };
 		C051F70D92E77E238F6DDC7E /* MnemonicVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicVC.swift; sourceTree = "<group>"; };
 		C051F7AC902DA14D067B4A7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C051F84A730A2CB809A6A0ED /* WalletDoneVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletDoneVC.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 			children = (
 				C051FDA0FC51D0F453BB6377 /* Checkbox.swift */,
 				C051F33C240D00316B044671 /* KeychainService.swift */,
+				C051F601F20283AD347350D8 /* EthAccount.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -449,6 +452,7 @@
 				C051FD4D235D13D355825375 /* MnemonicVC.swift in Sources */,
 				C051F8BA98265B7A066457C3 /* MnemonicVerificationVC.swift in Sources */,
 				C051F9E9395261263D08A9B4 /* WalletDoneVC.swift in Sources */,
+				C051FB49773A31D28AD3F7D8 /* EthAccount.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
