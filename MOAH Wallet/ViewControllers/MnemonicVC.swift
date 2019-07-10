@@ -9,7 +9,7 @@ import UIKit
 class MnemonicVC: UIViewController {
 
     let explainText: UITextView = {
-        let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 150))
+        let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 300))
 
         let attrText = NSMutableAttributedString(string: "비밀 시드 구문",
                 attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)])
@@ -26,7 +26,7 @@ class MnemonicVC: UIViewController {
     }()
 
     let mnemonicText: UITextView = {
-        let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 200))
+        let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 150))
 
         textView.isEditable = false
         textView.textAlignment = .left
@@ -73,12 +73,12 @@ class MnemonicVC: UIViewController {
         explainText.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         explainText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         explainText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        explainText.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        explainText.heightAnchor.constraint(equalToConstant: 200).isActive = true
 
-        mnemonicText.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        mnemonicText.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 40).isActive = true
         mnemonicText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         mnemonicText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        mnemonicText.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        mnemonicText.heightAnchor.constraint(equalToConstant: 150).isActive = true
 
         nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40).isActive = true
         nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
@@ -87,7 +87,7 @@ class MnemonicVC: UIViewController {
     }
 
     private func getMnemonic() -> String? {
-        let account = EthAccount()
+        let account: EthAccount = EthAccount.sharedInstance
         let mnemonic = account.generateMnemonic()
 
         return mnemonic

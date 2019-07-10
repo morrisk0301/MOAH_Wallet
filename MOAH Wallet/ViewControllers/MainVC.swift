@@ -8,7 +8,7 @@ import UIKit
 
 class MainVC: UIViewController{
 
-    var signup = true
+    var signUp = true
 
     let mainText: UITextView = {
         let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 60))
@@ -31,7 +31,7 @@ class MainVC: UIViewController{
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        if(signup){
+        if(signUp){
 
             let mnemonicWarningVC = MnemonicWarningVC()
             let navigationController = UINavigationController(rootViewController: mnemonicWarningVC)

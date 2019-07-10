@@ -256,9 +256,8 @@ class AgreementVC: UIViewController {
         }
 
         if(getWallet){
-            let mnemonicVerificationVC = MnemonicVerificationVC()
-            mnemonicVerificationVC.getWallet = true
-            self.navigationController?.pushViewController(mnemonicVerificationVC, animated: true)
+            let mnemonicVerificationGetVC = MnemonicVerificationGetVC()
+            self.navigationController?.pushViewController(mnemonicVerificationGetVC, animated: true)
         }
         else{
             let passwordVC = PasswordVC()

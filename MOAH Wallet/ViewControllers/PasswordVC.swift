@@ -201,7 +201,7 @@ class PasswordVC: UIViewController, UITextFieldDelegate{
             }
             else{
                 let mainVC = MainVC()
-                mainVC.signup = true
+                mainVC.signUp = true
 
                 let appDelegate: AppDelegate = (UIApplication.shared.delegate as? AppDelegate)!
                 appDelegate.window?.rootViewController = mainVC

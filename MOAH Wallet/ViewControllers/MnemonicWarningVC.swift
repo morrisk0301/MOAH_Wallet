@@ -84,7 +84,7 @@ class MnemonicWarningVC: UIViewController {
 
     @objc private func backPressed(_ sender: UIBarButtonItem) {
         let pMainVC = self.presentingViewController as! MainVC
-        pMainVC.signup = false
+        pMainVC.signUp = false
         self.dismiss(animated: true)
     }
 

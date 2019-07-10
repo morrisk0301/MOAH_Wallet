@@ -8,7 +8,7 @@ import UIKit
 
 class MnemonicVerificationVC: UIViewController{
 
-    var getWallet = false
+    var wordIndex: Int?
 
     let explainText: UITextView = {
         let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 120))
@@ -20,41 +20,72 @@ class MnemonicVerificationVC: UIViewController{
         return textView
     }()
 
-    let nextButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("다음", for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(nextPressed(_:)), for: .touchUpInside)
+    let mnemonicProgress: UIProgressView = {
+        let progressView = UIProgressView(frame: CGRect(x:0, y:0, width:200, height:5))
 
-        return button
+        progressView.progressTintColor = UIColor(rgb: 0x3562FF)
+        progressView.trackTintColor = UIColor(rgb: 0xEAEAFF)
+        progressView.transform = CGAffineTransform(scaleX: 1.0, y: 2.0)
+
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+
+        return progressView
+    }()
+
+    let mnemonicField: UITextField = {
+        let textField = UITextField()
+
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.height))
+        textField.leftView = paddingView
+        textField.leftViewMode = .always
+        textField.placeholder = "비밀 시드 단어를 입력해주세요"
+        textField.layer.borderColor = UIColor.lightGray.cgColor
+        textField.layer.borderWidth = 1.0
+        textField.returnKeyType = .done
+        textField.isSecureTextEntry = true
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.addTarget(self, action: #selector(textInput(_:)), for: .editingChanged)
+
+        return textField
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let attrText = NSMutableAttributedString(string: "비밀 시드 구문 인증",
-                attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)])
-        if(!getWallet){
-            attrText.append(NSAttributedString(string: "\n\n회원님의 지갑의 12자리 비밀 시드 구문을 순서대로 입력해주세요",
-                    attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18)]))
+        if(wordIndex == nil){
+            wordIndex = 0
         }
-        else{
-            attrText.append(NSAttributedString(string: "\n\n복원하실 지갑의 12자리 비밀 시드 구문을 순서대로 입력해주세요",
-                    attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18)]))
-        }
-        explainText.attributedText = attrText
 
         view.backgroundColor = .white
         view.addSubview(explainText)
-        view.addSubview(nextButton)
+        view.addSubview(mnemonicField)
+        view.addSubview(mnemonicProgress)
 
-        setupLayout()
+        let attrText = NSMutableAttributedString(string: "비밀 시드 구문 인증",
+                attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)])
+        attrText.append(NSAttributedString(string: "\n\n\(wordIndex!+1)번째 시드 단어를 입력해주세요.",
+                attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18)]))
+        explainText.attributedText = attrText
+
+        let newBackButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backPressed(_:)))
+
+        self.navigationItem.hidesBackButton = true
+        self.navigationItem.leftBarButtonItem = newBackButton
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
+
+        mnemonicProgress.progress = Float(wordIndex!)/12
+
+        setupLayout()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        mnemonicField.becomeFirstResponder()
     }
 
     private func setupLayout(){
@@ -63,22 +94,39 @@ class MnemonicVerificationVC: UIViewController{
         explainText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         explainText.heightAnchor.constraint(equalToConstant: 150).isActive = true
 
-        nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40).isActive = true
-        nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        nextButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        mnemonicProgress.topAnchor.constraint(equalTo: explainText.bottomAnchor).isActive = true
+        mnemonicProgress.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        mnemonicProgress.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        mnemonicProgress.heightAnchor.constraint(equalToConstant: 5).isActive = true
+
+        mnemonicField.topAnchor.constraint(equalTo: explainText.bottomAnchor, constant: 40).isActive = true
+        mnemonicField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        mnemonicField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        mnemonicField.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
 
-    @objc private func nextPressed(_ sender: UIButton) {
-        if(getWallet){
-            let passwordVC = PasswordVC()
-            passwordVC.getWallet = true
-            self.navigationController?.pushViewController(passwordVC, animated: true)
+    @objc private func textInput(_ sender: UITextField) {
+        let account: EthAccount = EthAccount.sharedInstance
+        if(account.verifyMnemonic(index: wordIndex!, word: mnemonicField.text!)){
+            if(wordIndex! < 11) {
+                let mnemonicVerificationVC = MnemonicVerificationVC()
+                mnemonicVerificationVC.wordIndex = wordIndex! + 1
+                self.navigationController?.pushViewController(mnemonicVerificationVC, animated: false)
+            }
+            else{
+                let walletDoneVC = WalletDoneVC()
+                self.present(walletDoneVC, animated: true)
+            }
         }
-        else{
-            let walletDoneVC = WalletDoneVC()
-            self.present(walletDoneVC, animated: true)
-        }
+        return
+    }
 
+    @objc private func backPressed(_ sender: UIButton){
+        let viewControllers: [UIViewController] = self.navigationController!.viewControllers
+        for aViewController in viewControllers {
+            if aViewController is MnemonicVC {
+                self.navigationController?.popToViewController(aViewController, animated: true)
+            }
+        }
     }
 }

@@ -10,9 +10,14 @@ import CryptoSwift
 
 class EthAccount {
 
+
+    static let sharedInstance = EthAccount()
+
     private var keyStore: BIP32Keystore?
     private var mnemonicIns: Array<String>?
     private var isVerified: Bool = false
+
+    private init(){}
 
     func generateMnemonic() -> String {
         let mnemonicSize = EntropySize(rawValue: 128)
@@ -130,5 +135,9 @@ class EthAccount {
         let mnemonicEncrypted = [UInt8](mnemonicEncryptedData)
 
         return mnemonicEncrypted
+    }
+
+    private func _generateKeyStoreIns(mnemonic: Mnemonics, password: String){
+
     }
 }

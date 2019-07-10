@@ -81,7 +81,7 @@ class WalletDoneVC: UIViewController{
         }
         else{
             let mainVC = self.view.window!.rootViewController as? MainVC
-            mainVC?.signup = false
+            mainVC?.signUp = false
             self.view.window!.rootViewController?.dismiss(animated: false)
         }
     }
