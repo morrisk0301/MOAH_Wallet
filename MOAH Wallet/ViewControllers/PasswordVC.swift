@@ -104,6 +104,11 @@ class PasswordVC: UIViewController, UITextFieldDelegate{
 
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        passwordField.becomeFirstResponder()
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -195,9 +200,12 @@ class PasswordVC: UIViewController, UITextFieldDelegate{
 
             if(getWallet){
                 let walletDoneVC = WalletDoneVC()
-                walletDoneVC.getWallet = true
+                let account: EthAccount = EthAccount.accountInstance
+                if(account.setAccount(password: password!)){
+                    walletDoneVC.getWallet = true
 
-                self.present(walletDoneVC, animated: true)
+                    self.present(walletDoneVC, animated: true)
+                }
             }
             else{
                 let mainVC = MainVC()

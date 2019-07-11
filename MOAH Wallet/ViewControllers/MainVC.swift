@@ -8,7 +8,7 @@ import UIKit
 
 class MainVC: UIViewController{
 
-    var signUp = true
+    var signUp = false
 
     let mainText: UITextView = {
         let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 60))

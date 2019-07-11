@@ -42,7 +42,6 @@ class MnemonicVerificationVC: UIViewController{
         textField.layer.borderColor = UIColor.lightGray.cgColor
         textField.layer.borderWidth = 1.0
         textField.returnKeyType = .done
-        textField.isSecureTextEntry = true
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.addTarget(self, action: #selector(textInput(_:)), for: .editingChanged)
 
@@ -51,6 +50,7 @@ class MnemonicVerificationVC: UIViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
 
         if(wordIndex == nil){
             wordIndex = 0
@@ -79,13 +79,13 @@ class MnemonicVerificationVC: UIViewController{
         setupLayout()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         mnemonicField.becomeFirstResponder()
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
     }
 
     private func setupLayout(){
@@ -106,7 +106,7 @@ class MnemonicVerificationVC: UIViewController{
     }
 
     @objc private func textInput(_ sender: UITextField) {
-        let account: EthAccount = EthAccount.sharedInstance
+        let account: EthAccount = EthAccount.accountInstance
         if(account.verifyMnemonic(index: wordIndex!, word: mnemonicField.text!)){
             if(wordIndex! < 11) {
                 let mnemonicVerificationVC = MnemonicVerificationVC()
@@ -115,6 +115,7 @@ class MnemonicVerificationVC: UIViewController{
             }
             else{
                 let walletDoneVC = WalletDoneVC()
+
                 self.present(walletDoneVC, animated: true)
             }
         }

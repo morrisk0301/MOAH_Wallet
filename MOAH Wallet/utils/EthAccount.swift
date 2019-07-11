@@ -11,10 +11,10 @@ import CryptoSwift
 class EthAccount {
 
 
-    static let sharedInstance = EthAccount()
+    static let accountInstance = EthAccount()
 
-    private var keyStore: BIP32Keystore?
-    private var mnemonicIns: Array<String>?
+    private var _KEYSTORE: BIP32Keystore?
+    private var _MNEMONIC: Mnemonics?
     private var isVerified: Bool = false
 
     private init(){}
@@ -22,31 +22,34 @@ class EthAccount {
     func generateMnemonic() -> String {
         let mnemonicSize = EntropySize(rawValue: 128)
         let mnemonic = Mnemonics(entropySize: mnemonicSize!)
-        mnemonicIns = mnemonic.string.components(separatedBy: " ")
+        _MNEMONIC = mnemonic
 
         return mnemonic.string
     }
 
-    func setAccount(mnemonicString: String, password: String, isNew: Bool) -> Bool {
-        let mnemonic: Mnemonics?
+    func setMnemonic(mnemonicString: String) -> Bool {
         do{
-            mnemonic = try Mnemonics(mnemonicString)
-        }
-        catch{
+            let mnemonic = try Mnemonics(mnemonicString)
+            _MNEMONIC = mnemonic
+            return true
+        } catch{
             return false
         }
+    }
 
-        if(isNew && !isVerified){
-            return false
-        }
-        _encryptMnemonic(mnemonic: mnemonic!, key: password)
+    func setAccount(password: String) -> Bool {
+        _encryptMnemonic(password: password)
+        _generateKeyStore(password: password)
 
         return true
     }
 
     func verifyMnemonic(index: Int, word: String) -> Bool {
-        if(mnemonicIns![index] == word){
-            if(index == mnemonicIns!.count-1){
+        if(_MNEMONIC == nil){ return false}
+        let mnemonicIns = _MNEMONIC!.string.components(separatedBy: " ")
+
+        if(mnemonicIns[index] == word){
+            if(index == mnemonicIns.count-1){
                 isVerified = true
             }
             return true
@@ -56,11 +59,6 @@ class EthAccount {
         }
     }
 
-    func generateKeystore(mnemonic: Mnemonics, password: String) -> BIP32Keystore {
-        let keyStore = try! BIP32Keystore(mnemonics: mnemonic, password: password)
-
-        return keyStore
-    }
 
     func generateAccount() {
 
@@ -84,9 +82,9 @@ class EthAccount {
         })
     }
 
-    private func _encryptMnemonic(mnemonic: Mnemonics, key: String) {
-        let mnemonicData: Data = mnemonic.string.data(using: String.Encoding.utf8)!
-        let key256 = [UInt8](key.data(using: String.Encoding.utf8)!.sha256)
+    private func _encryptMnemonic(password: String) {
+        let mnemonicData: Data = _MNEMONIC!.string.data(using: String.Encoding.utf8)!
+        let key256 = [UInt8](password.data(using: String.Encoding.utf8)!.sha256)
         let iv: [UInt8] = Array(_randomString(length: 16).utf8)
         let aes = try! AES(key: key256, blockMode: CBC(iv: iv))
         let mnemonicEncrypted = try! aes.encrypt([UInt8](mnemonicData))
@@ -137,7 +135,7 @@ class EthAccount {
         return mnemonicEncrypted
     }
 
-    private func _generateKeyStoreIns(mnemonic: Mnemonics, password: String){
-
+    private func _generateKeyStore(password: String){
+        _KEYSTORE = try! BIP32Keystore(mnemonics: _MNEMONIC!, password: password)
     }
 }

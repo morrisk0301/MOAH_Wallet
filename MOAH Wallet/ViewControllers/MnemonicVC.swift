@@ -87,7 +87,7 @@ class MnemonicVC: UIViewController {
     }
 
     private func getMnemonic() -> String? {
-        let account: EthAccount = EthAccount.sharedInstance
+        let account: EthAccount = EthAccount.accountInstance
         let mnemonic = account.generateMnemonic()
 
         return mnemonic
