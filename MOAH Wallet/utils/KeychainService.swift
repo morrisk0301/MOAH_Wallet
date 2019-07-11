@@ -49,8 +49,7 @@ public class KeychainService: NSObject {
 
     }
 
-
-    class func savePassword(service: String, account:String, data: String) {
+    class func savePassword(service: String, account:String, data: String) -> Bool {
         if let dataFromString = data.data(using: String.Encoding.utf8, allowLossyConversion: false) {
 
             // Instantiate a new default keychain query
@@ -62,8 +61,13 @@ public class KeychainService: NSObject {
             if (status != errSecSuccess) {    // Always check the status
                 if let err = SecCopyErrorMessageString(status, nil) {
                     print("Write failed: \(err)")
+                    return false
                 }
             }
+            return true
+        }
+        else{
+            return false
         }
     }
 

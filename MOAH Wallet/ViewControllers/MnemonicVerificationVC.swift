@@ -115,8 +115,9 @@ class MnemonicVerificationVC: UIViewController{
             }
             else{
                 let walletDoneVC = WalletDoneVC()
-
-                self.present(walletDoneVC, animated: true)
+                if(account.setAccount(true)){
+                    self.present(walletDoneVC, animated: true)
+                }
             }
         }
         return

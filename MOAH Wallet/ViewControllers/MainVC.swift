@@ -5,6 +5,8 @@
 
 import Foundation
 import UIKit
+import web3swift
+import BigInt
 
 class MainVC: UIViewController{
 
@@ -27,6 +29,24 @@ class MainVC: UIViewController{
         view.backgroundColor = .white
         view.addSubview(mainText)
 
+        /*
+        let account: EthAccount = EthAccount.accountInstance
+        let KS = account.getKeyStore()
+        let web3Kovan = Web3(infura: .kovan)
+        let keyStoreManager = KeystoreManager([KS])
+        web3Kovan.keystoreManager = keyStoreManager
+
+        let amount = BigUInt(10000000000000000)
+        let toAddress = Address("0xAa7725FF2Bd0B88e5EA57f0Ea74D2Bf1cA61ddaf")
+        var options = Web3Options.default
+        options.from = KS.addresses.first!
+
+        let intermediateTX =  try! web3Kovan.eth.sendETH(to: toAddress, amount: amount, options: options)
+        try! intermediateTX.send(password: "123")
+        */
+
+
+
         setupLayout()
     }
 
@@ -37,6 +57,8 @@ class MainVC: UIViewController{
             let navigationController = UINavigationController(rootViewController: mnemonicWarningVC)
 
             self.present(navigationController, animated: true)
+        }else{
+            self.checkAccount()
         }
     }
 

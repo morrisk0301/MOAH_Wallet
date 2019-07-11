@@ -18,10 +18,6 @@ class PasswordVC: UIViewController, UITextFieldDelegate{
     var showConstraint: NSLayoutConstraint?
     var hideConstraint: NSLayoutConstraint?
 
-    let service = "WalletPassword"
-    let account = ""
-
-
     let passwordText: UITextView = {
         let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 120))
 
@@ -201,7 +197,7 @@ class PasswordVC: UIViewController, UITextFieldDelegate{
             if(getWallet){
                 let walletDoneVC = WalletDoneVC()
                 let account: EthAccount = EthAccount.accountInstance
-                if(account.setAccount(password: password!)){
+                if(account.setAccount(password!)){
                     walletDoneVC.getWallet = true
 
                     self.present(walletDoneVC, animated: true)
