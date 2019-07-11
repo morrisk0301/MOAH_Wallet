@@ -96,12 +96,12 @@ class LockVC: UIViewController, UITextFieldDelegate{
     }
 
     private func setupLayout(){
+        passwordText.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40).isActive = true
         passwordText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         passwordText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        passwordText.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: -60).isActive = true
         passwordText.heightAnchor.constraint(equalToConstant: 150).isActive = true
 
-        passwordField.topAnchor.constraint(equalTo: view.centerYAnchor, constant: -80).isActive = true
+        passwordField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -40).isActive = true
         passwordField.leadingAnchor.constraint(equalTo:  view.leadingAnchor, constant: 20).isActive = true
         passwordField.trailingAnchor.constraint(equalTo:  view.trailingAnchor, constant: -20).isActive = true
         passwordField.heightAnchor.constraint(equalToConstant: 50).isActive = true
@@ -139,5 +139,9 @@ class LockVC: UIViewController, UITextFieldDelegate{
             hideConstraint!.isActive = true
             keyboardShown = false
         }
+    }
+
+    @objc private func nextPressed(_ sender: UIButton){
+
     }
 }

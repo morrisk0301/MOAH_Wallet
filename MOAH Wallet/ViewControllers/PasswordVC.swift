@@ -12,6 +12,7 @@ class PasswordVC: UIViewController, UITextFieldDelegate{
 
     var getWallet = false
     var password: String?
+    var salt: String?
     var confirm = false
     var keyboardHeight: CGFloat?
     var keyboardShown = false
@@ -120,7 +121,7 @@ class PasswordVC: UIViewController, UITextFieldDelegate{
         passwordText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         passwordText.heightAnchor.constraint(equalToConstant: 120).isActive = true
 
-        passwordField.topAnchor.constraint(equalTo: view.centerYAnchor, constant: -80).isActive = true
+        passwordField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -40).isActive = true
         passwordField.leadingAnchor.constraint(equalTo:  view.leadingAnchor, constant: 20).isActive = true
         passwordField.trailingAnchor.constraint(equalTo:  view.trailingAnchor, constant: -20).isActive = true
         passwordField.heightAnchor.constraint(equalToConstant: 50).isActive = true
@@ -133,22 +134,19 @@ class PasswordVC: UIViewController, UITextFieldDelegate{
     }
 
     private func savePassword(){
+        let util = Util()
         let defaults = UserDefaults.standard
         let passwordArray: Array<UInt8> = Array("\(password!)".utf8)
-        let hash = randomString(length: 32)
+        let hash = util.randomString(length: 32)
         let salt: Array<UInt8> = Array(hash.utf8)
         let saltString = salt.toHexString()
 
         let key = try? PKCS5.PBKDF2(password: passwordArray, salt: salt, iterations: 4096, keyLength: 32, variant: .sha256).calculate()
         let keyString = key?.toHexString()
 
+        self.salt = saltString
         defaults.set(saltString, forKey: "salt")
         defaults.set(keyString, forKey: "key")
-    }
-
-    private func randomString(length: Int) -> String {
-        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        return String((0..<length).map{ _ in letters.randomElement()! })
     }
 
     @objc private func keyboardWillShow(_ sender: Notification){
@@ -192,12 +190,13 @@ class PasswordVC: UIViewController, UITextFieldDelegate{
             self.navigationController?.pushViewController(passwordVC, animated: true)
         }
         if(confirm && password == self.passwordField.text!){
+            let account: EthAccount = EthAccount.accountInstance
             savePassword()
+            account.setPassword(password: salt!)
 
             if(getWallet){
                 let walletDoneVC = WalletDoneVC()
-                let account: EthAccount = EthAccount.accountInstance
-                if(account.setAccount(password!)){
+                if(account.setAccount(salt!)){
                     walletDoneVC.getWallet = true
 
                     self.present(walletDoneVC, animated: true)
@@ -212,7 +211,6 @@ class PasswordVC: UIViewController, UITextFieldDelegate{
 
                 self.navigationController?.popToRootViewController(animated: true)
             }
-
         }
     }
 }

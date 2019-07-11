@@ -80,6 +80,7 @@ class EthAccount {
     func setAccount(_ password: String) -> Bool {
         _encryptMnemonic(password: password)
         _saveKeyStoreManager(password: password)
+        unlockAccount(password: password)
 
         return true
     }
@@ -87,6 +88,7 @@ class EthAccount {
     func setAccount(_ isNew: Bool) -> Bool {
         _encryptMnemonic(password: _password!)
         _saveKeyStoreManager(password: _password!)
+        unlockAccount(password: password)
 
         return true
     }
@@ -99,18 +101,11 @@ class EthAccount {
         return _isVerified
     }
 
-    private func _randomString(length: Int) -> String {
-        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-
-        return String((0..<length).map { _ in
-            letters.randomElement()!
-        })
-    }
-
     private func _encryptMnemonic(password: String) {
+        let util = Util()
         let mnemonicData: Data = _mnemonic!.string.data(using: String.Encoding.utf8)!
         let key256 = [UInt8](password.data(using: String.Encoding.utf8)!.sha256)
-        let iv: [UInt8] = Array(_randomString(length: 16).utf8)
+        let iv: [UInt8] = Array(util.randomString(length: 16).utf8)
         let aes = try! AES(key: key256, blockMode: CBC(iv: iv))
         let mnemonicEncrypted = try! aes.encrypt([UInt8](mnemonicData))
 

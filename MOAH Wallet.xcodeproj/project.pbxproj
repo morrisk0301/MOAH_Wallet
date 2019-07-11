@@ -20,6 +20,7 @@
 		C051F9CCA4B178C2CDB531A2 /* PasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FDA70B3196EAE1C0DE6B /* PasswordVC.swift */; };
 		C051F9D4CD5F97DE4AA25F2E /* MOAH_WalletTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FDAF143D94C8A37998D7 /* MOAH_WalletTests.swift */; };
 		C051F9E9395261263D08A9B4 /* WalletDoneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F84A730A2CB809A6A0ED /* WalletDoneVC.swift */; };
+		C051FA62FD875D5F93EDDFD4 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F26E21CD42E0A1B5B53D /* Util.swift */; };
 		C051FB49773A31D28AD3F7D8 /* EthAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F601F20283AD347350D8 /* EthAccount.swift */; };
 		C051FB5E23902398DEF96B30 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F7AC902DA14D067B4A7E /* AppDelegate.swift */; };
 		C051FBFDA8E8C9B908FD3E08 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C051F89569BDF7047923FAFE /* LaunchScreen.storyboard */; };
@@ -61,6 +62,7 @@
 		908A34CA5923A3A1D9426A42 /* Pods-MOAH Wallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MOAH Wallet.debug.xcconfig"; path = "Target Support Files/Pods-MOAH Wallet/Pods-MOAH Wallet.debug.xcconfig"; sourceTree = "<group>"; };
 		C051F15C5D2B49DE5637EBC5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C051F229911C22EA45BD1C64 /* MnemonicVerificationGetVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicVerificationGetVC.swift; sourceTree = "<group>"; };
+		C051F26E21CD42E0A1B5B53D /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		C051F33C240D00316B044671 /* KeychainService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		C051F49F7A22AF8C42EA4D32 /* MainVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		C051F4A76C51AA93A6914007 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 				C051FDA0FC51D0F453BB6377 /* Checkbox.swift */,
 				C051F33C240D00316B044671 /* KeychainService.swift */,
 				C051F601F20283AD347350D8 /* EthAccount.swift */,
+				C051F26E21CD42E0A1B5B53D /* Util.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 				C051F9E9395261263D08A9B4 /* WalletDoneVC.swift in Sources */,
 				C051FB49773A31D28AD3F7D8 /* EthAccount.swift in Sources */,
 				C051F659E6322F019B9C26AE /* MnemonicVerificationGetVC.swift in Sources */,
+				C051FA62FD875D5F93EDDFD4 /* Util.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
