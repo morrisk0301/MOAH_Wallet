@@ -5,6 +5,7 @@
 
 import Foundation
 import UIKit
+import CryptoSwift
 
 class LockVC: UIViewController, UITextFieldDelegate{
 
@@ -12,6 +13,7 @@ class LockVC: UIViewController, UITextFieldDelegate{
     var keyboardShown = false
     var showConstraint: NSLayoutConstraint?
     var hideConstraint: NSLayoutConstraint?
+    var key: String?
 
     let passwordText: UITextView = {
         let textView = UITextView(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
@@ -50,7 +52,7 @@ class LockVC: UIViewController, UITextFieldDelegate{
         button.setTitle("다음", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleLabel?.font = UIFont.systemFont(ofSize: 20)
-        //button.addTarget(self, action: #selector(nextPressed(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(nextPressed(_:)), for: .touchUpInside)
 
         return button
     }()
@@ -113,6 +115,22 @@ class LockVC: UIViewController, UITextFieldDelegate{
         hideConstraint!.isActive = true
     }
 
+    private func checkPassword(_ password: String) -> Bool{
+        let defaults = UserDefaults.standard
+
+        let saltString = defaults.string(forKey: "salt")!
+        let keyHex = defaults.string(forKey: "key")!
+
+        let salt: [UInt8] = Array(saltString.utf8)
+        let password: [UInt8] = Array(password.utf8)
+        let key = Array<UInt8>(hex: keyHex)
+
+        let passwordHash = try! PKCS5.PBKDF2(password: password, salt: salt, iterations: 4096, keyLength: 32, variant: .sha256).calculate()
+        self.key = key.toHexString()
+
+        return (passwordHash == key)
+    }
+
     @objc private func keyboardWillShow(_ sender: Notification){
         if let keyboardFrame = sender.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
@@ -142,6 +160,14 @@ class LockVC: UIViewController, UITextFieldDelegate{
     }
 
     @objc private func nextPressed(_ sender: UIButton){
+        if(checkPassword(passwordField.text!)){
+            let account: EthAccount = EthAccount.accountInstance
+            let mainVC = MainVC()
+            account.unlockAccount(key!)
 
+            let appDelegate: AppDelegate = (UIApplication.shared.delegate as? AppDelegate)!
+            appDelegate.window?.rootViewController = mainVC
+            self.view.window!.rootViewController?.dismiss(animated: false)
+        }
     }
 }

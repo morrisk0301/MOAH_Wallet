@@ -98,14 +98,6 @@ extension UIViewController {
         view.addGestureRecognizer(tap)
     }
 
-    func checkAccount() {
-        let account: EthAccount = EthAccount.accountInstance
-        if(account.getKeyStoreManager() == nil){
-            let lockVC = LockVC()
-            self.present(lockVC, animated: false)
-        }
-    }
-
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }

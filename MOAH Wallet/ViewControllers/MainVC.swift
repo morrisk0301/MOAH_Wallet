@@ -57,8 +57,6 @@ class MainVC: UIViewController{
             let navigationController = UINavigationController(rootViewController: mnemonicWarningVC)
 
             self.present(navigationController, animated: true)
-        }else{
-            self.checkAccount()
         }
     }
 

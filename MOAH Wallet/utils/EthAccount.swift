@@ -25,15 +25,18 @@ class EthAccount {
     }
 
     func lockAccount(){
-
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0, execute: {
+            //print(1231231231223)
+            self._nilKeyStore()
+        })
     }
 
-    func unlockAccount(password: String) {
+    func unlockAccount(_ password: String) {
         _loadKeyStoreManager(password: password)
     }
 
 
-    func setPassword(password: String) {
+    func setPassword(_ password: String) {
         _password = password
     }
 
@@ -80,7 +83,8 @@ class EthAccount {
     func setAccount(_ password: String) -> Bool {
         _encryptMnemonic(password: password)
         _saveKeyStoreManager(password: password)
-        unlockAccount(password: password)
+        _nilPasswordMnemonic()
+        unlockAccount(password)
 
         return true
     }
@@ -88,7 +92,8 @@ class EthAccount {
     func setAccount(_ isNew: Bool) -> Bool {
         _encryptMnemonic(password: _password!)
         _saveKeyStoreManager(password: _password!)
-        unlockAccount(password: password)
+        _nilPasswordMnemonic()
+        unlockAccount(_password!)
 
         return true
     }
@@ -164,5 +169,14 @@ class EthAccount {
     private func _loadKeyStoreManager(password: String) {
         let userDir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
         _keyStoreManager = KeystoreManager.managerForPath(userDir + "/keystore")
+    }
+
+    private func _nilPasswordMnemonic(){
+        _password = nil
+        _mnemonic = nil
+    }
+
+    private func _nilKeyStore(){
+        _keyStoreManager = nil
     }
 }

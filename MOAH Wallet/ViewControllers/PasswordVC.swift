@@ -133,20 +133,20 @@ class PasswordVC: UIViewController, UITextFieldDelegate{
         hideConstraint!.isActive = true
     }
 
-    private func savePassword(){
+    private func savePassword() -> String{
         let util = Util()
         let defaults = UserDefaults.standard
-        let passwordArray: Array<UInt8> = Array("\(password!)".utf8)
+        let passwordArray: [UInt8] = Array(password!.utf8)
         let hash = util.randomString(length: 32)
-        let salt: Array<UInt8> = Array(hash.utf8)
-        let saltString = salt.toHexString()
+        let salt: [UInt8] = Array(hash.utf8)
 
-        let key = try? PKCS5.PBKDF2(password: passwordArray, salt: salt, iterations: 4096, keyLength: 32, variant: .sha256).calculate()
-        let keyString = key?.toHexString()
+        let key = try! PKCS5.PBKDF2(password: passwordArray, salt: salt, iterations: 4096, keyLength: 32, variant: .sha256).calculate()
+        let keyHex = key.toHexString()
 
-        self.salt = saltString
-        defaults.set(saltString, forKey: "salt")
-        defaults.set(keyString, forKey: "key")
+        defaults.set(hash, forKey: "salt")
+        defaults.set(keyHex, forKey: "key")
+
+        return keyHex
     }
 
     @objc private func keyboardWillShow(_ sender: Notification){
@@ -191,12 +191,12 @@ class PasswordVC: UIViewController, UITextFieldDelegate{
         }
         if(confirm && password == self.passwordField.text!){
             let account: EthAccount = EthAccount.accountInstance
-            savePassword()
-            account.setPassword(password: salt!)
+            let keyHex = savePassword()
+            account.setPassword(keyHex)
 
             if(getWallet){
                 let walletDoneVC = WalletDoneVC()
-                if(account.setAccount(salt!)){
+                if(account.setAccount(keyHex)){
                     walletDoneVC.getWallet = true
 
                     self.present(walletDoneVC, animated: true)
