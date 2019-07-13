@@ -10,9 +10,11 @@
 		05420EDFE8066F95FF450720 /* Pods_MOAH_Wallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 812B68AEFA4BF918CB42A780 /* Pods_MOAH_Wallet.framework */; };
 		414E9B1CD0814E681ED5F8C1 /* Pods_MOAH_WalletUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EF9D3F80FDB01A105DBD08E /* Pods_MOAH_WalletUITests.framework */; };
 		6A53443E9BA1270E4CDF7AF0 /* Pods_MOAH_WalletTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E1E7B44C2914ADF41305D87 /* Pods_MOAH_WalletTests.framework */; };
+		A540D1D222D792D600A6CE7B /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A540D1D122D792D600A6CE7B /* LocalAuthentication.framework */; };
 		C051F2666FCBD43EDDC03FD2 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F49F7A22AF8C42EA4D32 /* MainVC.swift */; };
 		C051F29405CB6CAEB8A90062 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C051FDE6CC50D5ED79E6F42C /* Main.storyboard */; };
 		C051F361ACB751354EDEFC01 /* MOAH_WalletUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FD3DE6EDBDC571CF0639 /* MOAH_WalletUITests.swift */; };
+		C051F3DACAA1AF497935493C /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FF5210FFB8564925AFD5 /* AlertViewController.swift */; };
 		C051F659E6322F019B9C26AE /* MnemonicVerificationGetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F229911C22EA45BD1C64 /* MnemonicVerificationGetVC.swift */; };
 		C051F7AED57D4EF678F17D23 /* AgreementViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FC4D96E5C42E477C575F /* AgreementViewVC.swift */; };
 		C051F7FB92BF96B4D3144680 /* AgreementVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FBCD7A1BA2D9B4758AB9 /* AgreementVC.swift */; };
@@ -60,6 +62,7 @@
 		812B68AEFA4BF918CB42A780 /* Pods_MOAH_Wallet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MOAH_Wallet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E1E7B44C2914ADF41305D87 /* Pods_MOAH_WalletTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MOAH_WalletTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		908A34CA5923A3A1D9426A42 /* Pods-MOAH Wallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MOAH Wallet.debug.xcconfig"; path = "Target Support Files/Pods-MOAH Wallet/Pods-MOAH Wallet.debug.xcconfig"; sourceTree = "<group>"; };
+		A540D1D122D792D600A6CE7B /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		C051F15C5D2B49DE5637EBC5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C051F229911C22EA45BD1C64 /* MnemonicVerificationGetVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicVerificationGetVC.swift; sourceTree = "<group>"; };
 		C051F26E21CD42E0A1B5B53D /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
@@ -87,6 +90,7 @@
 		C051FE099084213AC811870D /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		C051FE634D5A6B9DF45C940E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C051FF117AB4DADC769782D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
+		C051FF5210FFB8564925AFD5 /* AlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +114,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A540D1D222D792D600A6CE7B /* LocalAuthentication.framework in Frameworks */,
 				05420EDFE8066F95FF450720 /* Pods_MOAH_Wallet.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -120,6 +125,7 @@
 		69767C46390E8ADA249FA0F6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A540D1D122D792D600A6CE7B /* LocalAuthentication.framework */,
 				812B68AEFA4BF918CB42A780 /* Pods_MOAH_Wallet.framework */,
 				8E1E7B44C2914ADF41305D87 /* Pods_MOAH_WalletTests.framework */,
 				0EF9D3F80FDB01A105DBD08E /* Pods_MOAH_WalletUITests.framework */,
@@ -201,6 +207,7 @@
 				C051F33C240D00316B044671 /* KeychainService.swift */,
 				C051F601F20283AD347350D8 /* EthAccount.swift */,
 				C051F26E21CD42E0A1B5B53D /* Util.swift */,
+				C051FF5210FFB8564925AFD5 /* AlertViewController.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -461,6 +468,7 @@
 				C051FB49773A31D28AD3F7D8 /* EthAccount.swift in Sources */,
 				C051F659E6322F019B9C26AE /* MnemonicVerificationGetVC.swift in Sources */,
 				C051FA62FD875D5F93EDDFD4 /* Util.swift in Sources */,
+				C051F3DACAA1AF497935493C /* AlertViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

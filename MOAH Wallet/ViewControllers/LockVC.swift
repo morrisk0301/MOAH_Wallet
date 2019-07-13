@@ -5,7 +5,7 @@
 
 import Foundation
 import UIKit
-import CryptoSwift
+import LocalAuthentication
 
 class LockVC: UIViewController, UITextFieldDelegate{
 
@@ -14,6 +14,10 @@ class LockVC: UIViewController, UITextFieldDelegate{
     var showConstraint: NSLayoutConstraint?
     var hideConstraint: NSLayoutConstraint?
     var key: String?
+
+    let userDefaults = UserDefaults.standard
+    let account: EthAccount = EthAccount.accountInstance
+    let appDelegate: AppDelegate = (UIApplication.shared.delegate as? AppDelegate)!
 
     let passwordText: UITextView = {
         let textView = UITextView(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
@@ -61,17 +65,15 @@ class LockVC: UIViewController, UITextFieldDelegate{
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
 
+        let useBiometrics = userDefaults.bool(forKey: "useBiometrics")
+        if(useBiometrics){
+            bioVerification()
+        }
+
         view.backgroundColor = .white
         view.addSubview(passwordText)
         view.addSubview(passwordField)
         view.addSubview(confirmButton)
-
-        /*
-        let account: EthAccount = EthAccount.accountInstance
-        account.unlockAccount(password: "123")
-        let keyStore = account.getKeyStoreManager()
-        print(type(of: keyStore))
-        */
 
         passwordField.delegate = self
 
@@ -86,11 +88,6 @@ class LockVC: UIViewController, UITextFieldDelegate{
     override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        passwordField.becomeFirstResponder()
     }
 
     override func didReceiveMemoryWarning() {
@@ -115,20 +112,20 @@ class LockVC: UIViewController, UITextFieldDelegate{
         hideConstraint!.isActive = true
     }
 
-    private func checkPassword(_ password: String) -> Bool{
-        let defaults = UserDefaults.standard
 
-        let saltString = defaults.string(forKey: "salt")!
-        let keyHex = defaults.string(forKey: "key")!
+    private func bioVerification(){
+        let autoContext = LAContext()
+        autoContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: self.description){(success, error) in
+            DispatchQueue.main.async {
+                if (success) {
+                    self.account.bioProceed()
+                    let mainVC = MainVC()
 
-        let salt: [UInt8] = Array(saltString.utf8)
-        let password: [UInt8] = Array(password.utf8)
-        let key = Array<UInt8>(hex: keyHex)
-
-        let passwordHash = try! PKCS5.PBKDF2(password: password, salt: salt, iterations: 4096, keyLength: 32, variant: .sha256).calculate()
-        self.key = key.toHexString()
-
-        return (passwordHash == key)
+                    self.appDelegate.window?.rootViewController = mainVC
+                    self.view.window!.rootViewController?.dismiss(animated: true)
+                }
+            }
+        }
     }
 
     @objc private func keyboardWillShow(_ sender: Notification){
@@ -160,14 +157,11 @@ class LockVC: UIViewController, UITextFieldDelegate{
     }
 
     @objc private func nextPressed(_ sender: UIButton){
-        if(checkPassword(passwordField.text!)){
-            let account: EthAccount = EthAccount.accountInstance
+        if(account.checkPassword(passwordField.text!)){
             let mainVC = MainVC()
-            account.unlockAccount(key!)
 
-            let appDelegate: AppDelegate = (UIApplication.shared.delegate as? AppDelegate)!
             appDelegate.window?.rootViewController = mainVC
-            self.view.window!.rootViewController?.dismiss(animated: false)
+            self.view.window!.rootViewController?.dismiss(animated: true)
         }
     }
 }

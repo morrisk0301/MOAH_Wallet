@@ -13,6 +13,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var useBiometrics = false
     let account: EthAccount = EthAccount.accountInstance
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -21,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let mainVC = MainVC()
 
         let defaults = UserDefaults.standard
-        let key = defaults.string(forKey: "key")
+        let key = defaults.string(forKey: "salt")
         if(key != nil){
             let lockVC = LockVC()
             self.window?.makeKeyAndVisible()
@@ -57,6 +58,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let lockVC = LockVC()
             self.window?.makeKeyAndVisible()
             self.window?.rootViewController?.present(lockVC, animated: false)
+        }else{
+            account.invalidateTimer()
         }
     }
 

@@ -12,4 +12,16 @@ class Util {
         let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         return String((0..<length).map{ _ in letters.randomElement()! })
     }
+
+    func alert(title: String, body: String, buttonTitle: String, completion: @escaping (Bool) -> Void) -> AlertViewController {
+        let alertViewController = AlertViewController()
+
+        alertViewController.modalPresentationStyle = .overCurrentContext
+        alertViewController.alertTitle = title
+        alertViewController.alertBody = body
+        alertViewController.alertButtonTitle = buttonTitle
+        alertViewController.buttonAction = completion
+
+        return alertViewController
+    }
 }

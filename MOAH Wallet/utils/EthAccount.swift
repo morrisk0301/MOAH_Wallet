@@ -12,12 +12,54 @@ class EthAccount {
 
     static let accountInstance = EthAccount()
 
+    let util = Util()
+    let userDefaults = UserDefaults.standard
+
     private var _keyStoreManager: KeystoreManager?
     private var _mnemonic: Mnemonics?
     private var _password: String?
     private var _isVerified: Bool = false
-
+    private var _timer: Timer?
     private init() {
+    }
+
+    func bioProceed(){
+        _unlockAccount()
+    }
+
+    func savePassword(_ password: String){
+        let passwordArray: [UInt8] = Array(password.utf8)
+        let hash = util.randomString(length: 32)
+        let salt: [UInt8] = Array(hash.utf8)
+
+        let key = _hashPassword(password: passwordArray, salt: salt)
+        let keyHex = key.toHexString()
+        _password = keyHex
+
+        userDefaults.set(hash, forKey: "salt")
+        if (!KeychainService.savePassword(service: "moahWallet", account: "password", data: keyHex)) {
+            KeychainService.updatePassword(service: "moahWallet", account: "password", data: keyHex)
+        }
+    }
+
+    func checkPassword(_ password: String) -> Bool{
+        let passwordArray: [UInt8] = Array(password.utf8)
+        let hash = userDefaults.string(forKey: "salt")!
+        let salt: [UInt8] = Array(hash.utf8)
+
+        let passwordHashed = _hashPassword(password: passwordArray, salt: salt)
+
+        let keyHex = KeychainService.loadPassword(service: "moahWallet", account: "password")!
+        let key = Array<UInt8>(hex: keyHex)
+
+        if(passwordHashed == key){
+            self._password = keyHex
+            _loadKeyStoreManager(password: keyHex)
+            return true
+        }
+        else{
+            return false
+        }
     }
 
     func getKeyStoreManager() -> KeystoreManager? {
@@ -25,19 +67,12 @@ class EthAccount {
     }
 
     func lockAccount(){
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0, execute: {
-            //print(1231231231223)
-            self._nilKeyStore()
-        })
+        _timer = Timer.scheduledTimer(timeInterval: 300, target: self, selector: #selector(_nilKeyData(_:)), userInfo: nil, repeats: false)
     }
 
-    func unlockAccount(_ password: String) {
-        _loadKeyStoreManager(password: password)
-    }
-
-
-    func setPassword(_ password: String) {
-        _password = password
+    func invalidateTimer(){
+        _timer?.invalidate()
+        _timer = nil
     }
 
     func generateMnemonic() -> String {
@@ -74,26 +109,17 @@ class EthAccount {
         }
     }
 
-    func getMnemonic(password: String) -> String {
+    func getMnemonic(password: String) -> String? {
         let mnemonic = _decryptMnemonic(password: password)
 
         return mnemonic
     }
 
-    func setAccount(_ password: String) -> Bool {
-        _encryptMnemonic(password: password)
-        _saveKeyStoreManager(password: password)
-        _nilPasswordMnemonic()
-        unlockAccount(password)
-
-        return true
-    }
-
-    func setAccount(_ isNew: Bool) -> Bool {
+    func setAccount() -> Bool {
         _encryptMnemonic(password: _password!)
         _saveKeyStoreManager(password: _password!)
-        _nilPasswordMnemonic()
-        unlockAccount(_password!)
+        _nilMnemonic()
+        _unlockAccount()
 
         return true
     }
@@ -109,7 +135,7 @@ class EthAccount {
     private func _encryptMnemonic(password: String) {
         let util = Util()
         let mnemonicData: Data = _mnemonic!.string.data(using: String.Encoding.utf8)!
-        let key256 = [UInt8](password.data(using: String.Encoding.utf8)!.sha256)
+        let key256 = Array<UInt8>(hex: password)
         let iv: [UInt8] = Array(util.randomString(length: 16).utf8)
         let aes = try! AES(key: key256, blockMode: CBC(iv: iv))
         let mnemonicEncrypted = try! aes.encrypt([UInt8](mnemonicData))
@@ -118,20 +144,24 @@ class EthAccount {
         _saveIv(iv: iv)
     }
 
-    private func _decryptMnemonic(password: String) -> String {
-        let password = [UInt8](password.data(using: String.Encoding.utf8)!.sha256)
-        let iv = _loadIv()
-        let mnemonicEncrypted = _loadMnemonic()
+    private func _decryptMnemonic(password: String) -> String? {
+        if(checkPassword(password)){
+            let key256 = Array<UInt8>(hex: self._password!)
+            let iv = _loadIv()
+            let mnemonicEncrypted = _loadMnemonic()
 
-        let aes = try! AES(key: password, blockMode: CBC(iv: iv))
-        let mnemonicDecrypted = try! aes.decrypt(mnemonicEncrypted)
-        let mnemonic = String(bytes: mnemonicDecrypted, encoding: .utf8)!
+            let aes = try! AES(key: key256, blockMode: CBC(iv: iv))
+            let mnemonicDecrypted = try! aes.decrypt(mnemonicEncrypted)
+            let mnemonic = String(bytes: mnemonicDecrypted, encoding: .utf8)!
 
-        return mnemonic
+            return mnemonic
+        }
+        else{
+            return nil
+        }
     }
 
     private func _saveMnemonic(mnemonicEncrypted: [UInt8]) {
-        let userDefaults = UserDefaults.standard
         let mnemonicEncryptedData = Data(bytes: mnemonicEncrypted, count: mnemonicEncrypted.count)
 
         userDefaults.set(mnemonicEncryptedData, forKey: "mnemonic")
@@ -171,12 +201,27 @@ class EthAccount {
         _keyStoreManager = KeystoreManager.managerForPath(userDir + "/keystore")
     }
 
-    private func _nilPasswordMnemonic(){
-        _password = nil
+    func _setPassword(_ password: String) {
+        _password = password
+    }
+
+    private func _hashPassword(password: [UInt8], salt: [UInt8]) -> [UInt8]{
+        let hash = try! PKCS5.PBKDF2(password: password, salt: salt, iterations: 4096, keyLength: 32, variant: .sha256).calculate()
+        return hash
+    }
+
+    private func _nilMnemonic(){
         _mnemonic = nil
     }
 
-    private func _nilKeyStore(){
+    private func _unlockAccount() {
+        let keyHex = KeychainService.loadPassword(service: "moahWallet", account: "password")!
+        self._password = keyHex
+        _loadKeyStoreManager(password: keyHex)
+    }
+
+    @objc private func _nilKeyData(_ sender: Timer){
+        _password = nil
         _keyStoreManager = nil
     }
 }

@@ -7,10 +7,12 @@ import Foundation
 import UIKit
 import CryptoSwift
 import Security
+import LocalAuthentication
 
 class PasswordVC: UIViewController, UITextFieldDelegate{
 
-    var getWallet = false
+    var getWallet: Bool = false
+    var useBiometrics: Bool = false
     var password: String?
     var salt: String?
     var confirm = false
@@ -18,6 +20,11 @@ class PasswordVC: UIViewController, UITextFieldDelegate{
     var keyboardShown = false
     var showConstraint: NSLayoutConstraint?
     var hideConstraint: NSLayoutConstraint?
+
+    let autoContext = LAContext()
+    let util = Util()
+    let account: EthAccount = EthAccount.accountInstance
+    let defaults = UserDefaults.standard
 
     let passwordText: UITextView = {
         let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 120))
@@ -133,20 +140,52 @@ class PasswordVC: UIViewController, UITextFieldDelegate{
         hideConstraint!.isActive = true
     }
 
-    private func savePassword() -> String{
-        let util = Util()
-        let defaults = UserDefaults.standard
-        let passwordArray: [UInt8] = Array(password!.utf8)
-        let hash = util.randomString(length: 32)
-        let salt: [UInt8] = Array(hash.utf8)
+    private func authBiometrics(){
+        if(autoContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)){
+            let alertVC = util.alert(title: "생채 인식 기능 사용", body: "빠른 앱 실행을 위해\n생채 인식 기능을 사용하시겠습니까?", buttonTitle: "사용하기"){(next) in
+                if(next){
+                    self.autoContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: self.description){(success, error) in
+                        DispatchQueue.main.async {
+                            if (success) {
+                                self.useBiometrics = true
+                            }
+                            self.proceedView()
+                        }
+                    }
+                }
+                else{
+                    DispatchQueue.main.async {
+                        self.proceedView()
+                    }
+                }
+            }
+            self.present(alertVC, animated: false)
+        }else{
+            DispatchQueue.main.async {
+                self.proceedView()
+            }
+        }
+    }
 
-        let key = try! PKCS5.PBKDF2(password: passwordArray, salt: salt, iterations: 4096, keyLength: 32, variant: .sha256).calculate()
-        let keyHex = key.toHexString()
+    private func proceedView(){
+        self.defaults.set(self.useBiometrics, forKey: "useBiometrics")
 
-        defaults.set(hash, forKey: "salt")
-        defaults.set(keyHex, forKey: "key")
+        if(self.getWallet){
+            let walletDoneVC = WalletDoneVC()
 
-        return keyHex
+            if(self.account.setAccount()){
+                walletDoneVC.getWallet = true
+                self.present(walletDoneVC, animated: true)
+            }
+        }
+        else{
+            let mainVC = MainVC()
+            mainVC.signUp = true
+
+            let appDelegate: AppDelegate = (UIApplication.shared.delegate as? AppDelegate)!
+            appDelegate.window?.rootViewController = mainVC
+            self.navigationController?.popToRootViewController(animated: true)
+        }
     }
 
     @objc private func keyboardWillShow(_ sender: Notification){
@@ -190,27 +229,8 @@ class PasswordVC: UIViewController, UITextFieldDelegate{
             self.navigationController?.pushViewController(passwordVC, animated: true)
         }
         if(confirm && password == self.passwordField.text!){
-            let account: EthAccount = EthAccount.accountInstance
-            let keyHex = savePassword()
-            account.setPassword(keyHex)
-
-            if(getWallet){
-                let walletDoneVC = WalletDoneVC()
-                if(account.setAccount(keyHex)){
-                    walletDoneVC.getWallet = true
-
-                    self.present(walletDoneVC, animated: true)
-                }
-            }
-            else{
-                let mainVC = MainVC()
-                mainVC.signUp = true
-
-                let appDelegate: AppDelegate = (UIApplication.shared.delegate as? AppDelegate)!
-                appDelegate.window?.rootViewController = mainVC
-
-                self.navigationController?.popToRootViewController(animated: true)
-            }
+            account.savePassword(password!)
+            authBiometrics()
         }
     }
 }
