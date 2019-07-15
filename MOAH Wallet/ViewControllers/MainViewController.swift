@@ -11,10 +11,14 @@ import UIKit
 
 class MainViewController: UIViewController {
 
+    let screenSize = UIScreen.main.bounds
+
     let moahWalletText: UITextView = {
         let textView = UITextView(frame: CGRect(x: 0, y: 0, width: 100, height: 60))
         textView.text = "MOAH Wallet"
-        textView.font = UIFont.boldSystemFont(ofSize: 40)
+        textView.font = UIFont(name: "NanumSquareRoundEB", size: 40)
+        textView.textColor = .white
+        textView.backgroundColor = .clear
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.textAlignment = .center
         textView.isEditable = false
@@ -22,10 +26,23 @@ class MainViewController: UIViewController {
         return textView
     }()
 
-    let newWalletButton: UIButton = {
-        let button = UIButton(type: .system)
+    let explainText: UITextView = {
+        let textView = UITextView(frame: CGRect(x: 0, y: 0, width: 100, height: 60))
+        textView.text = "MOAH Wallet은 이더리움 및 ERC20 토큰과\ndApp을 위한 암호화폐 지갑입니다."
+        textView.font = UIFont(name: "NanumSquareRoundB", size: 14)
+        textView.backgroundColor = .clear
+        textView.textColor = .white
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.textAlignment = .center
+        textView.isEditable = false
+
+        return textView
+    }()
+
+    let newWalletButton: CustomButton = {
+        let button = CustomButton(type: .system)
         button.setTitle("새로운 지갑 만들기", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 20)
+        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 20)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.tag = 1
         button.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
@@ -33,10 +50,10 @@ class MainViewController: UIViewController {
         return button
     }()
 
-    let getWalletButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("기존 지갑 복원하기", for: .normal) 
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 20)
+    let getWalletButton: CustomButton = {
+        let button = CustomButton(type: .system)
+        button.setTitle("기존 지갑 복원하기", for: .normal)
+        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 20)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.tag = 2
         button.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
@@ -46,10 +63,10 @@ class MainViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = .white
+        self.setupBackground()
 
         view.addSubview(moahWalletText)
+        view.addSubview(explainText)
         view.addSubview(newWalletButton)
         view.addSubview(getWalletButton)
 
@@ -64,20 +81,28 @@ class MainViewController: UIViewController {
     }
 
     private func setupLayout() {
-        moahWalletText.topAnchor.constraint(equalTo: view.centerYAnchor, constant: -100).isActive = true
+        let screenHeight = screenSize.height
+        let screenWidth = screenSize.width
+
+        moahWalletText.topAnchor.constraint(equalTo: view.topAnchor, constant: screenHeight/4).isActive = true
         moahWalletText.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         moahWalletText.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         moahWalletText.heightAnchor.constraint(equalToConstant: 60).isActive = true
 
-        getWalletButton.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        getWalletButton.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        getWalletButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50).isActive = true
-        newWalletButton.heightAnchor.constraint(equalToConstant: 180).isActive = true
+        explainText.topAnchor.constraint(equalTo: moahWalletText.bottomAnchor, constant: 20).isActive = true
+        explainText.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        explainText.widthAnchor.constraint(equalToConstant: screenWidth*(0.85)).isActive = true
+        explainText.heightAnchor.constraint(equalToConstant: 60).isActive = true
 
-        newWalletButton.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        newWalletButton.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        newWalletButton.bottomAnchor.constraint(equalTo: getWalletButton.topAnchor, constant: 30).isActive = true
-        newWalletButton.heightAnchor.constraint(equalToConstant: 180).isActive = true
+        newWalletButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/20).isActive = true
+        newWalletButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/20).isActive = true
+        newWalletButton.bottomAnchor.constraint(equalTo: getWalletButton.topAnchor, constant: -30).isActive = true
+        newWalletButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+
+        getWalletButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/20).isActive = true
+        getWalletButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/20).isActive = true
+        getWalletButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50).isActive = true
+        getWalletButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
 
     @objc private func buttonPressed(_ sender: UIButton){
@@ -96,6 +121,35 @@ extension UIViewController {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
+    }
+
+    func setupBackground(){
+        let backgroundImage = UIImageView(image: UIImage(named: "background"))
+
+        view.addSubview(backgroundImage)
+        backgroundImage.translatesAutoresizingMaskIntoConstraints = false
+        backgroundImage.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        backgroundImage.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        backgroundImage.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        backgroundImage.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    }
+
+    func replaceBackButton(){
+        self.navigationItem.hidesBackButton = true
+        let button: UIButton = UIButton(type: .custom)
+        button.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+        button.setImage(UIImage(named: "backArrow"), for: .normal)
+        button.addTarget(self, action: #selector(backPressed(_:)), for: .touchUpInside)
+
+        let leftButton = UIBarButtonItem(customView: button)
+        leftButton.customView?.widthAnchor.constraint(equalToConstant: 25).isActive = true
+        leftButton.customView?.heightAnchor.constraint(equalToConstant: 25).isActive = true
+
+        self.navigationItem.leftBarButtonItem = leftButton
+    }
+
+    @objc private func backPressed(_ sender: UIButton){
+        self.navigationController?.popViewController(animated: true)
     }
 
     @objc func dismissKeyboard() {
@@ -122,7 +176,6 @@ extension UIColor {
 }
 
 extension UITextView {
-
     func centerVertically() {
         let fittingSize = CGSize(width: bounds.width, height: CGFloat.greatestFiniteMagnitude)
         let size = sizeThatFits(fittingSize)
@@ -240,6 +293,17 @@ extension MutableCollection {
             let j = index(i, offsetBy: numericCast(arc4random_uniform(numericCast(diff))))
             swapAt(i, j)
         }
+    }
+}
+
+extension String {
+    func replace(target: String, withString: String, offset: Int) -> String {
+        let indexRange = self.startIndex..<self.index(self.startIndex, offsetBy: 3*offset-2)
+        return self.replacingOccurrences(of: target, with: withString, options: NSString.CompareOptions.literal, range: indexRange)
+    }
+
+    func replace(target: String, withString: String) -> String {
+        return self.replacingOccurrences(of: target, with: withString, options: NSString.CompareOptions.literal, range: nil)
     }
 }
 

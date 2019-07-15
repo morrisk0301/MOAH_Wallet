@@ -16,17 +16,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let account: EthAccount = EthAccount.accountInstance
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        Thread.sleep(forTimeInterval: 2.0)
         self.window = UIWindow(frame: UIScreen.main.bounds)
         let mainView = MainViewController(nibName: nil, bundle: nil)
-        let mainVC = MainVC()
 
         let defaults = UserDefaults.standard
         let key = defaults.string(forKey: "salt")
         if(key != nil){
             let lockVC = LockVC()
+            self.window?.rootViewController = lockVC
             self.window?.makeKeyAndVisible()
-            self.window?.rootViewController = mainVC
-            self.window?.rootViewController?.present(lockVC, animated: false)
         }
         else{
             self.window!.rootViewController = mainView

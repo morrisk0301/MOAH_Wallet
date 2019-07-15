@@ -9,135 +9,279 @@ import CryptoSwift
 import Security
 import LocalAuthentication
 
-class PasswordVC: UIViewController, UITextFieldDelegate{
+class PasswordVC: UIViewController, UITextFieldDelegate, KeypadViewDelegate{
 
     var getWallet: Bool = false
     var useBiometrics: Bool = false
     var password: String?
+    var passwordTemp: String = ""
     var salt: String?
     var confirm = false
-    var keyboardHeight: CGFloat?
-    var keyboardShown = false
-    var showConstraint: NSLayoutConstraint?
-    var hideConstraint: NSLayoutConstraint?
 
     let autoContext = LAContext()
     let util = Util()
     let account: EthAccount = EthAccount.accountInstance
     let defaults = UserDefaults.standard
+    let screenSize = UIScreen.main.bounds
 
     let passwordText: UITextView = {
-        let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 120))
+        let textView = UITextView(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
 
+        textView.font = UIFont.boldSystemFont(ofSize: 20)
+        textView.textColor = .white
         textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.textAlignment = .left
+        textView.textAlignment = .center
         textView.isEditable = false
+        textView.backgroundColor = .clear
 
         return textView
     }()
 
-    let passwordField: UITextField = {
-        let textField = UITextField()
+    let errorText: UITextView = {
+        let textView = UITextView(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
 
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.height))
-        textField.leftView = paddingView
-        textField.leftViewMode = .always
-        textField.placeholder = "비밀번호 (최소 8자리 이상)"
-        textField.layer.borderColor = UIColor.lightGray.cgColor
-        textField.layer.borderWidth = 1.0
-        textField.returnKeyType = .done
-        textField.isSecureTextEntry = true
-        textField.translatesAutoresizingMaskIntoConstraints = false
+        textView.text = ""
+        textView.font = UIFont.boldSystemFont(ofSize: 14)
+        textView.backgroundColor = .clear
+        textView.textColor = .white
+        textView.isEditable = false
+        textView.textAlignment = .center
+        textView.translatesAutoresizingMaskIntoConstraints = false
 
-        return textField
+        return textView
     }()
 
-    let confirmButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("다음", for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 20)
-        button.addTarget(self, action: #selector(nextPressed(_:)), for: .touchUpInside)
+    let pwLine: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "pwLine"))
+        imageView.translatesAutoresizingMaskIntoConstraints = false
 
-        return button
+        return imageView
     }()
 
-    override func viewWillAppear(_ animated: Bool) {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
+    let pwLine2: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "pwLine"))
+        imageView.translatesAutoresizingMaskIntoConstraints = false
 
-    override func viewWillDisappear(_ animated: Bool) {
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
+        return imageView
+    }()
+
+    let pwLine3: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "pwLine"))
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+
+        return imageView
+    }()
+
+    let pwLine4: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "pwLine"))
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+
+        return imageView
+    }()
+
+    let pwLine5: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "pwLine"))
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+
+        return imageView
+    }()
+
+    let pwLine6: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "pwLine"))
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+
+        return imageView
+    }()
+
+    let secureKeypad: KeypadView = {
+        let view = KeypadView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+
+        return view
+    }()
+
+    let animation: CABasicAnimation = {
+        let midX = UIScreen.main.bounds.midX
+        let midY = UIScreen.main.bounds.midY
+        let animation = CABasicAnimation(keyPath: "position")
+
+        animation.duration = 0.06
+        animation.repeatCount = 4
+        animation.autoreverses = true
+        animation.fromValue = CGPoint(x: midX - 10, y: midY)
+        animation.toValue = CGPoint(x: midX + 10, y: midY)
+
+        return animation
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.hideKeyboardWhenTappedAround()
+        self.setupBackground()
+        self.replaceBackButton()
 
-
-        view.backgroundColor = .white
         view.addSubview(passwordText)
-        view.addSubview(passwordField)
-        view.addSubview(confirmButton)
+        view.addSubview(pwLine)
+        view.addSubview(pwLine2)
+        view.addSubview(pwLine3)
+        view.addSubview(pwLine4)
+        view.addSubview(pwLine5)
+        view.addSubview(pwLine6)
+        view.addSubview(errorText)
+        view.addSubview(secureKeypad)
+
+        secureKeypad.delegate = self
 
         if(!confirm){
-            let attrText = NSMutableAttributedString(string: "비밀번호 생성",
-                    attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)])
-            attrText.append(NSAttributedString(string: "\n\n비밀번호는 찾기가 불가능하므로, \n신중하게 입력해주세요.",
-                    attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18)]))
-
-            passwordText.attributedText = attrText
+            passwordText.text = "MOAH Wallet 잠금\n비밀번호 설정해주세요."
         }
         else{
-            let attrText = NSMutableAttributedString(string: "비밀번호 확인",
-                    attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)])
-            attrText.append(NSAttributedString(string: "\n\n비밀번호를 한번 더 입력해주세요.",
-                    attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18)]))
-
-            passwordText.attributedText = attrText
+            passwordText.text = "비밀번호를 한번 더 입력해주세요."
         }
-
 
         setupLayout()
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
-
-        passwordField.delegate = self
-
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        passwordField.becomeFirstResponder()
-    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
 
     private func setupLayout(){
-        passwordText.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        let screenHeight = screenSize.height
+        let screenWidth = screenSize.width
+
+        passwordText.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40).isActive = true
         passwordText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         passwordText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        passwordText.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        passwordText.heightAnchor.constraint(equalToConstant: 150).isActive = true
 
-        passwordField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -40).isActive = true
-        passwordField.leadingAnchor.constraint(equalTo:  view.leadingAnchor, constant: 20).isActive = true
-        passwordField.trailingAnchor.constraint(equalTo:  view.trailingAnchor, constant: -20).isActive = true
-        passwordField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        pwLine.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -screenHeight/10).isActive = true
+        pwLine.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/8).isActive = true
+        pwLine.widthAnchor.constraint(equalToConstant: screenWidth/12).isActive = true
+        pwLine.heightAnchor.constraint(equalToConstant: screenWidth/10).isActive = true
 
-        confirmButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        confirmButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        confirmButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        hideConstraint = confirmButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40)
-        hideConstraint!.isActive = true
+        pwLine2.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -screenHeight/10).isActive = true
+        pwLine2.leadingAnchor.constraint(equalTo: pwLine.trailingAnchor, constant: screenWidth/20).isActive = true
+        pwLine2.widthAnchor.constraint(equalToConstant: screenWidth/12).isActive = true
+        pwLine2.heightAnchor.constraint(equalToConstant: screenWidth/10).isActive = true
+
+        pwLine3.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -screenHeight/10).isActive = true
+        pwLine3.leadingAnchor.constraint(equalTo: pwLine2.trailingAnchor, constant: screenWidth/20).isActive = true
+        pwLine3.widthAnchor.constraint(equalToConstant: screenWidth/12).isActive = true
+        pwLine3.heightAnchor.constraint(equalToConstant: screenWidth/10).isActive = true
+
+        pwLine4.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -screenHeight/10).isActive = true
+        pwLine4.leadingAnchor.constraint(equalTo: pwLine3.trailingAnchor, constant: screenWidth/20).isActive = true
+        pwLine4.widthAnchor.constraint(equalToConstant: screenWidth/12).isActive = true
+        pwLine4.heightAnchor.constraint(equalToConstant: screenWidth/10).isActive = true
+
+        pwLine5.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -screenHeight/10).isActive = true
+        pwLine5.leadingAnchor.constraint(equalTo: pwLine4.trailingAnchor, constant: screenWidth/20).isActive = true
+        pwLine5.widthAnchor.constraint(equalToConstant: screenWidth/12).isActive = true
+        pwLine5.heightAnchor.constraint(equalToConstant: screenWidth/10).isActive = true
+
+        pwLine6.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -screenHeight/10).isActive = true
+        pwLine6.leadingAnchor.constraint(equalTo: pwLine5.trailingAnchor, constant: screenWidth/20).isActive = true
+        pwLine6.widthAnchor.constraint(equalToConstant: screenWidth/12).isActive = true
+        pwLine6.heightAnchor.constraint(equalToConstant: screenWidth/10).isActive = true
+
+        errorText.topAnchor.constraint(equalTo: pwLine.bottomAnchor, constant: 5).isActive = true
+        errorText.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        errorText.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        errorText.heightAnchor.constraint(equalToConstant: 50).isActive = true
+
+        secureKeypad.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -screenHeight/10).isActive = true
+        secureKeypad.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        secureKeypad.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        secureKeypad.heightAnchor.constraint(equalToConstant: screenHeight/3).isActive = true
+    }
+
+    func cellPressed(_ cellItem: String) {
+        passwordTemp.append(cellItem)
+        changeLabel(passwordTemp.count)
+
+        if(passwordTemp.count >= 6){
+            if(!confirm){
+                let passwordVC = PasswordVC()
+                passwordVC.confirm = true
+
+                if(getWallet){
+                    passwordVC.getWallet = true
+                }
+                passwordVC.password = passwordTemp
+
+                self.navigationController?.pushViewController(passwordVC, animated: true)
+            }
+            else if(confirm && password == passwordTemp){
+                account.savePassword(password!)
+                authBiometrics()
+            }
+            else if(confirm && password != passwordTemp){
+                passwordTemp = ""
+                let changeImage = UIImage(named: "pwLine")
+
+
+                self.view.layer.add(animation, forKey: "position")
+
+                errorText.text = "비밀번호가 일치하지 않습니다."
+                pwLine6.image = changeImage
+                pwLine5.image = changeImage
+                pwLine4.image = changeImage
+                pwLine3.image = changeImage
+                pwLine2.image = changeImage
+                pwLine.image = changeImage
+            }
+        }
+    }
+
+    func changeLabel(_ offset: Int){
+        let changeImage = UIImage(named: "pwLabel")
+        switch offset{
+        case 6:
+            pwLine6.image = changeImage
+        case 5:
+            pwLine5.image = changeImage
+        case 4:
+            pwLine4.image = changeImage
+        case 3:
+            pwLine3.image = changeImage
+        case 2:
+            pwLine2.image = changeImage
+        case 1:
+            pwLine.image = changeImage
+        default:
+            return
+        }
+    }
+
+    func deleteLabel(_ offset: Int){
+        let changeImage = UIImage(named: "pwLine")
+        switch offset{
+        case 1:
+            pwLine.image = changeImage
+        case 2:
+            pwLine2.image = changeImage
+        case 3:
+            pwLine3.image = changeImage
+        case 4:
+            pwLine4.image = changeImage
+        case 5:
+            pwLine5.image = changeImage
+        case 6:
+            pwLine6.image = changeImage
+        default:
+            return
+        }
+    }
+
+    func delPressed() {
+        if(passwordTemp.count > 0){
+            deleteLabel(passwordTemp.count)
+            passwordTemp.removeLast()
+        }
     }
 
     private func authBiometrics(){
@@ -185,52 +329,6 @@ class PasswordVC: UIViewController, UITextFieldDelegate{
             let appDelegate: AppDelegate = (UIApplication.shared.delegate as? AppDelegate)!
             appDelegate.window?.rootViewController = mainVC
             self.navigationController?.popToRootViewController(animated: true)
-        }
-    }
-
-    @objc private func keyboardWillShow(_ sender: Notification){
-        if let keyboardFrame = sender.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-
-            if(keyboardHeight == nil){
-                keyboardHeight = keyboardRectangle.height
-            }
-            if(!keyboardShown || keyboardHeight! < keyboardRectangle.height){
-                if(showConstraint != nil){
-                    showConstraint!.isActive = false
-                }
-                showConstraint = confirmButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -keyboardRectangle.height)
-                hideConstraint!.isActive = false
-                showConstraint!.isActive = true
-                keyboardHeight = keyboardRectangle.height
-                keyboardShown = true
-            }
-        }
-    }
-
-    @objc private func keyboardWillHide(_ sender: Notification){
-        if(keyboardShown){
-            showConstraint!.isActive = false
-            hideConstraint!.isActive = true
-            keyboardShown = false
-        }
-    }
-
-    @objc private func nextPressed(_ sender: UIButton){
-        if(!confirm){
-            let passwordVC = PasswordVC()
-            passwordVC.confirm = true
-
-            if(getWallet){
-                passwordVC.getWallet = true
-            }
-            passwordVC.password = self.passwordField.text!
-
-            self.navigationController?.pushViewController(passwordVC, animated: true)
-        }
-        if(confirm && password == self.passwordField.text!){
-            account.savePassword(password!)
-            authBiometrics()
         }
     }
 }
