@@ -8,6 +8,8 @@ import UIKit
 
 class MnemonicWarningVC: UIViewController {
 
+    var tempMnemonic: String?
+
     let mnemonicText: UITextView = {
         let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 120))
 
@@ -47,9 +49,8 @@ class MnemonicWarningVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let rightButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backPressed(_:)))
-        self.navigationItem.leftBarButtonItem = rightButton
+        self.replaceBackButton(color: "dark")
+        self.clearNavigationBar()
 
         view.backgroundColor = .white
         view.addSubview(mnemonicText)
@@ -57,8 +58,6 @@ class MnemonicWarningVC: UIViewController {
         view.addSubview(nextButton)
 
         setupLayout()
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
     }
 
     override func didReceiveMemoryWarning() {
@@ -90,6 +89,8 @@ class MnemonicWarningVC: UIViewController {
 
     @objc private func nextPressed(_ sender: UIButton) {
         let mnemonicVC = MnemonicVC()
+        mnemonicVC.tempMnemonic = self.tempMnemonic!
+
         self.navigationController?.pushViewController(mnemonicVC, animated: true)
     }
 }

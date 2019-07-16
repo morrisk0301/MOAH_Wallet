@@ -63,6 +63,7 @@ class AgreementVC: UIViewController {
         button.backgroundColor = UIColor(key: "light")
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(agreePressed(_:)), for: .touchUpInside)
+        button.isEnabled = false
 
         return button
     }()
@@ -70,6 +71,7 @@ class AgreementVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.replaceBackButton(color: "dark")
+        self.clearNavigationBar()
 
         view.backgroundColor = .white
 
@@ -80,8 +82,6 @@ class AgreementVC: UIViewController {
         view.addSubview(nextButton)
 
         setupLayout()
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
     }
 
     override func viewDidLayoutSubviews() {
@@ -132,23 +132,15 @@ class AgreementVC: UIViewController {
         if(!checked){
             checked = true
             nextButton.backgroundColor = UIColor(key: "regular")
+            nextButton.isEnabled = true
         }else{
             checked = false
             nextButton.backgroundColor = UIColor(key: "light")
+            nextButton.isEnabled = false
         }
     }
 
-    @objc private func agreementPressed(_ sender: UIButton!){
-        let agreementViewVC = AgreementViewVC()
-        let button = sender as UIButton
-
-        agreementViewVC.agreementNum = button.tag
-        self.present(agreementViewVC, animated: true)
-    }
-
-
     @objc private func agreePressed(_ sender: UIButton!){
-
         if(getWallet){
             let mnemonicVerificationGetVC = MnemonicVerificationGetVC()
             self.navigationController?.pushViewController(mnemonicVerificationGetVC, animated: true)

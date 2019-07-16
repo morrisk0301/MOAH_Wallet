@@ -114,7 +114,7 @@ class LockVC: UIViewController, KeypadViewDelegate {
 
         let useBiometrics = userDefaults.bool(forKey: "useBiometrics")
         if (useBiometrics) {
-            //bioVerification()
+            bioVerification()
         }
 
         secureKeypad.delegate = self
@@ -268,7 +268,6 @@ class LockVC: UIViewController, KeypadViewDelegate {
                     let mainVC = MainVC()
 
                     self.appDelegate.window?.rootViewController = mainVC
-                    self.view.window!.rootViewController?.dismiss(animated: true)
                 }
             }
         }

@@ -33,7 +33,7 @@ class AlertViewController: UIViewController{
         label.textColor = .black
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 20, weight: .heavy)
+        label.font = UIFont(name:"NanumSquareRoundEB", size: 20)
 
         return label
     }()
@@ -44,7 +44,7 @@ class AlertViewController: UIViewController{
         textView.textColor = UIColor(red: 130, green: 130, blue: 130)
         textView.textAlignment = .center
         textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.font = .systemFont(ofSize: 16)
+        textView.font = UIFont(name:"NanumSquareRoundB", size: 16)
 
         return textView
     }()
@@ -53,7 +53,7 @@ class AlertViewController: UIViewController{
         let button = UIButton(type: .system)
         button.setTitle("취소", for: .normal)
         button.setTitleColor(UIColor(red: 130, green: 130, blue: 130), for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 16)
+        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 16)
         button.backgroundColor = UIColor(red: 230, green: 230, blue: 230)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.tag = 0
@@ -64,8 +64,8 @@ class AlertViewController: UIViewController{
 
     let nextButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitleColor(UIColor(rgb: 0x0096D5), for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 16)
+        button.setTitleColor(UIColor(key: "regular"), for: .normal)
+        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 16)
         button.backgroundColor = UIColor(red: 230, green: 230, blue: 230)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.tag = 1
@@ -76,7 +76,7 @@ class AlertViewController: UIViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.black.withAlphaComponent(0.05)
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.3)
         view.isOpaque = false
 
         view.addSubview(alertView)

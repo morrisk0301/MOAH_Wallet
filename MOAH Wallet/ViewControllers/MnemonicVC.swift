@@ -8,6 +8,8 @@ import UIKit
 
 class MnemonicVC: UIViewController {
 
+    var tempMnemonic: String?
+
     let explainText: UITextView = {
         let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 300))
 
@@ -48,21 +50,20 @@ class MnemonicVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.clearNavigationBar()
 
         view.backgroundColor = .white
         view.addSubview(explainText)
         view.addSubview(mnemonicText)
         view.addSubview(nextButton)
 
-        let mnemonic: String = getMnemonic()!
+        let mnemonic: String = tempMnemonic!
 
         let attrText = NSMutableAttributedString(string: mnemonic,
                 attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)])
         mnemonicText.attributedText = attrText
 
         setupLayout()
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
     }
 
     override func didReceiveMemoryWarning() {
@@ -84,13 +85,6 @@ class MnemonicVC: UIViewController {
         nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         nextButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-    }
-
-    private func getMnemonic() -> String? {
-        let account: EthAccount = EthAccount.accountInstance
-        let mnemonic = account.generateMnemonic()
-
-        return mnemonic
     }
 
     @objc private func nextPressed(_ sender: UIButton) {

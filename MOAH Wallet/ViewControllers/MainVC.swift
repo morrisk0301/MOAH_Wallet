@@ -10,7 +10,8 @@ import BigInt
 
 class MainVC: UIViewController{
 
-    var signUp = false
+    var signUp = true
+    var tempMnemonic: String = "almost cross gorilla slogan visa volcano sport output region wealth good bamboo"
 
     let mainText: UITextView = {
         let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 60))
@@ -52,11 +53,13 @@ class MainVC: UIViewController{
 
     override func viewDidAppear(_ animated: Bool) {
         if(signUp){
-
             let mnemonicWarningVC = MnemonicWarningVC()
+            //mnemonicWarningVC.tempMnemonic = self.tempMnemonic!
+            mnemonicWarningVC.tempMnemonic = self.tempMnemonic
+
             let navigationController = UINavigationController(rootViewController: mnemonicWarningVC)
 
-            self.present(navigationController, animated: true)
+            self.present(navigationController, animated: false)
         }
     }
 

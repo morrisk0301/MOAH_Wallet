@@ -51,6 +51,7 @@ class MnemonicVerificationVC: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
+        self.clearNavigationBar()
 
         if(wordIndex == nil){
             wordIndex = 0
@@ -71,8 +72,6 @@ class MnemonicVerificationVC: UIViewController{
 
         self.navigationItem.hidesBackButton = true
         self.navigationItem.leftBarButtonItem = newBackButton
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
 
         mnemonicProgress.progress = Float(wordIndex!)/12
 

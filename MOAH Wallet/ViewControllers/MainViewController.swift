@@ -39,22 +39,32 @@ class MainViewController: UIViewController {
         return textView
     }()
 
-    let newWalletButton: CustomButton = {
-        let button = CustomButton(type: .system)
+    let newWalletButton: UIButton = {
+        let button = UIButton(type: .system)
         button.setTitle("새로운 지갑 만들기", for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 20)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.cornerRadius = 10
+        button.backgroundColor = .clear
+        button.layer.borderColor = UIColor.white.cgColor
+        button.layer.borderWidth = 2.0
         button.tag = 1
         button.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
 
         return button
     }()
 
-    let getWalletButton: CustomButton = {
-        let button = CustomButton(type: .system)
+    let getWalletButton: UIButton = {
+        let button = UIButton(type: .system)
         button.setTitle("기존 지갑 복원하기", for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 20)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.cornerRadius = 10
+        button.backgroundColor = .clear
+        button.layer.borderColor = UIColor.white.cgColor
+        button.layer.borderWidth = 2.0
         button.tag = 2
         button.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
 
@@ -71,9 +81,6 @@ class MainViewController: UIViewController {
         view.addSubview(getWalletButton)
 
         setupLayout()
-
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
     }
 
     override func didReceiveMemoryWarning() {
@@ -140,7 +147,7 @@ extension UIViewController {
         button.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
 
         if(color == "dark"){
-            button.setImage(UIImage(named: "backArrow"), for: .normal)    
+            button.setImage(UIImage(named: "back"), for: .normal)    
         }
         else if (color == "light"){
             button.setImage(UIImage(named: "whiteArrow"), for: .normal)
@@ -148,10 +155,15 @@ extension UIViewController {
         button.addTarget(self, action: #selector(backPressed(_:)), for: .touchUpInside)
 
         let leftButton = UIBarButtonItem(customView: button)
-        leftButton.customView?.widthAnchor.constraint(equalToConstant: 25).isActive = true
-        leftButton.customView?.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        leftButton.customView?.widthAnchor.constraint(equalToConstant: view.frame.width/35).isActive = true
+        leftButton.customView?.heightAnchor.constraint(equalToConstant: (view.frame.width/35)*1.5).isActive = true
 
         self.navigationItem.leftBarButtonItem = leftButton
+    }
+
+    func clearNavigationBar(){
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
     }
 
     @objc private func backPressed(_ sender: UIButton){

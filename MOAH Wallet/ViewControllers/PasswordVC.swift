@@ -118,6 +118,7 @@ class PasswordVC: UIViewController, UITextFieldDelegate, KeypadViewDelegate{
         super.viewDidLoad()
         self.setupBackground()
         self.replaceBackButton(color: "light")
+        self.clearNavigationBar()
 
         view.addSubview(passwordText)
         view.addSubview(pwLine)
@@ -139,8 +140,6 @@ class PasswordVC: UIViewController, UITextFieldDelegate, KeypadViewDelegate{
         }
 
         setupLayout()
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -336,12 +335,18 @@ class PasswordVC: UIViewController, UITextFieldDelegate, KeypadViewDelegate{
             }
         }
         else{
+            let mnemonic = self.account.generateMnemonic()
+
             let mainVC = MainVC()
             mainVC.signUp = true
+            mainVC.tempMnemonic = mnemonic
 
-            let appDelegate: AppDelegate = (UIApplication.shared.delegate as? AppDelegate)!
-            appDelegate.window?.rootViewController = mainVC
-            self.navigationController?.popToRootViewController(animated: true)
+            if(self.account.setAccount()){
+                let appDelegate: AppDelegate = (UIApplication.shared.delegate as? AppDelegate)!
+
+                appDelegate.window?.rootViewController = mainVC
+                self.navigationController?.popToRootViewController(animated: true)
+            }
         }
     }
 }
