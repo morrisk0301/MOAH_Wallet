@@ -15,6 +15,7 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
 
         textView.text = "비밀 시드 구문 인증"
         textView.font = UIFont(name:"NanumSquareRoundB", size: 20)
+        textView.textColor = UIColor(key: "darker")
         textView.isEditable = false
         textView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -126,20 +127,21 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
 
     private func setupLayout(){
         let screenHeight = screenSize.height
+        let screenWidth = screenSize.width
 
         mnemonicText.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        mnemonicText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        mnemonicText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        mnemonicText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/20).isActive = true
+        mnemonicText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/20).isActive = true
         mnemonicText.heightAnchor.constraint(equalToConstant: 30).isActive = true
 
         explainText.topAnchor.constraint(equalTo: mnemonicText.bottomAnchor, constant: screenHeight/40).isActive = true
-        explainText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        explainText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        explainText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/20).isActive = true
+        explainText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/20).isActive = true
         explainText.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
         mnemonicField.topAnchor.constraint(equalTo: explainText.bottomAnchor, constant: screenHeight/30).isActive = true
-        mnemonicField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        mnemonicField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        mnemonicField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/20).isActive = true
+        mnemonicField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/20).isActive = true
         mnemonicField.heightAnchor.constraint(equalToConstant: screenSize.height/4.5).isActive = true
 
         errorText.topAnchor.constraint(equalTo: mnemonicField.bottomAnchor, constant: 5).isActive = true

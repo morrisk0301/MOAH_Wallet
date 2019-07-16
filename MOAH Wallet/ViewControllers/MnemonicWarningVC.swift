@@ -10,13 +10,17 @@ class MnemonicWarningVC: UIViewController {
 
     var tempMnemonic: String?
 
+    let screenSize = UIScreen.main.bounds
+
     let mnemonicText: UITextView = {
         let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 120))
 
         let attrText = NSMutableAttributedString(string: "비밀 시드 구문",
-                attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundB", size: 20)])
+                attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundB", size: 20), 
+                             NSAttributedString.Key.foregroundColor: UIColor(key: "darker")])
         attrText.append(NSAttributedString(string: "\n\n비밀 시드 구문으로 지갑을 백업하고\n복원할 수 있습니다.",
-                attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundR", size: 18)]))
+                attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundR", size: 18),
+                             NSAttributedString.Key.foregroundColor: UIColor(key: "darker")]))
 
         textView.attributedText = attrText
         textView.translatesAutoresizingMaskIntoConstraints = false
@@ -73,14 +77,16 @@ class MnemonicWarningVC: UIViewController {
     }
 
     private func setupLayout() {
+        let screenWidth = screenSize.width
+
         mnemonicText.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        mnemonicText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        mnemonicText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        mnemonicText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/20).isActive = true
+        mnemonicText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/20).isActive = true
         mnemonicText.heightAnchor.constraint(equalToConstant: 120).isActive = true
 
         warningText.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        warningText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        warningText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        warningText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/20).isActive = true
+        warningText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/20).isActive = true
         warningText.heightAnchor.constraint(equalToConstant: 120).isActive = true
 
         nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40).isActive = true

@@ -10,8 +10,9 @@ import BigInt
 
 class MainVC: UIViewController{
 
-    var signUp = true
-    var tempMnemonic: String = "almost cross gorilla slogan visa volcano sport output region wealth good bamboo"
+    var signUp = false
+    //var tempMnemonic: String = "almost cross gorilla slogan visa volcano sport output region wealth good bamboo"
+    var tempMnemonic: String?
 
     let mainText: UITextView = {
         let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 60))

@@ -118,7 +118,6 @@ class EthAccount {
     func setAccount() -> Bool {
         _encryptMnemonic(password: _password!)
         _saveKeyStoreManager(password: _password!)
-        _nilMnemonic()
         _unlockAccount()
 
         return true
@@ -210,10 +209,6 @@ class EthAccount {
         return hash
     }
 
-    private func _nilMnemonic(){
-        _mnemonic = nil
-    }
-
     private func _unlockAccount() {
         let keyHex = KeychainService.loadPassword(service: "moahWallet", account: "password")!
         self._password = keyHex
@@ -223,5 +218,6 @@ class EthAccount {
     @objc private func _nilKeyData(_ sender: Timer){
         _password = nil
         _keyStoreManager = nil
+        _mnemonic = nil
     }
 }
