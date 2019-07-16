@@ -20,7 +20,8 @@ class CustomButton: UIButton {
 
     private func setupButton() {
         //backgroundColor = UIColor(rgb: 0x005FB2)
-        backgroundColor = UIColor(rgb: 0x0067E2)
+        //backgroundColor = UIColor(rgb: 0x078E2)
+        backgroundColor = UIColor(key: "dark")
         titleLabel?.font = UIFont.boldSystemFont(ofSize: 22)
         //layer.borderWidth = 2.0
         //layer.borderColor = UIColor.white.cgColor

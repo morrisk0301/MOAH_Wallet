@@ -17,7 +17,8 @@ class AgreementVC: UIViewController {
     let agreementText: UITextView = {
         let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 60))
         textView.text = "MOAH Wallet \n서비스 약관에 동의해주세요."
-        textView.font = UIFont.boldSystemFont(ofSize: 18)
+        textView.font = UIFont(name:"NanumSquareRoundEB", size: 18)
+        textView.textColor = UIColor(key: "darker")
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.textAlignment = .center
         textView.isEditable = false
@@ -38,6 +39,7 @@ class AgreementVC: UIViewController {
         textView.text = "MOAH Wallet 이용약관 전체 동의"
         textView.font = UIFont(name:"NanumSquareRoundB", size: 15)
         textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.textColor = UIColor(key: "darker")
         textView.textAlignment = .left
         textView.isEditable = false
 
@@ -47,17 +49,7 @@ class AgreementVC: UIViewController {
     let agreementScroll: UIScrollView = {
         let scrollView = UIScrollView()
 
-
-        /*
-        agreementView.translatesAutoresizingMaskIntoConstraints = false
-        agreementView.topAnchor.constraint(equalTo: scrollView.topAnchor)
-        agreementView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
-        agreementView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor)
-        agreementView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor)
-        */
-
-
-        scrollView.layer.borderColor = UIColor(rgb: 0x0067E2).cgColor
+        scrollView.layer.borderColor = UIColor(key: "darker").cgColor
         scrollView.layer.borderWidth = 1.0
         scrollView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -68,7 +60,7 @@ class AgreementVC: UIViewController {
         let button = CustomButton(type: .system)
         button.setTitle("다음", for: .normal)
         button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 20)
-        button.backgroundColor = UIColor(rgb: 0x9FC8FF)
+        button.backgroundColor = UIColor(key: "light")
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(agreePressed(_:)), for: .touchUpInside)
 
@@ -77,7 +69,7 @@ class AgreementVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.replaceBackButton()
+        self.replaceBackButton(color: "dark")
 
         view.backgroundColor = .white
 
@@ -97,6 +89,7 @@ class AgreementVC: UIViewController {
         agreementView.text = agreement
         agreementView.isEditable = false
         agreementView.font = UIFont(name:"NanumSquareRoundB", size: 12)
+        agreementView.textColor = UIColor(key: "darker")
 
         agreementScroll.addSubview(agreementView)
     }
@@ -138,10 +131,10 @@ class AgreementVC: UIViewController {
     @objc private func checkboxPressed(_ sender: CheckBox){
         if(!checked){
             checked = true
-            nextButton.backgroundColor = UIColor(rgb: 0x0067E2)
+            nextButton.backgroundColor = UIColor(key: "regular")
         }else{
             checked = false
-            nextButton.backgroundColor = UIColor(rgb: 0x9FC8FF)
+            nextButton.backgroundColor = UIColor(key: "light")
         }
     }
 

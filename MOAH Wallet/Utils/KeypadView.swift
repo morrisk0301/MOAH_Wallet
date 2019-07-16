@@ -84,16 +84,13 @@ class KeypadView: UIView, UICollectionViewDataSource, UICollectionViewDelegateFl
         if(indexPath.item == 11){
             let imageview = UIImageView(frame: CGRect(x: cell.contentView.center.x-15, y: cell.contentView.center.y-11, width: 30, height: 22));
             imageview.image = UIImage(named: "delete")
-            //imageview.translatesAutoresizingMaskIntoConstraints = false
-            //imageview.widthAnchor.constraint(equalToConstant: 20)
-            //imageview.heightAnchor.constraint(equalToConstant: 20)
 
             cell.contentView.addSubview(imageview)
         }
 
         cell.digitsLabel.text = numbers[indexPath.item]
+        cell.digitsLabel.font = UIFont(name:"NanumSquareRoundB", size: 18)
         cell.digitsLabel.textColor = .white
-        cell.digitsLabel.font = UIFont.systemFont(ofSize: 18)
 
         return cell
     }

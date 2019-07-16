@@ -14,7 +14,7 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
         let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 30))
 
         textView.text = "비밀 시드 구문 인증"
-        textView.font = UIFont.boldSystemFont(ofSize: 20)
+        textView.font = UIFont(name:"NanumSquareRoundEB", size: 20)
         textView.isEditable = false
         textView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -25,7 +25,8 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
         let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 50))
 
         textView.text = "복원하실 지갑의 12자리 비밀 시드 구문을 순서대로 입력해주세요."
-        textView.font = UIFont.systemFont(ofSize: 16)
+        textView.font = UIFont(name:"NanumSquareRoundB", size: 16)
+        textView.textColor = UIColor(key: "darker")
         textView.isEditable = false
         textView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -35,32 +36,65 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
     let mnemonicField: UITextView = {
         let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 200))
 
-        textView.layer.borderColor = UIColor.lightGray.cgColor
+        textView.layer.borderColor = UIColor(key: "darker").cgColor
         textView.layer.borderWidth = 1.0
-        textView.font = UIFont.boldSystemFont(ofSize: 16)
+        textView.font = UIFont(name:"NanumSquareRoundB", size: 20)
+        textView.textColor = UIColor(key: "darker")
         textView.returnKeyType = .done
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.keyboardType = .asciiCapable
+
+        return textView
+    }()
+
+    let errorText: UITextView = {
+        let textView = UITextView(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
+
+        textView.text = ""
+        textView.font = UIFont(name:"NanumSquareRoundB", size: 14)
+        textView.backgroundColor = .clear
+        textView.textColor = UIColor(key: "darker")
+        textView.isEditable = false
+        textView.textAlignment = .center
         textView.translatesAutoresizingMaskIntoConstraints = false
 
         return textView
     }()
 
-    let nextButton: UIButton = {
-        let button = UIButton(type: .system)
+    let nextButton: CustomButton = {
+        let button = CustomButton(type: .system)
         button.setTitle("다음", for: .normal)
+        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 20)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(nextPressed(_:)), for: .touchUpInside)
 
         return button
     }()
 
+    let animation: CABasicAnimation = {
+        let midX = UIScreen.main.bounds.midX
+        let midY = UIScreen.main.bounds.midY
+        let animation = CABasicAnimation(keyPath: "position")
+
+        animation.duration = 0.06
+        animation.repeatCount = 4
+        animation.autoreverses = true
+        animation.fromValue = CGPoint(x: midX - 10, y: midY)
+        animation.toValue = CGPoint(x: midX + 10, y: midY)
+
+        return animation
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.replaceBackButton(color: "dark")
         self.hideKeyboardWhenTappedAround()
 
         view.backgroundColor = .white
         view.addSubview(mnemonicText)
         view.addSubview(explainText)
         view.addSubview(mnemonicField)
+        view.addSubview(errorText)
         view.addSubview(nextButton)
 
         mnemonicField.delegate = self
@@ -71,6 +105,11 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         mnemonicField.becomeFirstResponder()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        mnemonicField.text = ""
+        errorText.text = ""
     }
 
     override func didReceiveMemoryWarning() {
@@ -86,7 +125,7 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
     }
 
     private func setupLayout(){
-        mnemonicText.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        mnemonicText.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5).isActive = true
         mnemonicText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         mnemonicText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         mnemonicText.heightAnchor.constraint(equalToConstant: 30).isActive = true
@@ -101,10 +140,15 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
         mnemonicField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         mnemonicField.heightAnchor.constraint(equalToConstant: screenSize.height/4.5).isActive = true
 
+        errorText.topAnchor.constraint(equalTo: mnemonicField.bottomAnchor, constant: 5).isActive = true
+        errorText.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        errorText.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        errorText.heightAnchor.constraint(equalToConstant: 50).isActive = true
+
         nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40).isActive = true
         nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        nextButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        nextButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
 
     @objc private func nextPressed(_ sender: UIButton){
@@ -114,6 +158,10 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
         if(account.setMnemonic(mnemonicString: mnemonicField.text!)){
             passwordVC.getWallet = true
             self.navigationController?.pushViewController(passwordVC, animated: true)
+        }
+        else{
+            self.view.layer.add(animation, forKey: "position")
+            errorText.text = "올바르지 않은 시드 구문입니다!"
         }
 
     }

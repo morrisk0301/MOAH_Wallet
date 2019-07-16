@@ -27,7 +27,7 @@ class PasswordVC: UIViewController, UITextFieldDelegate, KeypadViewDelegate{
     let passwordText: UITextView = {
         let textView = UITextView(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
 
-        textView.font = UIFont.boldSystemFont(ofSize: 20)
+        textView.font = UIFont(name:"NanumSquareRoundEB", size: 20)
         textView.textColor = .white
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.textAlignment = .center
@@ -41,7 +41,7 @@ class PasswordVC: UIViewController, UITextFieldDelegate, KeypadViewDelegate{
         let textView = UITextView(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
 
         textView.text = ""
-        textView.font = UIFont.boldSystemFont(ofSize: 14)
+        textView.font = UIFont(name:"NanumSquareRoundB", size: 14)
         textView.backgroundColor = .clear
         textView.textColor = .white
         textView.isEditable = false
@@ -117,7 +117,7 @@ class PasswordVC: UIViewController, UITextFieldDelegate, KeypadViewDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupBackground()
-        self.replaceBackButton()
+        self.replaceBackButton(color: "light")
 
         view.addSubview(passwordText)
         view.addSubview(pwLine)
@@ -143,6 +143,19 @@ class PasswordVC: UIViewController, UITextFieldDelegate, KeypadViewDelegate{
         self.navigationController?.navigationBar.shadowImage = UIImage()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        let changeImage = UIImage(named: "pwLine")
+
+        errorText.text = ""
+        passwordTemp = ""
+
+        pwLine6.image = changeImage
+        pwLine5.image = changeImage
+        pwLine4.image = changeImage
+        pwLine3.image = changeImage
+        pwLine2.image = changeImage
+        pwLine.image = changeImage
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

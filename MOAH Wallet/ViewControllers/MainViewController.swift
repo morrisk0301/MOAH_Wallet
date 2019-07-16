@@ -134,11 +134,17 @@ extension UIViewController {
         backgroundImage.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
 
-    func replaceBackButton(){
+    func replaceBackButton(color: String){
         self.navigationItem.hidesBackButton = true
         let button: UIButton = UIButton(type: .custom)
         button.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-        button.setImage(UIImage(named: "backArrow"), for: .normal)
+
+        if(color == "dark"){
+            button.setImage(UIImage(named: "backArrow"), for: .normal)    
+        }
+        else if (color == "light"){
+            button.setImage(UIImage(named: "whiteArrow"), for: .normal)
+        }
         button.addTarget(self, action: #selector(backPressed(_:)), for: .touchUpInside)
 
         let leftButton = UIBarButtonItem(customView: button)
@@ -172,6 +178,41 @@ extension UIColor {
                 green: (rgb >> 8) & 0xFF,
                 blue: rgb & 0xFF
         )
+    }
+
+    convenience init(key: String){
+        if(key == "dark"){
+            self.init(
+                    red: 0x00 & 0xFF,
+                    green: 0x67 & 0xFF,
+                    blue: 0xE2 & 0xFF
+            )
+        }
+        else if(key=="light"){
+            self.init(
+                    red: 0x9F & 0xFF,
+                    green: 0xC8 & 0xFF,
+                    blue: 0xFF & 0xFF
+            )
+        }
+        else if(key=="darker"){
+            self.init(
+                    red: 0x00 & 0xFF,
+                    green: 0x16 & 0xFF,
+                    blue: 0x34 & 0xFF
+            )
+        }
+        else{
+            self.init(
+                    red: 0 & 0xFF,
+                    green: 0x78 & 0xFF,
+                    blue: 0xE2 & 0xFF
+            )
+        }
+    }
+
+    func keyColorDark(){
+        //return 0x078E2
     }
 }
 
