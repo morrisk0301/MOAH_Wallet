@@ -27,7 +27,7 @@ class PasswordVC: UIViewController, UITextFieldDelegate, KeypadViewDelegate{
     let passwordText: UITextView = {
         let textView = UITextView(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
 
-        textView.font = UIFont(name:"NanumSquareRoundEB", size: 20)
+        textView.font = UIFont(name:"NanumSquareRoundB", size: 20)
         textView.textColor = .white
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.textAlignment = .center

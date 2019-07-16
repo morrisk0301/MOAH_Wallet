@@ -14,9 +14,9 @@ class MnemonicWarningVC: UIViewController {
         let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 120))
 
         let attrText = NSMutableAttributedString(string: "비밀 시드 구문",
-                attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)])
+                attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundB", size: 20)])
         attrText.append(NSAttributedString(string: "\n\n비밀 시드 구문으로 지갑을 백업하고\n복원할 수 있습니다.",
-                attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18)]))
+                attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundR", size: 18)]))
 
         textView.attributedText = attrText
         textView.translatesAutoresizingMaskIntoConstraints = false
@@ -28,9 +28,16 @@ class MnemonicWarningVC: UIViewController {
 
     let warningText: UITextView = {
         let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 120))
-        textView.text = "주의: 비밀 시드 구문을 절대 공개하지 마십시오. 시드 구문으로 사용자의 암호화폐를 탈취할 수 있습니다."
-        textView.font = UIFont.systemFont(ofSize: 18)
-        textView.textColor = .red
+
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 5
+
+        let attrText = NSMutableAttributedString(string: "주의: 비밀 시드 구문을 절대 공개하지 마십시오. 시드 구문으로 사용자의 암호화폐를 탈취할 수 있습니다!",
+                attributes: [NSAttributedString.Key.paragraphStyle: style,
+                             NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundEB", size: 18)!])
+
+        textView.attributedText = attrText
+        textView.textColor = UIColor(key: "dark")
         textView.isEditable = false
         textView.textAlignment = .left
         textView.translatesAutoresizingMaskIntoConstraints = false
@@ -38,9 +45,10 @@ class MnemonicWarningVC: UIViewController {
         return textView
     }()
 
-    let nextButton: UIButton = {
-        let button = UIButton(type: .system)
+    let nextButton: CustomButton = {
+        let button = CustomButton(type: .system)
         button.setTitle("다음", for: .normal)
+        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 20)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(nextPressed(_:)), for: .touchUpInside)
 
@@ -76,9 +84,9 @@ class MnemonicWarningVC: UIViewController {
         warningText.heightAnchor.constraint(equalToConstant: 120).isActive = true
 
         nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40).isActive = true
-        nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        nextButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        nextButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
 
     @objc private func backPressed(_ sender: UIBarButtonItem) {

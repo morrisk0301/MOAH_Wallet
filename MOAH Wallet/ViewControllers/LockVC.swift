@@ -21,7 +21,7 @@ class LockVC: UIViewController, KeypadViewDelegate {
         let textView = UITextView(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
 
         textView.text = "MOAH Wallet\n비밀번호를 입력해주세요"
-        textView.font = UIFont(name:"NanumSquareRoundEB", size: 20)
+        textView.font = UIFont(name:"NanumSquareRoundB", size: 20)
         textView.textColor = .white
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.textAlignment = .center

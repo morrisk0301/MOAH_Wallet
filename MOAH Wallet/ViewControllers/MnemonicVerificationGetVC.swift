@@ -14,7 +14,7 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
         let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 30))
 
         textView.text = "비밀 시드 구문 인증"
-        textView.font = UIFont(name:"NanumSquareRoundEB", size: 20)
+        textView.font = UIFont(name:"NanumSquareRoundB", size: 20)
         textView.isEditable = false
         textView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -25,7 +25,7 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
         let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 50))
 
         textView.text = "복원하실 지갑의 12자리 비밀 시드 구문을 순서대로 입력해주세요."
-        textView.font = UIFont(name:"NanumSquareRoundB", size: 16)
+        textView.font = UIFont(name:"NanumSquareRoundR", size: 16)
         textView.textColor = UIColor(key: "darker")
         textView.isEditable = false
         textView.translatesAutoresizingMaskIntoConstraints = false
@@ -125,17 +125,19 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
     }
 
     private func setupLayout(){
-        mnemonicText.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5).isActive = true
+        let screenHeight = screenSize.height
+
+        mnemonicText.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         mnemonicText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         mnemonicText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         mnemonicText.heightAnchor.constraint(equalToConstant: 30).isActive = true
 
-        explainText.topAnchor.constraint(equalTo: mnemonicText.bottomAnchor).isActive = true
+        explainText.topAnchor.constraint(equalTo: mnemonicText.bottomAnchor, constant: screenHeight/40).isActive = true
         explainText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         explainText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         explainText.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
-        mnemonicField.topAnchor.constraint(equalTo: explainText.bottomAnchor, constant: 20).isActive = true
+        mnemonicField.topAnchor.constraint(equalTo: explainText.bottomAnchor, constant: screenHeight/30).isActive = true
         mnemonicField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         mnemonicField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         mnemonicField.heightAnchor.constraint(equalToConstant: screenSize.height/4.5).isActive = true
@@ -146,8 +148,8 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
         errorText.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
         nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40).isActive = true
-        nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         nextButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
 

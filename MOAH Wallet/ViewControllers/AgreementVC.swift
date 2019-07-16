@@ -17,7 +17,7 @@ class AgreementVC: UIViewController {
     let agreementText: UITextView = {
         let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 60))
         textView.text = "MOAH Wallet \n서비스 약관에 동의해주세요."
-        textView.font = UIFont(name:"NanumSquareRoundEB", size: 18)
+        textView.font = UIFont(name:"NanumSquareRoundB", size: 18)
         textView.textColor = UIColor(key: "darker")
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.textAlignment = .center
@@ -88,7 +88,7 @@ class AgreementVC: UIViewController {
         let agreementView = UITextView(frame: CGRect(x: 10, y: 10, width: agreementScroll.frame.width*(0.95), height: agreementScroll.frame.height))
         agreementView.text = agreement
         agreementView.isEditable = false
-        agreementView.font = UIFont(name:"NanumSquareRoundB", size: 12)
+        agreementView.font = UIFont(name:"NanumSquareRoundR", size: 12)
         agreementView.textColor = UIColor(key: "darker")
 
         agreementScroll.addSubview(agreementView)

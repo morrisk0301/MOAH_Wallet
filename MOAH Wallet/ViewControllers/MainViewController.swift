@@ -43,12 +43,12 @@ class MainViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("새로운 지갑 만들기", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 20)
+        button.titleLabel?.font = UIFont(name:"NanumSquareRoundR", size: 20)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 10
         button.backgroundColor = .clear
         button.layer.borderColor = UIColor.white.cgColor
-        button.layer.borderWidth = 2.0
+        button.layer.borderWidth = 1.0
         button.tag = 1
         button.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
 
@@ -59,12 +59,12 @@ class MainViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("기존 지갑 복원하기", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 20)
+        button.titleLabel?.font = UIFont(name:"NanumSquareRoundR", size: 20)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 10
         button.backgroundColor = .clear
         button.layer.borderColor = UIColor.white.cgColor
-        button.layer.borderWidth = 2.0
+        button.layer.borderWidth = 1.0
         button.tag = 2
         button.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
 
@@ -103,7 +103,7 @@ class MainViewController: UIViewController {
 
         newWalletButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/20).isActive = true
         newWalletButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/20).isActive = true
-        newWalletButton.bottomAnchor.constraint(equalTo: getWalletButton.topAnchor, constant: -30).isActive = true
+        newWalletButton.bottomAnchor.constraint(equalTo: getWalletButton.topAnchor, constant: -20).isActive = true
         newWalletButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
         getWalletButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/20).isActive = true
@@ -202,8 +202,8 @@ extension UIColor {
         }
         else if(key=="light"){
             self.init(
-                    red: 0x9F & 0xFF,
-                    green: 0xC8 & 0xFF,
+                    red: 0x8A & 0xFF,
+                    green: 0xD1 & 0xFF,
                     blue: 0xFF & 0xFF
             )
         }
@@ -217,8 +217,8 @@ extension UIColor {
         else{
             self.init(
                     red: 0 & 0xFF,
-                    green: 0x78 & 0xFF,
-                    blue: 0xE2 & 0xFF
+                    green: 0xA2 & 0xFF,
+                    blue: 0xDD & 0xFF
             )
         }
     }
