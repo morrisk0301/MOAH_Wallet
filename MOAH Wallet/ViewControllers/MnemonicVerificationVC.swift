@@ -128,7 +128,7 @@ class MnemonicVerificationVC: UIViewController{
 
     override func viewDidLayoutSubviews() {
         let border = CALayer()
-        border.frame = CGRect(x:0, y: mnemonicField.frame.height-1, width: mnemonicField.frame.width, height: 1.5)
+        border.frame = CGRect(x:0, y: mnemonicField.frame.height-1, width: mnemonicField.frame.width, height: 1)
         border.backgroundColor = UIColor(key: "darker").cgColor
 
         mnemonicField.layer.addSublayer(border)

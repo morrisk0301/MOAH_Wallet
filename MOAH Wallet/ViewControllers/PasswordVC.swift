@@ -337,15 +337,14 @@ class PasswordVC: UIViewController, UITextFieldDelegate, KeypadViewDelegate{
         else{
             let mnemonic = self.account.generateMnemonic()
 
-            let mainVC = MainVC()
-            mainVC.signUp = true
-            mainVC.tempMnemonic = mnemonic
+            let mainContainerVC = MainContainerVC()
+            mainContainerVC.signUp = true
+            mainContainerVC.tempMnemonic = mnemonic
 
             if(self.account.setAccount()){
                 let appDelegate: AppDelegate = (UIApplication.shared.delegate as? AppDelegate)!
 
-                appDelegate.window?.rootViewController = mainVC
-                self.navigationController?.popToRootViewController(animated: true)
+                appDelegate.window?.rootViewController = mainContainerVC
             }
         }
     }

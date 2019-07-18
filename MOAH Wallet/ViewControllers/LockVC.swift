@@ -193,7 +193,8 @@ class LockVC: UIViewController, KeypadViewDelegate {
         if(password.count >= 6){
             if(account.checkPassword(password)){
                 let mainVC = MainVC()
-                self.appDelegate.window?.rootViewController = mainVC
+                let nav = UINavigationController(rootViewController: mainVC)
+                self.appDelegate.window?.rootViewController = nav
             }
             else{
                 password = ""
@@ -265,9 +266,9 @@ class LockVC: UIViewController, KeypadViewDelegate {
             DispatchQueue.main.async {
                 if (success) {
                     self.account.bioProceed()
-                    let mainVC = MainVC()
+                    let mainContainerVC = MainContainerVC()
 
-                    self.appDelegate.window?.rootViewController = mainVC
+                    self.appDelegate.window?.rootViewController = mainContainerVC
                 }
             }
         }

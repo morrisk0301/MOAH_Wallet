@@ -96,9 +96,9 @@ class MnemonicWarningVC: UIViewController {
     }
 
     @objc private func backPressed(_ sender: UIBarButtonItem) {
-        let pMainVC = self.presentingViewController as! MainVC
-        pMainVC.signUp = false
-        self.dismiss(animated: true)
+        let mainVC = self.navigationController?.viewControllers.first as! MainVC
+        mainVC.signUp = false
+        self.navigationController?.popViewController(animated: true)
     }
 
     @objc private func nextPressed(_ sender: UIButton) {

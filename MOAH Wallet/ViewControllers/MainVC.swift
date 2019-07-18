@@ -11,13 +11,16 @@ import BigInt
 class MainVC: UIViewController{
 
     var signUp = false
-    //var tempMnemonic: String = "almost cross gorilla slogan visa volcano sport output region wealth good bamboo"
+    var isExpand = false
     var tempMnemonic: String?
+    var delegate: MainControllerDelegate?
 
     let mainText: UITextView = {
         let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 60))
         textView.text = "메인화면 입니다."
-        textView.font = UIFont.boldSystemFont(ofSize: 40)
+        textView.font = UIFont(name:"NanumSquareRoundB", size: 40)
+        textView.textColor = .white
+        textView.backgroundColor = .clear
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.textAlignment = .center
         textView.isEditable = false
@@ -27,6 +30,17 @@ class MainVC: UIViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupBackground()
+        self.clearNavigationBar()
+        navigationItem.title = "MOAH Wallet"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Side", style: .plain, target: self, action: #selector(leftMenuClicked(_:)))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Side", style: .plain, target: self, action: #selector(rightMenuClicked(_:)))
+
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundEB", size: 25)!,
+                                                                        NSAttributedString.Key.foregroundColor: UIColor.white]
+
+
+        //navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_menu_white_3x").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleMenuToggle))
 
         view.backgroundColor = .white
         view.addSubview(mainText)
@@ -55,12 +69,9 @@ class MainVC: UIViewController{
     override func viewDidAppear(_ animated: Bool) {
         if(signUp){
             let mnemonicWarningVC = MnemonicWarningVC()
-            //mnemonicWarningVC.tempMnemonic = self.tempMnemonic!
-            mnemonicWarningVC.tempMnemonic = self.tempMnemonic
+            mnemonicWarningVC.tempMnemonic = self.tempMnemonic!
 
-            let navigationController = UINavigationController(rootViewController: mnemonicWarningVC)
-
-            self.present(navigationController, animated: false)
+            self.navigationController?.pushViewController(mnemonicWarningVC, animated: false)
         }
     }
 
@@ -73,6 +84,14 @@ class MainVC: UIViewController{
         mainText.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         mainText.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         mainText.heightAnchor.constraint(equalToConstant: 60).isActive = true
+    }
+
+    @objc func leftMenuClicked(_ sender: UIBarButtonItem){
+        delegate?.leftSideMenuClicked()
+    }
+
+    @objc func rightMenuClicked(_ sender: UIBarButtonItem){
+        delegate?.rightSideMenuClicked()
     }
 
 }

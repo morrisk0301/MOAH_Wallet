@@ -21,10 +21,12 @@
 		C051F2EF863672C14C79CE4D /* NanumGothic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C051F2C7AD63643BFDF3A9C6 /* NanumGothic.ttf */; };
 		C051F361ACB751354EDEFC01 /* MOAH_WalletUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FD3DE6EDBDC571CF0639 /* MOAH_WalletUITests.swift */; };
 		C051F3DACAA1AF497935493C /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FF5210FFB8564925AFD5 /* AlertViewController.swift */; };
+		C051F55881A8C22611357EA0 /* MainLeftMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F4A33524E6859AC9F0DB /* MainLeftMenuVC.swift */; };
 		C051F659E6322F019B9C26AE /* MnemonicVerificationGetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F229911C22EA45BD1C64 /* MnemonicVerificationGetVC.swift */; };
 		C051F7AED57D4EF678F17D23 /* AgreementViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FC4D96E5C42E477C575F /* AgreementViewVC.swift */; };
 		C051F7FB92BF96B4D3144680 /* AgreementVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FBCD7A1BA2D9B4758AB9 /* AgreementVC.swift */; };
 		C051F8BA98265B7A066457C3 /* MnemonicVerificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F5E412FDCE2C3CE99311 /* MnemonicVerificationVC.swift */; };
+		C051F957854FA8DC85D649B1 /* MainContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FFF0FD15853474C90D5C /* MainContainerVC.swift */; };
 		C051F9CCA4B178C2CDB531A2 /* PasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FDA70B3196EAE1C0DE6B /* PasswordVC.swift */; };
 		C051F9D4CD5F97DE4AA25F2E /* MOAH_WalletTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FDAF143D94C8A37998D7 /* MOAH_WalletTests.swift */; };
 		C051F9E9395261263D08A9B4 /* WalletDoneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F84A730A2CB809A6A0ED /* WalletDoneVC.swift */; };
@@ -40,6 +42,7 @@
 		C051FD4D235D13D355825375 /* MnemonicVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F70D92E77E238F6DDC7E /* MnemonicVC.swift */; };
 		C051FE23DC31CD80A8669C21 /* KeypadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F153A5ACA4843BFD4A8F /* KeypadView.swift */; };
 		C051FF1268E6D9BEF4B03283 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F33C240D00316B044671 /* KeychainService.swift */; };
+		C051FF461ADBF901B248A237 /* MainRightMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F5FCC7895E6E27E26041 /* MainRightMenuVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,9 +85,11 @@
 		C051F2C7AD63643BFDF3A9C6 /* NanumGothic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file.ttf; path = NanumGothic.ttf; sourceTree = "<group>"; };
 		C051F33C240D00316B044671 /* KeychainService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		C051F49F7A22AF8C42EA4D32 /* MainVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
+		C051F4A33524E6859AC9F0DB /* MainLeftMenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainLeftMenuVC.swift; sourceTree = "<group>"; };
 		C051F4A76C51AA93A6914007 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
 		C051F5C09B953DEC48AC4DAE /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		C051F5E412FDCE2C3CE99311 /* MnemonicVerificationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicVerificationVC.swift; sourceTree = "<group>"; };
+		C051F5FCC7895E6E27E26041 /* MainRightMenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainRightMenuVC.swift; sourceTree = "<group>"; };
 		C051F601F20283AD347350D8 /* EthAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthAccount.swift; sourceTree = "<group>"; };
 		C051F70D92E77E238F6DDC7E /* MnemonicVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicVC.swift; sourceTree = "<group>"; };
 		C051F7AC902DA14D067B4A7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -105,6 +110,7 @@
 		C051FE634D5A6B9DF45C940E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C051FF117AB4DADC769782D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
 		C051FF5210FFB8564925AFD5 /* AlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
+		C051FFF0FD15853474C90D5C /* MainContainerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainContainerVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +180,9 @@
 				C051F5E412FDCE2C3CE99311 /* MnemonicVerificationVC.swift */,
 				C051F84A730A2CB809A6A0ED /* WalletDoneVC.swift */,
 				C051F229911C22EA45BD1C64 /* MnemonicVerificationGetVC.swift */,
+				C051F4A33524E6859AC9F0DB /* MainLeftMenuVC.swift */,
+				C051FFF0FD15853474C90D5C /* MainContainerVC.swift */,
+				C051F5FCC7895E6E27E26041 /* MainRightMenuVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -513,6 +522,9 @@
 				C051FE23DC31CD80A8669C21 /* KeypadView.swift in Sources */,
 				C051FB3EDA8676CDCDBBDEF9 /* KeyboardShowHide.swift in Sources */,
 				C051FA4FC1BB10B033A9D7EB /* CustomButton.swift in Sources */,
+				C051F55881A8C22611357EA0 /* MainLeftMenuVC.swift in Sources */,
+				C051F957854FA8DC85D649B1 /* MainContainerVC.swift in Sources */,
+				C051FF461ADBF901B248A237 /* MainRightMenuVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
