@@ -200,6 +200,13 @@ extension UIColor {
                     blue: 0xE2 & 0xFF
             )
         }
+        else if(key=="darker"){
+            self.init(
+                    red: 0x00 & 0xFF,
+                    green: 0x16 & 0xFF,
+                    blue: 0x34 & 0xFF
+            )
+        }
         else if(key=="light"){
             self.init(
                     red: 0x8A & 0xFF,
@@ -207,11 +214,11 @@ extension UIColor {
                     blue: 0xFF & 0xFF
             )
         }
-        else if(key=="darker"){
+        else if(key=="lighter"){
             self.init(
-                    red: 0x00 & 0xFF,
-                    green: 0x16 & 0xFF,
-                    blue: 0x34 & 0xFF
+                    red: 0xF0 & 0xFF,
+                    green: 0xFC & 0xFF,
+                    blue: 0xFF & 0xFF
             )
         }
         else{
@@ -221,10 +228,6 @@ extension UIColor {
                     blue: 0xDD & 0xFF
             )
         }
-    }
-
-    func keyColorDark(){
-        //return 0x078E2
     }
 }
 

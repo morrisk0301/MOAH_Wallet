@@ -15,6 +15,8 @@ class MainVC: UIViewController{
     var tempMnemonic: String?
     var delegate: MainControllerDelegate?
 
+    let screenSize = UIScreen.main.bounds
+
     let mainText: UITextView = {
         let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 60))
         textView.text = "메인화면 입니다."
@@ -26,6 +28,15 @@ class MainVC: UIViewController{
         textView.isEditable = false
 
         return textView
+    }()
+
+    let txView: UIView = {
+        let view = UIView()
+
+        view.backgroundColor = .white
+        view.translatesAutoresizingMaskIntoConstraints = false
+
+        return view
     }()
 
     override func viewDidLoad() {
@@ -42,8 +53,11 @@ class MainVC: UIViewController{
 
         //navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_menu_white_3x").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleMenuToggle))
 
-        view.backgroundColor = .white
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(mainViewClicked))
+
         view.addSubview(mainText)
+        view.addSubview(txView)
+        view.addGestureRecognizer(tap)
 
         /*
         let account: EthAccount = EthAccount.accountInstance
@@ -80,10 +94,18 @@ class MainVC: UIViewController{
     }
 
     private func setupLayout(){
-        mainText.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        let screenHeight = screenSize.height
+        let screenWidth = screenSize.width
+
+        mainText.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: screenHeight/4).isActive = true
         mainText.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         mainText.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         mainText.heightAnchor.constraint(equalToConstant: 60).isActive = true
+
+        txView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        txView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        txView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        txView.heightAnchor.constraint(equalToConstant: screenHeight/2.5).isActive = true
     }
 
     @objc func leftMenuClicked(_ sender: UIBarButtonItem){
@@ -92,6 +114,10 @@ class MainVC: UIViewController{
 
     @objc func rightMenuClicked(_ sender: UIBarButtonItem){
         delegate?.rightSideMenuClicked()
+    }
+
+    @objc func mainViewClicked(_ sender: UITapGestureRecognizer){
+        delegate?.mainViewClicked()
     }
 
 }

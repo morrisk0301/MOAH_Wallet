@@ -22,6 +22,7 @@
 		C051F361ACB751354EDEFC01 /* MOAH_WalletUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FD3DE6EDBDC571CF0639 /* MOAH_WalletUITests.swift */; };
 		C051F3DACAA1AF497935493C /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FF5210FFB8564925AFD5 /* AlertViewController.swift */; };
 		C051F55881A8C22611357EA0 /* MainLeftMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F4A33524E6859AC9F0DB /* MainLeftMenuVC.swift */; };
+		C051F58BA970A28F5148E884 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FF8E066A1CFE267725CC /* CustomButton.swift */; };
 		C051F659E6322F019B9C26AE /* MnemonicVerificationGetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F229911C22EA45BD1C64 /* MnemonicVerificationGetVC.swift */; };
 		C051F7AED57D4EF678F17D23 /* AgreementViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FC4D96E5C42E477C575F /* AgreementViewVC.swift */; };
 		C051F7FB92BF96B4D3144680 /* AgreementVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FBCD7A1BA2D9B4758AB9 /* AgreementVC.swift */; };
@@ -30,17 +31,17 @@
 		C051F9CCA4B178C2CDB531A2 /* PasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FDA70B3196EAE1C0DE6B /* PasswordVC.swift */; };
 		C051F9D4CD5F97DE4AA25F2E /* MOAH_WalletTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FDAF143D94C8A37998D7 /* MOAH_WalletTests.swift */; };
 		C051F9E9395261263D08A9B4 /* WalletDoneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F84A730A2CB809A6A0ED /* WalletDoneVC.swift */; };
-		C051FA4FC1BB10B033A9D7EB /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F5C09B953DEC48AC4DAE /* CustomButton.swift */; };
 		C051FA62FD875D5F93EDDFD4 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F26E21CD42E0A1B5B53D /* Util.swift */; };
+		C051FB1FE29301C3EA68F93B /* KeypadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FD83FA4BAE07897C116D /* KeypadView.swift */; };
 		C051FB3EDA8676CDCDBBDEF9 /* KeyboardShowHide.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F29FBC6A1B53190053A7 /* KeyboardShowHide.swift */; };
 		C051FB49773A31D28AD3F7D8 /* EthAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F601F20283AD347350D8 /* EthAccount.swift */; };
 		C051FB5E23902398DEF96B30 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F7AC902DA14D067B4A7E /* AppDelegate.swift */; };
 		C051FC07BFCC39DD3F13BCF3 /* LockVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FCDFA9CC8D752BE3F74C /* LockVC.swift */; };
+		C051FC27C11844F1ED252D9B /* RightMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FDC89BDB5CFCD23A6131 /* RightMenuCell.swift */; };
 		C051FCAEDB55EB1E50BAADE7 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FE099084213AC811870D /* MainViewController.swift */; };
 		C051FCD29155AA7ACFBCAA4C /* MnemonicWarningVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FC01F06447338DDAAA8A /* MnemonicWarningVC.swift */; };
-		C051FD40D3FA50FA0EA05607 /* Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FDA0FC51D0F453BB6377 /* Checkbox.swift */; };
 		C051FD4D235D13D355825375 /* MnemonicVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F70D92E77E238F6DDC7E /* MnemonicVC.swift */; };
-		C051FE23DC31CD80A8669C21 /* KeypadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F153A5ACA4843BFD4A8F /* KeypadView.swift */; };
+		C051FD6077E544C0242ACD61 /* Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FCFAB6F715D632781390 /* Checkbox.swift */; };
 		C051FF1268E6D9BEF4B03283 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F33C240D00316B044671 /* KeychainService.swift */; };
 		C051FF461ADBF901B248A237 /* MainRightMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F5FCC7895E6E27E26041 /* MainRightMenuVC.swift */; };
 /* End PBXBuildFile section */
@@ -78,7 +79,6 @@
 		A5A0C08B22DCD150006F2E83 /* NanumSquareRoundR.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRoundR.ttf; sourceTree = "<group>"; };
 		A5A0C08C22DCD150006F2E83 /* NanumSquareRoundB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRoundB.ttf; sourceTree = "<group>"; };
 		A5A0C08D22DCD150006F2E83 /* NanumSquareRoundEB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRoundEB.ttf; sourceTree = "<group>"; };
-		C051F153A5ACA4843BFD4A8F /* KeypadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeypadView.swift; sourceTree = "<group>"; };
 		C051F229911C22EA45BD1C64 /* MnemonicVerificationGetVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicVerificationGetVC.swift; sourceTree = "<group>"; };
 		C051F26E21CD42E0A1B5B53D /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		C051F29FBC6A1B53190053A7 /* KeyboardShowHide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardShowHide.swift; sourceTree = "<group>"; };
@@ -87,7 +87,6 @@
 		C051F49F7A22AF8C42EA4D32 /* MainVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		C051F4A33524E6859AC9F0DB /* MainLeftMenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainLeftMenuVC.swift; sourceTree = "<group>"; };
 		C051F4A76C51AA93A6914007 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
-		C051F5C09B953DEC48AC4DAE /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		C051F5E412FDCE2C3CE99311 /* MnemonicVerificationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicVerificationVC.swift; sourceTree = "<group>"; };
 		C051F5FCC7895E6E27E26041 /* MainRightMenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainRightMenuVC.swift; sourceTree = "<group>"; };
 		C051F601F20283AD347350D8 /* EthAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthAccount.swift; sourceTree = "<group>"; };
@@ -100,16 +99,19 @@
 		C051FC01F06447338DDAAA8A /* MnemonicWarningVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicWarningVC.swift; sourceTree = "<group>"; };
 		C051FC4D96E5C42E477C575F /* AgreementViewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgreementViewVC.swift; sourceTree = "<group>"; };
 		C051FCDFA9CC8D752BE3F74C /* LockVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockVC.swift; sourceTree = "<group>"; };
+		C051FCFAB6F715D632781390 /* Checkbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checkbox.swift; sourceTree = "<group>"; };
 		C051FD3DE6EDBDC571CF0639 /* MOAH_WalletUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOAH_WalletUITests.swift; sourceTree = "<group>"; };
 		C051FD66F7A5E3DE5EF1F0B5 /* MOAH WalletUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MOAH WalletUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C051FD7C702D47C01C39269E /* MOAH WalletTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MOAH WalletTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C051FDA0FC51D0F453BB6377 /* Checkbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checkbox.swift; sourceTree = "<group>"; };
+		C051FD83FA4BAE07897C116D /* KeypadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeypadView.swift; sourceTree = "<group>"; };
 		C051FDA70B3196EAE1C0DE6B /* PasswordVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordVC.swift; sourceTree = "<group>"; };
 		C051FDAF143D94C8A37998D7 /* MOAH_WalletTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOAH_WalletTests.swift; sourceTree = "<group>"; };
+		C051FDC89BDB5CFCD23A6131 /* RightMenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightMenuCell.swift; sourceTree = "<group>"; };
 		C051FE099084213AC811870D /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		C051FE634D5A6B9DF45C940E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C051FF117AB4DADC769782D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
 		C051FF5210FFB8564925AFD5 /* AlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
+		C051FF8E066A1CFE267725CC /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		C051FFF0FD15853474C90D5C /* MainContainerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainContainerVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -166,7 +168,7 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		C051F009C85EAAC761BD385F /* ViewControllers */ = {
+		C051F009C85EAAC761BD385F /* Controller */ = {
 			isa = PBXGroup;
 			children = (
 				C051FBCD7A1BA2D9B4758AB9 /* AgreementVC.swift */,
@@ -184,7 +186,7 @@
 				C051FFF0FD15853474C90D5C /* MainContainerVC.swift */,
 				C051F5FCC7895E6E27E26041 /* MainRightMenuVC.swift */,
 			);
-			path = ViewControllers;
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		C051F10289EE90F96384604E /* MOAH Wallet */ = {
@@ -195,9 +197,10 @@
 				C051F7AC902DA14D067B4A7E /* AppDelegate.swift */,
 				A50F201522DB97FA00466E8F /* LaunchScreen.storyboard */,
 				C051FDE6CC50D5ED79E6F42C /* Main.storyboard */,
-				C051F009C85EAAC761BD385F /* ViewControllers */,
+				C051F009C85EAAC761BD385F /* Controller */,
 				C051F8EF9ECCBF70D1341548 /* Utils */,
 				C051F1543F153AB463143264 /* Resources */,
+				C051F978BFB84B4B06445E34 /* View */,
 			);
 			path = "MOAH Wallet";
 			sourceTree = "<group>";
@@ -246,16 +249,24 @@
 		C051F8EF9ECCBF70D1341548 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				C051FDA0FC51D0F453BB6377 /* Checkbox.swift */,
 				C051F33C240D00316B044671 /* KeychainService.swift */,
 				C051F601F20283AD347350D8 /* EthAccount.swift */,
 				C051F26E21CD42E0A1B5B53D /* Util.swift */,
 				C051FF5210FFB8564925AFD5 /* AlertViewController.swift */,
-				C051F153A5ACA4843BFD4A8F /* KeypadView.swift */,
 				C051F29FBC6A1B53190053A7 /* KeyboardShowHide.swift */,
-				C051F5C09B953DEC48AC4DAE /* CustomButton.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		C051F978BFB84B4B06445E34 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C051FD83FA4BAE07897C116D /* KeypadView.swift */,
+				C051FF8E066A1CFE267725CC /* CustomButton.swift */,
+				C051FCFAB6F715D632781390 /* Checkbox.swift */,
+				C051FDC89BDB5CFCD23A6131 /* RightMenuCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		C051FB6918D76ABB9BC18032 /* MOAH WalletUITests */ = {
@@ -510,7 +521,6 @@
 				C051FCD29155AA7ACFBCAA4C /* MnemonicWarningVC.swift in Sources */,
 				C051FC07BFCC39DD3F13BCF3 /* LockVC.swift in Sources */,
 				C051F9CCA4B178C2CDB531A2 /* PasswordVC.swift in Sources */,
-				C051FD40D3FA50FA0EA05607 /* Checkbox.swift in Sources */,
 				C051FF1268E6D9BEF4B03283 /* KeychainService.swift in Sources */,
 				C051FD4D235D13D355825375 /* MnemonicVC.swift in Sources */,
 				C051F8BA98265B7A066457C3 /* MnemonicVerificationVC.swift in Sources */,
@@ -519,12 +529,14 @@
 				C051F659E6322F019B9C26AE /* MnemonicVerificationGetVC.swift in Sources */,
 				C051FA62FD875D5F93EDDFD4 /* Util.swift in Sources */,
 				C051F3DACAA1AF497935493C /* AlertViewController.swift in Sources */,
-				C051FE23DC31CD80A8669C21 /* KeypadView.swift in Sources */,
 				C051FB3EDA8676CDCDBBDEF9 /* KeyboardShowHide.swift in Sources */,
-				C051FA4FC1BB10B033A9D7EB /* CustomButton.swift in Sources */,
 				C051F55881A8C22611357EA0 /* MainLeftMenuVC.swift in Sources */,
 				C051F957854FA8DC85D649B1 /* MainContainerVC.swift in Sources */,
 				C051FF461ADBF901B248A237 /* MainRightMenuVC.swift in Sources */,
+				C051FB1FE29301C3EA68F93B /* KeypadView.swift in Sources */,
+				C051F58BA970A28F5148E884 /* CustomButton.swift in Sources */,
+				C051FD6077E544C0242ACD61 /* Checkbox.swift in Sources */,
+				C051FC27C11844F1ED252D9B /* RightMenuCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

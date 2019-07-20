@@ -12,6 +12,9 @@ class MainContainerVC: UIViewController, MainControllerDelegate{
     var isExpandRight = false
     var signUp = false
     var tempMnemonic: String?
+    var mainLeftMenuVC: MainLeftMenuVC!
+    var mainRightMenuVC: MainRightMenuVC!
+    var centerController: UIViewController!
 
     let screenSize = UIScreen.main.bounds
 
@@ -22,7 +25,7 @@ class MainContainerVC: UIViewController, MainControllerDelegate{
         mainVC.signUp = self.signUp
         mainVC.tempMnemonic = self.tempMnemonic
         mainVC.delegate = self
-        let centerController = UINavigationController(rootViewController: mainVC)
+        centerController = UINavigationController(rootViewController: mainVC)
 
         view.addSubview(centerController.view)
         addChild(centerController)
@@ -38,54 +41,77 @@ class MainContainerVC: UIViewController, MainControllerDelegate{
         if shouldExpand {
             if(side == "left"){
                 UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
-                    self.view.frame.origin.x = self.view.frame.width - self.screenSize.width/5
+                    self.centerController.view.frame.origin.x = self.centerController.view.frame.width - self.screenSize.width/5
                 }, completion: nil)
             }else{
                 UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
-                    self.view.frame.origin.x = -(self.view.frame.width - self.screenSize.width/5)
+                    self.centerController.view.frame.origin.x = -(self.centerController.view.frame.width - self.screenSize.width/5)
                 }, completion: nil)
             }
 
         } else {
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
-                self.view.frame.origin.x = 0
+                self.centerController.view.frame.origin.x = 0
             }) { (_) in
 
             }
         }
-
+        /*
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
             self.setNeedsStatusBarAppearanceUpdate()
         }, completion: nil)
+        */
 
     }
 
     func leftSideMenuClicked() {
-        if(!isExpandLeft){
-            let mainLeftMenuVC = MainLeftMenuVC()
-            view.insertSubview(mainLeftMenuVC.view, at: 0)
+        if(mainLeftMenuVC == nil){
+            mainLeftMenuVC = MainLeftMenuVC()
+            if(mainRightMenuVC != nil){
+                view.insertSubview(mainLeftMenuVC.view, aboveSubview: mainRightMenuVC.view)
+            }else{
+                view.insertSubview(mainLeftMenuVC.view, at: 0)
+            }
             addChild(mainLeftMenuVC)
             mainLeftMenuVC.didMove(toParent: self)
         }
+        else if(mainRightMenuVC != nil){
+            view.insertSubview(mainLeftMenuVC.view, aboveSubview: mainRightMenuVC.view)
+        }
+
 
         isExpandLeft = !isExpandLeft
         animatePanel(shouldExpand: isExpandLeft, side: "left")
     }
 
     func rightSideMenuClicked() {
-        if(!isExpandRight){
-            let mainRightMenuVC = MainRightMenuVC()
-            view.insertSubview(mainRightMenuVC.view, at: 0)
+        if(mainRightMenuVC == nil){
+            mainRightMenuVC = MainRightMenuVC()
+            if(mainLeftMenuVC != nil){
+                view.insertSubview(mainRightMenuVC.view, aboveSubview: mainLeftMenuVC.view)
+            }else{
+                view.insertSubview(mainRightMenuVC.view, at: 0)
+            }
             addChild(mainRightMenuVC)
             mainRightMenuVC.didMove(toParent: self)
+        }
+        else if(mainLeftMenuVC != nil){
+            view.insertSubview(mainRightMenuVC.view, aboveSubview: mainLeftMenuVC.view)
         }
 
         isExpandRight = !isExpandRight
         animatePanel(shouldExpand: isExpandRight, side: "right")
+    }
+
+    func mainViewClicked() {
+        isExpandRight = false
+        isExpandLeft = false
+        animatePanel(shouldExpand: false, side: "left")
     }
 }
 
 protocol MainControllerDelegate{
     func leftSideMenuClicked()
     func rightSideMenuClicked()
+    func mainViewClicked()
 }
