@@ -12,30 +12,44 @@ class RightMenuCell: UITableViewCell {
 
         let label = UILabel()
         label.textColor = UIColor(key: "darker")
-        label.font = UIFont.systemFont(ofSize: 16)
-        label.text = "Sample text"
+        label.font = UIFont(name:"NanumSquareRound", size: 16)!
+        label.text = ""
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
     }()
 
-    // MARK: - Init
+    let arrowImage: UIImageView = {
+
+        let imageView =  UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        imageView.image = UIImage(named: "rightMenuArrow")
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+
+        return imageView
+    }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        backgroundColor = UIColor(key: "lighter")
+        backgroundColor = UIColor(key: "light3")
         selectionStyle = .none
 
-
         addSubview(descriptionLabel)
+        addSubview(arrowImage)
         descriptionLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        //descriptionLabel.leftAnchor.constraint(equalTo: iconImageView.rightAnchor, constant: 12).isActive = true
+        descriptionLabel.trailingAnchor.constraint(equalTo: arrowImage.leadingAnchor).isActive = true
+
+        arrowImage.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        arrowImage.widthAnchor.constraint(equalToConstant: frame.width/35).isActive = true
+        arrowImage.heightAnchor.constraint(equalToConstant: (frame.width/35)*1.5).isActive = true
+        arrowImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -frame.width/10).isActive = true
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    @objc func menuPressed(_ sender:UIButton){
 
+    }
 }

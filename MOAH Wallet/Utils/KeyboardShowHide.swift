@@ -92,8 +92,6 @@ class KeyboardShowHide: UIViewController, UITextFieldDelegate {
     }
 
     private func setupLayout() {
-        let screenHeight = screenSize.height
-
         passwordText.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40).isActive = true
         passwordText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         passwordText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true

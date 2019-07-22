@@ -36,8 +36,7 @@ class MainContainerVC: UIViewController, MainControllerDelegate{
         super.didReceiveMemoryWarning()
     }
 
-    private func animatePanel(shouldExpand: Bool, side: String) {
-
+    private func animatePanel(shouldExpand: Bool, side: String, menuOption: Any?) {
         if shouldExpand {
             if(side == "left"){
                 UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
@@ -53,14 +52,46 @@ class MainContainerVC: UIViewController, MainControllerDelegate{
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
                 self.centerController.view.frame.origin.x = 0
             }) { (_) in
+                if(side == "left"){
 
+                }else{
+                    guard let menuOption = menuOption as? RightMenuOption else { return }
+                    self.didSelectRightMenuOption(menuOption: menuOption)
+                }
             }
         }
-        /*
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
-            self.setNeedsStatusBarAppearanceUpdate()
-        }, completion: nil)
-        */
+    }
+
+    func didSelectRightMenuOption(menuOption: RightMenuOption) {
+        var controller: UIViewController!
+
+        switch menuOption {
+        case .WalletNetwork:
+            print("Show profile")
+        case .WalletMnemonic:
+            print("Show Inbox")
+        case .WalletPassword:
+            print("Show Notifications")
+        case .CSAnnouncement:
+            /*
+            let controller = SettingsController()
+            controller.username = "Batman"
+            present(UINavigationController(rootViewController: controller), animated: true, completion: nil)
+            */
+            print("Show Notifications")
+        case .CSFAQ:
+            print("Show Notifications")
+        case .CSAgreement:
+            print("Show Notifications")
+        case .CSEmail:
+            print("Show Notifications")
+        default:
+            print("default")
+        }
+
+    }
+
+    func didSelectLeftMenuOption(menuOption: RightMenuOption) {
 
     }
 
@@ -81,12 +112,13 @@ class MainContainerVC: UIViewController, MainControllerDelegate{
 
 
         isExpandLeft = !isExpandLeft
-        animatePanel(shouldExpand: isExpandLeft, side: "left")
+        animatePanel(shouldExpand: isExpandLeft, side: "left", menuOption: nil)
     }
 
-    func rightSideMenuClicked() {
+    func rightSideMenuClicked(forMenuOption menuOption: RightMenuOption?) {
         if(mainRightMenuVC == nil){
             mainRightMenuVC = MainRightMenuVC()
+            mainRightMenuVC.delegte = self
             if(mainLeftMenuVC != nil){
                 view.insertSubview(mainRightMenuVC.view, aboveSubview: mainLeftMenuVC.view)
             }else{
@@ -100,18 +132,12 @@ class MainContainerVC: UIViewController, MainControllerDelegate{
         }
 
         isExpandRight = !isExpandRight
-        animatePanel(shouldExpand: isExpandRight, side: "right")
+        animatePanel(shouldExpand: isExpandRight, side: "right", menuOption: menuOption)
     }
 
     func mainViewClicked() {
         isExpandRight = false
         isExpandLeft = false
-        animatePanel(shouldExpand: false, side: "left")
+        animatePanel(shouldExpand: false, side: "left", menuOption: nil)
     }
-}
-
-protocol MainControllerDelegate{
-    func leftSideMenuClicked()
-    func rightSideMenuClicked()
-    func mainViewClicked()
 }

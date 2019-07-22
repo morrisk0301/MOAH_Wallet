@@ -7,11 +7,6 @@ import Foundation
 import UIKit
 import AudioToolbox
 
-protocol KeypadViewDelegate {
-    func cellPressed(_ cellItem: String)
-    func delPressed()
-}
-
 class KeyCell: UICollectionViewCell {
 
     let digitsLabel = UILabel()

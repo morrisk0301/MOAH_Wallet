@@ -17,17 +17,16 @@ class MainVC: UIViewController{
 
     let screenSize = UIScreen.main.bounds
 
-    let mainText: UITextView = {
-        let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 60))
-        textView.text = "메인화면 입니다."
-        textView.font = UIFont(name:"NanumSquareRoundB", size: 40)
-        textView.textColor = .white
-        textView.backgroundColor = .clear
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.textAlignment = .center
-        textView.isEditable = false
+    let mainText: UILabel = {
+        let label = UILabel()
+        label.text = "메인화면 입니다."
+        label.font = UIFont(name:"NanumSquareRoundB", size: 40)
+        label.textColor = .white
+        label.backgroundColor = .clear
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
 
-        return textView
+        return label
     }()
 
     let txView: UIView = {
@@ -113,7 +112,7 @@ class MainVC: UIViewController{
     }
 
     @objc func rightMenuClicked(_ sender: UIBarButtonItem){
-        delegate?.rightSideMenuClicked()
+        delegate?.rightSideMenuClicked(forMenuOption: nil)
     }
 
     @objc func mainViewClicked(_ sender: UITapGestureRecognizer){

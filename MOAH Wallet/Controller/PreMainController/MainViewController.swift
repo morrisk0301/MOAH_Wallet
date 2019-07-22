@@ -214,11 +214,25 @@ extension UIColor {
                     blue: 0xFF & 0xFF
             )
         }
-        else if(key=="lighter"){
+        else if(key=="light2"){
+            self.init(
+                    red: 0xD0 & 0xFF,
+                    green: 0xDC & 0xFF,
+                    blue: 0xFF & 0xFF
+            )
+        }
+        else if(key=="light3"){
             self.init(
                     red: 0xF0 & 0xFF,
                     green: 0xFC & 0xFF,
                     blue: 0xFF & 0xFF
+            )
+        }
+        else if(key=="grey"){
+            self.init(
+                    red: 0xBB & 0xFF,
+                    green: 0xBB & 0xFF,
+                    blue: 0xBB & 0xFF
             )
         }
         else{

@@ -6,7 +6,7 @@
 import Foundation
 import UIKit
 
-class AlertViewController: UIViewController{
+class AlertVC: UIViewController{
     let screenSize = UIScreen.main.bounds
 
     var alertTitle: String?

@@ -13,8 +13,8 @@ class Util {
         return String((0..<length).map{ _ in letters.randomElement()! })
     }
 
-    func alert(title: String, body: String, buttonTitle: String, completion: @escaping (Bool) -> Void) -> AlertViewController {
-        let alertViewController = AlertViewController()
+    func alert(title: String, body: String, buttonTitle: String, completion: @escaping (Bool) -> Void) -> AlertVC {
+        let alertViewController = AlertVC()
 
         alertViewController.modalPresentationStyle = .overCurrentContext
         alertViewController.alertTitle = title

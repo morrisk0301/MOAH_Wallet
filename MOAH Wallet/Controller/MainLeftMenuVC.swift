@@ -25,7 +25,7 @@ class MainLeftMenuVC: UIViewController {
         //tableView.dataSource = self
 
         //tableView.register(<#T##cellClass: AnyClass?##Swift.AnyClass?#>, forCellReuseIdentifier: <#T##String##Swift.String#>)
-        view.backgroundColor = UIColor(key: "lighter")
+        view.backgroundColor = UIColor(key: "light3")
         tableView.separatorStyle = .none
         tableView.rowHeight = 80
 
