@@ -69,33 +69,33 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
     }
 
     func didSelectRightMenuOption(menuOption: RightMenuOption) {
-        var controller: UIViewController!
         let transition = LeftTransition()
-
 
         switch menuOption {
         case .WalletNetwork:
-            controller = NetworkSettingVC()
+            let controller = NetworkSettingVC()
             view.window!.layer.add(transition, forKey: kCATransition)
             present(UINavigationController(rootViewController: controller), animated: false, completion: nil)
         case .WalletMnemonic:
-            controller = MnemonicSettingVC()
+            let controller = PasswordCheckVC()
+            controller.toView = "mnemonic"
             view.window!.layer.add(transition, forKey: kCATransition)
             present(UINavigationController(rootViewController: controller), animated: false, completion: nil)
         case .WalletPassword:
-            controller = PasswordSettingVC()
+            let controller = PasswordCheckVC()
+            controller.toView = "password"
             view.window!.layer.add(transition, forKey: kCATransition)
             present(UINavigationController(rootViewController: controller), animated: false, completion: nil)
         case .CSAnnouncement:
-            controller = AnnouncementVC()
+            let controller = AnnouncementVC()
             view.window!.layer.add(transition, forKey: kCATransition)
             present(UINavigationController(rootViewController: controller), animated: false, completion: nil)
         case .CSFAQ:
-            controller = FAQVC()
+            let controller = FAQVC()
             view.window!.layer.add(transition, forKey: kCATransition)
             present(UINavigationController(rootViewController: controller), animated: false, completion: nil)
         case .CSAgreement:
-            controller = AgreementCheckVC()
+            let controller = AgreementCheckVC()
             view.window!.layer.add(transition, forKey: kCATransition)
             present(UINavigationController(rootViewController: controller), animated: false, completion: nil)
         case .CSEmail:

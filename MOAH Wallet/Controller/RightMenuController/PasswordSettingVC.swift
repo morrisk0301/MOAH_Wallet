@@ -7,21 +7,16 @@ import Foundation
 import UIKit
 
 class PasswordSettingVC: UIViewController {
-    let lock: LockView = {
-        let lockView = LockView()
-        lockView.translatesAutoresizingMaskIntoConstraints = false
-
-        return lockView
-    }()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.replaceBackButton(color: "dark")
         self.setNavigationTitle(title: "비밀번호 및 인증 관리")
         self.clearNavigationBar()
 
-        view.backgroundColor = .white
-        view.addSubview(lock)
+        self.navigationItem.leftBarButtonItem?.target = self
+        self.navigationItem.leftBarButtonItem?.action = #selector(backPressed(_:))
 
+        view.backgroundColor = UIColor(key: "light3")
         setupLayout()
     }
 
@@ -30,10 +25,6 @@ class PasswordSettingVC: UIViewController {
     }
 
     private func setupLayout(){
-        lock.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        lock.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        lock.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        lock.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
 
     }
 

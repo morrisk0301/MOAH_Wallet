@@ -94,17 +94,10 @@ class KeypadView: UIView, UICollectionViewDataSource, UICollectionViewDelegateFl
         let cell = collectionView.cellForItem(at: indexPath)
         AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
 
-        UIView.animate(withDuration: 0.2,
-                animations: {
-                    //Fade-out
-                    cell?.alpha = 0.5
-                }) { (completed) in
-            UIView.animate(withDuration: 0.2,
-                    animations: {
-                        //Fade-In
-                        cell?.alpha = 1
-                    })
+        UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions.allowUserInteraction, animations: {cell?.alpha = 0.5}) { (completed) in
+            UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions.allowUserInteraction, animations: {cell?.alpha = 1})
         }
+
         if(indexPath.item < numbers.count-1 && indexPath.item != 9 ){
             delegate?.cellPressed(numbers[indexPath.item])
         }

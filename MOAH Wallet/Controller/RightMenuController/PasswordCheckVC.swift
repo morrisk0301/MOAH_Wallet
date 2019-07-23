@@ -1,5 +1,5 @@
 //
-// Created by 김경인 on 2019-07-06.
+// Created by 김경인 on 2019-07-22.
 // Copyright (c) 2019 Sejong University Alom. All rights reserved.
 //
 
@@ -7,7 +7,7 @@ import Foundation
 import UIKit
 import LocalAuthentication
 
-class LockVC: UIViewController, KeypadViewDelegate {
+class PasswordCheckVC: UIViewController, KeypadViewDelegate {
 
     var toView: String!
     var password:String = ""
@@ -56,8 +56,14 @@ class LockVC: UIViewController, KeypadViewDelegate {
 
         if(password.count >= 6){
             if(account.checkPassword(password)){
-                let mainContainerVC = MainContainerVC()
-                self.appDelegate.window?.rootViewController = mainContainerVC
+                if(self.toView == "mnemonic"){
+                    let controller = MnemonicSettingVC()
+                    self.navigationController?.pushViewController(controller, animated: true)
+                }
+                else if(self.toView == "password"){
+                    let controller = PasswordSettingVC()
+                    self.navigationController?.pushViewController(controller, animated: true)
+                }
             }
             else{
                 password = ""
@@ -87,11 +93,22 @@ class LockVC: UIViewController, KeypadViewDelegate {
         autoContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "MOAH Wallet 생채 인식") { (success, error) in
             DispatchQueue.main.async {
                 if (success) {
-                    self.account.bioProceed()
-                    let mainContainerVC = MainContainerVC()
-                    self.appDelegate.window?.rootViewController = mainContainerVC
+                    if(self.toView == "mnemonic"){
+                        let controller = MnemonicSettingVC()
+                        self.navigationController?.pushViewController(controller, animated: true)
+                    }
+                    else if(self.toView == "password"){
+                        let controller = PasswordSettingVC()
+                        self.navigationController?.pushViewController(controller, animated: true)
+                    }
                 }
             }
         }
+    }
+
+    @objc func backPressed(_ sender: UIButton){
+        let transition = RightTransition()
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.dismiss(animated: false)
     }
 }

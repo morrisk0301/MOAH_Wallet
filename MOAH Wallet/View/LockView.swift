@@ -6,34 +6,38 @@
 import Foundation
 import UIKit
 
-class LockView: UIView, KeypadViewDelegate {
+class LockView: UIView {
 
-    let passwordText: UITextView = {
-        let textView = UITextView(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
+    let screenSize = UIScreen.main.bounds
+    var password:String = ""
 
-        textView.text = "MOAH Wallet\n비밀번호를 입력해주세요"
-        textView.font = UIFont(name:"NanumSquareRoundB", size: 20)
-        textView.textColor = .white
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.textAlignment = .center
-        textView.isEditable = false
-        textView.backgroundColor = .clear
+    let passwordLabel: UILabel = {
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
 
-        return textView
+        label.text = "MOAH Wallet\n비밀번호를 입력해주세요"
+        label.font = UIFont(name:"NanumSquareRoundB", size: 20)
+        label.textColor = .white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        label.backgroundColor = .clear
+        label.numberOfLines = 0
+
+        return label
     }()
 
-    let errorText: UITextView = {
-        let textView = UITextView(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
+    let errorLabel: UILabel = {
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
 
-        textView.text = ""
-        textView.font = UIFont(name:"NanumSquareRoundB", size: 14)
-        textView.backgroundColor = .clear
-        textView.textColor = .white
-        textView.isEditable = false
-        textView.textAlignment = .center
-        textView.translatesAutoresizingMaskIntoConstraints = false
+        label.text = ""
+        label.font = UIFont(name:"NanumSquareRoundB", size: 14)
+        label.backgroundColor = .clear
+        label.textColor = .white
+        label.textAlignment = .center
+        label.numberOfLines = 0
 
-        return textView
+        label.translatesAutoresizingMaskIntoConstraints = false
+
+        return label
     }()
 
     let pwLine: UIImageView = {
@@ -102,17 +106,17 @@ class LockView: UIView, KeypadViewDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        addSubview(passwordText)
+        setupBackground()
+
+        addSubview(passwordLabel)
         addSubview(pwLine)
         addSubview(pwLine2)
         addSubview(pwLine3)
         addSubview(pwLine4)
         addSubview(pwLine5)
         addSubview(pwLine6)
-        addSubview(errorText)
+        addSubview(errorLabel)
         addSubview(secureKeypad)
-
-        secureKeypad.delegate = self
 
         setupLayout()
     }
@@ -121,14 +125,25 @@ class LockView: UIView, KeypadViewDelegate {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func setupLayout(){
-        let screenHeight = frame.height
-        let screenWidth = frame.width
+    func setupBackground(){
+        let backgroundImage = UIImageView(image: UIImage(named: "background"))
 
-        passwordText.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 40).isActive = true
-        passwordText.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
-        passwordText.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = true
-        passwordText.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        addSubview(backgroundImage)
+        backgroundImage.translatesAutoresizingMaskIntoConstraints = false
+        backgroundImage.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        backgroundImage.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        backgroundImage.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        backgroundImage.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+    }
+
+    func setupLayout(){
+        let screenHeight = screenSize.height
+        let screenWidth = screenSize.width
+
+        passwordLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 40).isActive = true
+        passwordLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
+        passwordLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = true
+        passwordLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
         pwLine.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -screenHeight/10).isActive = true
         pwLine.leadingAnchor.constraint(equalTo: leadingAnchor, constant: screenWidth/8).isActive = true
@@ -160,97 +175,15 @@ class LockView: UIView, KeypadViewDelegate {
         pwLine6.widthAnchor.constraint(equalToConstant: screenWidth/12).isActive = true
         pwLine6.heightAnchor.constraint(equalToConstant: screenWidth/10).isActive = true
 
-        errorText.topAnchor.constraint(equalTo: pwLine.bottomAnchor, constant: 5).isActive = true
-        errorText.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        errorText.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        errorText.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        errorLabel.topAnchor.constraint(equalTo: pwLine.bottomAnchor, constant: 5).isActive = true
+        errorLabel.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        errorLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        errorLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
         secureKeypad.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -screenHeight/15).isActive = true
         secureKeypad.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         secureKeypad.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         secureKeypad.heightAnchor.constraint(equalToConstant: screenHeight/3).isActive = true
-    }
-
-    func cellPressed(_ cellItem: String) {
-
-    }
-
-    func delPressed() {
-
-    }
-}
-/*
-//
-// Created by 김경인 on 2019-07-06.
-// Copyright (c) 2019 Sejong University Alom. All rights reserved.
-//
-
-import Foundation
-import UIKit
-import LocalAuthentication
-
-class LockVC: UIViewController, KeypadViewDelegate {
-
-    var password:String = ""
-
-    let screenSize = UIScreen.main.bounds
-
-    let userDefaults = UserDefaults.standard
-    let account: EthAccount = EthAccount.accountInstance
-    let appDelegate: AppDelegate = (UIApplication.shared.delegate as? AppDelegate)!
-
-
-
-
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.setupBackground()
-
-        let useBiometrics = userDefaults.bool(forKey: "useBiometrics")
-        if (useBiometrics) {
-            bioVerification()
-        }
-
-
-
-
-
-        setupLayout()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-
-    private func setupLayout() {
-
-    }
-
-    func cellPressed(_ cellItem: String) {
-        password.append(cellItem)
-        changeLabel(password.count)
-
-        if(password.count >= 6){
-            if(account.checkPassword(password)){
-                let mainContainerVC = MainContainerVC()
-                self.appDelegate.window?.rootViewController = mainContainerVC
-            }
-            else{
-                password = ""
-                let changeImage = UIImage(named: "pwLine")
-                self.view.layer.add(animation, forKey: "position")
-
-                errorText.text = "비밀번호가 일치하지 않습니다.\n5회 오류시 지갑이 초기화됩니다."
-                pwLine6.image = changeImage
-                pwLine5.image = changeImage
-                pwLine4.image = changeImage
-                pwLine3.image = changeImage
-                pwLine2.image = changeImage
-                pwLine.image = changeImage
-            }
-        }
-
     }
 
     func changeLabel(_ offset: Int){
@@ -292,25 +225,4 @@ class LockVC: UIViewController, KeypadViewDelegate {
             return
         }
     }
-
-    func delPressed() {
-        if(password.count > 0){
-            deleteLabel(password.count)
-            password.removeLast()
-        }
-    }
-
-    private func bioVerification() {
-        let autoContext = LAContext()
-        autoContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "MOAH Wallet 생채 인식") { (success, error) in
-            DispatchQueue.main.async {
-                if (success) {
-                    self.account.bioProceed()
-                    let mainContainerVC = MainContainerVC()
-                    self.appDelegate.window?.rootViewController = mainContainerVC
-                }
-            }
-        }
-    }
 }
-*/
