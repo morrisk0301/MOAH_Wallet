@@ -13,7 +13,10 @@ class AgreementCheckVC: UIViewController {
         self.setNavigationTitle(title: "약관 및 정책")
         self.clearNavigationBar()
 
-        view.backgroundColor = .white
+        self.navigationItem.leftBarButtonItem?.target = self
+        self.navigationItem.leftBarButtonItem?.action = #selector(backPressed(_:))
+
+        view.backgroundColor = UIColor(key: "light3")
         setupLayout()
     }
 

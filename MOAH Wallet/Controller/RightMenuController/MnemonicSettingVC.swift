@@ -13,7 +13,10 @@ class MnemonicSettingVC: UIViewController {
         self.setNavigationTitle(title: "시드 구문 관리")
         self.clearNavigationBar()
 
-        view.backgroundColor = .white
+        self.navigationItem.leftBarButtonItem?.target = self
+        self.navigationItem.leftBarButtonItem?.action = #selector(backPressed(_:))
+
+        view.backgroundColor = UIColor(key: "light3")
         setupLayout()
     }
 

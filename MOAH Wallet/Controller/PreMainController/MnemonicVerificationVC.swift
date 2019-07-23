@@ -112,6 +112,9 @@ class MnemonicVerificationVC: UIViewController{
         self.clearNavigationBar()
         self.replaceBackButton(color: "dark")
 
+        self.navigationItem.leftBarButtonItem?.target = self
+        self.navigationItem.leftBarButtonItem?.action = #selector(backPressed(_:))
+
         if(wordIndex == nil){
             wordIndex = 0
         }

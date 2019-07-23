@@ -44,6 +44,9 @@ class WalletDoneVC: UIViewController{
         self.replaceBackButton(color: "light")
         self.setupBackground()
 
+        self.navigationItem.leftBarButtonItem?.target = self
+        self.navigationItem.leftBarButtonItem?.action = #selector(backPressed(_:))
+
         let style = NSMutableParagraphStyle()
         style.alignment = NSTextAlignment.center
 

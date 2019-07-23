@@ -56,6 +56,10 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
     }
 
     func proceedToView(side: String, menuOption: Any?){
+        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
+            self.centerController.view.frame.origin.x = 0
+        }, completion: nil)
+
         if(side == "left"){
 
         }else{
@@ -67,6 +71,7 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
     func didSelectRightMenuOption(menuOption: RightMenuOption) {
         var controller: UIViewController!
         let transition = LeftTransition()
+
 
         switch menuOption {
         case .WalletNetwork:
@@ -119,7 +124,6 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
             view.insertSubview(mainLeftMenuVC.view, aboveSubview: mainRightMenuVC.view)
         }
 
-
         isExpandLeft = !isExpandLeft
         animatePanel(shouldExpand: isExpandLeft, side: "left", menuOption: nil)
     }
@@ -145,6 +149,8 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
             animatePanel(shouldExpand: isExpandRight, side: nil, menuOption: menuOption)
         }
         else{
+            //let networkSettingVC = NetworkSettingVC()
+            //self.present(UINavigationController(rootViewController: networkSettingVC), animated: true)
             proceedToView(side: "", menuOption: menuOption)
         }
     }

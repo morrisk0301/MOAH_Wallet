@@ -72,6 +72,9 @@ class AgreementVC: UIViewController {
         self.replaceBackButton(color: "dark")
         self.clearNavigationBar()
 
+        self.navigationItem.leftBarButtonItem?.target = self
+        self.navigationItem.leftBarButtonItem?.action = #selector(backPressed(_:))
+
         view.backgroundColor = UIColor(key: "light3")
 
         view.addSubview(agreementLabel)
