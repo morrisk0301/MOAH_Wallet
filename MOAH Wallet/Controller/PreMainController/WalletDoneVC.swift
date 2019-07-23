@@ -13,13 +13,14 @@ class WalletDoneVC: UIViewController{
     let screenSize = UIScreen.main.bounds
     let appDelegate: AppDelegate = (UIApplication.shared.delegate as? AppDelegate)!
 
-    let doneText: UITextView = {
-        let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 150))
-        textView.backgroundColor = .clear
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.isEditable = false
+    let doneLabel: UILabel = {
+        let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 150))
 
-        return textView
+        label.backgroundColor = .clear
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+
+        return label
     }()
 
     let backButton: UIButton = {
@@ -55,7 +56,7 @@ class WalletDoneVC: UIViewController{
                     attributes: [NSAttributedString.Key.paragraphStyle: style,
                                  NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundR", size: 16)!, 
                                  NSAttributedString.Key.foregroundColor: UIColor.white]))
-            doneText.attributedText = attrText
+            doneLabel.attributedText = attrText
         }
         else{
             let attrText = NSMutableAttributedString(string: "지갑 생성이 완료되었습니다!",
@@ -66,13 +67,13 @@ class WalletDoneVC: UIViewController{
                     attributes: [NSAttributedString.Key.paragraphStyle: style,
                                  NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundR", size: 16)!,
                                  NSAttributedString.Key.foregroundColor: UIColor.white]))
-            doneText.attributedText = attrText
+            doneLabel.attributedText = attrText
         }
 
 
         view.backgroundColor = .white
         view.addSubview(backButton)
-        view.addSubview(doneText)
+        view.addSubview(doneLabel)
 
         setupLayout()
     }
@@ -84,10 +85,10 @@ class WalletDoneVC: UIViewController{
     private func setupLayout(){
         let screenWidth = screenSize.width
 
-        doneText.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        doneText.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        doneText.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        doneText.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        doneLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        doneLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        doneLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        doneLabel.heightAnchor.constraint(equalToConstant: 200).isActive = true
 
         backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/20).isActive = true
         backButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/20).isActive = true

@@ -12,26 +12,34 @@ class MnemonicWarningVC: UIViewController {
 
     let screenSize = UIScreen.main.bounds
 
-    let mnemonicText: UITextView = {
-        let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 120))
+    let headLabel: UILabel = {
+        let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 120))
 
-        let attrText = NSMutableAttributedString(string: "비밀 시드 구문",
-                attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundB", size: 20), 
-                             NSAttributedString.Key.foregroundColor: UIColor(key: "darker")])
-        attrText.append(NSAttributedString(string: "\n\n비밀 시드 구문으로 지갑을 백업하고\n복원할 수 있습니다.",
-                attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundR", size: 18),
-                             NSAttributedString.Key.foregroundColor: UIColor(key: "darker")]))
+        label.text = "비밀 시드 구문"
+        label.font = UIFont(name: "NanumSquareRoundB", size: 20)
+        label.textColor = UIColor(key: "darker")
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+        label.numberOfLines = 0
 
-        textView.attributedText = attrText
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.textAlignment = .left
-        textView.isEditable = false
-
-        return textView
+        return label
     }()
 
-    let warningText: UITextView = {
-        let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 120))
+    let mnemonicLabel: UILabel = {
+        let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 120))
+
+        label.text = "비밀 시드 구문으로 지갑을 백업하고\n복원할 수 있습니다."
+        label.font = UIFont(name: "NanumSquareRoundR", size: 18)
+        label.textColor = UIColor(key: "darker")
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+        label.numberOfLines = 0
+
+        return label
+    }()
+
+    let warningLabel: UILabel = {
+        let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 120))
 
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 5
@@ -40,13 +48,13 @@ class MnemonicWarningVC: UIViewController {
                 attributes: [NSAttributedString.Key.paragraphStyle: style,
                              NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundEB", size: 18)!])
 
-        textView.attributedText = attrText
-        textView.textColor = UIColor(key: "dark")
-        textView.isEditable = false
-        textView.textAlignment = .left
-        textView.translatesAutoresizingMaskIntoConstraints = false
+        label.attributedText = attrText
+        label.textColor = UIColor(key: "dark")
+        label.numberOfLines = 0
+        label.textAlignment = .left
+        label.translatesAutoresizingMaskIntoConstraints = false
 
-        return textView
+        return label
     }()
 
     let nextButton: CustomButton = {
@@ -64,9 +72,10 @@ class MnemonicWarningVC: UIViewController {
         self.replaceBackButton(color: "dark")
         self.clearNavigationBar()
 
-        view.backgroundColor = .white
-        view.addSubview(mnemonicText)
-        view.addSubview(warningText)
+        view.backgroundColor = UIColor(key: "light3")
+        view.addSubview(headLabel)
+        view.addSubview(mnemonicLabel)
+        view.addSubview(warningLabel)
         view.addSubview(nextButton)
 
         setupLayout()
@@ -79,15 +88,20 @@ class MnemonicWarningVC: UIViewController {
     private func setupLayout() {
         let screenWidth = screenSize.width
 
-        mnemonicText.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        mnemonicText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/20).isActive = true
-        mnemonicText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/20).isActive = true
-        mnemonicText.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        headLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5).isActive = true
+        headLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/15).isActive = true
+        headLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/15).isActive = true
+        headLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
-        warningText.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        warningText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/20).isActive = true
-        warningText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/20).isActive = true
-        warningText.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        mnemonicLabel.topAnchor.constraint(equalTo: headLabel.bottomAnchor).isActive = true
+        mnemonicLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/15).isActive = true
+        mnemonicLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/15).isActive = true
+        mnemonicLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+
+        warningLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        warningLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/15).isActive = true
+        warningLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/15).isActive = true
+        warningLabel.heightAnchor.constraint(equalToConstant: 120).isActive = true
 
         nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40).isActive = true
         nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true

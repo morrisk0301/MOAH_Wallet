@@ -24,31 +24,30 @@ class PasswordVC: UIViewController, UITextFieldDelegate, KeypadViewDelegate{
     let defaults = UserDefaults.standard
     let screenSize = UIScreen.main.bounds
 
-    let passwordText: UITextView = {
-        let textView = UITextView(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
+    let passwordLabel: UILabel = {
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
 
-        textView.font = UIFont(name:"NanumSquareRoundB", size: 20)
-        textView.textColor = .white
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.textAlignment = .center
-        textView.isEditable = false
-        textView.backgroundColor = .clear
+        label.font = UIFont(name:"NanumSquareRoundB", size: 20)
+        label.textColor = .white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.backgroundColor = .clear
 
-        return textView
+        return label
     }()
 
-    let errorText: UITextView = {
-        let textView = UITextView(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
+    let errorLabel: UILabel = {
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
 
-        textView.text = ""
-        textView.font = UIFont(name:"NanumSquareRoundB", size: 14)
-        textView.backgroundColor = .clear
-        textView.textColor = .white
-        textView.isEditable = false
-        textView.textAlignment = .center
-        textView.translatesAutoresizingMaskIntoConstraints = false
+        label.text = ""
+        label.font = UIFont(name:"NanumSquareRoundB", size: 14)
+        label.backgroundColor = .clear
+        label.textColor = .white
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
 
-        return textView
+        return label
     }()
 
     let pwLine: UIImageView = {
@@ -120,23 +119,23 @@ class PasswordVC: UIViewController, UITextFieldDelegate, KeypadViewDelegate{
         self.replaceBackButton(color: "light")
         self.clearNavigationBar()
 
-        view.addSubview(passwordText)
+        view.addSubview(passwordLabel)
         view.addSubview(pwLine)
         view.addSubview(pwLine2)
         view.addSubview(pwLine3)
         view.addSubview(pwLine4)
         view.addSubview(pwLine5)
         view.addSubview(pwLine6)
-        view.addSubview(errorText)
+        view.addSubview(errorLabel)
         view.addSubview(secureKeypad)
 
         secureKeypad.delegate = self
 
         if(!confirm){
-            passwordText.text = "MOAH Wallet 잠금\n비밀번호 설정해주세요."
+            passwordLabel.text = "MOAH Wallet 잠금\n비밀번호를 설정해주세요."
         }
         else{
-            passwordText.text = "비밀번호를 한번 더 입력해주세요."
+            passwordLabel.text = "비밀번호를 한번 더 입력해주세요."
         }
 
         setupLayout()
@@ -145,7 +144,7 @@ class PasswordVC: UIViewController, UITextFieldDelegate, KeypadViewDelegate{
     override func viewWillDisappear(_ animated: Bool) {
         let changeImage = UIImage(named: "pwLine")
 
-        errorText.text = ""
+        errorLabel.text = ""
         passwordTemp = ""
 
         pwLine6.image = changeImage
@@ -165,10 +164,10 @@ class PasswordVC: UIViewController, UITextFieldDelegate, KeypadViewDelegate{
         let screenHeight = screenSize.height
         let screenWidth = screenSize.width
 
-        passwordText.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40).isActive = true
-        passwordText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        passwordText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        passwordText.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        passwordLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40).isActive = true
+        passwordLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        passwordLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        passwordLabel.heightAnchor.constraint(equalToConstant: 150).isActive = true
 
         pwLine.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -screenHeight/10).isActive = true
         pwLine.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/8).isActive = true
@@ -200,10 +199,10 @@ class PasswordVC: UIViewController, UITextFieldDelegate, KeypadViewDelegate{
         pwLine6.widthAnchor.constraint(equalToConstant: screenWidth/12).isActive = true
         pwLine6.heightAnchor.constraint(equalToConstant: screenWidth/10).isActive = true
 
-        errorText.topAnchor.constraint(equalTo: pwLine.bottomAnchor, constant: 5).isActive = true
-        errorText.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        errorText.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        errorText.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        errorLabel.topAnchor.constraint(equalTo: pwLine.bottomAnchor, constant: 5).isActive = true
+        errorLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        errorLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        errorLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
         secureKeypad.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -screenHeight/10).isActive = true
         secureKeypad.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -238,7 +237,7 @@ class PasswordVC: UIViewController, UITextFieldDelegate, KeypadViewDelegate{
 
                 self.view.layer.add(animation, forKey: "position")
 
-                errorText.text = "비밀번호가 일치하지 않습니다."
+                errorLabel.text = "비밀번호가 일치하지 않습니다."
                 pwLine6.image = changeImage
                 pwLine5.image = changeImage
                 pwLine4.image = changeImage

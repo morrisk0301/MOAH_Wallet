@@ -14,16 +14,16 @@ class AgreementVC: UIViewController {
     let screenSize = UIScreen.main.bounds
     let agreement: String = "이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. "
 
-    let agreementText: UITextView = {
-        let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 60))
-        textView.text = "MOAH Wallet \n서비스 약관에 동의해주세요."
-        textView.font = UIFont(name:"NanumSquareRoundB", size: 18)
-        textView.textColor = UIColor(key: "darker")
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.textAlignment = .center
-        textView.isEditable = false
+    let agreementLabel: UILabel = {
+        let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 60))
+        label.text = "MOAH Wallet \n서비스 약관에 동의해주세요."
+        label.font = UIFont(name:"NanumSquareRoundB", size: 18)
+        label.numberOfLines = 0
+        label.textColor = UIColor(key: "darker")
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
 
-        return textView
+        return label
     }()
 
     let agreementCheckbox: CheckBox = {
@@ -34,16 +34,15 @@ class AgreementVC: UIViewController {
         return checkbox
     }()
 
-    let checkboxText: UITextView = {
-        let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 30))
-        textView.text = "MOAH Wallet 이용약관 전체 동의"
-        textView.font = UIFont(name:"NanumSquareRoundB", size: 15)
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.textColor = UIColor(key: "darker")
-        textView.textAlignment = .left
-        textView.isEditable = false
+    let checkboxLabel: UILabel = {
+        let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 30))
+        label.text = "MOAH Wallet 이용약관 전체 동의"
+        label.font = UIFont(name:"NanumSquareRoundB", size: 15)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = UIColor(key: "darker")
+        label.textAlignment = .left
 
-        return textView
+        return label
     }()
 
     let agreementScroll: UIScrollView = {
@@ -73,12 +72,12 @@ class AgreementVC: UIViewController {
         self.replaceBackButton(color: "dark")
         self.clearNavigationBar()
 
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(key: "light3")
 
-        view.addSubview(agreementText)
+        view.addSubview(agreementLabel)
         view.addSubview(agreementScroll)
         view.addSubview(agreementCheckbox)
-        view.addSubview(checkboxText)
+        view.addSubview(checkboxLabel)
         view.addSubview(nextButton)
 
         setupLayout()
@@ -102,12 +101,12 @@ class AgreementVC: UIViewController {
         let screenHeight = screenSize.height
         let screenWidth = screenSize.width
 
-        agreementText.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        agreementText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
-        agreementText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
-        agreementText.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        agreementLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        agreementLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
+        agreementLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
+        agreementLabel.heightAnchor.constraint(equalToConstant: 60).isActive = true
 
-        agreementScroll.topAnchor.constraint(equalTo: agreementText.bottomAnchor, constant: 20).isActive = true
+        agreementScroll.topAnchor.constraint(equalTo: agreementLabel.bottomAnchor, constant: 20).isActive = true
         agreementScroll.bottomAnchor.constraint(equalTo: agreementCheckbox.topAnchor, constant: -30).isActive = true
         agreementScroll.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         agreementScroll.widthAnchor.constraint(equalToConstant: screenWidth*(0.9)).isActive = true
@@ -117,10 +116,10 @@ class AgreementVC: UIViewController {
         agreementCheckbox.widthAnchor.constraint(equalToConstant: 30).isActive = true
         agreementCheckbox.heightAnchor.constraint(equalToConstant: 30).isActive = true
 
-        checkboxText.bottomAnchor.constraint(equalTo: nextButton.topAnchor, constant: -21).isActive = true
-        checkboxText.leadingAnchor.constraint(equalTo: agreementCheckbox.trailingAnchor, constant: 10).isActive = true
-        checkboxText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/15).isActive = true
-        checkboxText.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        checkboxLabel.bottomAnchor.constraint(equalTo: nextButton.topAnchor, constant: -21).isActive = true
+        checkboxLabel.leadingAnchor.constraint(equalTo: agreementCheckbox.trailingAnchor, constant: 10).isActive = true
+        checkboxLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/15).isActive = true
+        checkboxLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
 
         nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true

@@ -166,6 +166,13 @@ extension UIViewController {
         self.navigationController?.navigationBar.shadowImage = UIImage()
     }
 
+    func setNavigationTitle(title: String){
+        navigationItem.title = title
+        self.navigationController?.navigationBar.titleTextAttributes =
+                [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundB", size: 20)!, 
+                 NSAttributedString.Key.foregroundColor: UIColor(key: "darker")]
+    }
+
     @objc private func backPressed(_ sender: UIButton){
         self.navigationController?.popViewController(animated: true)
     }
@@ -202,9 +209,9 @@ extension UIColor {
         }
         else if(key=="darker"){
             self.init(
-                    red: 0x00 & 0xFF,
-                    green: 0x16 & 0xFF,
-                    blue: 0x34 & 0xFF
+                    red: 0x20 & 0xFF,
+                    green: 0x20 & 0xFF,
+                    blue: 0x20 & 0xFF
             )
         }
         else if(key=="light"){
@@ -223,9 +230,9 @@ extension UIColor {
         }
         else if(key=="light3"){
             self.init(
-                    red: 0xF0 & 0xFF,
-                    green: 0xFC & 0xFF,
-                    blue: 0xFF & 0xFF
+                    red: 0xFA & 0xFF,
+                    green: 0xFA & 0xFF,
+                    blue: 0xEFA & 0xFF
             )
         }
         else if(key=="grey"){

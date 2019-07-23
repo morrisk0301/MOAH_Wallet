@@ -16,22 +16,29 @@
 		A5A0C08E22DCD151006F2E83 /* NanumSquareRoundB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5A0C08C22DCD150006F2E83 /* NanumSquareRoundB.ttf */; };
 		A5A0C08F22DCD154006F2E83 /* NanumSquareRoundEB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5A0C08D22DCD150006F2E83 /* NanumSquareRoundEB.ttf */; };
 		A5A0C09022DCD155006F2E83 /* NanumSquareRoundR.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5A0C08B22DCD150006F2E83 /* NanumSquareRoundR.ttf */; };
+		C051F106C4C595A04EAA4FE1 /* AgreementCheckVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F51191A6826F0F867E0E /* AgreementCheckVC.swift */; };
 		C051F159ABCE211D65F59FE8 /* WalletDoneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F1995FE3594C44DEA5F6 /* WalletDoneVC.swift */; };
 		C051F2666FCBD43EDDC03FD2 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F49F7A22AF8C42EA4D32 /* MainVC.swift */; };
 		C051F29405CB6CAEB8A90062 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C051FDE6CC50D5ED79E6F42C /* Main.storyboard */; };
+		C051F2AA4E61C47D5F1C3018 /* RightTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F6000A5F24D81AA83484 /* RightTransition.swift */; };
 		C051F2EF863672C14C79CE4D /* NanumGothic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C051F2C7AD63643BFDF3A9C6 /* NanumGothic.ttf */; };
 		C051F361ACB751354EDEFC01 /* MOAH_WalletUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FD3DE6EDBDC571CF0639 /* MOAH_WalletUITests.swift */; };
+		C051F373B173AC54AF229DFB /* NetworkSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F46ECA4D5C3D54C0F6B4 /* NetworkSettingVC.swift */; };
 		C051F43CB8BBDF5876788661 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FA6C9DECCACCA006C620 /* MainViewController.swift */; };
 		C051F49194CE70570CBFED75 /* PasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FA989586C885176EA740 /* PasswordVC.swift */; };
+		C051F4A7604CFC036FD89FFE /* MnemonicSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F8B5925C8BBCF3AA8E8E /* MnemonicSettingVC.swift */; };
 		C051F55881A8C22611357EA0 /* MainLeftMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F4A33524E6859AC9F0DB /* MainLeftMenuVC.swift */; };
 		C051F58BA970A28F5148E884 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FF8E066A1CFE267725CC /* CustomButton.swift */; };
 		C051F5F80BB40708BAE58682 /* MnemonicVerificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FC2158395B4BF65E453E /* MnemonicVerificationVC.swift */; };
 		C051F6991830583F5D879C9C /* AgreementVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FD9079AB28E40C022FDD /* AgreementVC.swift */; };
+		C051F722D5ED0A6958B239A0 /* AnnouncementVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FAA7B42C718BE4204A4A /* AnnouncementVC.swift */; };
 		C051F7AE7F9AA30993F9E5AD /* MnemonicVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FB1E96548FFD0DEEF195 /* MnemonicVC.swift */; };
+		C051F7C9A6AC866D22C44686 /* PasswordSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F2A0436A8E675D322837 /* PasswordSettingVC.swift */; };
 		C051F8022391B9973BD91137 /* MnemonicWarningVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F6F1EBF7625D6A925061 /* MnemonicWarningVC.swift */; };
 		C051F85B2D0020F30D1961C8 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FFB8B9E194F8D83BD639 /* Protocols.swift */; };
 		C051F9325D53C154295B5522 /* AgreementViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FD974D93686134C5B4E6 /* AgreementViewVC.swift */; };
 		C051F93D1BFE68F450C3B94C /* MainRightMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F9B011B6E362F3C18BEB /* MainRightMenuVC.swift */; };
+		C051F94A55FC32388DE66EF6 /* LockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FECD2DA7B560A0904BBE /* LockView.swift */; };
 		C051F954683BF105789BE5C2 /* RightMenuOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FBEC2A31284D49D39064 /* RightMenuOption.swift */; };
 		C051F955E6F8A508A82CB7E8 /* EthAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FA9FF2133358D8774A35 /* EthAccount.swift */; };
 		C051F957854FA8DC85D649B1 /* MainContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FFF0FD15853474C90D5C /* MainContainerVC.swift */; };
@@ -41,7 +48,9 @@
 		C051FB1FE29301C3EA68F93B /* KeypadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FD83FA4BAE07897C116D /* KeypadView.swift */; };
 		C051FB3EDA8676CDCDBBDEF9 /* KeyboardShowHide.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F29FBC6A1B53190053A7 /* KeyboardShowHide.swift */; };
 		C051FB5E23902398DEF96B30 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F7AC902DA14D067B4A7E /* AppDelegate.swift */; };
+		C051FC018077B21A44B84622 /* LeftTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FAAD35BE522484440F32 /* LeftTransition.swift */; };
 		C051FC07BFCC39DD3F13BCF3 /* LockVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FCDFA9CC8D752BE3F74C /* LockVC.swift */; };
+		C051FC24A82139E7B0A58CD6 /* FAQVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F96A941D724CEC53F3B1 /* FAQVC.swift */; };
 		C051FC27C11844F1ED252D9B /* RightMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FDC89BDB5CFCD23A6131 /* RightMenuCell.swift */; };
 		C051FC4AF7558DDA3AA8C5A6 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F2FC1D4AD78361437D8A /* KeychainService.swift */; };
 		C051FD6077E544C0242ACD61 /* Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FCFAB6F715D632781390 /* Checkbox.swift */; };
@@ -84,21 +93,29 @@
 		C051F1995FE3594C44DEA5F6 /* WalletDoneVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletDoneVC.swift; sourceTree = "<group>"; };
 		C051F26E21CD42E0A1B5B53D /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		C051F29FBC6A1B53190053A7 /* KeyboardShowHide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardShowHide.swift; sourceTree = "<group>"; };
+		C051F2A0436A8E675D322837 /* PasswordSettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordSettingVC.swift; sourceTree = "<group>"; };
 		C051F2C7AD63643BFDF3A9C6 /* NanumGothic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file.ttf; path = NanumGothic.ttf; sourceTree = "<group>"; };
 		C051F2FC1D4AD78361437D8A /* KeychainService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		C051F46ECA4D5C3D54C0F6B4 /* NetworkSettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkSettingVC.swift; sourceTree = "<group>"; };
 		C051F49F7A22AF8C42EA4D32 /* MainVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		C051F4A33524E6859AC9F0DB /* MainLeftMenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainLeftMenuVC.swift; sourceTree = "<group>"; };
 		C051F4A76C51AA93A6914007 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
+		C051F51191A6826F0F867E0E /* AgreementCheckVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgreementCheckVC.swift; sourceTree = "<group>"; };
+		C051F6000A5F24D81AA83484 /* RightTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightTransition.swift; sourceTree = "<group>"; };
 		C051F6342A463F4E5602402A /* MnemonicVerificationGetVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicVerificationGetVC.swift; sourceTree = "<group>"; };
 		C051F6F1EBF7625D6A925061 /* MnemonicWarningVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicWarningVC.swift; sourceTree = "<group>"; };
 		C051F78260EE7AE0C72FAED1 /* AlertVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertVC.swift; sourceTree = "<group>"; };
 		C051F7AC902DA14D067B4A7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C051F8B5925C8BBCF3AA8E8E /* MnemonicSettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicSettingVC.swift; sourceTree = "<group>"; };
 		C051F94D8F21FC113B4FD9F2 /* MOAH Wallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MOAH Wallet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C051F956AE867F6089FFE1BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
+		C051F96A941D724CEC53F3B1 /* FAQVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FAQVC.swift; sourceTree = "<group>"; };
 		C051F9B011B6E362F3C18BEB /* MainRightMenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainRightMenuVC.swift; sourceTree = "<group>"; };
 		C051FA6C9DECCACCA006C620 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		C051FA989586C885176EA740 /* PasswordVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordVC.swift; sourceTree = "<group>"; };
 		C051FA9FF2133358D8774A35 /* EthAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthAccount.swift; sourceTree = "<group>"; };
+		C051FAA7B42C718BE4204A4A /* AnnouncementVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementVC.swift; sourceTree = "<group>"; };
+		C051FAAD35BE522484440F32 /* LeftTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftTransition.swift; sourceTree = "<group>"; };
 		C051FB1E96548FFD0DEEF195 /* MnemonicVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicVC.swift; sourceTree = "<group>"; };
 		C051FBEC2A31284D49D39064 /* RightMenuOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightMenuOption.swift; sourceTree = "<group>"; };
 		C051FC2158395B4BF65E453E /* MnemonicVerificationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicVerificationVC.swift; sourceTree = "<group>"; };
@@ -113,6 +130,7 @@
 		C051FDAF143D94C8A37998D7 /* MOAH_WalletTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOAH_WalletTests.swift; sourceTree = "<group>"; };
 		C051FDC89BDB5CFCD23A6131 /* RightMenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightMenuCell.swift; sourceTree = "<group>"; };
 		C051FE634D5A6B9DF45C940E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C051FECD2DA7B560A0904BBE /* LockView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockView.swift; sourceTree = "<group>"; };
 		C051FF117AB4DADC769782D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
 		C051FF8E066A1CFE267725CC /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		C051FFB8B9E194F8D83BD639 /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
@@ -215,6 +233,12 @@
 			isa = PBXGroup;
 			children = (
 				C051F9B011B6E362F3C18BEB /* MainRightMenuVC.swift */,
+				C051F46ECA4D5C3D54C0F6B4 /* NetworkSettingVC.swift */,
+				C051F8B5925C8BBCF3AA8E8E /* MnemonicSettingVC.swift */,
+				C051F2A0436A8E675D322837 /* PasswordSettingVC.swift */,
+				C051FAA7B42C718BE4204A4A /* AnnouncementVC.swift */,
+				C051F96A941D724CEC53F3B1 /* FAQVC.swift */,
+				C051F51191A6826F0F867E0E /* AgreementCheckVC.swift */,
 			);
 			path = RightMenuController;
 			sourceTree = "<group>";
@@ -295,6 +319,9 @@
 				C051FF8E066A1CFE267725CC /* CustomButton.swift */,
 				C051FCFAB6F715D632781390 /* Checkbox.swift */,
 				C051FDC89BDB5CFCD23A6131 /* RightMenuCell.swift */,
+				C051F6000A5F24D81AA83484 /* RightTransition.swift */,
+				C051FAAD35BE522484440F32 /* LeftTransition.swift */,
+				C051FECD2DA7B560A0904BBE /* LockView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -569,6 +596,15 @@
 				C051F49194CE70570CBFED75 /* PasswordVC.swift in Sources */,
 				C051F43CB8BBDF5876788661 /* MainViewController.swift in Sources */,
 				C051F93D1BFE68F450C3B94C /* MainRightMenuVC.swift in Sources */,
+				C051F373B173AC54AF229DFB /* NetworkSettingVC.swift in Sources */,
+				C051F4A7604CFC036FD89FFE /* MnemonicSettingVC.swift in Sources */,
+				C051F7C9A6AC866D22C44686 /* PasswordSettingVC.swift in Sources */,
+				C051F722D5ED0A6958B239A0 /* AnnouncementVC.swift in Sources */,
+				C051FC24A82139E7B0A58CD6 /* FAQVC.swift in Sources */,
+				C051F106C4C595A04EAA4FE1 /* AgreementCheckVC.swift in Sources */,
+				C051F2AA4E61C47D5F1C3018 /* RightTransition.swift in Sources */,
+				C051FC018077B21A44B84622 /* LeftTransition.swift in Sources */,
+				C051F94A55FC32388DE66EF6 /* LockView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

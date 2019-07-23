@@ -5,8 +5,9 @@
 
 import Foundation
 import UIKit
+import MessageUI
 
-class MainContainerVC: UIViewController, MainControllerDelegate{
+class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeViewControllerDelegate{
 
     var isExpandLeft = false
     var isExpandRight = false
@@ -36,7 +37,7 @@ class MainContainerVC: UIViewController, MainControllerDelegate{
         super.didReceiveMemoryWarning()
     }
 
-    private func animatePanel(shouldExpand: Bool, side: String, menuOption: Any?) {
+    private func animatePanel(shouldExpand: Bool, side: String?, menuOption: Any?) {
         if shouldExpand {
             if(side == "left"){
                 UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
@@ -47,48 +48,56 @@ class MainContainerVC: UIViewController, MainControllerDelegate{
                     self.centerController.view.frame.origin.x = -(self.centerController.view.frame.width - self.screenSize.width/5)
                 }, completion: nil)
             }
-
         } else {
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
                 self.centerController.view.frame.origin.x = 0
-            }) { (_) in
-                if(side == "left"){
+            }, completion: nil)
+        }
+    }
 
-                }else{
-                    guard let menuOption = menuOption as? RightMenuOption else { return }
-                    self.didSelectRightMenuOption(menuOption: menuOption)
-                }
-            }
+    func proceedToView(side: String, menuOption: Any?){
+        if(side == "left"){
+
+        }else{
+            guard let menuOption = menuOption as? RightMenuOption else { return }
+            self.didSelectRightMenuOption(menuOption: menuOption)
         }
     }
 
     func didSelectRightMenuOption(menuOption: RightMenuOption) {
         var controller: UIViewController!
+        let transition = LeftTransition()
 
         switch menuOption {
         case .WalletNetwork:
-            print("Show profile")
+            controller = NetworkSettingVC()
+            view.window!.layer.add(transition, forKey: kCATransition)
+            present(UINavigationController(rootViewController: controller), animated: false, completion: nil)
         case .WalletMnemonic:
-            print("Show Inbox")
+            controller = MnemonicSettingVC()
+            view.window!.layer.add(transition, forKey: kCATransition)
+            present(UINavigationController(rootViewController: controller), animated: false, completion: nil)
         case .WalletPassword:
-            print("Show Notifications")
+            controller = PasswordSettingVC()
+            view.window!.layer.add(transition, forKey: kCATransition)
+            present(UINavigationController(rootViewController: controller), animated: false, completion: nil)
         case .CSAnnouncement:
-            /*
-            let controller = SettingsController()
-            controller.username = "Batman"
-            present(UINavigationController(rootViewController: controller), animated: true, completion: nil)
-            */
-            print("Show Notifications")
+            controller = AnnouncementVC()
+            view.window!.layer.add(transition, forKey: kCATransition)
+            present(UINavigationController(rootViewController: controller), animated: false, completion: nil)
         case .CSFAQ:
-            print("Show Notifications")
+            controller = FAQVC()
+            view.window!.layer.add(transition, forKey: kCATransition)
+            present(UINavigationController(rootViewController: controller), animated: false, completion: nil)
         case .CSAgreement:
-            print("Show Notifications")
+            controller = AgreementCheckVC()
+            view.window!.layer.add(transition, forKey: kCATransition)
+            present(UINavigationController(rootViewController: controller), animated: false, completion: nil)
         case .CSEmail:
-            print("Show Notifications")
+            self.sendEmail()
         default:
-            print("default")
+            break
         }
-
     }
 
     func didSelectLeftMenuOption(menuOption: RightMenuOption) {
@@ -132,12 +141,34 @@ class MainContainerVC: UIViewController, MainControllerDelegate{
         }
 
         isExpandRight = !isExpandRight
-        animatePanel(shouldExpand: isExpandRight, side: "right", menuOption: menuOption)
+        if(menuOption == nil){
+            animatePanel(shouldExpand: isExpandRight, side: nil, menuOption: menuOption)
+        }
+        else{
+            proceedToView(side: "", menuOption: menuOption)
+        }
     }
 
     func mainViewClicked() {
         isExpandRight = false
         isExpandLeft = false
         animatePanel(shouldExpand: false, side: "left", menuOption: nil)
+    }
+
+    func sendEmail(){
+        if(MFMailComposeViewController.canSendMail()){
+            let emailTitle = ""
+            let messageBody = "문의하기: "
+            let toRecipents = ["moahWallet_official@naver.com"]
+            let mc: MFMailComposeViewController = MFMailComposeViewController()
+            mc.mailComposeDelegate = self
+            mc.setSubject(emailTitle)
+            mc.setMessageBody(messageBody, isHTML: false)
+            mc.setToRecipients(toRecipents)
+            present(mc, animated: true, completion: nil)
+        }
+        else{
+            return
+        }
     }
 }

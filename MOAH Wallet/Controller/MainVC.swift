@@ -49,9 +49,6 @@ class MainVC: UIViewController{
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundEB", size: 25)!,
                                                                         NSAttributedString.Key.foregroundColor: UIColor.white]
 
-
-        //navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_menu_white_3x").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleMenuToggle))
-
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(mainViewClicked))
 
         view.addSubview(mainText)

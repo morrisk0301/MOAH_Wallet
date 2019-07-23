@@ -12,7 +12,7 @@ class RightMenuCell: UITableViewCell {
 
         let label = UILabel()
         label.textColor = UIColor(key: "darker")
-        label.font = UIFont(name:"NanumSquareRound", size: 16)!
+        label.font = UIFont(name:"NanumSquareRound", size: 15)!
         label.text = ""
         label.translatesAutoresizingMaskIntoConstraints = false
 
@@ -42,7 +42,7 @@ class RightMenuCell: UITableViewCell {
         arrowImage.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         arrowImage.widthAnchor.constraint(equalToConstant: frame.width/35).isActive = true
         arrowImage.heightAnchor.constraint(equalToConstant: (frame.width/35)*1.5).isActive = true
-        arrowImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -frame.width/10).isActive = true
+        arrowImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -frame.width/9).isActive = true
     }
 
     required init?(coder aDecoder: NSCoder) {

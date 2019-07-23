@@ -12,14 +12,29 @@ class MnemonicVerificationVC: UIViewController{
 
     let screenSize = UIScreen.main.bounds
 
-    let explainText: UITextView = {
-        let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 120))
+    let headLabel: UILabel = {
+        let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 120))
 
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.textAlignment = .left
-        textView.isEditable = false
+        label.text = "비밀 시드 구문 인증"
+        label.font = UIFont(name: "NanumSquareRoundB", size: 20)
+        label.textColor = UIColor(key: "darker")
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+        label.numberOfLines = 0
 
-        return textView
+        return label
+    }()
+
+    let explainLabel: UILabel = {
+        let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 120))
+
+        label.font = UIFont(name: "NanumSquareRoundR", size: 18)
+        label.textColor = UIColor(key: "darker")
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+        label.numberOfLines = 0
+
+        return label
     }()
 
     let mnemonicProgress: UIProgressView = {
@@ -37,7 +52,6 @@ class MnemonicVerificationVC: UIViewController{
     let mnemonicField: UITextField = {
         let textField = UITextField()
 
-
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.height))
         textField.leftView = paddingView
         textField.leftViewMode = .always
@@ -47,24 +61,25 @@ class MnemonicVerificationVC: UIViewController{
         textField.textColor = UIColor(key: "darker")
         textField.font = UIFont(name:"NanumSquareRoundR", size: 20)
         textField.keyboardType = .asciiCapable
+        textField.backgroundColor = .clear
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.addTarget(self, action: #selector(textInput(_:)), for: .editingChanged)
 
         return textField
     }()
 
-    let errorText: UITextView = {
-        let textView = UITextView(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
+    let errorLabel: UILabel = {
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
 
-        textView.text = ""
-        textView.font = UIFont(name:"NanumSquareRoundB", size: 14)
-        textView.backgroundColor = .clear
-        textView.textColor = UIColor(key: "darker")
-        textView.isEditable = false
-        textView.textAlignment = .center
-        textView.translatesAutoresizingMaskIntoConstraints = false
+        label.text = ""
+        label.font = UIFont(name:"NanumSquareRoundB", size: 14)
+        label.backgroundColor = .clear
+        label.textColor = UIColor(key: "darker")
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
 
-        return textView
+        return label
     }()
 
     let nextButton: CustomButton = {
@@ -101,20 +116,15 @@ class MnemonicVerificationVC: UIViewController{
             wordIndex = 0
         }
 
-        view.backgroundColor = .white
-        view.addSubview(explainText)
+        view.backgroundColor = UIColor(key: "light3")
+        view.addSubview(headLabel)
+        view.addSubview(explainLabel)
         view.addSubview(mnemonicProgress)
         view.addSubview(mnemonicField)
-        view.addSubview(errorText)
+        view.addSubview(errorLabel)
         view.addSubview(nextButton)
 
-        let attrText = NSMutableAttributedString(string: "비밀 시드 구문 인증",
-                attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundB", size: 20),
-                             NSAttributedString.Key.foregroundColor: UIColor(key: "darker")])
-        attrText.append(NSAttributedString(string: "\n\n\(wordIndex!+1)번째 시드 단어를 입력해주세요.",
-                attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundR", size: 18), 
-                             NSAttributedString.Key.foregroundColor: UIColor(key: "darker")]))
-        explainText.attributedText = attrText
+        explainLabel.text = "\(wordIndex! + 1)번째 시드 단어를 입력해주세요."
 
         mnemonicProgress.progress = Float(wordIndex!)/12
 
@@ -142,25 +152,30 @@ class MnemonicVerificationVC: UIViewController{
         let screenWidth = screenSize.width
         let screenHeight = screenSize.height
 
-        explainText.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        explainText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/20).isActive = true
-        explainText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/20).isActive = true
-        explainText.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        headLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5).isActive = true
+        headLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/15).isActive = true
+        headLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/15).isActive = true
+        headLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
-        mnemonicProgress.topAnchor.constraint(equalTo: explainText.bottomAnchor).isActive = true
-        mnemonicProgress.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/15).isActive = true
-        mnemonicProgress.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/15).isActive = true
+        explainLabel.topAnchor.constraint(equalTo: headLabel.bottomAnchor).isActive = true
+        explainLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/15).isActive = true
+        explainLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/15).isActive = true
+        explainLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+
+        mnemonicProgress.topAnchor.constraint(equalTo: explainLabel.bottomAnchor).isActive = true
+        mnemonicProgress.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/13).isActive = true
+        mnemonicProgress.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/13).isActive = true
         mnemonicProgress.heightAnchor.constraint(equalToConstant: 5).isActive = true
 
-        mnemonicField.topAnchor.constraint(equalTo: explainText.bottomAnchor, constant: screenHeight/7).isActive = true
-        mnemonicField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        mnemonicField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        mnemonicField.topAnchor.constraint(equalTo: explainLabel.bottomAnchor, constant: screenHeight/7).isActive = true
+        mnemonicField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/15).isActive = true
+        mnemonicField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/15).isActive = true
         mnemonicField.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
-        errorText.topAnchor.constraint(equalTo: mnemonicField.bottomAnchor, constant: 5).isActive = true
-        errorText.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        errorText.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        errorText.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        errorLabel.topAnchor.constraint(equalTo: mnemonicField.bottomAnchor, constant: 5).isActive = true
+        errorLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        errorLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        errorLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
         nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40).isActive = true
         nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -203,7 +218,7 @@ class MnemonicVerificationVC: UIViewController{
         }
         else{
             self.view.layer.add(animation, forKey: "position")
-            errorText.text = "올바르지 않은 시드 구문입니다!"
+            errorLabel.text = "올바르지 않은 시드 구문입니다!"
         }
 
     }
