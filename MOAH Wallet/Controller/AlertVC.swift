@@ -33,27 +33,28 @@ class AlertVC: UIViewController{
         label.textColor = .black
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name:"NanumSquareRoundEB", size: 20)
+        label.font = UIFont(name:"NanumSquareRoundEB", size: 20, dynamic: true)
 
         return label
     }()
 
-    let bodyText: UITextView = {
-        let textView = UITextView(frame: CGRect(x: 10, y: 100, width: 100, height: 50))
+    let bodyLabel: UILabel = {
+        let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 50))
 
-        textView.textColor = UIColor(red: 130, green: 130, blue: 130)
-        textView.textAlignment = .center
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.font = UIFont(name:"NanumSquareRoundB", size: 16)
+        label.textColor = UIColor(red: 130, green: 130, blue: 130)
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont(name:"NanumSquareRoundB", size: 16, dynamic: true)
+        label.numberOfLines = 0
 
-        return textView
+        return label
     }()
 
     let backButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("취소", for: .normal)
         button.setTitleColor(UIColor(red: 130, green: 130, blue: 130), for: .normal)
-        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 16)
+        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 16, dynamic: true)
         button.backgroundColor = UIColor(red: 230, green: 230, blue: 230)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.tag = 0
@@ -65,7 +66,7 @@ class AlertVC: UIViewController{
     let nextButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitleColor(UIColor(key: "regular"), for: .normal)
-        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 16)
+        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 16, dynamic: true)
         button.backgroundColor = UIColor(red: 230, green: 230, blue: 230)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.tag = 1
@@ -81,19 +82,15 @@ class AlertVC: UIViewController{
 
         view.addSubview(alertView)
         alertView.addSubview(titleLabel)
-        alertView.addSubview(bodyText)
+        alertView.addSubview(bodyLabel)
         alertView.addSubview(backButton)
         alertView.addSubview(nextButton)
 
         titleLabel.text = self.alertTitle!
-        bodyText.text = self.alertBody!
+        bodyLabel.text = self.alertBody!
         nextButton.setTitle(self.alertButtonTitle!, for: .normal)
 
         setupLayout()
-    }
-
-    override func viewDidLayoutSubviews() {
-        bodyText.centerVertically()
     }
 
     private func setupLayout(){
@@ -110,10 +107,10 @@ class AlertVC: UIViewController{
         titleLabel.trailingAnchor.constraint(equalTo: alertView.trailingAnchor, constant: -alertWidth/10).isActive = true
         titleLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
-        bodyText.topAnchor.constraint(equalTo: titleLabel.bottomAnchor).isActive = true
-        bodyText.leadingAnchor.constraint(equalTo: alertView.leadingAnchor, constant: alertWidth/10).isActive = true
-        bodyText.trailingAnchor.constraint(equalTo: alertView.trailingAnchor, constant: -alertWidth/10).isActive = true
-        bodyText.bottomAnchor.constraint(equalTo: backButton.topAnchor, constant: -alertHeight/20).isActive = true
+        bodyLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor).isActive = true
+        bodyLabel.leadingAnchor.constraint(equalTo: alertView.leadingAnchor, constant: alertWidth/10).isActive = true
+        bodyLabel.trailingAnchor.constraint(equalTo: alertView.trailingAnchor, constant: -alertWidth/10).isActive = true
+        bodyLabel.bottomAnchor.constraint(equalTo: backButton.topAnchor, constant: -alertHeight/20).isActive = true
 
         backButton.bottomAnchor.constraint(equalTo: alertView.bottomAnchor).isActive = true
         backButton.leadingAnchor.constraint(equalTo: alertView.leadingAnchor).isActive = true

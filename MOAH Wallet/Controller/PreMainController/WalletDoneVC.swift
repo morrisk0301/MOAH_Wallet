@@ -87,8 +87,9 @@ class WalletDoneVC: UIViewController{
 
     private func setupLayout(){
         let screenWidth = screenSize.width
+        let screenHeight = screenSize.height
 
-        doneLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        doneLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -screenHeight/10).isActive = true
         doneLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         doneLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         doneLabel.heightAnchor.constraint(equalToConstant: 200).isActive = true

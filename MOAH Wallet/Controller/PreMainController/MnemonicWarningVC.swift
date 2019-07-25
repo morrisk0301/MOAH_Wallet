@@ -16,7 +16,7 @@ class MnemonicWarningVC: UIViewController {
         let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 120))
 
         label.text = "비밀 시드 구문"
-        label.font = UIFont(name: "NanumSquareRoundB", size: 20)
+        label.font = UIFont(name: "NanumSquareRoundB", size: 20, dynamic: true)
         label.textColor = UIColor(key: "darker")
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
@@ -29,7 +29,7 @@ class MnemonicWarningVC: UIViewController {
         let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 120))
 
         label.text = "비밀 시드 구문으로 지갑을 백업하고\n복원할 수 있습니다."
-        label.font = UIFont(name: "NanumSquareRoundR", size: 18)
+        label.font = UIFont(name: "NanumSquareRoundR", size: 18, dynamic: true)
         label.textColor = UIColor(key: "darker")
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
@@ -46,7 +46,7 @@ class MnemonicWarningVC: UIViewController {
 
         let attrText = NSMutableAttributedString(string: "주의: 비밀 시드 구문을 절대 공개하지 마십시오. 시드 구문으로 사용자의 암호화폐를 탈취할 수 있습니다!",
                 attributes: [NSAttributedString.Key.paragraphStyle: style,
-                             NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundEB", size: 18)!])
+                             NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundEB", size: 18, dynamic: true)!])
 
         label.attributedText = attrText
         label.textColor = UIColor(key: "dark")
@@ -60,7 +60,7 @@ class MnemonicWarningVC: UIViewController {
     let nextButton: CustomButton = {
         let button = CustomButton(type: .system)
         button.setTitle("다음", for: .normal)
-        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 20)
+        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 20, dynamic: true)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(nextPressed(_:)), for: .touchUpInside)
 

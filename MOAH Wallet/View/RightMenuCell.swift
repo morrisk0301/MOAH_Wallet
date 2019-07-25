@@ -12,7 +12,7 @@ class RightMenuCell: UITableViewCell {
 
         let label = UILabel()
         label.textColor = UIColor(key: "darker")
-        label.font = UIFont(name:"NanumSquareRound", size: 15)!
+        label.font = UIFont(name:"NanumSquareRound", size: 15, dynamic: true)!
         label.text = ""
         label.translatesAutoresizingMaskIntoConstraints = false
 
@@ -47,9 +47,5 @@ class RightMenuCell: UITableViewCell {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    @objc func menuPressed(_ sender:UIButton){
-
     }
 }

@@ -13,3 +13,7 @@ protocol MainControllerDelegate {
     func rightSideMenuClicked(forMenuOption menuOption: RightMenuOption?)
     func mainViewClicked()
 }
+
+protocol TokenViewDelegate {
+    func tokenViewClicked()
+}

@@ -33,7 +33,7 @@ class MainRightMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(RightMenuCell.self, forCellReuseIdentifier: reuseIdentifer)
-        tableView.rowHeight = screenSize.height/17
+        tableView.rowHeight = screenSize.height/15
 
         view.addSubview(tableView)
 
@@ -64,7 +64,7 @@ class MainRightMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             border.frame = CGRect(x:0, y: cell.frame.height*0.9, width: screenSize.width, height: 0.5)
 
             let attrText = NSAttributedString(string: option.description,
-                    attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundB", size: 22)!, 
+                    attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundB", size: 22, dynamic: true)!, 
                                  NSAttributedString.Key.paragraphStyle: style,
                                  NSAttributedString.Key.foregroundColor: UIColor(key: "darker")])
 
@@ -87,7 +87,7 @@ class MainRightMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         if(indexPath.row == 0){
             return screenSize.height/6
         }
-        return screenSize.height/17
+        return screenSize.height/15
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

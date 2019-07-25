@@ -8,7 +8,7 @@ import UIKit
 import web3swift
 import BigInt
 
-class MainVC: UIViewController{
+class MainVC: UIViewController, TokenViewDelegate{
 
     var signUp = false
     var isExpand = false
@@ -17,16 +17,29 @@ class MainVC: UIViewController{
 
     let screenSize = UIScreen.main.bounds
 
-    let mainText: UILabel = {
+    let tokenView: MainTokenView = {
+        let tokenView = MainTokenView()
+        tokenView.translatesAutoresizingMaskIntoConstraints = false
+
+        return tokenView
+    }()
+
+    let balanceLabel: UILabel = {
         let label = UILabel()
-        label.text = "메인화면 입니다."
-        label.font = UIFont(name:"NanumSquareRoundB", size: 40)
+
+        label.text = "0.000 ETH"
+        label.font = UIFont(name:"NanumSquareRoundB", size: 40, dynamic: true)
         label.textColor = .white
-        label.backgroundColor = .clear
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
+    }()
+
+    let depositButton: CustomButton = {
+        let button = CustomButton()
+
+        return button
     }()
 
     let txView: UIView = {
@@ -46,14 +59,17 @@ class MainVC: UIViewController{
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Side", style: .plain, target: self, action: #selector(leftMenuClicked(_:)))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Side", style: .plain, target: self, action: #selector(rightMenuClicked(_:)))
 
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundEB", size: 25)!,
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundEB", size: 25, dynamic: true)!,
                                                                         NSAttributedString.Key.foregroundColor: UIColor.white]
 
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(mainViewClicked))
 
-        view.addSubview(mainText)
         view.addSubview(txView)
+        view.addSubview(tokenView)
+        view.addSubview(balanceLabel)
         view.addGestureRecognizer(tap)
+        tokenView.setTokenString(tokenString: "Ethereum")
+        tokenView.delegate = self
 
         /*
         let account: EthAccount = EthAccount.accountInstance
@@ -93,15 +109,24 @@ class MainVC: UIViewController{
         let screenHeight = screenSize.height
         let screenWidth = screenSize.width
 
-        mainText.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: screenHeight/4).isActive = true
-        mainText.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        mainText.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        mainText.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        tokenView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: screenHeight/20).isActive = true
+        tokenView.heightAnchor.constraint(equalToConstant: screenHeight/20).isActive = true
+        tokenView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        tokenView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+
+        balanceLabel.topAnchor.constraint(equalTo: tokenView.bottomAnchor, constant: screenHeight/10).isActive = true
+        balanceLabel.heightAnchor.constraint(equalToConstant: screenHeight/20).isActive = true
+        balanceLabel.centerXAnchor.constraint(equalTo: tokenView.centerXAnchor).isActive = true
+        balanceLabel.widthAnchor.constraint(equalToConstant: screenWidth/1.5).isActive = true
 
         txView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         txView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         txView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         txView.heightAnchor.constraint(equalToConstant: screenHeight/2.5).isActive = true
+    }
+
+    func tokenViewClicked() {
+
     }
 
     @objc func leftMenuClicked(_ sender: UIBarButtonItem){

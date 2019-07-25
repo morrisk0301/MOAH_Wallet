@@ -14,7 +14,7 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
         let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 30))
 
         label.text = "비밀 시드 구문 인증"
-        label.font = UIFont(name:"NanumSquareRoundB", size: 20)
+        label.font = UIFont(name:"NanumSquareRoundB", size: 20, dynamic: true)
         label.textColor = UIColor(key: "darker")
         label.translatesAutoresizingMaskIntoConstraints = false
 
@@ -25,7 +25,7 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
         let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 50))
 
         label.text = "복원하실 지갑의 12자리 비밀 시드 구문을 순서대로 입력해주세요."
-        label.font = UIFont(name:"NanumSquareRoundR", size: 16)
+        label.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
         label.textColor = UIColor(key: "darker")
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -38,7 +38,7 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
 
         textView.layer.borderColor = UIColor(key: "darker").cgColor
         textView.layer.borderWidth = 1.0
-        textView.font = UIFont(name:"NanumSquareRoundB", size: 20)
+        textView.font = UIFont(name:"NanumSquareRoundB", size: 20, dynamic: true)
         textView.textColor = UIColor(key: "darker")
         textView.returnKeyType = .done
         textView.backgroundColor = .clear
@@ -52,7 +52,7 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
 
         label.text = ""
-        label.font = UIFont(name:"NanumSquareRoundB", size: 14)
+        label.font = UIFont(name:"NanumSquareRoundB", size: 14, dynamic: true)
         label.backgroundColor = .clear
         label.textColor = UIColor(key: "darker")
         label.textAlignment = .center
@@ -64,7 +64,7 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
     let nextButton: CustomButton = {
         let button = CustomButton(type: .system)
         button.setTitle("다음", for: .normal)
-        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 20)
+        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 20, dynamic: true)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(nextPressed(_:)), for: .touchUpInside)
 
@@ -131,9 +131,9 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
         mnemonicLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         mnemonicLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/15).isActive = true
         mnemonicLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/15).isActive = true
-        mnemonicLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        mnemonicLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
 
-        explainLabel.topAnchor.constraint(equalTo: mnemonicLabel.bottomAnchor, constant: screenHeight/40).isActive = true
+        explainLabel.topAnchor.constraint(equalTo: mnemonicLabel.bottomAnchor).isActive = true
         explainLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/15).isActive = true
         explainLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/15).isActive = true
         explainLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true

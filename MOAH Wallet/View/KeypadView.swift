@@ -77,14 +77,14 @@ class KeypadView: UIView, UICollectionViewDataSource, UICollectionViewDelegateFl
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! KeyCell
 
         if(indexPath.item == 11){
-            let imageview = UIImageView(frame: CGRect(x: cell.contentView.center.x-15, y: cell.contentView.center.y-11, width: 30, height: 22));
+            let imageview = UIImageView(frame: CGRect(x: cell.contentView.center.x-(screenSize.width/18)*1.4*0.5, y: cell.contentView.center.y-(screenSize.width/18)*0.5, width: (screenSize.width/18)*1.4, height: screenSize.width/18));
             imageview.image = UIImage(named: "delete")
 
             cell.contentView.addSubview(imageview)
         }
 
         cell.digitsLabel.text = numbers[indexPath.item]
-        cell.digitsLabel.font = UIFont(name:"NanumSquareRoundB", size: 18)
+        cell.digitsLabel.font = UIFont(name:"NanumSquareRoundB", size: 18, dynamic: true)
         cell.digitsLabel.textColor = .white
 
         return cell

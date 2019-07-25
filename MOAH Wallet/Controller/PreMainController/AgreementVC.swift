@@ -17,7 +17,7 @@ class AgreementVC: UIViewController {
     let agreementLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 60))
         label.text = "MOAH Wallet \n서비스 약관에 동의해주세요."
-        label.font = UIFont(name:"NanumSquareRoundB", size: 18)
+        label.font = UIFont(name:"NanumSquareRoundB", size: 18, dynamic: true)
         label.numberOfLines = 0
         label.textColor = UIColor(key: "darker")
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -37,7 +37,7 @@ class AgreementVC: UIViewController {
     let checkboxLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 30))
         label.text = "MOAH Wallet 이용약관 전체 동의"
-        label.font = UIFont(name:"NanumSquareRoundB", size: 15)
+        label.font = UIFont(name:"NanumSquareRoundB", size: 15, dynamic: true)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = UIColor(key: "darker")
         label.textAlignment = .left
@@ -58,7 +58,7 @@ class AgreementVC: UIViewController {
     let nextButton: CustomButton = {
         let button = CustomButton(type: .system)
         button.setTitle("다음", for: .normal)
-        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 20)
+        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 20, dynamic: true)
         button.backgroundColor = UIColor(key: "light")
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(agreePressed(_:)), for: .touchUpInside)
@@ -90,7 +90,7 @@ class AgreementVC: UIViewController {
         let agreementView = UITextView(frame: CGRect(x: 10, y: 10, width: agreementScroll.frame.width*(0.95), height: agreementScroll.frame.height))
         agreementView.text = agreement
         agreementView.isEditable = false
-        agreementView.font = UIFont(name:"NanumSquareRoundR", size: 12)
+        agreementView.font = UIFont(name:"NanumSquareRoundR", size: 12, dynamic: true)
         agreementView.textColor = UIColor(key: "darker")
 
         agreementScroll.addSubview(agreementView)
@@ -107,7 +107,7 @@ class AgreementVC: UIViewController {
         agreementLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         agreementLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
         agreementLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
-        agreementLabel.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        agreementLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
         agreementScroll.topAnchor.constraint(equalTo: agreementLabel.bottomAnchor, constant: 20).isActive = true
         agreementScroll.bottomAnchor.constraint(equalTo: agreementCheckbox.topAnchor, constant: -30).isActive = true

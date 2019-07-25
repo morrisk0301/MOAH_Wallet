@@ -15,7 +15,7 @@ class LockView: UIView {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
 
         label.text = "MOAH Wallet\n비밀번호를 입력해주세요"
-        label.font = UIFont(name:"NanumSquareRoundB", size: 20)
+        label.font = UIFont(name:"NanumSquareRoundB", size: 20, dynamic: true)
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
@@ -29,7 +29,7 @@ class LockView: UIView {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
 
         label.text = ""
-        label.font = UIFont(name:"NanumSquareRoundB", size: 14)
+        label.font = UIFont(name:"NanumSquareRoundB", size: 14, dynamic: true)
         label.backgroundColor = .clear
         label.textColor = .white
         label.textAlignment = .center
@@ -140,9 +140,9 @@ class LockView: UIView {
         let screenHeight = screenSize.height
         let screenWidth = screenSize.width
 
-        passwordLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 40).isActive = true
-        passwordLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
-        passwordLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = true
+        passwordLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: screenHeight/10).isActive = true
+        passwordLabel.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        passwordLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         passwordLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
         pwLine.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -screenHeight/10).isActive = true

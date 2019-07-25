@@ -16,7 +16,7 @@ class MnemonicVerificationVC: UIViewController{
         let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 120))
 
         label.text = "비밀 시드 구문 인증"
-        label.font = UIFont(name: "NanumSquareRoundB", size: 20)
+        label.font = UIFont(name: "NanumSquareRoundB", size: 20, dynamic: true)
         label.textColor = UIColor(key: "darker")
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
@@ -28,7 +28,7 @@ class MnemonicVerificationVC: UIViewController{
     let explainLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 120))
 
-        label.font = UIFont(name: "NanumSquareRoundR", size: 18)
+        label.font = UIFont(name: "NanumSquareRoundR", size: 18, dynamic: true)
         label.textColor = UIColor(key: "darker")
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
@@ -59,7 +59,7 @@ class MnemonicVerificationVC: UIViewController{
         textField.borderStyle = .none
         textField.returnKeyType = .done
         textField.textColor = UIColor(key: "darker")
-        textField.font = UIFont(name:"NanumSquareRoundR", size: 20)
+        textField.font = UIFont(name:"NanumSquareRoundR", size: 20, dynamic: true)
         textField.keyboardType = .asciiCapable
         textField.backgroundColor = .clear
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -72,7 +72,7 @@ class MnemonicVerificationVC: UIViewController{
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
 
         label.text = ""
-        label.font = UIFont(name:"NanumSquareRoundB", size: 14)
+        label.font = UIFont(name:"NanumSquareRoundB", size: 14, dynamic: true)
         label.backgroundColor = .clear
         label.textColor = UIColor(key: "darker")
         label.textAlignment = .center
@@ -85,7 +85,7 @@ class MnemonicVerificationVC: UIViewController{
     let nextButton: CustomButton = {
         let button = CustomButton(type: .system)
         button.setTitle("다음", for: .normal)
-        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 20)
+        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 20, dynamic: true)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(nextPressed(_:)), for: .touchUpInside)
 
@@ -170,7 +170,7 @@ class MnemonicVerificationVC: UIViewController{
         mnemonicProgress.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/13).isActive = true
         mnemonicProgress.heightAnchor.constraint(equalToConstant: 5).isActive = true
 
-        mnemonicField.topAnchor.constraint(equalTo: explainLabel.bottomAnchor, constant: screenHeight/7).isActive = true
+        mnemonicField.topAnchor.constraint(equalTo: explainLabel.bottomAnchor, constant: screenHeight/10).isActive = true
         mnemonicField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/15).isActive = true
         mnemonicField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/15).isActive = true
         mnemonicField.heightAnchor.constraint(equalToConstant: 50).isActive = true
