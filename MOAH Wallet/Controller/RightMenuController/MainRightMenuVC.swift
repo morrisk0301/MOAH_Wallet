@@ -34,6 +34,7 @@ class MainRightMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         tableView.dataSource = self
         tableView.register(RightMenuCell.self, forCellReuseIdentifier: reuseIdentifer)
         tableView.rowHeight = screenSize.height/15
+        tableView.isScrollEnabled = false
 
         view.addSubview(tableView)
 
@@ -85,7 +86,7 @@ class MainRightMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSou
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if(indexPath.row == 0){
-            return screenSize.height/6
+            return screenSize.height/5
         }
         return screenSize.height/15
     }

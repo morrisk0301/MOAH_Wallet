@@ -18,7 +18,7 @@ enum RightMenuOption: Int, CustomStringConvertible {
 
     var description: String {
         switch self {
-        case .Welcome: return "안녕하세요,\nMOAH Wallet 입니다."
+        case .Welcome: return "\n안녕하세요,\nMOAH Wallet 입니다."
         case .WalletNetwork: return "네트워크 관리"
         case .WalletMnemonic: return "시드 구문 관리"
         case .WalletPassword: return "비밀번호 및 인증 관리"

@@ -8,7 +8,7 @@ import UIKit
 import web3swift
 import BigInt
 
-class MainVC: UIViewController, TokenViewDelegate{
+class MainVC: UIViewController{
 
     var signUp = false
     var isExpand = false
@@ -36,8 +36,18 @@ class MainVC: UIViewController, TokenViewDelegate{
         return label
     }()
 
-    let depositButton: CustomButton = {
-        let button = CustomButton()
+    let depositButton: TransparentButton = {
+        let button = TransparentButton(type: .system)
+        button.setTitle("입금", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+
+        return button
+    }()
+
+    let transferButton: TransparentButton = {
+        let button = TransparentButton(type: .system)
+        button.setTitle("전송", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
 
         return button
     }()
@@ -45,7 +55,7 @@ class MainVC: UIViewController, TokenViewDelegate{
     let txView: UIView = {
         let view = UIView()
 
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(key: "dark")
         view.translatesAutoresizingMaskIntoConstraints = false
 
         return view
@@ -56,20 +66,20 @@ class MainVC: UIViewController, TokenViewDelegate{
         self.setupBackground()
         self.clearNavigationBar()
         navigationItem.title = "MOAH Wallet"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Side", style: .plain, target: self, action: #selector(leftMenuClicked(_:)))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Side", style: .plain, target: self, action: #selector(rightMenuClicked(_:)))
 
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundEB", size: 25, dynamic: true)!,
                                                                         NSAttributedString.Key.foregroundColor: UIColor.white]
 
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(mainViewClicked))
+        self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(screenSize.height/300, for: .default)
 
-        view.addSubview(txView)
+        setupBarButton()
+
         view.addSubview(tokenView)
         view.addSubview(balanceLabel)
-        view.addGestureRecognizer(tap)
+        view.addSubview(depositButton)
+        view.addSubview(transferButton)
+        //view.addSubview(txView)
         tokenView.setTokenString(tokenString: "Ethereum")
-        tokenView.delegate = self
 
         /*
         let account: EthAccount = EthAccount.accountInstance
@@ -105,6 +115,31 @@ class MainVC: UIViewController, TokenViewDelegate{
         super.didReceiveMemoryWarning()
     }
 
+    func setupBarButton(){
+        let leftUIButton: UIButton = UIButton(type: .custom)
+        leftUIButton.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+
+        leftUIButton.setImage(UIImage(named: "menuIcon"), for: .normal)
+        leftUIButton.addTarget(self, action: #selector(leftMenuClicked(_:)), for: .touchUpInside)
+
+        let leftButton = UIBarButtonItem(customView: leftUIButton)
+        leftButton.customView?.widthAnchor.constraint(equalToConstant: (view.frame.width/30)*1.5).isActive = true
+        leftButton.customView?.heightAnchor.constraint(equalToConstant: view.frame.width/30).isActive = true
+
+        let rightUIButton: UIButton = UIButton(type: .custom)
+        rightUIButton.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+
+        rightUIButton.setImage(UIImage(named: "menuIcon2"), for: .normal)
+        rightUIButton.addTarget(self, action: #selector(rightMenuClicked(_:)), for: .touchUpInside)
+
+        let rightButton = UIBarButtonItem(customView: rightUIButton)
+        rightButton.customView?.widthAnchor.constraint(equalToConstant: view.frame.width/12).isActive = true
+        rightButton.customView?.heightAnchor.constraint(equalToConstant: view.frame.width/12).isActive = true
+
+        navigationItem.leftBarButtonItem = leftButton
+        navigationItem.rightBarButtonItem = rightButton
+    }
+
     private func setupLayout(){
         let screenHeight = screenSize.height
         let screenWidth = screenSize.width
@@ -114,19 +149,25 @@ class MainVC: UIViewController, TokenViewDelegate{
         tokenView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tokenView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
 
-        balanceLabel.topAnchor.constraint(equalTo: tokenView.bottomAnchor, constant: screenHeight/10).isActive = true
+        balanceLabel.topAnchor.constraint(equalTo: tokenView.bottomAnchor, constant: screenHeight/15).isActive = true
         balanceLabel.heightAnchor.constraint(equalToConstant: screenHeight/20).isActive = true
         balanceLabel.centerXAnchor.constraint(equalTo: tokenView.centerXAnchor).isActive = true
         balanceLabel.widthAnchor.constraint(equalToConstant: screenWidth/1.5).isActive = true
 
-        txView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        txView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        txView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        txView.heightAnchor.constraint(equalToConstant: screenHeight/2.5).isActive = true
-    }
+        depositButton.topAnchor.constraint(equalTo: balanceLabel.bottomAnchor, constant: screenHeight/15).isActive = true
+        depositButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/7).isActive = true
+        depositButton.heightAnchor.constraint(equalToConstant: screenHeight/20).isActive = true
+        depositButton.widthAnchor.constraint(equalToConstant: screenWidth/3).isActive = true
 
-    func tokenViewClicked() {
+        transferButton.topAnchor.constraint(equalTo: balanceLabel.bottomAnchor, constant: screenHeight/15).isActive = true
+        transferButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/7).isActive = true
+        transferButton.heightAnchor.constraint(equalToConstant: screenHeight/20).isActive = true
+        transferButton.widthAnchor.constraint(equalToConstant: screenWidth/3).isActive = true
 
+        //txView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        //txView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        //txView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        //txView.heightAnchor.constraint(equalToConstant: screenHeight/2).isActive = true
     }
 
     @objc func leftMenuClicked(_ sender: UIBarButtonItem){
@@ -136,9 +177,4 @@ class MainVC: UIViewController, TokenViewDelegate{
     @objc func rightMenuClicked(_ sender: UIBarButtonItem){
         delegate?.rightSideMenuClicked(forMenuOption: nil)
     }
-
-    @objc func mainViewClicked(_ sender: UITapGestureRecognizer){
-        delegate?.mainViewClicked()
-    }
-
 }

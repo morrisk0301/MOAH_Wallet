@@ -7,7 +7,7 @@ import Foundation
 import UIKit
 import MessageUI
 
-class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeViewControllerDelegate{
+class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeViewControllerDelegate, UIGestureRecognizerDelegate{
 
     var isExpandLeft = false
     var isExpandRight = false
@@ -15,7 +15,9 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
     var tempMnemonic: String?
     var mainLeftMenuVC: MainLeftMenuVC!
     var mainRightMenuVC: MainRightMenuVC!
+    var tokenSelectVC: TokenSelectVC!
     var centerController: UIViewController!
+    var transparentView = UIView()
 
     let screenSize = UIScreen.main.bounds
 
@@ -26,6 +28,7 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
         mainVC.signUp = self.signUp
         mainVC.tempMnemonic = self.tempMnemonic
         mainVC.delegate = self
+        mainVC.tokenView.delegate = self
         centerController = UINavigationController(rootViewController: mainVC)
 
         view.addSubview(centerController.view)
@@ -40,23 +43,40 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
     private func animatePanel(shouldExpand: Bool, side: String?, menuOption: Any?) {
         if shouldExpand {
             if(side == "left"){
-                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0,
+                        options: [.curveEaseInOut, UIView.AnimationOptions.allowUserInteraction], animations: {
+                    self.transparentView.alpha = 0.3
                     self.centerController.view.frame.origin.x = self.centerController.view.frame.width - self.screenSize.width/5
                 }, completion: nil)
-            }else{
-                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
+            }
+            else if(side == "right"){
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0,
+                        options: [.curveEaseInOut, UIView.AnimationOptions.allowUserInteraction], animations: {
+                    self.transparentView.alpha = 0.3
                     self.centerController.view.frame.origin.x = -(self.centerController.view.frame.width - self.screenSize.width/5)
                 }, completion: nil)
             }
+            else if(side == "down"){
+                UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0,
+                        options: [.curveEaseInOut, UIView.AnimationOptions.allowUserInteraction], animations: {
+                    self.transparentView.alpha = 0.3
+                    self.tokenSelectVC.view.frame = CGRect(x: 0, y: self.screenSize.height/2, width: self.screenSize.width, height: self.screenSize.height/2)
+                }, completion: nil)
+            }
         } else {
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0,
+                    options: [.curveEaseInOut, UIView.AnimationOptions.allowUserInteraction], animations: {
+                self.transparentView.alpha = 0
                 self.centerController.view.frame.origin.x = 0
-            }, completion: nil)
+            }, completion: {_ in
+                self.transparentView.removeFromSuperview()
+            })
         }
     }
 
     func proceedToView(side: String, menuOption: Any?){
-        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
+        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0,
+                options: [.curveEaseInOut, UIView.AnimationOptions.allowUserInteraction], animations: {
             self.centerController.view.frame.origin.x = 0
         }, completion: nil)
 
@@ -110,6 +130,8 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
     }
 
     func leftSideMenuClicked() {
+        addTransparentView(side: "left")
+
         if(mainLeftMenuVC == nil){
             mainLeftMenuVC = MainLeftMenuVC()
             if(mainRightMenuVC != nil){
@@ -129,6 +151,8 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
     }
 
     func rightSideMenuClicked(forMenuOption menuOption: RightMenuOption?) {
+        addTransparentView(side: "right")
+
         if(mainRightMenuVC == nil){
             mainRightMenuVC = MainRightMenuVC()
             mainRightMenuVC.delegte = self
@@ -146,19 +170,60 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
 
         isExpandRight = !isExpandRight
         if(menuOption == nil){
-            animatePanel(shouldExpand: isExpandRight, side: nil, menuOption: menuOption)
+            animatePanel(shouldExpand: isExpandRight, side: "right", menuOption: menuOption)
         }
         else{
-            //let networkSettingVC = NetworkSettingVC()
-            //self.present(UINavigationController(rootViewController: networkSettingVC), animated: true)
             proceedToView(side: "", menuOption: menuOption)
         }
     }
 
-    func mainViewClicked() {
+    func tokenViewClicked() {
+        addTransparentView(side: "down")
+
+        if(tokenSelectVC == nil){
+            tokenSelectVC = TokenSelectVC()
+
+            tokenSelectVC.view.frame = CGRect(x: 0, y: screenSize.height, width: screenSize.width, height: screenSize.height/2)
+            view.addSubview(tokenSelectVC.view)
+            addChild(tokenSelectVC)
+            tokenSelectVC.didMove(toParent: self)
+        }else{
+            view.addSubview(tokenSelectVC.view)
+        }
+
+        animatePanel(shouldExpand: true, side: "down", menuOption: nil)
+    }
+
+    func addTransparentView(side: String){
+        transparentView.backgroundColor = UIColor.black.withAlphaComponent(0.9)
+        transparentView.frame = centerController.view.frame
+        transparentView.alpha = 0
+        centerController.view.addSubview(transparentView)
+
+        if(side=="down"){
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(transparentViewClicked(_:)))
+            transparentView.addGestureRecognizer(tapGesture)
+        }else{
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(mainViewClicked(_:)))
+            transparentView.addGestureRecognizer(tapGesture)
+        }
+    }
+
+    @objc private func mainViewClicked(_ sender: UIGestureRecognizer) {
         isExpandRight = false
         isExpandLeft = false
-        animatePanel(shouldExpand: false, side: "left", menuOption: nil)
+        animatePanel(shouldExpand: false, side: nil, menuOption: nil)
+    }
+
+    @objc private func transparentViewClicked(_ sender: UITapGestureRecognizer){
+        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0,
+                options: [.curveEaseInOut, UIView.AnimationOptions.allowUserInteraction], animations: {
+            self.transparentView.alpha = 0
+            self.tokenSelectVC.view.frame = CGRect(x: 0, y: self.screenSize.height, width: self.screenSize.width, height: self.screenSize.height/2)
+        }, completion: {_ in
+            self.transparentView.removeFromSuperview()
+            self.tokenSelectVC.removeFromParent()
+        })
     }
 
     func sendEmail(){

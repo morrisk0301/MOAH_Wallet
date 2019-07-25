@@ -39,32 +39,18 @@ class MainViewController: UIViewController {
         return label
     }()
 
-    let newWalletButton: UIButton = {
-        let button = UIButton(type: .system)
+    let newWalletButton: TransparentButton = {
+        let button = TransparentButton(type: .system)
         button.setTitle("새로운 지갑 만들기", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont(name:"NanumSquareRoundR", size: 20, dynamic: true)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.layer.cornerRadius = 10
-        button.backgroundColor = .clear
-        button.layer.borderColor = UIColor.white.cgColor
-        button.layer.borderWidth = 1.0
         button.tag = 1
         button.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
 
         return button
     }()
 
-    let getWalletButton: UIButton = {
-        let button = UIButton(type: .system)
+    let getWalletButton: TransparentButton = {
+        let button = TransparentButton(type: .system)
         button.setTitle("기존 지갑 복원하기", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont(name:"NanumSquareRoundR", size: 20, dynamic: true)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.layer.cornerRadius = 10
-        button.backgroundColor = .clear
-        button.layer.borderColor = UIColor.white.cgColor
-        button.layer.borderWidth = 1.0
         button.tag = 2
         button.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
 

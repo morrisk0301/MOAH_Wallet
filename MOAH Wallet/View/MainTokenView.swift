@@ -9,7 +9,7 @@ import UIKit
 class MainTokenView: UIView {
 
     let screenSize = UIScreen.main.bounds
-    var delegate: TokenViewDelegate?
+    var delegate: MainControllerDelegate?
 
     let tokenImage: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "ethLogo"))
@@ -50,7 +50,7 @@ class MainTokenView: UIView {
 
         //let attrText = NSMutableAttributedString(string: "Ethereum  ", attributes: [
         let attrText = NSMutableAttributedString(string: tokenString+"  " , attributes: [
-            NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundEB", size: 20, dynamic: true)!,
+            NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundB", size: 20, dynamic: true)!,
             NSAttributedString.Key.foregroundColor: UIColor.white,
         ])
         attrText.append(NSAttributedString(attachment: attachImage))

@@ -25,6 +25,7 @@
 		C051F2EF863672C14C79CE4D /* NanumGothic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C051F2C7AD63643BFDF3A9C6 /* NanumGothic.ttf */; };
 		C051F361ACB751354EDEFC01 /* MOAH_WalletUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FD3DE6EDBDC571CF0639 /* MOAH_WalletUITests.swift */; };
 		C051F373B173AC54AF229DFB /* NetworkSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F46ECA4D5C3D54C0F6B4 /* NetworkSettingVC.swift */; };
+		C051F3E8704B988773687809 /* TokenSelectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FF7BB7B279B376C514A0 /* TokenSelectVC.swift */; };
 		C051F43CB8BBDF5876788661 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FA6C9DECCACCA006C620 /* MainViewController.swift */; };
 		C051F45046E2E4152EDD8712 /* MainTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F635779A9F378E8C0E45 /* MainTokenView.swift */; };
 		C051F49194CE70570CBFED75 /* PasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FA989586C885176EA740 /* PasswordVC.swift */; };
@@ -33,6 +34,7 @@
 		C051F58BA970A28F5148E884 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FF8E066A1CFE267725CC /* CustomButton.swift */; };
 		C051F5F80BB40708BAE58682 /* MnemonicVerificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FC2158395B4BF65E453E /* MnemonicVerificationVC.swift */; };
 		C051F6991830583F5D879C9C /* AgreementVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FD9079AB28E40C022FDD /* AgreementVC.swift */; };
+		C051F711317505E36A1E5FE1 /* DownTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FE0CA05FA24966110268 /* DownTransition.swift */; };
 		C051F722D5ED0A6958B239A0 /* AnnouncementVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FAA7B42C718BE4204A4A /* AnnouncementVC.swift */; };
 		C051F7AE7F9AA30993F9E5AD /* MnemonicVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FB1E96548FFD0DEEF195 /* MnemonicVC.swift */; };
 		C051F7C9A6AC866D22C44686 /* PasswordSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F2A0436A8E675D322837 /* PasswordSettingVC.swift */; };
@@ -58,7 +60,9 @@
 		C051FC27C11844F1ED252D9B /* RightMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FDC89BDB5CFCD23A6131 /* RightMenuCell.swift */; };
 		C051FC4AF7558DDA3AA8C5A6 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F2FC1D4AD78361437D8A /* KeychainService.swift */; };
 		C051FD6077E544C0242ACD61 /* Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FCFAB6F715D632781390 /* Checkbox.swift */; };
+		C051FE537904487550FD4095 /* UpTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F387544906A5F9ED1AF2 /* UpTransition.swift */; };
 		C051FEC7D1FC02F093FF50B5 /* MnemonicVerificationGetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F6342A463F4E5602402A /* MnemonicVerificationGetVC.swift */; };
+		C051FF7241A205070C0A26B3 /* TransparentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F326270A0761F1E5315E /* TransparentButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +105,8 @@
 		C051F2A0436A8E675D322837 /* PasswordSettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordSettingVC.swift; sourceTree = "<group>"; };
 		C051F2C7AD63643BFDF3A9C6 /* NanumGothic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file.ttf; path = NanumGothic.ttf; sourceTree = "<group>"; };
 		C051F2FC1D4AD78361437D8A /* KeychainService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		C051F326270A0761F1E5315E /* TransparentButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransparentButton.swift; sourceTree = "<group>"; };
+		C051F387544906A5F9ED1AF2 /* UpTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpTransition.swift; sourceTree = "<group>"; };
 		C051F46ECA4D5C3D54C0F6B4 /* NetworkSettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkSettingVC.swift; sourceTree = "<group>"; };
 		C051F49F7A22AF8C42EA4D32 /* MainVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		C051F4A33524E6859AC9F0DB /* MainLeftMenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainLeftMenuVC.swift; sourceTree = "<group>"; };
@@ -137,9 +143,11 @@
 		C051FD974D93686134C5B4E6 /* AgreementViewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgreementViewVC.swift; sourceTree = "<group>"; };
 		C051FDAF143D94C8A37998D7 /* MOAH_WalletTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOAH_WalletTests.swift; sourceTree = "<group>"; };
 		C051FDC89BDB5CFCD23A6131 /* RightMenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightMenuCell.swift; sourceTree = "<group>"; };
+		C051FE0CA05FA24966110268 /* DownTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownTransition.swift; sourceTree = "<group>"; };
 		C051FE634D5A6B9DF45C940E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C051FECD2DA7B560A0904BBE /* LockView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockView.swift; sourceTree = "<group>"; };
 		C051FF117AB4DADC769782D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
+		C051FF7BB7B279B376C514A0 /* TokenSelectVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenSelectVC.swift; sourceTree = "<group>"; };
 		C051FF8E066A1CFE267725CC /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		C051FFB8B9E194F8D83BD639 /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		C051FFF0FD15853474C90D5C /* MainContainerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainContainerVC.swift; sourceTree = "<group>"; };
@@ -208,6 +216,7 @@
 				C051F78260EE7AE0C72FAED1 /* AlertVC.swift */,
 				C051F58D1773450372607960 /* PreMainController */,
 				C051F1EA5DBBAA18C80300C9 /* RightMenuController */,
+				C051FF7BB7B279B376C514A0 /* TokenSelectVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -334,6 +343,9 @@
 				C051FAAD35BE522484440F32 /* LeftTransition.swift */,
 				C051FECD2DA7B560A0904BBE /* LockView.swift */,
 				C051F635779A9F378E8C0E45 /* MainTokenView.swift */,
+				C051F326270A0761F1E5315E /* TransparentButton.swift */,
+				C051FE0CA05FA24966110268 /* DownTransition.swift */,
+				C051F387544906A5F9ED1AF2 /* UpTransition.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -621,6 +633,10 @@
 				C051F88E2A48A734D8F1901B /* Extensions.swift in Sources */,
 				C051F9790CC44994FE169C8E /* Structs.swift in Sources */,
 				C051F45046E2E4152EDD8712 /* MainTokenView.swift in Sources */,
+				C051FF7241A205070C0A26B3 /* TransparentButton.swift in Sources */,
+				C051F711317505E36A1E5FE1 /* DownTransition.swift in Sources */,
+				C051F3E8704B988773687809 /* TokenSelectVC.swift in Sources */,
+				C051FE537904487550FD4095 /* UpTransition.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
