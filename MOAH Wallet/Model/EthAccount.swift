@@ -7,7 +7,6 @@ import Foundation
 import web3swift
 import CryptoSwift
 
-
 class EthAccount {
 
     static let accountInstance = EthAccount()
@@ -15,11 +14,13 @@ class EthAccount {
     let util = Util()
     let userDefaults = UserDefaults.standard
 
-    private var _keyStoreManager: KeystoreManager?
+    private var _keyStore: BIP32Keystore?
     private var _mnemonic: Mnemonics?
     private var _password: String?
     private var _isVerified: Bool = false
     private var _timer: Timer?
+    private var _address: Address?
+    private var _addressArray: [Address] = [Address]()
     private init() {
     }
 
@@ -54,7 +55,7 @@ class EthAccount {
 
         if(passwordHashed == key){
             self._password = keyHex
-            _loadKeyStoreManager(password: keyHex)
+            _loadKeyStore()
             return true
         }
         else{
@@ -63,11 +64,22 @@ class EthAccount {
     }
 
     func getKeyStoreManager() -> KeystoreManager? {
-        return _keyStoreManager
+        if(_keyStore == nil){
+            return nil
+        }else{
+            let keyStoreManager = KeystoreManager([_keyStore!])
+            return keyStoreManager
+        }
     }
 
-    func lockAccount(){
-        _timer = Timer.scheduledTimer(timeInterval: 300, target: self, selector: #selector(_nilKeyData(_:)), userInfo: nil, repeats: false)
+    func lockAccount(timer: Bool){
+        if(timer){
+            _timer = Timer.scheduledTimer(timeInterval: 300, target: self, selector: #selector(_lockKeyData(_:)), userInfo: nil, repeats: false)
+        }
+        else{
+            _timer?.fire()
+            invalidateTimer()
+        }
     }
 
     func invalidateTimer(){
@@ -117,18 +129,37 @@ class EthAccount {
 
     func setAccount() -> Bool {
         _encryptMnemonic(password: _password!)
-        _saveKeyStoreManager(password: _password!)
-        _unlockAccount()
+        _generateKeyStore(password: _password!)
+        _saveKeyStore()
+        setAddress(index: nil)
 
         return true
     }
 
-    func generateAccount() {
-
+    func generateAccount() -> Bool {
+        do{
+            try _keyStore?.createNewChildAccount(password: _password!)
+            _saveKeyStore()
+        }catch {
+            return false
+        }
+        return true
     }
 
     func getIsVerified() -> Bool {
         return _isVerified
+    }
+
+    func setAddress(index: Int?){
+        if(index == nil || index! > 9){
+            _address = _addressArray.first
+        }else{
+            _address = _addressArray[index!]
+        }
+    }
+
+    func getAddress() -> Address? {
+        return _address
     }
 
     private func _encryptMnemonic(password: String) {
@@ -188,16 +219,28 @@ class EthAccount {
         return iv
     }
 
-    private func _saveKeyStoreManager(password: String) {
-        let userDir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-        let keyStore = try! BIP32Keystore(mnemonics: _mnemonic!, password: password)
-        let keyData = try! JSONEncoder().encode(keyStore.keystoreParams)
-        FileManager.default.createFile(atPath: userDir + "/keystore" + "/key.json", contents: keyData, attributes: nil)
+    private func _generateKeyStore(password: String){
+        _keyStore = try! BIP32Keystore(mnemonics: _mnemonic!, password: password)
     }
 
-    private func _loadKeyStoreManager(password: String) {
+    private func _saveKeyStore() {
         let userDir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-        _keyStoreManager = KeystoreManager.managerForPath(userDir + "/keystore")
+        let keyData = try! JSONEncoder().encode(_keyStore!.keystoreParams)
+        let fileManager = FileManager.default
+        do{
+            try fileManager.createDirectory(atPath: userDir +  "/keystore", withIntermediateDirectories: true)    
+        }catch{
+            print(error)
+        }
+        fileManager.createFile(atPath: userDir +  "/keystore/key.json", contents: keyData)
+    }
+
+    private func _loadKeyStore() {
+        let userDir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+        let fileHandle = FileHandle.init(forReadingAtPath: userDir+"/keystore/key.json")
+        let jsonFile = fileHandle?.readDataToEndOfFile()
+        _keyStore = BIP32Keystore(jsonFile!)!
+        _setAddressArray()
     }
 
     func _setPassword(_ password: String) {
@@ -212,12 +255,27 @@ class EthAccount {
     private func _unlockAccount() {
         let keyHex = KeychainService.loadPassword(service: "moahWallet", account: "password")!
         self._password = keyHex
-        _loadKeyStoreManager(password: keyHex)
+        _loadKeyStore()
+        setAddress(index: nil)
     }
 
-    @objc private func _nilKeyData(_ sender: Timer){
+    private func _setAddressArray(){
+        let path = _keyStore!.paths
+        var pathKey = Array(path.keys)
+        pathKey = pathKey.sorted(by: <)
+
+        for key in pathKey{
+            let address = path[key]
+            _addressArray.append(address!)
+        }
+    }
+
+    @objc private func _lockKeyData(_ sender: Timer){
+        _saveKeyStore()
         _password = nil
-        _keyStoreManager = nil
+        _keyStore = nil
         _mnemonic = nil
+        _address = nil
+        _addressArray = [Address]()
     }
 }

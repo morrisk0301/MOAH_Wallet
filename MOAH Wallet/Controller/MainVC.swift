@@ -27,7 +27,7 @@ class MainVC: UIViewController{
     let balanceLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "0.000 ETH"
+        label.text = "0.0000 ETH"
         label.font = UIFont(name:"NanumSquareRoundB", size: 40, dynamic: true)
         label.textColor = .white
         label.textAlignment = .center
@@ -39,6 +39,7 @@ class MainVC: UIViewController{
     let depositButton: TransparentButton = {
         let button = TransparentButton(type: .system)
         button.setTitle("입금", for: .normal)
+        button.titleLabel?.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
         button.translatesAutoresizingMaskIntoConstraints = false
 
         return button
@@ -47,6 +48,7 @@ class MainVC: UIViewController{
     let transferButton: TransparentButton = {
         let button = TransparentButton(type: .system)
         button.setTitle("전송", for: .normal)
+        button.titleLabel?.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
         button.translatesAutoresizingMaskIntoConstraints = false
 
         return button
@@ -80,6 +82,15 @@ class MainVC: UIViewController{
         view.addSubview(transferButton)
         //view.addSubview(txView)
         tokenView.setTokenString(tokenString: "Ethereum")
+
+
+        let web3: Web3Custom = Web3Custom.web3
+        web3.getBalance(completion: {(balance) in
+            DispatchQueue.main.async {
+                let balanceTrimmed = self.trimBalance(balance: balance)
+                self.balanceLabel.text = balanceTrimmed
+            }
+        })
 
         /*
         let account: EthAccount = EthAccount.accountInstance
@@ -115,6 +126,15 @@ class MainVC: UIViewController{
         super.didReceiveMemoryWarning()
     }
 
+    func trimBalance(balance: BigUInt?) -> String {
+        if(balance == nil){
+            return "0.00000 ETH"
+        }
+        let balanceString = balance!.string(unitDecimals: 18, decimals: 4) + " ETH"
+
+        return balanceString
+    }
+
     func setupBarButton(){
         let leftUIButton: UIButton = UIButton(type: .custom)
         leftUIButton.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
@@ -146,8 +166,8 @@ class MainVC: UIViewController{
 
         tokenView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: screenHeight/20).isActive = true
         tokenView.heightAnchor.constraint(equalToConstant: screenHeight/20).isActive = true
-        tokenView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        tokenView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        tokenView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/5).isActive = true
+        tokenView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/5).isActive = true
 
         balanceLabel.topAnchor.constraint(equalTo: tokenView.bottomAnchor, constant: screenHeight/15).isActive = true
         balanceLabel.heightAnchor.constraint(equalToConstant: screenHeight/20).isActive = true
