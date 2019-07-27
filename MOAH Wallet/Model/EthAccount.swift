@@ -72,14 +72,8 @@ class EthAccount {
         }
     }
 
-    func lockAccount(timer: Bool){
-        if(timer){
-            _timer = Timer.scheduledTimer(timeInterval: 300, target: self, selector: #selector(_lockKeyData(_:)), userInfo: nil, repeats: false)
-        }
-        else{
-            _timer?.fire()
-            invalidateTimer()
-        }
+    func lockAccount(){
+        _timer = Timer.scheduledTimer(timeInterval: 300, target: self, selector: #selector(_lockKeyData(_:)), userInfo: nil, repeats: false)
     }
 
     func invalidateTimer(){
@@ -131,6 +125,7 @@ class EthAccount {
         _encryptMnemonic(password: _password!)
         _generateKeyStore(password: _password!)
         _saveKeyStore()
+        _setAddressArray()
         setAddress(index: nil)
 
         return true
@@ -139,6 +134,7 @@ class EthAccount {
     func generateAccount() -> Bool {
         do{
             try _keyStore?.createNewChildAccount(password: _password!)
+            _setAddressArray()
             _saveKeyStore()
         }catch {
             return false
@@ -160,6 +156,10 @@ class EthAccount {
 
     func getAddress() -> Address? {
         return _address
+    }
+
+    func getAddressArray() -> [Address]? {
+        return _addressArray
     }
 
     private func _encryptMnemonic(password: String) {
@@ -241,6 +241,7 @@ class EthAccount {
         let jsonFile = fileHandle?.readDataToEndOfFile()
         _keyStore = BIP32Keystore(jsonFile!)!
         _setAddressArray()
+        setAddress(index: nil)
     }
 
     func _setPassword(_ password: String) {
@@ -256,14 +257,14 @@ class EthAccount {
         let keyHex = KeychainService.loadPassword(service: "moahWallet", account: "password")!
         self._password = keyHex
         _loadKeyStore()
-        setAddress(index: nil)
     }
 
     private func _setAddressArray(){
+        _addressArray = [Address]()
+
         let path = _keyStore!.paths
         var pathKey = Array(path.keys)
         pathKey = pathKey.sorted(by: <)
-
         for key in pathKey{
             let address = path[key]
             _addressArray.append(address!)

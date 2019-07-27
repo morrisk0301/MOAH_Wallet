@@ -9,8 +9,8 @@ import UIKit
 class UpTransition: CATransition {
     override init() {
         super.init()
-        duration = 0.3
-        type = CATransitionType.push
+        duration = 0.5
+        type = CATransitionType.moveIn
         subtype = CATransitionSubtype.fromTop
         timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
     }

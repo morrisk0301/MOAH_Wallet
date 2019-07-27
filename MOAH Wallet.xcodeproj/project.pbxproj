@@ -10,18 +10,20 @@
 		05420EDFE8066F95FF450720 /* Pods_MOAH_Wallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 812B68AEFA4BF918CB42A780 /* Pods_MOAH_Wallet.framework */; };
 		414E9B1CD0814E681ED5F8C1 /* Pods_MOAH_WalletUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EF9D3F80FDB01A105DBD08E /* Pods_MOAH_WalletUITests.framework */; };
 		6A53443E9BA1270E4CDF7AF0 /* Pods_MOAH_WalletTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E1E7B44C2914ADF41305D87 /* Pods_MOAH_WalletTests.framework */; };
-		A50F201422DB963A00466E8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A50F201322DB963A00466E8F /* Assets.xcassets */; };
 		A50F201722DB97FA00466E8F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A50F201522DB97FA00466E8F /* LaunchScreen.storyboard */; };
 		A540D1D222D792D600A6CE7B /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A540D1D122D792D600A6CE7B /* LocalAuthentication.framework */; };
 		A5A0C08E22DCD151006F2E83 /* NanumSquareRoundB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5A0C08C22DCD150006F2E83 /* NanumSquareRoundB.ttf */; };
 		A5A0C08F22DCD154006F2E83 /* NanumSquareRoundEB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5A0C08D22DCD150006F2E83 /* NanumSquareRoundEB.ttf */; };
 		A5A0C09022DCD155006F2E83 /* NanumSquareRoundR.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5A0C08B22DCD150006F2E83 /* NanumSquareRoundR.ttf */; };
+		A5BDDA6422EB45BB00A9EE5C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5BDDA6322EB45BB00A9EE5C /* Assets.xcassets */; };
+		C051F089B9C06C3FD9DB06E9 /* MainLeftMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F4D47F43A88794BDAD9B /* MainLeftMenuVC.swift */; };
 		C051F0AC25B5A02E9F827E16 /* PasswordCheckVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F7EB191CFBE9259BBA27 /* PasswordCheckVC.swift */; };
 		C051F106C4C595A04EAA4FE1 /* AgreementCheckVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F51191A6826F0F867E0E /* AgreementCheckVC.swift */; };
 		C051F159ABCE211D65F59FE8 /* WalletDoneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F1995FE3594C44DEA5F6 /* WalletDoneVC.swift */; };
 		C051F2666FCBD43EDDC03FD2 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F49F7A22AF8C42EA4D32 /* MainVC.swift */; };
 		C051F29405CB6CAEB8A90062 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C051FDE6CC50D5ED79E6F42C /* Main.storyboard */; };
 		C051F2AA4E61C47D5F1C3018 /* RightTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F6000A5F24D81AA83484 /* RightTransition.swift */; };
+		C051F2DBA1C7CFB4564D2888 /* AccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FB4F46E703A948904A15 /* AccountCell.swift */; };
 		C051F2EF863672C14C79CE4D /* NanumGothic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C051F2C7AD63643BFDF3A9C6 /* NanumGothic.ttf */; };
 		C051F361ACB751354EDEFC01 /* MOAH_WalletUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FD3DE6EDBDC571CF0639 /* MOAH_WalletUITests.swift */; };
 		C051F373B173AC54AF229DFB /* NetworkSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F46ECA4D5C3D54C0F6B4 /* NetworkSettingVC.swift */; };
@@ -30,13 +32,15 @@
 		C051F45046E2E4152EDD8712 /* MainTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F635779A9F378E8C0E45 /* MainTokenView.swift */; };
 		C051F49194CE70570CBFED75 /* PasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FA989586C885176EA740 /* PasswordVC.swift */; };
 		C051F4A7604CFC036FD89FFE /* MnemonicSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F8B5925C8BBCF3AA8E8E /* MnemonicSettingVC.swift */; };
+		C051F4F3C611CBCFBDA45DB2 /* MyAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F63AEAD075F1D9237EED /* MyAccountVC.swift */; };
 		C051F557FB97A111AA701661 /* Web3Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F97A0E294E3AD06B4979 /* Web3Custom.swift */; };
-		C051F55881A8C22611357EA0 /* MainLeftMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F4A33524E6859AC9F0DB /* MainLeftMenuVC.swift */; };
 		C051F58BA970A28F5148E884 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FF8E066A1CFE267725CC /* CustomButton.swift */; };
 		C051F5F80BB40708BAE58682 /* MnemonicVerificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FC2158395B4BF65E453E /* MnemonicVerificationVC.swift */; };
 		C051F6991830583F5D879C9C /* AgreementVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FD9079AB28E40C022FDD /* AgreementVC.swift */; };
 		C051F711317505E36A1E5FE1 /* DownTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FE0CA05FA24966110268 /* DownTransition.swift */; };
 		C051F722D5ED0A6958B239A0 /* AnnouncementVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FAA7B42C718BE4204A4A /* AnnouncementVC.swift */; };
+		C051F7715A69EEBDEFE0844A /* PrivateKeyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FDE2A021837D18D0871F /* PrivateKeyVC.swift */; };
+		C051F782F892BE0170C699DB /* LeftMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F91D4A715C7A47041660 /* LeftMenuCell.swift */; };
 		C051F7AE7F9AA30993F9E5AD /* MnemonicVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FB1E96548FFD0DEEF195 /* MnemonicVC.swift */; };
 		C051F7C9A6AC866D22C44686 /* PasswordSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F2A0436A8E675D322837 /* PasswordSettingVC.swift */; };
 		C051F8022391B9973BD91137 /* MnemonicWarningVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F6F1EBF7625D6A925061 /* MnemonicWarningVC.swift */; };
@@ -94,12 +98,12 @@
 		812B68AEFA4BF918CB42A780 /* Pods_MOAH_Wallet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MOAH_Wallet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E1E7B44C2914ADF41305D87 /* Pods_MOAH_WalletTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MOAH_WalletTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		908A34CA5923A3A1D9426A42 /* Pods-MOAH Wallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MOAH Wallet.debug.xcconfig"; path = "Target Support Files/Pods-MOAH Wallet/Pods-MOAH Wallet.debug.xcconfig"; sourceTree = "<group>"; };
-		A50F201322DB963A00466E8F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A50F201622DB97FA00466E8F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A540D1D122D792D600A6CE7B /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		A5A0C08B22DCD150006F2E83 /* NanumSquareRoundR.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRoundR.ttf; sourceTree = "<group>"; };
 		A5A0C08C22DCD150006F2E83 /* NanumSquareRoundB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRoundB.ttf; sourceTree = "<group>"; };
 		A5A0C08D22DCD150006F2E83 /* NanumSquareRoundEB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRoundEB.ttf; sourceTree = "<group>"; };
+		A5BDDA6322EB45BB00A9EE5C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C051F05C4517A9E3F19A8751 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		C051F1995FE3594C44DEA5F6 /* WalletDoneVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletDoneVC.swift; sourceTree = "<group>"; };
 		C051F26E21CD42E0A1B5B53D /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
@@ -112,17 +116,19 @@
 		C051F46ECA4D5C3D54C0F6B4 /* NetworkSettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkSettingVC.swift; sourceTree = "<group>"; };
 		C051F478AD26EA7B007B6AF3 /* LeftMenuOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftMenuOption.swift; sourceTree = "<group>"; };
 		C051F49F7A22AF8C42EA4D32 /* MainVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
-		C051F4A33524E6859AC9F0DB /* MainLeftMenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainLeftMenuVC.swift; sourceTree = "<group>"; };
 		C051F4A76C51AA93A6914007 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
+		C051F4D47F43A88794BDAD9B /* MainLeftMenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainLeftMenuVC.swift; sourceTree = "<group>"; };
 		C051F51191A6826F0F867E0E /* AgreementCheckVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgreementCheckVC.swift; sourceTree = "<group>"; };
 		C051F6000A5F24D81AA83484 /* RightTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightTransition.swift; sourceTree = "<group>"; };
 		C051F6342A463F4E5602402A /* MnemonicVerificationGetVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicVerificationGetVC.swift; sourceTree = "<group>"; };
 		C051F635779A9F378E8C0E45 /* MainTokenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTokenView.swift; sourceTree = "<group>"; };
+		C051F63AEAD075F1D9237EED /* MyAccountVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAccountVC.swift; sourceTree = "<group>"; };
 		C051F6F1EBF7625D6A925061 /* MnemonicWarningVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicWarningVC.swift; sourceTree = "<group>"; };
 		C051F78260EE7AE0C72FAED1 /* AlertVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertVC.swift; sourceTree = "<group>"; };
 		C051F7AC902DA14D067B4A7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C051F7EB191CFBE9259BBA27 /* PasswordCheckVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordCheckVC.swift; sourceTree = "<group>"; };
 		C051F8B5925C8BBCF3AA8E8E /* MnemonicSettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicSettingVC.swift; sourceTree = "<group>"; };
+		C051F91D4A715C7A47041660 /* LeftMenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftMenuCell.swift; sourceTree = "<group>"; };
 		C051F94D8F21FC113B4FD9F2 /* MOAH Wallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MOAH Wallet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C051F956AE867F6089FFE1BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
 		C051F96A941D724CEC53F3B1 /* FAQVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FAQVC.swift; sourceTree = "<group>"; };
@@ -134,6 +140,7 @@
 		C051FAA7B42C718BE4204A4A /* AnnouncementVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementVC.swift; sourceTree = "<group>"; };
 		C051FAAD35BE522484440F32 /* LeftTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftTransition.swift; sourceTree = "<group>"; };
 		C051FB1E96548FFD0DEEF195 /* MnemonicVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicVC.swift; sourceTree = "<group>"; };
+		C051FB4F46E703A948904A15 /* AccountCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountCell.swift; sourceTree = "<group>"; };
 		C051FBEC2A31284D49D39064 /* RightMenuOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightMenuOption.swift; sourceTree = "<group>"; };
 		C051FC2158395B4BF65E453E /* MnemonicVerificationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicVerificationVC.swift; sourceTree = "<group>"; };
 		C051FCDFA9CC8D752BE3F74C /* LockVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockVC.swift; sourceTree = "<group>"; };
@@ -147,6 +154,7 @@
 		C051FD974D93686134C5B4E6 /* AgreementViewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgreementViewVC.swift; sourceTree = "<group>"; };
 		C051FDAF143D94C8A37998D7 /* MOAH_WalletTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOAH_WalletTests.swift; sourceTree = "<group>"; };
 		C051FDC89BDB5CFCD23A6131 /* RightMenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightMenuCell.swift; sourceTree = "<group>"; };
+		C051FDE2A021837D18D0871F /* PrivateKeyVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateKeyVC.swift; sourceTree = "<group>"; };
 		C051FE0CA05FA24966110268 /* DownTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownTransition.swift; sourceTree = "<group>"; };
 		C051FE634D5A6B9DF45C940E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C051FECD2DA7B560A0904BBE /* LockView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockView.swift; sourceTree = "<group>"; };
@@ -215,12 +223,12 @@
 			children = (
 				C051F49F7A22AF8C42EA4D32 /* MainVC.swift */,
 				C051FCDFA9CC8D752BE3F74C /* LockVC.swift */,
-				C051F4A33524E6859AC9F0DB /* MainLeftMenuVC.swift */,
 				C051FFF0FD15853474C90D5C /* MainContainerVC.swift */,
 				C051F78260EE7AE0C72FAED1 /* AlertVC.swift */,
 				C051F58D1773450372607960 /* PreMainController */,
 				C051F1EA5DBBAA18C80300C9 /* RightMenuController */,
 				C051FF7BB7B279B376C514A0 /* TokenSelectVC.swift */,
+				C051F9A7B306A8BF12E198F5 /* LeftMenuController */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -228,7 +236,7 @@
 		C051F10289EE90F96384604E /* MOAH Wallet */ = {
 			isa = PBXGroup;
 			children = (
-				A50F201322DB963A00466E8F /* Assets.xcassets */,
+				A5BDDA6322EB45BB00A9EE5C /* Assets.xcassets */,
 				C051FF117AB4DADC769782D9 /* Info.plist */,
 				C051F7AC902DA14D067B4A7E /* AppDelegate.swift */,
 				A50F201522DB97FA00466E8F /* LaunchScreen.storyboard */,
@@ -352,8 +360,20 @@
 				C051F326270A0761F1E5315E /* TransparentButton.swift */,
 				C051FE0CA05FA24966110268 /* DownTransition.swift */,
 				C051F387544906A5F9ED1AF2 /* UpTransition.swift */,
+				C051F91D4A715C7A47041660 /* LeftMenuCell.swift */,
+				C051FB4F46E703A948904A15 /* AccountCell.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		C051F9A7B306A8BF12E198F5 /* LeftMenuController */ = {
+			isa = PBXGroup;
+			children = (
+				C051F4D47F43A88794BDAD9B /* MainLeftMenuVC.swift */,
+				C051F63AEAD075F1D9237EED /* MyAccountVC.swift */,
+				C051FDE2A021837D18D0871F /* PrivateKeyVC.swift */,
+			);
+			path = LeftMenuController;
 			sourceTree = "<group>";
 		};
 		C051FB6918D76ABB9BC18032 /* MOAH WalletUITests */ = {
@@ -484,9 +504,9 @@
 			files = (
 				A50F201722DB97FA00466E8F /* LaunchScreen.storyboard in Resources */,
 				A5A0C08F22DCD154006F2E83 /* NanumSquareRoundEB.ttf in Resources */,
-				A50F201422DB963A00466E8F /* Assets.xcassets in Resources */,
 				A5A0C09022DCD155006F2E83 /* NanumSquareRoundR.ttf in Resources */,
 				C051F29405CB6CAEB8A90062 /* Main.storyboard in Resources */,
+				A5BDDA6422EB45BB00A9EE5C /* Assets.xcassets in Resources */,
 				C051F2EF863672C14C79CE4D /* NanumGothic.ttf in Resources */,
 				A5A0C08E22DCD151006F2E83 /* NanumSquareRoundB.ttf in Resources */,
 			);
@@ -605,7 +625,6 @@
 				C051FC07BFCC39DD3F13BCF3 /* LockVC.swift in Sources */,
 				C051FA62FD875D5F93EDDFD4 /* Util.swift in Sources */,
 				C051FB3EDA8676CDCDBBDEF9 /* KeyboardShowHide.swift in Sources */,
-				C051F55881A8C22611357EA0 /* MainLeftMenuVC.swift in Sources */,
 				C051F957854FA8DC85D649B1 /* MainContainerVC.swift in Sources */,
 				C051FB1FE29301C3EA68F93B /* KeypadView.swift in Sources */,
 				C051F58BA970A28F5148E884 /* CustomButton.swift in Sources */,
@@ -645,6 +664,11 @@
 				C051FE537904487550FD4095 /* UpTransition.swift in Sources */,
 				C051FD0AB2ECBBFC1E2CDA33 /* LeftMenuOption.swift in Sources */,
 				C051F557FB97A111AA701661 /* Web3Custom.swift in Sources */,
+				C051F089B9C06C3FD9DB06E9 /* MainLeftMenuVC.swift in Sources */,
+				C051F782F892BE0170C699DB /* LeftMenuCell.swift in Sources */,
+				C051F4F3C611CBCFBDA45DB2 /* MyAccountVC.swift in Sources */,
+				C051F7715A69EEBDEFE0844A /* PrivateKeyVC.swift in Sources */,
+				C051F2DBA1C7CFB4564D2888 /* AccountCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

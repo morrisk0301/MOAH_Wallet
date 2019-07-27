@@ -9,7 +9,7 @@ protocol KeypadViewDelegate {
 }
 
 protocol MainControllerDelegate {
-    func leftSideMenuClicked()
+    func leftSideMenuClicked(forMenuOption menuOption: LeftMenuOption?)
     func rightSideMenuClicked(forMenuOption menuOption: RightMenuOption?)
     func tokenViewClicked()
 }

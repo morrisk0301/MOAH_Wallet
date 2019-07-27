@@ -12,7 +12,7 @@ class MainRightMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSou
 
     let screenSize = UIScreen.main.bounds
 
-    var delegte: MainControllerDelegate?
+    var delegate: MainControllerDelegate?
 
     var tableView: UITableView = {
         let tableView = UITableView()
@@ -93,7 +93,7 @@ class MainRightMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSou
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let menuOption = RightMenuOption(rawValue: indexPath.row)
-        delegte?.rightSideMenuClicked(forMenuOption: menuOption)
+        delegate?.rightSideMenuClicked(forMenuOption: menuOption)
     }
 
     private func setupLayout(){

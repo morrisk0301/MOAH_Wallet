@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
         let key = defaults.string(forKey: "salt")
         if(key != nil){
-            account.lockAccount(timer: true)
+            account.lockAccount()
         }
     }
 
@@ -49,10 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(_ application: UIApplication) {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-        let key = defaults.string(forKey: "salt")
-        if(key != nil){
-            account.lockAccount(timer: false)
-        }
+
     }
 
 

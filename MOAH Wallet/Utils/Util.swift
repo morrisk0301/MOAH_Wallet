@@ -4,6 +4,8 @@
 //
 
 import Foundation
+import CoreImage
+import UIKit
 
 class Util {
     init(){}
@@ -23,5 +25,35 @@ class Util {
         alertViewController.buttonAction = completion
 
         return alertViewController
+    }
+
+    func generateQRCode(source: String?) -> UIImage? {
+
+        guard let sourceString: String = source else {return nil}
+
+        let data = sourceString.data(using: String.Encoding.ascii)
+
+        guard let qrFilter = CIFilter(name: "CIQRCodeGenerator") else { return nil }
+
+        qrFilter.setValue(data, forKey: "inputMessage")
+
+        guard let qrImage = qrFilter.outputImage else { return nil }
+
+        let transform = CGAffineTransform(scaleX: 10, y: 10)
+        let scaledQrImage = qrImage.transformed(by: transform)
+
+        guard let colorInvertFilter = CIFilter(name: "CIColorInvert") else { return nil }
+        colorInvertFilter.setValue(scaledQrImage, forKey: "inputImage")
+        guard let outputInvertedImage = colorInvertFilter.outputImage else { return nil }
+
+        guard let maskToAlphaFilter = CIFilter(name: "CIMaskToAlpha") else { return nil }
+        maskToAlphaFilter.setValue(outputInvertedImage, forKey: "inputImage")
+        guard let outputCIImage = maskToAlphaFilter.outputImage else { return nil }
+
+        let context = CIContext()
+        guard let cgImage = context.createCGImage(scaledQrImage, from: outputCIImage.extent) else { return nil }
+        let processedImage = UIImage(cgImage: cgImage)
+
+        return processedImage
     }
 }

@@ -81,7 +81,8 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
         }, completion: nil)
 
         if(side == "left"){
-
+            guard let menuOption = menuOption as? LeftMenuOption else { return }
+            self.didSelectLeftMenuOption(menuOption: menuOption)
         }else{
             guard let menuOption = menuOption as? RightMenuOption else { return }
             self.didSelectRightMenuOption(menuOption: menuOption)
@@ -125,15 +126,25 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
         }
     }
 
-    func didSelectLeftMenuOption(menuOption: RightMenuOption) {
-
+    func didSelectLeftMenuOption(menuOption: LeftMenuOption) {
+        switch menuOption {
+        case .MyAccount:
+            let controller = MyAccountVC()
+            present(UINavigationController(rootViewController: controller), animated: true, completion: nil)
+        case .PrivateKey:
+            let controller = PrivateKeyVC()
+            present(UINavigationController(rootViewController: controller), animated: true, completion: nil)
+        default:
+            break
+        }
     }
 
-    func leftSideMenuClicked() {
+    func leftSideMenuClicked(forMenuOption menuOption: LeftMenuOption?) {
         addTransparentView(side: "left")
 
         if(mainLeftMenuVC == nil){
             mainLeftMenuVC = MainLeftMenuVC()
+            mainLeftMenuVC.delegate = self
             if(mainRightMenuVC != nil){
                 view.insertSubview(mainLeftMenuVC.view, aboveSubview: mainRightMenuVC.view)
             }else{
@@ -147,7 +158,12 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
         }
 
         isExpandLeft = !isExpandLeft
-        animatePanel(shouldExpand: isExpandLeft, side: "left", menuOption: nil)
+        if(menuOption == nil){
+            animatePanel(shouldExpand: isExpandLeft, side: "left", menuOption: menuOption)
+        }
+        else{
+            proceedToView(side: "left", menuOption: menuOption)
+        }
     }
 
     func rightSideMenuClicked(forMenuOption menuOption: RightMenuOption?) {
@@ -155,7 +171,7 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
 
         if(mainRightMenuVC == nil){
             mainRightMenuVC = MainRightMenuVC()
-            mainRightMenuVC.delegte = self
+            mainRightMenuVC.delegate = self
             if(mainLeftMenuVC != nil){
                 view.insertSubview(mainRightMenuVC.view, aboveSubview: mainLeftMenuVC.view)
             }else{
@@ -173,7 +189,7 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
             animatePanel(shouldExpand: isExpandRight, side: "right", menuOption: menuOption)
         }
         else{
-            proceedToView(side: "", menuOption: menuOption)
+            proceedToView(side: "right", menuOption: menuOption)
         }
     }
 

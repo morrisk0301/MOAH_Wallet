@@ -113,9 +113,9 @@ extension UIColor {
         }
         else if(key=="light3"){
             self.init(
-                    red: 0xFA & 0xFF,
-                    green: 0xFA & 0xFF,
-                    blue: 0xEFA & 0xFF
+                    red: 0xF7 & 0xFF,
+                    green: 0xF7 & 0xFF,
+                    blue: 0xF7 & 0xFF
             )
         }
         else if(key=="grey"){
@@ -277,6 +277,18 @@ extension UIView {
         translatesAutoresizingMaskIntoConstraints = false
         heightAnchor.constraint(equalToConstant: constant).isActive = true
     }
+
+    func applyShadow(){
+        layer.borderWidth = 0.5
+        layer.borderColor = UIColor(rgb: 0xE7E7E7).cgColor
+        layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.15).cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 1.5)
+        layer.shadowOpacity = 1.0
+        layer.shadowRadius = 0.0
+        layer.masksToBounds = false
+        layer.cornerRadius = 4.0
+    }
+
 }
 
 extension MutableCollection {

@@ -16,6 +16,7 @@ class MainVC: UIViewController{
     var delegate: MainControllerDelegate?
 
     let screenSize = UIScreen.main.bounds
+    let web3: Web3Custom = Web3Custom.web3
 
     let tokenView: MainTokenView = {
         let tokenView = MainTokenView()
@@ -27,7 +28,7 @@ class MainVC: UIViewController{
     let balanceLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "0.0000 ETH"
+        label.text = "0.00000 ETH"
         label.font = UIFont(name:"NanumSquareRoundB", size: 40, dynamic: true)
         label.textColor = .white
         label.textAlignment = .center
@@ -83,15 +84,6 @@ class MainVC: UIViewController{
         //view.addSubview(txView)
         tokenView.setTokenString(tokenString: "Ethereum")
 
-
-        let web3: Web3Custom = Web3Custom.web3
-        web3.getBalance(completion: {(balance) in
-            DispatchQueue.main.async {
-                let balanceTrimmed = self.trimBalance(balance: balance)
-                self.balanceLabel.text = balanceTrimmed
-            }
-        })
-
         /*
         let account: EthAccount = EthAccount.accountInstance
         let KS = account.getKeyStore()
@@ -119,7 +111,16 @@ class MainVC: UIViewController{
             mnemonicWarningVC.tempMnemonic = self.tempMnemonic!
 
             self.navigationController?.pushViewController(mnemonicWarningVC, animated: false)
+
+            return
         }
+
+        web3.getBalance(completion: {(balance) in
+            DispatchQueue.main.async {
+                let balanceTrimmed = self.trimBalance(balance: balance)
+                self.balanceLabel.text = balanceTrimmed
+            }
+        })
     }
 
     override func didReceiveMemoryWarning() {
@@ -127,7 +128,7 @@ class MainVC: UIViewController{
     }
 
     func trimBalance(balance: BigUInt?) -> String {
-        if(balance == nil){
+        if(balance == nil || balance == 0){
             return "0.00000 ETH"
         }
         let balanceString = balance!.string(unitDecimals: 18, decimals: 4) + " ETH"
@@ -191,7 +192,7 @@ class MainVC: UIViewController{
     }
 
     @objc func leftMenuClicked(_ sender: UIBarButtonItem){
-        delegate?.leftSideMenuClicked()
+        delegate?.leftSideMenuClicked(forMenuOption: nil)
     }
 
     @objc func rightMenuClicked(_ sender: UIBarButtonItem){
