@@ -11,7 +11,7 @@ class PasswordSettingVC: UIViewController {
         super.viewDidLoad()
         self.replaceBackButton(color: "dark")
         self.setNavigationTitle(title: "비밀번호 및 인증 관리")
-        self.clearNavigationBar()
+        self.transparentNavigationBar()
 
         self.navigationItem.leftBarButtonItem?.target = self
         self.navigationItem.leftBarButtonItem?.action = #selector(backPressed(_:))

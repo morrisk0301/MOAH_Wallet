@@ -5,6 +5,7 @@
 
 import Foundation
 import UIKit
+import web3swift
 
 class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -13,7 +14,7 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     let account: EthAccount = EthAccount.accountInstance
     let screenSize = UIScreen.main.bounds
 
-    var tableView: UITableView = {
+    let tableView: UITableView = {
         let tableView = UITableView()
 
         tableView.backgroundColor = UIColor(key: "light3")
@@ -23,11 +24,22 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
         return tableView
     }()
 
+    let addButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("추가", for: .normal)
+        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 20, dynamic: true)
+        button.setTitleColor(UIColor(key: "dark"), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(addPressed(_:)), for: .touchUpInside)
+
+        return button
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.replaceBackButton(color: "dark")
         self.setNavigationTitle(title: "내 계정")
-        self.clearNavigationBar()
+        self.transparentNavigationBar()
 
         self.navigationItem.leftBarButtonItem?.target = self
         self.navigationItem.leftBarButtonItem?.action = #selector(backPressed(_:))
@@ -70,6 +82,12 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifer, for: indexPath) as! AccountCell
+        guard let accounts = account.getAddressArray() else { return cell }
+
+        if(indexPath.section == 0){
+            cell.accountLabel.text = "주 계정"
+        }
+        cell.addressLabel.text = accounts[indexPath.section].description
 
         return cell
     }
@@ -95,5 +113,9 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
 
     @objc func backPressed(_ sender: UIButton){
         self.dismiss(animated: true)
+    }
+
+    @objc func addPressed(_ sender: UIButton){
+
     }
 }

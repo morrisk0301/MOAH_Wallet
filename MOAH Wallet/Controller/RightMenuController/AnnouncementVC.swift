@@ -11,7 +11,7 @@ class AnnouncementVC: UIViewController {
         super.viewDidLoad()
         self.replaceBackButton(color: "dark")
         self.setNavigationTitle(title: "공지사항")
-        self.clearNavigationBar()
+        self.transparentNavigationBar()
 
         self.navigationItem.leftBarButtonItem?.target = self
         self.navigationItem.leftBarButtonItem?.action = #selector(backPressed(_:))

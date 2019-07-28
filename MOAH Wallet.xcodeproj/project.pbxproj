@@ -43,6 +43,7 @@
 		C051F782F892BE0170C699DB /* LeftMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F91D4A715C7A47041660 /* LeftMenuCell.swift */; };
 		C051F7AE7F9AA30993F9E5AD /* MnemonicVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FB1E96548FFD0DEEF195 /* MnemonicVC.swift */; };
 		C051F7C9A6AC866D22C44686 /* PasswordSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F2A0436A8E675D322837 /* PasswordSettingVC.swift */; };
+		C051F7E59E0BC7CD726C46E7 /* AddAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F395F27B1ABD90762B49 /* AddAccountVC.swift */; };
 		C051F8022391B9973BD91137 /* MnemonicWarningVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F6F1EBF7625D6A925061 /* MnemonicWarningVC.swift */; };
 		C051F85B2D0020F30D1961C8 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FFB8B9E194F8D83BD639 /* Protocols.swift */; };
 		C051F88E2A48A734D8F1901B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F05C4517A9E3F19A8751 /* Extensions.swift */; };
@@ -113,6 +114,7 @@
 		C051F2FC1D4AD78361437D8A /* KeychainService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		C051F326270A0761F1E5315E /* TransparentButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransparentButton.swift; sourceTree = "<group>"; };
 		C051F387544906A5F9ED1AF2 /* UpTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpTransition.swift; sourceTree = "<group>"; };
+		C051F395F27B1ABD90762B49 /* AddAccountVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAccountVC.swift; sourceTree = "<group>"; };
 		C051F46ECA4D5C3D54C0F6B4 /* NetworkSettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkSettingVC.swift; sourceTree = "<group>"; };
 		C051F478AD26EA7B007B6AF3 /* LeftMenuOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftMenuOption.swift; sourceTree = "<group>"; };
 		C051F49F7A22AF8C42EA4D32 /* MainVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
@@ -372,6 +374,7 @@
 				C051F4D47F43A88794BDAD9B /* MainLeftMenuVC.swift */,
 				C051F63AEAD075F1D9237EED /* MyAccountVC.swift */,
 				C051FDE2A021837D18D0871F /* PrivateKeyVC.swift */,
+				C051F395F27B1ABD90762B49 /* AddAccountVC.swift */,
 			);
 			path = LeftMenuController;
 			sourceTree = "<group>";
@@ -669,6 +672,7 @@
 				C051F4F3C611CBCFBDA45DB2 /* MyAccountVC.swift in Sources */,
 				C051F7715A69EEBDEFE0844A /* PrivateKeyVC.swift in Sources */,
 				C051F2DBA1C7CFB4564D2888 /* AccountCell.swift in Sources */,
+				C051F7E59E0BC7CD726C46E7 /* AddAccountVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,7 +11,7 @@ class PrivateKeyVC: UIViewController {
         super.viewDidLoad()
         self.replaceBackButton(color: "dark")
         self.setNavigationTitle(title: "개인키 조회")
-        self.clearNavigationBar()
+        self.transparentNavigationBar()
 
         self.navigationItem.leftBarButtonItem?.target = self
         self.navigationItem.leftBarButtonItem?.action = #selector(backPressed(_:))

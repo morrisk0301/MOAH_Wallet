@@ -18,8 +18,6 @@ class TransparentButton: UIButton {
 
     func setupButton(){
         setTitleColor(.white, for: .normal)
-        titleLabel?.font = UIFont(name:"NanumSquareRoundR", size: 20, dynamic: true)
-        translatesAutoresizingMaskIntoConstraints = false
         layer.cornerRadius = 10
         backgroundColor = .clear
         layer.borderColor = UIColor.white.cgColor

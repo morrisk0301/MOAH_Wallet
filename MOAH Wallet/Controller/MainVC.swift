@@ -67,7 +67,7 @@ class MainVC: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupBackground()
-        self.clearNavigationBar()
+        self.transparentNavigationBar()
         navigationItem.title = "MOAH Wallet"
 
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundEB", size: 25, dynamic: true)!,

@@ -70,7 +70,7 @@ class MnemonicWarningVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.replaceBackButton(color: "dark")
-        self.clearNavigationBar()
+        self.transparentNavigationBar()
 
         view.backgroundColor = UIColor(key: "light3")
         view.addSubview(headLabel)

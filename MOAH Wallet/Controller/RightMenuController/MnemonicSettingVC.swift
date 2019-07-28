@@ -11,7 +11,7 @@ class MnemonicSettingVC: UIViewController {
         super.viewDidLoad()
         self.replaceBackButton(color: "dark")
         self.setNavigationTitle(title: "시드 구문 관리")
-        self.clearNavigationBar()
+        self.transparentNavigationBar()
 
         self.navigationItem.leftBarButtonItem?.target = self
         self.navigationItem.leftBarButtonItem?.action = #selector(backPressed(_:))

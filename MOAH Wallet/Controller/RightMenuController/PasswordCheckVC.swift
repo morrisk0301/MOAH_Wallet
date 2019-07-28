@@ -25,7 +25,7 @@ class PasswordCheckVC: UIViewController, KeypadViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.replaceBackButton(color: "light")
-        self.clearNavigationBar()
+        self.transparentNavigationBar()
 
         view.addSubview(lock)
         lock.secureKeypad.delegate = self

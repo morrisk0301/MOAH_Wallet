@@ -39,22 +39,24 @@ class MainViewController: UIViewController {
         return label
     }()
 
-    let newWalletButton: TransparentButton = {
+    lazy var newWalletButton: TransparentButton = {
         let button = TransparentButton(type: .system)
         button.setTitle("새로운 지갑 만들기", for: .normal)
         button.titleLabel?.font = UIFont(name:"NanumSquareRoundR", size: 20, dynamic: true)
         button.tag = 1
         button.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
 
         return button
     }()
 
-    let getWalletButton: TransparentButton = {
+    lazy var getWalletButton: TransparentButton = {
         let button = TransparentButton(type: .system)
         button.setTitle("기존 지갑 복원하기", for: .normal)
         button.titleLabel?.font = UIFont(name:"NanumSquareRoundR", size: 20, dynamic: true)
         button.tag = 2
         button.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
 
         return button
     }()

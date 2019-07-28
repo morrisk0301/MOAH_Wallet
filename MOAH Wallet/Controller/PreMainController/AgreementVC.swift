@@ -70,7 +70,7 @@ class AgreementVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.replaceBackButton(color: "dark")
-        self.clearNavigationBar()
+        self.transparentNavigationBar()
 
         self.navigationItem.leftBarButtonItem?.target = self
         self.navigationItem.leftBarButtonItem?.action = #selector(backPressed(_:))

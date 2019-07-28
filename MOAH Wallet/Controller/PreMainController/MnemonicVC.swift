@@ -62,7 +62,7 @@ class MnemonicVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.clearNavigationBar()
+        self.transparentNavigationBar()
         self.replaceBackButton(color: "dark")
 
         view.backgroundColor = UIColor(key: "light3")

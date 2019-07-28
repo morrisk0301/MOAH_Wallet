@@ -44,7 +44,7 @@ extension UIViewController {
         self.navigationItem.leftBarButtonItem = leftButton
     }
 
-    func clearNavigationBar(){
+    func transparentNavigationBar(){
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
     }

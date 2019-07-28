@@ -109,7 +109,7 @@ class MnemonicVerificationVC: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
-        self.clearNavigationBar()
+        self.transparentNavigationBar()
         self.replaceBackButton(color: "dark")
 
         self.navigationItem.leftBarButtonItem?.target = self
