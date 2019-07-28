@@ -9,3 +9,9 @@ import UIKit
 struct AnchoredConstraints {
     var top, leading, bottom, trailing, width, height: NSLayoutConstraint?
 }
+
+struct AddressCustom: Codable {
+    var address: String
+    var name: String
+    var isPrivateKey: Bool
+}

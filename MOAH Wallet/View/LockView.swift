@@ -82,20 +82,6 @@ class LockView: UIView {
         return imageView
     }()
 
-    let animation: CABasicAnimation = {
-        let midX = UIScreen.main.bounds.midX
-        let midY = UIScreen.main.bounds.midY
-        let animation = CABasicAnimation(keyPath: "position")
-
-        animation.duration = 0.06
-        animation.repeatCount = 4
-        animation.autoreverses = true
-        animation.fromValue = CGPoint(x: midX - 10, y: midY)
-        animation.toValue = CGPoint(x: midX + 10, y: midY)
-
-        return animation
-    }()
-
     let secureKeypad: KeypadView = {
         let view = KeypadView()
         view.translatesAutoresizingMaskIntoConstraints = false

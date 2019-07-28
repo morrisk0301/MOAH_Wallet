@@ -92,23 +92,20 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
 
         guard let accounts = account.getAddressArray() else { return cell }
         guard let accountSelected = account.getAddress() else { return cell}
-        let addressName = account.getAddressNameArray()
 
         cell.checkImage.isHidden = true
-        if(accounts[indexPath.section].description == accountSelected.description){
+        if(accounts[indexPath.section].address == accountSelected.description){
             cell.checkImage.isHidden = false
         }
 
         if(indexPath.section == 0){
-            cell.accountLabel.text = "주 계정"
             cell.accountLabel.textColor = UIColor(key: "dark")
         }
-        else{
-            cell.accountLabel.text = addressName[indexPath.section-1]
-        }
-        cell.addressLabel.text = accounts[indexPath.section].description
 
-        web3.getBalance(address: accounts[indexPath.section].description, completion: {(balance) in
+        cell.accountLabel.text = accounts[indexPath.section].name
+        cell.addressLabel.text = accounts[indexPath.section].address
+
+        web3.getBalance(address: accounts[indexPath.section].address, completion: {(balance) in
             DispatchQueue.main.async {
                 let balanceTrimmed = self.util.trimBalance(balance: balance)
                 cell.balanceLabel.text = balanceTrimmed

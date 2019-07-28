@@ -104,8 +104,8 @@ class PasswordVC: UIViewController, KeypadViewDelegate {
                 passwordTemp = ""
                 let changeImage = UIImage(named: "pwLine")
 
-
-                self.view.layer.add(lock.animation, forKey: "position")
+                let animation = ShakeAnimation()
+                self.view.layer.add(animation, forKey: "position")
 
                 lock.errorLabel.text = "비밀번호가 일치하지 않습니다."
                 lock.pwLine6.image = changeImage

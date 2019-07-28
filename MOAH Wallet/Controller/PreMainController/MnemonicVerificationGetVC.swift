@@ -71,20 +71,6 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
         return button
     }()
 
-    let animation: CABasicAnimation = {
-        let midX = UIScreen.main.bounds.midX
-        let midY = UIScreen.main.bounds.midY
-        let animation = CABasicAnimation(keyPath: "position")
-
-        animation.duration = 0.06
-        animation.repeatCount = 4
-        animation.autoreverses = true
-        animation.fromValue = CGPoint(x: midX - 10, y: midY)
-        animation.toValue = CGPoint(x: midX + 10, y: midY)
-
-        return animation
-    }()
-
     override func viewDidLoad() {
         super.viewDidLoad()
         self.replaceBackButton(color: "dark")
@@ -163,6 +149,7 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
             self.navigationController?.pushViewController(passwordVC, animated: true)
         }
         else{
+            let animation = ShakeAnimation()
             self.view.layer.add(animation, forKey: "position")
             errorLabel.text = "올바르지 않은 시드 구문입니다!"
         }

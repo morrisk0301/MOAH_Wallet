@@ -13,23 +13,26 @@ class EthAccount {
 
     let util = Util()
     let userDefaults = UserDefaults.standard
+    let userDir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
 
+    private var _keyStoreManager: KeystoreManager?
     private var _keyStore: BIP32Keystore?
+    private var _plainKeystore: [PlainKeystore]?
     private var _mnemonic: Mnemonics?
     private var _password: String?
     private var _isVerified: Bool = false
     private var _timer: Timer?
     private var _address: Address?
-    private var _addressArray: [Address] = [Address]()
-    private var _addressName: [String] = [String]()
+    private var _addressArray: [AddressCustom] = [AddressCustom]()
+
     private init() {
     }
 
-    func bioProceed(){
+    func bioProceed() {
         _unlockAccount()
     }
 
-    func savePassword(_ password: String){
+    func savePassword(_ password: String) {
         let passwordArray: [UInt8] = Array(password.utf8)
         let hash = util.randomString(length: 32)
         let salt: [UInt8] = Array(hash.utf8)
@@ -44,7 +47,7 @@ class EthAccount {
         }
     }
 
-    func checkPassword(_ password: String) -> Bool{
+    func checkPassword(_ password: String) -> Bool {
         let passwordArray: [UInt8] = Array(password.utf8)
         let hash = userDefaults.string(forKey: "salt")!
         let salt: [UInt8] = Array(hash.utf8)
@@ -54,30 +57,26 @@ class EthAccount {
         let keyHex = KeychainService.loadPassword(service: "moahWallet", account: "password")!
         let key = Array<UInt8>(hex: keyHex)
 
-        if(passwordHashed == key){
+        if (passwordHashed == key) {
             self._password = keyHex
+            _loadAddress()
+            _loadAddressSelected()
             _loadKeyStore()
             return true
-        }
-        else{
+        } else {
             return false
         }
     }
 
     func getKeyStoreManager() -> KeystoreManager? {
-        if(_keyStore == nil){
-            return nil
-        }else{
-            let keyStoreManager = KeystoreManager([_keyStore!])
-            return keyStoreManager
-        }
+        return _keyStoreManager
     }
 
-    func lockAccount(){
+    func lockAccount() {
         _timer = Timer.scheduledTimer(timeInterval: 300, target: self, selector: #selector(_lockKeyData(_:)), userInfo: nil, repeats: false)
     }
 
-    func invalidateTimer(){
+    func invalidateTimer() {
         _timer?.invalidate()
         _timer = nil
     }
@@ -117,30 +116,51 @@ class EthAccount {
     }
 
     func getMnemonic(password: String) -> String? {
-        let mnemonic = _decryptMnemonic(password: password)
+        /*
+        let mnemonic = _loadMnemonic(password: password)
 
         return mnemonic
+        */
+        return nil
     }
 
     func setAccount() -> Bool {
-        _encryptMnemonic(password: _password!)
+        _saveMnemonic(password: _password!)
         _generateKeyStore(password: _password!)
         _saveKeyStore()
-        _setAddressArray()
+        _generateAddressArray()
         setAddress(index: nil)
-        _saveAddress()
+
+        return true
+    }
+
+    func getAccount(key: String, name: String) -> Bool{
+        guard _checkAccount(name: name) else{ return false }
+
+        do{
+            let keyStore = try PlainKeystore(privateKey: key)
+            let address = AddressCustom(address: keyStore.addresses.first!.description, name: name, isPrivateKey: true)
+            _addAddress(address: address)
+            _savePrivateKey(key: key, name: address.name, password: _password!)
+            setAddress(address: _addressArray.last!.address)
+        }catch{
+            return false
+        }
 
         return true
     }
 
     func generateAccount(name: String) -> Bool {
-        do{
+        guard _checkAccount(name: name) else{ return false }
+
+        do {
             try _keyStore?.createNewChildAccount(password: _password!)
-            _saveAddressName(name)
-            _setAddressArray()
             _saveKeyStore()
-            setAddress(address: _addressArray.last!.description)
-        }catch {
+
+            let address = AddressCustom(address: _getLastAddress().description, name: name, isPrivateKey: false)
+            _addAddress(address: address)
+            setAddress(address: _addressArray.last!.address)
+        } catch {
             return false
         }
         return true
@@ -150,87 +170,81 @@ class EthAccount {
         return _isVerified
     }
 
-    func setAddress(index: Int?){
-        if(index == nil || index! > 9){
-            _address = _addressArray.first
-        }else{
-            _address = _addressArray[index!]
+    func setAddress(index: Int?) {
+        if (index == nil || index! > 9) {
+            _address = Address(_addressArray.first!.address)
+        } else {
+            _address = Address(_addressArray[index!].address)
         }
-        _saveAddress()
+        _saveAddressSelected()
     }
 
-    func setAddress(address: String){
+    func setAddress(address: String) {
         _address = Address(address)
-        _saveAddress()
+        _saveAddressSelected()
     }
 
     func getAddress() -> Address? {
         return _address
     }
 
-    func getAddressArray() -> [Address]? {
+    func getAddressArray() -> [AddressCustom]? {
         return _addressArray
     }
 
     func getAddressName() -> String? {
-        var counter = 0
         for address in _addressArray{
-            if(address == _address){
-                if(counter == 0){
-                    return nil
-                }
-                return _addressName[counter-1]
+            if(_address!.description == address.address){
+                return address.name
             }
-            counter += 1
         }
         return nil
     }
 
-    func getAddressNameArray() -> [String] {
-        return _addressName
-    }
-
-    private func _encryptMnemonic(password: String) {
-        let util = Util()
-        let mnemonicData: Data = _mnemonic!.string.data(using: String.Encoding.utf8)!
+    private func _encryptData(stringData: String, password: String) -> Data {
+        let data: Data = stringData.data(using: String.Encoding.utf8)!
         let key256 = Array<UInt8>(hex: password)
-        let iv: [UInt8] = Array(util.randomString(length: 16).utf8)
+        let iv = _loadIv()
         let aes = try! AES(key: key256, blockMode: CBC(iv: iv))
-        let mnemonicEncrypted = try! aes.encrypt([UInt8](mnemonicData))
+        let encryptedUint8 = try! aes.encrypt([UInt8](data))
+        let encryptedData = Data(bytes: encryptedUint8, count: encryptedUint8.count)
 
-        _saveMnemonic(mnemonicEncrypted: mnemonicEncrypted)
-        _saveIv(iv: iv)
+        return encryptedData
     }
 
-    private func _decryptMnemonic(password: String) -> String? {
-        if(checkPassword(password)){
-            let key256 = Array<UInt8>(hex: self._password!)
-            let iv = _loadIv()
-            let mnemonicEncrypted = _loadMnemonic()
+    private func _decryptData(encryptedData: Data, password: String) -> String {
+        let key256 = Array<UInt8>(hex: password)
+        let iv = _loadIv()
+        let aes = try! AES(key: key256, blockMode: CBC(iv: iv))
+        let decryptedUInt8 = try! aes.decrypt([UInt8](encryptedData))
+        let decryptedData = String(bytes: decryptedUInt8, encoding: .utf8)!
 
-            let aes = try! AES(key: key256, blockMode: CBC(iv: iv))
-            let mnemonicDecrypted = try! aes.decrypt(mnemonicEncrypted)
-            let mnemonic = String(bytes: mnemonicDecrypted, encoding: .utf8)!
-
-            return mnemonic
-        }
-        else{
-            return nil
-        }
+        return decryptedData
     }
 
-    private func _saveMnemonic(mnemonicEncrypted: [UInt8]) {
-        let mnemonicEncryptedData = Data(bytes: mnemonicEncrypted, count: mnemonicEncrypted.count)
 
-        userDefaults.set(mnemonicEncryptedData, forKey: "mnemonic")
+    private func _saveMnemonic(password: String) {
+        let mnemonicEncrypted = _encryptData(stringData: _mnemonic!.string, password: password)
+        userDefaults.set(mnemonicEncrypted, forKey: "mnemonic")
     }
 
-    private func _loadMnemonic() -> [UInt8] {
-        let userDefaults = UserDefaults.standard
-        let mnemonicEncryptedData = userDefaults.data(forKey: "mnemonic")!
-        let mnemonicEncrypted = [UInt8](mnemonicEncryptedData)
+    private func _loadMnemonic(password: String) -> String {
+        let mnemonicEncrypted = userDefaults.data(forKey: "mnemonic")!
+        let mnemonic = _decryptData(encryptedData: mnemonicEncrypted, password: password)
 
-        return mnemonicEncrypted
+        return mnemonic
+    }
+
+    private func _savePrivateKey(key: String, name: String, password: String) {
+        let encryptPrivateKey = _encryptData(stringData: key, password: password)
+        userDefaults.set(encryptPrivateKey, forKey: name)
+    }
+
+    private func _loadPrivateKey(name: String, password: String) -> String {
+        let encryptPrivateKey = userDefaults.data(forKey: name)!
+        let privateKey = _decryptData(encryptedData: encryptPrivateKey, password: password)
+
+        return privateKey
     }
 
     private func _saveIv(iv: [UInt8]) {
@@ -242,40 +256,45 @@ class EthAccount {
 
     private func _loadIv() -> [UInt8] {
         let ivString = KeychainService.loadPassword(service: "moahWallet", account: "iv")
-        let iv: [UInt8] = Array(ivString!.utf8)
-
-        return iv
+        if(ivString == nil){
+            return Array(util.randomString(length: 16).utf8)
+        }
+        else{
+            return Array(ivString!.utf8)
+        }
     }
 
-    private func _generateKeyStore(password: String){
+    private func _generateKeyStore(password: String) {
         _keyStore = try! BIP32Keystore(mnemonics: _mnemonic!, password: password)
     }
 
     private func _saveKeyStore() {
-        let userDir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
         let keyData = try! JSONEncoder().encode(_keyStore!.keystoreParams)
         let fileManager = FileManager.default
-        do{
-            try fileManager.createDirectory(atPath: userDir +  "/keystore", withIntermediateDirectories: true)    
-        }catch{
+        do {
+            try fileManager.createDirectory(atPath: userDir + "/keystore", withIntermediateDirectories: true)
+        } catch {
             print(error)
         }
-        fileManager.createFile(atPath: userDir +  "/keystore/key.json", contents: keyData)
+        fileManager.createFile(atPath: userDir + "/keystore/key.json", contents: keyData)
     }
 
     private func _loadKeyStore() {
-        let userDir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-        let fileHandle = FileHandle.init(forReadingAtPath: userDir+"/keystore/key.json")
+        let fileHandle = FileHandle.init(forReadingAtPath: userDir + "/keystore/key.json")
         let jsonFile = fileHandle?.readDataToEndOfFile()
         _keyStore = BIP32Keystore(jsonFile!)!
+        _keyStoreManager = KeystoreManager([_keyStore!])
 
-        _setAddressArray()
+        _loadPlainKeyStore()
+    }
 
-        let addressSelected = userDefaults.string(forKey: "address")
-        if(addressSelected == nil){
-            setAddress(index: nil)
-        }else{
-            setAddress(address: addressSelected!)
+    private func _loadPlainKeyStore(){
+        for address in _addressArray{
+            if(address.isPrivateKey == true){
+                let privateKey = _loadPrivateKey(name: address.name, password: _password!)
+                let plainKeyStore = try! PlainKeystore(privateKey: privateKey)
+                _keyStoreManager!.append(plainKeyStore)
+            }
         }
     }
 
@@ -283,7 +302,7 @@ class EthAccount {
         _password = password
     }
 
-    private func _hashPassword(password: [UInt8], salt: [UInt8]) -> [UInt8]{
+    private func _hashPassword(password: [UInt8], salt: [UInt8]) -> [UInt8] {
         let hash = try! PKCS5.PBKDF2(password: password, salt: salt, iterations: 4096, keyLength: 32, variant: .sha256).calculate()
         return hash
     }
@@ -291,55 +310,78 @@ class EthAccount {
     private func _unlockAccount() {
         let keyHex = KeychainService.loadPassword(service: "moahWallet", account: "password")!
         self._password = keyHex
+        _loadAddress()
+        _loadAddressSelected()
         _loadKeyStore()
     }
 
-    private func _saveAddress(){
+    private func _saveAddressSelected() {
         let addressSelected = _address?.description
-        userDefaults.set(addressSelected, forKey: "address")
+        userDefaults.set(addressSelected, forKey: "addressSelected")
     }
 
-    private func _saveAddressName(_ name: String){
-        var nameArray: [String]? = _loadAddressName()
-        if(nameArray == nil){
-            nameArray = []
+    private func _loadAddressSelected(){
+        let addressSelected = userDefaults.string(forKey: "addressSelected")
+        if (addressSelected == nil) {
+            setAddress(index: nil)
+        } else {
+            setAddress(address: addressSelected!)
         }
-
-        nameArray!.append(name)
-        userDefaults.set(nameArray, forKey: "addressName")
     }
 
-    private func _loadAddressName() -> [String]? {
-        let nameArray = userDefaults.stringArray(forKey: "addressName") ?? [String]()
-
-        return nameArray
+    private func _saveAddress() {
+        userDefaults.set(try! PropertyListEncoder().encode(_addressArray), forKey:"address")
     }
 
-    private func _setAddressArray(){
-        var nameArray: [String]? = _loadAddressName()
-        if(nameArray == nil){
-            nameArray = []
+    private func _loadAddress(){
+        if let rawArray = UserDefaults.standard.value(forKey:"address") as? Data {
+            let addressArray = try! PropertyListDecoder().decode([AddressCustom].self, from: rawArray)
+            _addressArray = addressArray
         }
+        else{
+            return
+        }
+    }
 
-        _addressName = nameArray!
-        _addressArray = [Address]()
+    private func _addAddress(address: AddressCustom){
+        _addressArray.append(address)
+        _saveAddress()
+    }
 
+    private func _generateAddressArray(){
+        let address = AddressCustom(address: _keyStore!.addresses.first!.description, name: "주 계정", isPrivateKey: false)
+        _addressArray = [address]
+        _saveAddress()
+    }
+
+    private func _getLastAddress() -> Address{
         let path = _keyStore!.paths
         var pathKey = Array(path.keys)
         pathKey = pathKey.sorted(by: <)
-        for key in pathKey{
-            let address = path[key]
-            _addressArray.append(address!)
-        }
+        let lastAddress = path[pathKey.last!]
+
+        return lastAddress!
     }
 
-    @objc private func _lockKeyData(_ sender: Timer){
+    private func _checkAccount(name: String) -> Bool{
+        var count = 0
+        for address in _addressArray{
+            if(address.isPrivateKey == false){count += 1}
+            if(address.name == name){
+                return false
+            }
+        }
+        if(count > 9) { return false }
+        else{ return true }
+    }
+
+    @objc private func _lockKeyData(_ sender: Timer) {
         _saveKeyStore()
-        _saveAddress()
+        _saveAddressSelected()
         _password = nil
         _keyStore = nil
         _mnemonic = nil
         _address = nil
-        _addressArray = [Address]()
+        _addressArray = [AddressCustom]()
     }
 }

@@ -26,7 +26,7 @@ class CreateAccountVC: UIViewController, UITextFieldDelegate {
         textField.borderStyle = .none
         textField.returnKeyType = .done
         textField.textColor = UIColor(key: "darker")
-        textField.font = UIFont(name:"NanumSquareRoundR", size: 20, dynamic: true)
+        textField.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
         textField.backgroundColor = .white
         textField.translatesAutoresizingMaskIntoConstraints = false
 
@@ -79,7 +79,6 @@ class CreateAccountVC: UIViewController, UITextFieldDelegate {
         border.backgroundColor = UIColor(key: "grey2").cgColor
 
         nameField.layer.addSublayer(border)
-        //nameField.applyShadow()
     }
 
     override func didReceiveMemoryWarning() {
@@ -129,11 +128,16 @@ class CreateAccountVC: UIViewController, UITextFieldDelegate {
 
     @objc private func nextPressed(_ sender: UIButton){
         let name = nameField.text!
-        account.generateAccount(name: name)
-
-        for controller in self.navigationController!.viewControllers{
-            guard let vc = controller as? MyAccountVC else { continue }
-            self.navigationController?.popToViewController(vc, animated: true)
+        if(account.generateAccount(name: name)){
+            for controller in self.navigationController!.viewControllers{
+                guard let vc = controller as? MyAccountVC else { continue }
+                self.navigationController?.popToViewController(vc, animated: true)
+            }
+        }
+        else{
+            let animation = ShakeAnimation()
+            self.view.layer.add(animation, forKey: "position")
+            //errorLabel.text = "올바르지 않은 시드 구문입니다!"
         }
     }
 }

@@ -85,7 +85,6 @@ class MainVC: UIViewController{
         //view.addSubview(txView)
         tokenView.setTokenString(tokenString: "Ethereum")
 
-
         /*
         let account: EthAccount = EthAccount.accountInstance
         let KS = account.getKeyStore()
