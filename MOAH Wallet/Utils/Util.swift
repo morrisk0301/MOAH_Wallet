@@ -5,6 +5,7 @@
 
 import Foundation
 import CoreImage
+import BigInt
 import UIKit
 
 class Util {
@@ -25,6 +26,15 @@ class Util {
         alertViewController.buttonAction = completion
 
         return alertViewController
+    }
+
+    func trimBalance(balance: BigUInt?) -> String {
+        if(balance == nil || balance == 0){
+            return "0.00000 ETH"
+        }
+        let balanceString = balance!.string(unitDecimals: 18, decimals: 4) + " ETH"
+
+        return balanceString
     }
 
     func generateQRCode(source: String?) -> UIImage? {

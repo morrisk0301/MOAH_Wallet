@@ -17,6 +17,7 @@ class MainVC: UIViewController{
 
     let screenSize = UIScreen.main.bounds
     let web3: Web3Custom = Web3Custom.web3
+    let util = Util()
 
     let tokenView: MainTokenView = {
         let tokenView = MainTokenView()
@@ -84,6 +85,7 @@ class MainVC: UIViewController{
         //view.addSubview(txView)
         tokenView.setTokenString(tokenString: "Ethereum")
 
+
         /*
         let account: EthAccount = EthAccount.accountInstance
         let KS = account.getKeyStore()
@@ -115,9 +117,9 @@ class MainVC: UIViewController{
             return
         }
 
-        web3.getBalance(completion: {(balance) in
+        web3.getBalance(address: nil, completion: {(balance) in
             DispatchQueue.main.async {
-                let balanceTrimmed = self.trimBalance(balance: balance)
+                let balanceTrimmed = self.util.trimBalance(balance: balance)
                 self.balanceLabel.text = balanceTrimmed
             }
         })
@@ -125,15 +127,6 @@ class MainVC: UIViewController{
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-    }
-
-    func trimBalance(balance: BigUInt?) -> String {
-        if(balance == nil || balance == 0){
-            return "0.00000 ETH"
-        }
-        let balanceString = balance!.string(unitDecimals: 18, decimals: 4) + " ETH"
-
-        return balanceString
     }
 
     func setupBarButton(){

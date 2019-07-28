@@ -7,6 +7,7 @@ import Foundation
 import UIKit
 
 enum LeftMenuOption: Int, CustomStringConvertible {
+
     case AccountName
     case MyAccount
     case PrivateKey

@@ -21,6 +21,7 @@ class EthAccount {
     private var _timer: Timer?
     private var _address: Address?
     private var _addressArray: [Address] = [Address]()
+    private var _addressName: [String] = [String]()
     private init() {
     }
 
@@ -127,15 +128,18 @@ class EthAccount {
         _saveKeyStore()
         _setAddressArray()
         setAddress(index: nil)
+        _saveAddress()
 
         return true
     }
 
-    func generateAccount() -> Bool {
+    func generateAccount(name: String) -> Bool {
         do{
             try _keyStore?.createNewChildAccount(password: _password!)
+            _saveAddressName(name)
             _setAddressArray()
             _saveKeyStore()
+            setAddress(address: _addressArray.last!.description)
         }catch {
             return false
         }
@@ -152,6 +156,12 @@ class EthAccount {
         }else{
             _address = _addressArray[index!]
         }
+        _saveAddress()
+    }
+
+    func setAddress(address: String){
+        _address = Address(address)
+        _saveAddress()
     }
 
     func getAddress() -> Address? {
@@ -160,6 +170,24 @@ class EthAccount {
 
     func getAddressArray() -> [Address]? {
         return _addressArray
+    }
+
+    func getAddressName() -> String? {
+        var counter = 0
+        for address in _addressArray{
+            if(address == _address){
+                if(counter == 0){
+                    return nil
+                }
+                return _addressName[counter-1]
+            }
+            counter += 1
+        }
+        return nil
+    }
+
+    func getAddressNameArray() -> [String] {
+        return _addressName
     }
 
     private func _encryptMnemonic(password: String) {
@@ -240,8 +268,15 @@ class EthAccount {
         let fileHandle = FileHandle.init(forReadingAtPath: userDir+"/keystore/key.json")
         let jsonFile = fileHandle?.readDataToEndOfFile()
         _keyStore = BIP32Keystore(jsonFile!)!
+
         _setAddressArray()
-        setAddress(index: nil)
+
+        let addressSelected = userDefaults.string(forKey: "address")
+        if(addressSelected == nil){
+            setAddress(index: nil)
+        }else{
+            setAddress(address: addressSelected!)
+        }
     }
 
     func _setPassword(_ password: String) {
@@ -259,7 +294,34 @@ class EthAccount {
         _loadKeyStore()
     }
 
+    private func _saveAddress(){
+        let addressSelected = _address?.description
+        userDefaults.set(addressSelected, forKey: "address")
+    }
+
+    private func _saveAddressName(_ name: String){
+        var nameArray: [String]? = _loadAddressName()
+        if(nameArray == nil){
+            nameArray = []
+        }
+
+        nameArray!.append(name)
+        userDefaults.set(nameArray, forKey: "addressName")
+    }
+
+    private func _loadAddressName() -> [String]? {
+        let nameArray = userDefaults.stringArray(forKey: "addressName") ?? [String]()
+
+        return nameArray
+    }
+
     private func _setAddressArray(){
+        var nameArray: [String]? = _loadAddressName()
+        if(nameArray == nil){
+            nameArray = []
+        }
+
+        _addressName = nameArray!
         _addressArray = [Address]()
 
         let path = _keyStore!.paths
@@ -273,6 +335,7 @@ class EthAccount {
 
     @objc private func _lockKeyData(_ sender: Timer){
         _saveKeyStore()
+        _saveAddress()
         _password = nil
         _keyStore = nil
         _mnemonic = nil

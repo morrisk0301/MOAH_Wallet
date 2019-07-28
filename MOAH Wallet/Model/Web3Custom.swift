@@ -25,15 +25,20 @@ class Web3Custom {
         return _web3Ins
     }
 
-    func getBalance(completion: @escaping (BigUInt?) -> () ){
-        let address = _getAddress()
+    func getBalance(address: String?, completion: @escaping (BigUInt?) -> () ){
+        var addressModified: Address?
+        if(address == nil){
+            addressModified = _getAddress()
+        }else{
+            addressModified = Address(address!)
+        }
 
         DispatchQueue.global(qos: .userInitiated).async{
             do{
-                if(address == nil){
+                if(addressModified == nil){
                     completion(nil)
                 }else{
-                    let balance = try self._web3Ins?.eth.getBalance(address: address!)
+                    let balance = try self._web3Ins?.eth.getBalance(address: addressModified!)
                     completion(balance)
                 }
             }catch{

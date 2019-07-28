@@ -65,7 +65,13 @@ class MainLeftMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             border.backgroundColor = UIColor(key: "grey").cgColor
             border.frame = CGRect(x:0, y: cell.frame.height*0.95, width: screenSize.width, height: 0.5)
 
-            cell.descriptionLabel.text = menuOption?.description
+            if(account.getAddressName() == nil){
+                cell.descriptionLabel.text = menuOption?.description
+            }
+            else{
+                cell.descriptionLabel.text = account.getAddressName()
+            }
+
             cell.descriptionLabel.font = UIFont(name:"NanumSquareRoundB", size: 22, dynamic: true)!
             cell.descriptionLabel.textColor = UIColor(key: "darker")
             cell.descriptionLabel.textAlignment = .center
