@@ -15,7 +15,7 @@ class AccountCell: UITableViewCell{
 
         label.text = "보조 계정"
         label.textColor = UIColor(key: "darker")
-        label.font = UIFont(name:"NanumSquareRoundR", size: 18, dynamic: true)
+        label.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
@@ -26,7 +26,7 @@ class AccountCell: UITableViewCell{
 
         label.text = "0.00000 ETH"
         label.textColor = UIColor(key: "darker")
-        label.font = UIFont(name:"NanumSquareRoundB", size: 22, dynamic: true)
+        label.font = UIFont(name:"NanumSquareRoundB", size: 20, dynamic: true)
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
@@ -37,9 +37,25 @@ class AccountCell: UITableViewCell{
 
         label.text = ""
         label.textColor = UIColor(key: "grey2")
-        label.font = UIFont(name:"NanumSquareRoundR", size: 15, dynamic: true)
+        label.font = UIFont(name:"NanumSquareRoundR", size: 13, dynamic: true)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
+
+        return label
+    }()
+
+    let privateKeyLabel: UILabel = {
+        let label = UILabel()
+
+        label.text = "가져온 계정"
+        label.textColor = UIColor(key: "dark")
+        label.font = UIFont(name:"NanumSquareRoundB", size: 10, dynamic: true)
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.layer.cornerRadius = 5
+        label.layer.borderColor = UIColor(key: "dark").cgColor
+        label.layer.borderWidth = 1.0
+        label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
     }()
@@ -86,20 +102,26 @@ class AccountCell: UITableViewCell{
 
     private func addLabel(){
         addSubview(accountLabel)
+        addSubview(privateKeyLabel)
         addSubview(balanceLabel)
         addSubview(addressLabel)
 
         accountLabel.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        accountLabel.bottomAnchor.constraint(equalTo: balanceLabel.topAnchor, constant: -screenSize.height/150).isActive = true
+        accountLabel.bottomAnchor.constraint(equalTo: balanceLabel.topAnchor).isActive = true
         accountLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: screenSize.width/10).isActive = true
         accountLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -screenSize.width/3).isActive = true
+
+        privateKeyLabel.centerYAnchor.constraint(equalTo: accountLabel.centerYAnchor).isActive = true
+        privateKeyLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -screenSize.width/12).isActive = true
+        privateKeyLabel.widthAnchor.constraint(equalToConstant: screenSize.width/6).isActive = true
+        privateKeyLabel.heightAnchor.constraint(equalToConstant: screenSize.height/40).isActive = true
 
         balanceLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         balanceLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: screenSize.width/10).isActive = true
         balanceLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -screenSize.width/3).isActive = true
-        balanceLabel.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        balanceLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
 
-        addressLabel.topAnchor.constraint(equalTo: balanceLabel.bottomAnchor, constant: screenSize.height/150).isActive = true
+        addressLabel.topAnchor.constraint(equalTo: balanceLabel.bottomAnchor).isActive = true
         addressLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: screenSize.width/10).isActive = true
         addressLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -screenSize.width/3).isActive = true
         addressLabel.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
@@ -109,7 +131,7 @@ class AccountCell: UITableViewCell{
         addSubview(checkImage)
 
         checkImage.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        checkImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -screenSize.width/10).isActive = true
+        checkImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -screenSize.width/9).isActive = true
         checkImage.heightAnchor.constraint(equalToConstant: screenSize.width/20).isActive = true
         checkImage.widthAnchor.constraint(equalToConstant: screenSize.width/15).isActive = true
     }

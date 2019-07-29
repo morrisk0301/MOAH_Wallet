@@ -84,7 +84,7 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return screenSize.height/5
+        return screenSize.height/6
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -94,8 +94,12 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
         guard let accountSelected = account.getAddress() else { return cell}
 
         cell.checkImage.isHidden = true
+        cell.privateKeyLabel.isHidden = true
         if(accounts[indexPath.section].address == accountSelected.description){
             cell.checkImage.isHidden = false
+        }
+        if(accounts[indexPath.section].isPrivateKey){
+            cell.privateKeyLabel.isHidden = false
         }
 
         if(indexPath.section == 0){

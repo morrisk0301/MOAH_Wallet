@@ -134,17 +134,26 @@ class EthAccount {
         return true
     }
 
-    func getAccount(key: String, name: String) -> Bool{
+    func getAccount(key: String, name: String) throws -> Bool{
         guard _checkAccount(name: name) else{ return false }
 
         do{
             let keyStore = try PlainKeystore(privateKey: key)
+            if(!_checkAccount(account: keyStore.addresses.first!.description)){
+                throw GetAccountError.existingAccount
+            }
+
             let address = AddressCustom(address: keyStore.addresses.first!.description, name: name, isPrivateKey: true)
-            _addAddress(address: address)
             _savePrivateKey(key: key, name: address.name, password: _password!)
+            _addAddress(address: address)
             setAddress(address: _addressArray.last!.address)
-        }catch{
-            return false
+            _loadPlainKeyStore()
+        }
+        catch GetAccountError.existingAccount{
+            throw GetAccountError.existingAccount
+        }
+        catch{
+            throw GetAccountError.invalidPrivateKey
         }
 
         return true
@@ -373,6 +382,13 @@ class EthAccount {
         }
         if(count > 9) { return false }
         else{ return true }
+    }
+
+    private func _checkAccount(account: String) -> Bool{
+        for address in _addressArray{
+            if(address.address == account){ return false}
+        }
+        return true
     }
 
     @objc private func _lockKeyData(_ sender: Timer) {

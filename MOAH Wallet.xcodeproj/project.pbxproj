@@ -64,6 +64,7 @@
 		C051FB1FE29301C3EA68F93B /* KeypadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FD83FA4BAE07897C116D /* KeypadView.swift */; };
 		C051FB3EDA8676CDCDBBDEF9 /* KeyboardShowHide.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F29FBC6A1B53190053A7 /* KeyboardShowHide.swift */; };
 		C051FB5E23902398DEF96B30 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F7AC902DA14D067B4A7E /* AppDelegate.swift */; };
+		C051FBC3EE3CCF033DC52F98 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F294C8BB75589DD19F35 /* Error.swift */; };
 		C051FC018077B21A44B84622 /* LeftTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FAAD35BE522484440F32 /* LeftTransition.swift */; };
 		C051FC07BFCC39DD3F13BCF3 /* LockVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FCDFA9CC8D752BE3F74C /* LockVC.swift */; };
 		C051FC24A82139E7B0A58CD6 /* FAQVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F96A941D724CEC53F3B1 /* FAQVC.swift */; };
@@ -110,6 +111,7 @@
 		C051F05C4517A9E3F19A8751 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		C051F1995FE3594C44DEA5F6 /* WalletDoneVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletDoneVC.swift; sourceTree = "<group>"; };
 		C051F26E21CD42E0A1B5B53D /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		C051F294C8BB75589DD19F35 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		C051F29FBC6A1B53190053A7 /* KeyboardShowHide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardShowHide.swift; sourceTree = "<group>"; };
 		C051F2A0436A8E675D322837 /* PasswordSettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordSettingVC.swift; sourceTree = "<group>"; };
 		C051F2C7AD63643BFDF3A9C6 /* NanumGothic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file.ttf; path = NanumGothic.ttf; sourceTree = "<group>"; };
@@ -348,6 +350,7 @@
 				C051FFB8B9E194F8D83BD639 /* Protocols.swift */,
 				C051F05C4517A9E3F19A8751 /* Extensions.swift */,
 				C051FCF89F1254FD1A2B0D3F /* Structs.swift */,
+				C051F294C8BB75589DD19F35 /* Error.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -689,6 +692,7 @@
 				C051F258B5359AA8ADF748A4 /* CreateAccountVC.swift in Sources */,
 				C051F0D08B61E4AC556E06C1 /* GetAccountVC.swift in Sources */,
 				C051F772637081EBC090ADE2 /* ShakeAnimation.swift in Sources */,
+				C051FBC3EE3CCF033DC52F98 /* Error.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

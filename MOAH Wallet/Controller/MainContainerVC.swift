@@ -58,7 +58,7 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
             }
             else if(side == "down"){
                 UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0,
-                        options: [.curveEaseInOut, UIView.AnimationOptions.allowUserInteraction], animations: {
+                        options: .curveEaseInOut, animations: {
                     self.transparentView.alpha = 0.3
                     self.tokenSelectVC.view.frame = CGRect(x: 0, y: self.screenSize.height/2, width: self.screenSize.width, height: self.screenSize.height/2)
                 }, completion: nil)
@@ -233,7 +233,7 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
 
     @objc private func transparentViewClicked(_ sender: UITapGestureRecognizer){
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0,
-                options: [.curveEaseInOut, UIView.AnimationOptions.allowUserInteraction], animations: {
+                options: .curveEaseInOut, animations: {
             self.transparentView.alpha = 0
             self.tokenSelectVC.view.frame = CGRect(x: 0, y: self.screenSize.height, width: self.screenSize.width, height: self.screenSize.height/2)
         }, completion: {_ in

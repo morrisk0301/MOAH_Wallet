@@ -49,7 +49,7 @@ class AddAccountVC: UIViewController, UITableViewDataSource, UITableViewDelegate
             cell.menuLabel.text = "계정 생성"
         }
         else{
-            cell.menuLabel.text = "개인키로 불러오기"
+            cell.menuLabel.text = "개인키로 가져오기"
         }
 
         return cell

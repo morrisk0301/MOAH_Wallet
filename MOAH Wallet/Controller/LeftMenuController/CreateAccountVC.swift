@@ -33,6 +33,20 @@ class CreateAccountVC: UIViewController, UITextFieldDelegate {
         return textField
     }()
 
+    let errorLabel: UILabel = {
+        let label = UILabel()
+
+        label.text = ""
+        label.font = UIFont(name:"NanumSquareRoundB", size: 14, dynamic: true)
+        label.backgroundColor = .clear
+        label.textColor = UIColor(key: "darker")
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+
+        return label
+    }()
+
     let confirmButton: CustomButton = {
         let button = CustomButton(type: .system)
         button.setTitle("다음", for: .normal)
@@ -51,9 +65,11 @@ class CreateAccountVC: UIViewController, UITextFieldDelegate {
         self.hideKeyboardWhenTappedAround()
 
         view.backgroundColor = UIColor(key: "light3")
+        nameField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
         nameField.delegate = self
 
         view.addSubview(nameField)
+        view.addSubview(errorLabel)
         view.addSubview(confirmButton)
 
         setupLayout()
@@ -91,11 +107,26 @@ class CreateAccountVC: UIViewController, UITextFieldDelegate {
         nameField.heightAnchor.constraint(equalToConstant: screenSize.height/15).isActive = true
         nameField.widthAnchor.constraint(equalToConstant: screenSize.width*0.9).isActive = true
 
+        errorLabel.topAnchor.constraint(equalTo: nameField.bottomAnchor, constant: screenSize.height/50).isActive = true
+        errorLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        errorLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        errorLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
+
         confirmButton.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         confirmButton.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         confirmButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         hideConstraint = confirmButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40)
         hideConstraint!.isActive = true
+    }
+
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let textFieldText = textField.text,
+              let rangeOfTextToReplace = Range(range, in: textFieldText) else {
+            return false
+        }
+        let substringToReplace = textFieldText[rangeOfTextToReplace]
+        let count = textFieldText.count - substringToReplace.count + string.count
+        return count <= 10
     }
 
     @objc private func keyboardWillShow(_ sender: Notification) {
@@ -136,8 +167,8 @@ class CreateAccountVC: UIViewController, UITextFieldDelegate {
         }
         else{
             let animation = ShakeAnimation()
+            errorLabel.text = "계정 이름이 중복되었거나,\n 최대 계정 개수(10개)를 초과하였습니다."
             self.view.layer.add(animation, forKey: "position")
-            //errorLabel.text = "올바르지 않은 시드 구문입니다!"
         }
     }
 }

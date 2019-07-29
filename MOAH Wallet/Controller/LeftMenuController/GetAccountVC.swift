@@ -29,6 +29,7 @@ class GetAccountVC: UIViewController, UITextFieldDelegate {
         textField.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
         textField.backgroundColor = .white
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.tag = 0
 
         return textField
     }()
@@ -46,8 +47,23 @@ class GetAccountVC: UIViewController, UITextFieldDelegate {
         textField.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
         textField.backgroundColor = .white
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.tag = 1
 
         return textField
+    }()
+
+    let errorLabel: UILabel = {
+        let label = UILabel()
+
+        label.text = ""
+        label.font = UIFont(name:"NanumSquareRoundB", size: 14, dynamic: true)
+        label.backgroundColor = .clear
+        label.textColor = UIColor(key: "darker")
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+
+        return label
     }()
 
     let warningLabel: UILabel = {
@@ -76,15 +92,17 @@ class GetAccountVC: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         self.replaceBackButton(color: "dark")
         self.transparentNavigationBar()
-        self.setNavigationTitle(title: "개인키로 불러오기")
+        self.setNavigationTitle(title: "개인키로 가져오기")
         self.hideKeyboardWhenTappedAround()
 
         view.backgroundColor = UIColor(key: "light3")
         nameField.delegate = self
+        nameField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
         privateKeyField.delegate = self
 
         view.addSubview(nameField)
         view.addSubview(privateKeyField)
+        view.addSubview(errorLabel)
         view.addSubview(confirmButton)
         view.addSubview(warningLabel)
 
@@ -119,7 +137,7 @@ class GetAccountVC: UIViewController, UITextFieldDelegate {
     }
 
     private func setupLayout(){
-        nameField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: screenSize.height/20).isActive = true
+        nameField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: screenSize.height/30).isActive = true
         nameField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         nameField.heightAnchor.constraint(equalToConstant: screenSize.height/15).isActive = true
         nameField.widthAnchor.constraint(equalToConstant: screenSize.width*0.9).isActive = true
@@ -129,7 +147,12 @@ class GetAccountVC: UIViewController, UITextFieldDelegate {
         privateKeyField.heightAnchor.constraint(equalToConstant: screenSize.height/15).isActive = true
         privateKeyField.widthAnchor.constraint(equalToConstant: screenSize.width*0.9).isActive = true
 
-        warningLabel.topAnchor.constraint(equalTo: privateKeyField.bottomAnchor, constant: screenSize.height/40).isActive = true
+        errorLabel.topAnchor.constraint(equalTo: privateKeyField.bottomAnchor, constant: screenSize.height/200).isActive = true
+        errorLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        errorLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        errorLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
+
+        warningLabel.topAnchor.constraint(equalTo: privateKeyField.bottomAnchor, constant: screenSize.height/20).isActive = true
         warningLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         warningLabel.heightAnchor.constraint(equalToConstant: screenSize.height/10).isActive = true
         warningLabel.widthAnchor.constraint(equalToConstant: screenSize.width*0.9).isActive = true
@@ -139,6 +162,17 @@ class GetAccountVC: UIViewController, UITextFieldDelegate {
         confirmButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         hideConstraint = confirmButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40)
         hideConstraint!.isActive = true
+    }
+
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if(textField.tag == 1){ return true}
+        guard let textFieldText = textField.text,
+              let rangeOfTextToReplace = Range(range, in: textFieldText) else {
+            return false
+        }
+        let substringToReplace = textFieldText[rangeOfTextToReplace]
+        let count = textFieldText.count - substringToReplace.count + string.count
+        return count <= 10
     }
 
     @objc private func keyboardWillShow(_ sender: Notification) {
@@ -171,14 +205,30 @@ class GetAccountVC: UIViewController, UITextFieldDelegate {
 
     @objc private func nextPressed(_ sender: UIButton){
         let name = nameField.text!
-        if(account.generateAccount(name: name)){
-            for controller in self.navigationController!.viewControllers{
-                guard let vc = controller as? MyAccountVC else { continue }
-                self.navigationController?.popToViewController(vc, animated: true)
+        let key = privateKeyField.text!
+        let animation = ShakeAnimation()
+        do{
+            let result = try account.getAccount(key: key, name: name)
+            if(result){
+                for controller in self.navigationController!.viewControllers{
+                    guard let vc = controller as? MyAccountVC else { continue }
+                    self.navigationController?.popToViewController(vc, animated: true)
+                }
+            }else{
+                errorLabel.text = "계정 이름이 중복되었습니다."
+                self.view.layer.add(animation, forKey: "position")
             }
         }
-        else{
-            let animation = ShakeAnimation()
+        catch GetAccountError.invalidPrivateKey {
+            errorLabel.text = "올바르지 않은 개인키입니다."
+            self.view.layer.add(animation, forKey: "position")
+        }
+        catch GetAccountError.existingAccount {
+            errorLabel.text = "이미 존재하는 계정입니다."
+            self.view.layer.add(animation, forKey: "position")
+        }
+        catch{
+            errorLabel.text = "계정 오류입니다."
             self.view.layer.add(animation, forKey: "position")
         }
     }
