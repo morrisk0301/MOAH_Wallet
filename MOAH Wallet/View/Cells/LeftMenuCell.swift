@@ -14,25 +14,25 @@ class LeftMenuCell: UITableViewCell {
 
         let label = UILabel()
         label.textColor = UIColor(key: "darker")
-        label.font = UIFont(name:"NanumSquareRound", size: 15, dynamic: true)!
+        label.font = UIFont(name:"NanumSquareRound", size: 17, dynamic: true)!
         label.text = ""
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
     }()
 
-    let addressText: UITextView = {
-        let textView = UITextView(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
+    let addressLabel: UILabel = {
+        let label = UILabel()
 
-        textView.textAlignment = .center
-        textView.backgroundColor = .clear
-        textView.font = UIFont(name:"NanumSquareRoundB", size: 18, dynamic: true)!
-        textView.textColor = UIColor(key: "darker")
-        textView.isEditable = false
-        textView.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        label.backgroundColor = .clear
+        label.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)!
+        label.textColor = UIColor(key: "grey2")
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
 
 
-        return textView
+        return label
     }()
 
     let qrCodeImage: UIImageView = {
@@ -44,13 +44,34 @@ class LeftMenuCell: UITableViewCell {
         return imageView
     }()
 
-    let arrowImage: UIImageView = {
+    let addressButton: UIButton = {
+        let button = UIButton(type: .system)
 
-        let imageView =  UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        imageView.image = UIImage(named: "rightMenuArrow")
-        imageView.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Address", for: .normal)
+        button.setTitleColor(UIColor(key: "darker"), for: .normal)
+        button.titleLabel?.font = UIFont(name:"NanumSquareRoundR", size: 15, dynamic: true)!
+        button.layer.borderWidth = 1.0
+        button.layer.cornerRadius = 10
+        button.layer.borderColor = UIColor(key: "grey2").cgColor
+        button.tag = 0
+        button.translatesAutoresizingMaskIntoConstraints = false
 
-        return imageView
+        return button
+    }()
+
+    let txFeeButton: UIButton = {
+        let button = UIButton(type: .system)
+
+        button.setTitle("TX Fee", for: .normal)
+        button.setTitleColor(UIColor(key: "darker"), for: .normal)
+        button.titleLabel?.font = UIFont(name:"NanumSquareRoundR", size: 15, dynamic: true)!
+        button.layer.borderWidth = 1.0
+        button.layer.cornerRadius = 10
+        button.layer.borderColor = UIColor(key: "grey2").cgColor
+        button.tag = 1
+        button.translatesAutoresizingMaskIntoConstraints = false
+
+        return button
     }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -61,14 +82,8 @@ class LeftMenuCell: UITableViewCell {
         qrCodeImage.applyShadow()
 
         addSubview(descriptionLabel)
-        //addSubview(arrowImage)
 
-        descriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: screenSize.width/9).isActive = true
-
-        //arrowImage.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        //arrowImage.widthAnchor.constraint(equalToConstant: frame.width/35).isActive = true
-        //arrowImage.heightAnchor.constraint(equalToConstant: (frame.width/35)*1.5).isActive = true
-        //arrowImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -frame.width/9).isActive = true
+        descriptionLabel.centerXAnchor.constraint(equalTo: centerXAnchor, constant: -screenSize.width/10).isActive = true
     }
 
     required init?(coder aDecoder: NSCoder) {

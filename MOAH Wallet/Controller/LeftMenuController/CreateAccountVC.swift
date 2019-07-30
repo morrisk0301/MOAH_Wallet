@@ -159,7 +159,12 @@ class CreateAccountVC: UIViewController, UITextFieldDelegate {
 
     @objc private func nextPressed(_ sender: UIButton){
         let name = nameField.text!
-        if(account.generateAccount(name: name)){
+        if(nameField.text?.count == 0){
+            let animation = ShakeAnimation()
+            errorLabel.text = "계정 이름을 입력해주세요."
+            self.view.layer.add(animation, forKey: "position")
+        }
+        else if(account.generateAccount(name: name)){
             for controller in self.navigationController!.viewControllers{
                 guard let vc = controller as? MyAccountVC else { continue }
                 self.navigationController?.popToViewController(vc, animated: true)

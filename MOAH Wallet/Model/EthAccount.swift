@@ -124,6 +124,15 @@ class EthAccount {
         return nil
     }
 
+    func getPrivateKey() -> String {
+        guard let privateKey = _loadPrivateKey(name: getAddressName()!, password: _password!) else{
+            let privateKey2 = try! _keyStore?.UNSAFE_getPrivateKeyData(password: _password!, account: _address!)
+
+            return privateKey2!.toHexString()
+        }
+        return privateKey
+    }
+
     func setAccount() -> Bool {
         _saveMnemonic(password: _password!)
         _generateKeyStore(password: _password!)
@@ -249,8 +258,8 @@ class EthAccount {
         userDefaults.set(encryptPrivateKey, forKey: name)
     }
 
-    private func _loadPrivateKey(name: String, password: String) -> String {
-        let encryptPrivateKey = userDefaults.data(forKey: name)!
+    private func _loadPrivateKey(name: String, password: String) -> String? {
+        guard let encryptPrivateKey = userDefaults.data(forKey: name) else { return nil }
         let privateKey = _decryptData(encryptedData: encryptPrivateKey, password: password)
 
         return privateKey
@@ -301,7 +310,7 @@ class EthAccount {
         for address in _addressArray{
             if(address.isPrivateKey == true){
                 let privateKey = _loadPrivateKey(name: address.name, password: _password!)
-                let plainKeyStore = try! PlainKeystore(privateKey: privateKey)
+                let plainKeyStore = try! PlainKeystore(privateKey: privateKey!)
                 _keyStoreManager!.append(plainKeyStore)
             }
         }

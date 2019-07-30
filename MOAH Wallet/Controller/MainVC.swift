@@ -108,10 +108,10 @@ class MainVC: UIViewController{
 
     override func viewDidAppear(_ animated: Bool) {
         if(signUp){
-            let mnemonicWarningVC = MnemonicWarningVC()
-            mnemonicWarningVC.tempMnemonic = self.tempMnemonic!
+            let mnemonicVC = MnemonicVC()
+            mnemonicVC.tempMnemonic = self.tempMnemonic!
 
-            self.navigationController?.pushViewController(mnemonicWarningVC, animated: false)
+            self.navigationController?.pushViewController(mnemonicVC, animated: false)
 
             return
         }

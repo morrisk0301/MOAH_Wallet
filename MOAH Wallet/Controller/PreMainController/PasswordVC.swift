@@ -166,7 +166,7 @@ class PasswordVC: UIViewController, KeypadViewDelegate {
 
     private func authBiometrics(){
         if(autoContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)){
-            let alertVC = util.alert(title: "생채 인식 기능 사용", body: "빠른 앱 실행을 위해\n생채 인식 기능을 사용하시겠습니까?", buttonTitle: "사용하기"){(next) in
+            let alertVC = util.alert(title: "생채 인식 기능 사용", body: "빠른 앱 실행을 위해\n생채 인식 기능을 사용하시겠습니까?", buttonTitle: "사용하기", buttonNum: 2){(next) in
                 if(next){
                     self.autoContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "MOAH Wallet 생채 인식"){(success, error) in
                         DispatchQueue.main.async {

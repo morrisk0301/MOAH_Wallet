@@ -207,6 +207,12 @@ class GetAccountVC: UIViewController, UITextFieldDelegate {
         let name = nameField.text!
         let key = privateKeyField.text!
         let animation = ShakeAnimation()
+        if(nameField.text?.count == 0){
+            let animation = ShakeAnimation()
+            errorLabel.text = "계정 이름을 입력해주세요."
+            self.view.layer.add(animation, forKey: "position")
+            return
+        }
         do{
             let result = try account.getAccount(key: key, name: name)
             if(result){

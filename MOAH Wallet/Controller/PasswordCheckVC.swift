@@ -64,6 +64,10 @@ class PasswordCheckVC: UIViewController, KeypadViewDelegate {
                     let controller = PasswordSettingVC()
                     self.navigationController?.pushViewController(controller, animated: true)
                 }
+                else if(self.toView == "privateKey"){
+                    let controller = PrivateKeyVC()
+                    self.navigationController?.pushViewController(controller, animated: true)
+                }
             }
             else{
                 password = ""
@@ -102,14 +106,22 @@ class PasswordCheckVC: UIViewController, KeypadViewDelegate {
                         let controller = PasswordSettingVC()
                         self.navigationController?.pushViewController(controller, animated: true)
                     }
+                    else if(self.toView == "privateKey"){
+                        let controller = PrivateKeyVC()
+                        self.navigationController?.pushViewController(controller, animated: true)
+                    }
                 }
             }
         }
     }
 
     @objc func backPressed(_ sender: UIButton){
-        let transition = RightTransition()
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.dismiss(animated: false)
+        if(self.toView == "privateKey"){
+            self.dismiss(animated: true)
+        }else{
+            let transition = RightTransition()
+            view.window!.layer.add(transition, forKey: kCATransition)
+            self.dismiss(animated: false)
+        }
     }
 }

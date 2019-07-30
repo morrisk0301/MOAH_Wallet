@@ -34,6 +34,8 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
         view.addSubview(centerController.view)
         addChild(centerController)
         centerController.didMove(toParent: self)
+
+        initVCs()
     }
 
     override func didReceiveMemoryWarning() {
@@ -71,6 +73,22 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
             }, completion: {_ in
                 self.transparentView.removeFromSuperview()
             })
+        }
+    }
+
+    func initVCs(){
+        DispatchQueue.main.async{
+            self.mainRightMenuVC = MainRightMenuVC()
+            self.mainRightMenuVC.delegate = self
+            self.view.insertSubview(self.mainRightMenuVC.view, at: 0)
+            self.addChild(self.mainRightMenuVC)
+            self.mainRightMenuVC.didMove(toParent: self)
+
+            self.mainLeftMenuVC = MainLeftMenuVC()
+            self.mainLeftMenuVC.delegate = self
+            self.view.insertSubview(self.mainLeftMenuVC.view, at: 0)
+            self.addChild(self.mainLeftMenuVC)
+            self.mainLeftMenuVC.didMove(toParent: self)
         }
     }
 
@@ -132,7 +150,8 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
             let controller = MyAccountVC()
             present(UINavigationController(rootViewController: controller), animated: true, completion: nil)
         case .PrivateKey:
-            let controller = PrivateKeyVC()
+            let controller = PasswordCheckVC()
+            controller.toView = "privateKey"
             present(UINavigationController(rootViewController: controller), animated: true, completion: nil)
         default:
             break
@@ -142,21 +161,7 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
     func leftSideMenuClicked(forMenuOption menuOption: LeftMenuOption?) {
         addTransparentView(side: "left")
 
-        if(mainLeftMenuVC == nil){
-            mainLeftMenuVC = MainLeftMenuVC()
-            mainLeftMenuVC.delegate = self
-            if(mainRightMenuVC != nil){
-                view.insertSubview(mainLeftMenuVC.view, aboveSubview: mainRightMenuVC.view)
-            }else{
-                view.insertSubview(mainLeftMenuVC.view, at: 0)
-            }
-            addChild(mainLeftMenuVC)
-            mainLeftMenuVC.didMove(toParent: self)
-        }
-        else if(mainRightMenuVC != nil){
-            view.insertSubview(mainLeftMenuVC.view, aboveSubview: mainRightMenuVC.view)
-        }
-
+        view.insertSubview(mainLeftMenuVC.view, aboveSubview: mainRightMenuVC.view)
         isExpandLeft = !isExpandLeft
         if(menuOption == nil){
             animatePanel(shouldExpand: isExpandLeft, side: "left", menuOption: menuOption)
@@ -169,21 +174,7 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
     func rightSideMenuClicked(forMenuOption menuOption: RightMenuOption?) {
         addTransparentView(side: "right")
 
-        if(mainRightMenuVC == nil){
-            mainRightMenuVC = MainRightMenuVC()
-            mainRightMenuVC.delegate = self
-            if(mainLeftMenuVC != nil){
-                view.insertSubview(mainRightMenuVC.view, aboveSubview: mainLeftMenuVC.view)
-            }else{
-                view.insertSubview(mainRightMenuVC.view, at: 0)
-            }
-            addChild(mainRightMenuVC)
-            mainRightMenuVC.didMove(toParent: self)
-        }
-        else if(mainLeftMenuVC != nil){
-            view.insertSubview(mainRightMenuVC.view, aboveSubview: mainLeftMenuVC.view)
-        }
-
+        view.insertSubview(mainRightMenuVC.view, aboveSubview: mainLeftMenuVC.view)
         isExpandRight = !isExpandRight
         if(menuOption == nil){
             animatePanel(shouldExpand: isExpandRight, side: "right", menuOption: menuOption)

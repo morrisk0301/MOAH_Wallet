@@ -17,13 +17,13 @@
 		A5A0C09022DCD155006F2E83 /* NanumSquareRoundR.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5A0C08B22DCD150006F2E83 /* NanumSquareRoundR.ttf */; };
 		A5BDDA6422EB45BB00A9EE5C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5BDDA6322EB45BB00A9EE5C /* Assets.xcassets */; };
 		C051F089B9C06C3FD9DB06E9 /* MainLeftMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F4D47F43A88794BDAD9B /* MainLeftMenuVC.swift */; };
-		C051F0AC25B5A02E9F827E16 /* PasswordCheckVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F7EB191CFBE9259BBA27 /* PasswordCheckVC.swift */; };
 		C051F0B1BAA75AD894DD0193 /* RightMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FA21B0D87D905D0AD07E /* RightMenuCell.swift */; };
 		C051F0D08B61E4AC556E06C1 /* GetAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FFB386BA85B16E2D972D /* GetAccountVC.swift */; };
 		C051F106C4C595A04EAA4FE1 /* AgreementCheckVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F51191A6826F0F867E0E /* AgreementCheckVC.swift */; };
 		C051F159ABCE211D65F59FE8 /* WalletDoneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F1995FE3594C44DEA5F6 /* WalletDoneVC.swift */; };
 		C051F258B5359AA8ADF748A4 /* CreateAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FE5AAB127B414BFB8543 /* CreateAccountVC.swift */; };
 		C051F2666FCBD43EDDC03FD2 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F49F7A22AF8C42EA4D32 /* MainVC.swift */; };
+		C051F284A7D374FCA7E108A6 /* PasswordCheckVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F9131D6E229A0A07E75C /* PasswordCheckVC.swift */; };
 		C051F29405CB6CAEB8A90062 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C051FDE6CC50D5ED79E6F42C /* Main.storyboard */; };
 		C051F2AA4E61C47D5F1C3018 /* RightTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F6000A5F24D81AA83484 /* RightTransition.swift */; };
 		C051F2EF863672C14C79CE4D /* NanumGothic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C051F2C7AD63643BFDF3A9C6 /* NanumGothic.ttf */; };
@@ -47,12 +47,12 @@
 		C051F7AE7F9AA30993F9E5AD /* MnemonicVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FB1E96548FFD0DEEF195 /* MnemonicVC.swift */; };
 		C051F7C9A6AC866D22C44686 /* PasswordSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F2A0436A8E675D322837 /* PasswordSettingVC.swift */; };
 		C051F7E59E0BC7CD726C46E7 /* AddAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F395F27B1ABD90762B49 /* AddAccountVC.swift */; };
-		C051F8022391B9973BD91137 /* MnemonicWarningVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F6F1EBF7625D6A925061 /* MnemonicWarningVC.swift */; };
 		C051F85B2D0020F30D1961C8 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FFB8B9E194F8D83BD639 /* Protocols.swift */; };
 		C051F88E2A48A734D8F1901B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F05C4517A9E3F19A8751 /* Extensions.swift */; };
 		C051F9325D53C154295B5522 /* AgreementViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FD974D93686134C5B4E6 /* AgreementViewVC.swift */; };
 		C051F93D1BFE68F450C3B94C /* MainRightMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F9B011B6E362F3C18BEB /* MainRightMenuVC.swift */; };
 		C051F941E7A54B8B22D52A81 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FD1BA4D050D26AE2DB72 /* MenuCell.swift */; };
+		C051F9448783D3EBAEEE3701 /* TXFeeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F1FBAE02F542E6EB725F /* TXFeeVC.swift */; };
 		C051F94A55FC32388DE66EF6 /* LockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FECD2DA7B560A0904BBE /* LockView.swift */; };
 		C051F954683BF105789BE5C2 /* RightMenuOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FBEC2A31284D49D39064 /* RightMenuOption.swift */; };
 		C051F955E6F8A508A82CB7E8 /* EthAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FA9FF2133358D8774A35 /* EthAccount.swift */; };
@@ -110,6 +110,7 @@
 		A5BDDA6322EB45BB00A9EE5C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C051F05C4517A9E3F19A8751 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		C051F1995FE3594C44DEA5F6 /* WalletDoneVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletDoneVC.swift; sourceTree = "<group>"; };
+		C051F1FBAE02F542E6EB725F /* TXFeeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TXFeeVC.swift; sourceTree = "<group>"; };
 		C051F26E21CD42E0A1B5B53D /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		C051F294C8BB75589DD19F35 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		C051F29FBC6A1B53190053A7 /* KeyboardShowHide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardShowHide.swift; sourceTree = "<group>"; };
@@ -130,12 +131,11 @@
 		C051F6342A463F4E5602402A /* MnemonicVerificationGetVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicVerificationGetVC.swift; sourceTree = "<group>"; };
 		C051F635779A9F378E8C0E45 /* MainTokenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTokenView.swift; sourceTree = "<group>"; };
 		C051F63AEAD075F1D9237EED /* MyAccountVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAccountVC.swift; sourceTree = "<group>"; };
-		C051F6F1EBF7625D6A925061 /* MnemonicWarningVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicWarningVC.swift; sourceTree = "<group>"; };
 		C051F78260EE7AE0C72FAED1 /* AlertVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertVC.swift; sourceTree = "<group>"; };
 		C051F7AC902DA14D067B4A7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C051F7EB191CFBE9259BBA27 /* PasswordCheckVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordCheckVC.swift; sourceTree = "<group>"; };
 		C051F8B5925C8BBCF3AA8E8E /* MnemonicSettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicSettingVC.swift; sourceTree = "<group>"; };
 		C051F90BE9924E9EE9462DC9 /* LeftMenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftMenuCell.swift; sourceTree = "<group>"; };
+		C051F9131D6E229A0A07E75C /* PasswordCheckVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordCheckVC.swift; sourceTree = "<group>"; };
 		C051F94D8F21FC113B4FD9F2 /* MOAH Wallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MOAH Wallet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C051F956AE867F6089FFE1BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
 		C051F96A941D724CEC53F3B1 /* FAQVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FAQVC.swift; sourceTree = "<group>"; };
@@ -237,6 +237,7 @@
 				C051F1EA5DBBAA18C80300C9 /* RightMenuController */,
 				C051FF7BB7B279B376C514A0 /* TokenSelectVC.swift */,
 				C051F9A7B306A8BF12E198F5 /* LeftMenuController */,
+				C051F9131D6E229A0A07E75C /* PasswordCheckVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -276,7 +277,6 @@
 				C051FAA7B42C718BE4204A4A /* AnnouncementVC.swift */,
 				C051F96A941D724CEC53F3B1 /* FAQVC.swift */,
 				C051F51191A6826F0F867E0E /* AgreementCheckVC.swift */,
-				C051F7EB191CFBE9259BBA27 /* PasswordCheckVC.swift */,
 			);
 			path = RightMenuController;
 			sourceTree = "<group>";
@@ -310,7 +310,6 @@
 				C051FD9079AB28E40C022FDD /* AgreementVC.swift */,
 				C051FD974D93686134C5B4E6 /* AgreementViewVC.swift */,
 				C051F1995FE3594C44DEA5F6 /* WalletDoneVC.swift */,
-				C051F6F1EBF7625D6A925061 /* MnemonicWarningVC.swift */,
 				C051FC2158395B4BF65E453E /* MnemonicVerificationVC.swift */,
 				C051F6342A463F4E5602402A /* MnemonicVerificationGetVC.swift */,
 				C051FB1E96548FFD0DEEF195 /* MnemonicVC.swift */,
@@ -381,6 +380,7 @@
 				C051F395F27B1ABD90762B49 /* AddAccountVC.swift */,
 				C051FE5AAB127B414BFB8543 /* CreateAccountVC.swift */,
 				C051FFB386BA85B16E2D972D /* GetAccountVC.swift */,
+				C051F1FBAE02F542E6EB725F /* TXFeeVC.swift */,
 			);
 			path = LeftMenuController;
 			sourceTree = "<group>";
@@ -657,7 +657,6 @@
 				C051F6991830583F5D879C9C /* AgreementVC.swift in Sources */,
 				C051F9325D53C154295B5522 /* AgreementViewVC.swift in Sources */,
 				C051F159ABCE211D65F59FE8 /* WalletDoneVC.swift in Sources */,
-				C051F8022391B9973BD91137 /* MnemonicWarningVC.swift in Sources */,
 				C051F5F80BB40708BAE58682 /* MnemonicVerificationVC.swift in Sources */,
 				C051FEC7D1FC02F093FF50B5 /* MnemonicVerificationGetVC.swift in Sources */,
 				C051F7AE7F9AA30993F9E5AD /* MnemonicVC.swift in Sources */,
@@ -673,7 +672,6 @@
 				C051F2AA4E61C47D5F1C3018 /* RightTransition.swift in Sources */,
 				C051FC018077B21A44B84622 /* LeftTransition.swift in Sources */,
 				C051F94A55FC32388DE66EF6 /* LockView.swift in Sources */,
-				C051F0AC25B5A02E9F827E16 /* PasswordCheckVC.swift in Sources */,
 				C051F88E2A48A734D8F1901B /* Extensions.swift in Sources */,
 				C051F9790CC44994FE169C8E /* Structs.swift in Sources */,
 				C051F45046E2E4152EDD8712 /* MainTokenView.swift in Sources */,
@@ -693,6 +691,8 @@
 				C051F0D08B61E4AC556E06C1 /* GetAccountVC.swift in Sources */,
 				C051F772637081EBC090ADE2 /* ShakeAnimation.swift in Sources */,
 				C051FBC3EE3CCF033DC52F98 /* Error.swift in Sources */,
+				C051F9448783D3EBAEEE3701 /* TXFeeVC.swift in Sources */,
+				C051F284A7D374FCA7E108A6 /* PasswordCheckVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

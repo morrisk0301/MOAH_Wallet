@@ -16,6 +16,7 @@ class MainLeftMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     let util = Util()
 
     var delegate: MainControllerDelegate?
+    var address: String?
 
     var tableView: UITableView = {
         let tableView = UITableView()
@@ -61,37 +62,7 @@ class MainLeftMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSour
 
         let menuOption = LeftMenuOption(rawValue: indexPath.row)
         if(indexPath.row == 0){
-            let border = CALayer()
-            border.backgroundColor = UIColor(key: "grey").cgColor
-            border.frame = CGRect(x:0, y: cell.frame.height*0.95, width: screenSize.width, height: 0.5)
-
-            cell.descriptionLabel.text = account.getAddressName()
-
-            cell.descriptionLabel.font = UIFont(name:"NanumSquareRoundB", size: 22, dynamic: true)!
-            cell.descriptionLabel.textColor = UIColor(key: "darker")
-            cell.descriptionLabel.textAlignment = .center
-            cell.descriptionLabel.numberOfLines = 0
-            cell.descriptionLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: screenSize.height/20).isActive = true
-            cell.layer.addSublayer(border)
-            cell.arrowImage.isHidden = true
-
-            let address = account.getAddress()
-            cell.addressText.text = address?.description
-
-            let qrImage = util.generateQRCode(source: address?.description)
-            cell.qrCodeImage.image = qrImage
-
-            cell.addSubview(cell.qrCodeImage)
-            cell.qrCodeImage.topAnchor.constraint(equalTo: cell.descriptionLabel.bottomAnchor, constant: screenSize.height/20).isActive = true
-            cell.qrCodeImage.centerXAnchor.constraint(equalTo: cell.centerXAnchor, constant: -screenSize.width/9).isActive = true
-            cell.qrCodeImage.heightAnchor.constraint(equalToConstant: screenSize.height/5).isActive = true
-            cell.qrCodeImage.widthAnchor.constraint(equalToConstant: screenSize.height/5).isActive = true
-
-            cell.addSubview(cell.addressText)
-            cell.addressText.topAnchor.constraint(equalTo: cell.qrCodeImage.bottomAnchor, constant: screenSize.height/15).isActive = true
-            cell.addressText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenSize.width/9).isActive = true
-            cell.addressText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenSize.width/3.3).isActive = true
-            cell.addressText.heightAnchor.constraint(equalToConstant: screenSize.height/8).isActive = true
+            mainCellLayout(cell: cell)
 
             return cell
         }
@@ -103,9 +74,9 @@ class MainLeftMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if(indexPath.row == 0){
-            return screenSize.height/1.5
+            return screenSize.height*0.6
         }
-        return screenSize.height/15
+        return screenSize.height/12
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -118,5 +89,67 @@ class MainLeftMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+    }
+
+    private func mainCellLayout(cell: LeftMenuCell){
+        let border = CALayer()
+        border.backgroundColor = UIColor(key: "grey").cgColor
+        border.frame = CGRect(x:0, y: cell.frame.height*0.95, width: screenSize.width, height: 0.5)
+
+        cell.descriptionLabel.text = account.getAddressName()
+
+        cell.descriptionLabel.font = UIFont(name:"NanumSquareRoundB", size: 22, dynamic: true)!
+        cell.descriptionLabel.textColor = UIColor(key: "darker")
+        cell.descriptionLabel.textAlignment = .center
+        cell.descriptionLabel.numberOfLines = 0
+        cell.descriptionLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: screenSize.height/20).isActive = true
+        cell.layer.addSublayer(border)
+
+        cell.addressButton.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
+        cell.txFeeButton.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
+
+        cell.addSubview(cell.qrCodeImage)
+        cell.addSubview(cell.addressLabel)
+        cell.addSubview(cell.addressButton)
+        cell.addSubview(cell.txFeeButton)
+
+        address = account.getAddress()?.description
+        cell.addressLabel.text = address
+
+        let qrImage = util.generateQRCode(source: address?.description)
+        cell.qrCodeImage.image = qrImage
+
+        cell.qrCodeImage.topAnchor.constraint(equalTo: cell.descriptionLabel.bottomAnchor, constant: screenSize.height/30).isActive = true
+        cell.qrCodeImage.centerXAnchor.constraint(equalTo: cell.centerXAnchor, constant: -screenSize.width/10).isActive = true
+        cell.qrCodeImage.heightAnchor.constraint(equalToConstant: screenSize.height/5).isActive = true
+        cell.qrCodeImage.widthAnchor.constraint(equalToConstant: screenSize.height/5).isActive = true
+
+        cell.addressButton.topAnchor.constraint(equalTo: cell.qrCodeImage.bottomAnchor, constant: screenSize.height/25).isActive = true
+        cell.addressButton.centerXAnchor.constraint(equalTo: cell.centerXAnchor, constant: -screenSize.width/10 - screenSize.width/6).isActive = true
+        cell.addressButton.widthAnchor.constraint(equalToConstant: screenSize.width/4).isActive = true
+        cell.addressButton.heightAnchor.constraint(equalToConstant: screenSize.height/20).isActive = true
+
+        cell.txFeeButton.topAnchor.constraint(equalTo: cell.qrCodeImage.bottomAnchor, constant: screenSize.height/25).isActive = true
+        cell.txFeeButton.centerXAnchor.constraint(equalTo: cell.centerXAnchor, constant: -screenSize.width/10 + screenSize.width/6).isActive = true
+        cell.txFeeButton.widthAnchor.constraint(equalToConstant: screenSize.width/4).isActive = true
+        cell.txFeeButton.heightAnchor.constraint(equalToConstant: screenSize.height/20).isActive = true
+
+        cell.addressLabel.topAnchor.constraint(equalTo: cell.addressButton.bottomAnchor, constant: screenSize.height/35).isActive = true
+        cell.addressLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenSize.width/10).isActive = true
+        cell.addressLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenSize.width/3.3).isActive = true
+        cell.addressLabel.heightAnchor.constraint(equalToConstant: screenSize.height/17).isActive = true
+    }
+
+    @objc func buttonPressed(_ sender: UIButton){
+        if(sender.tag == 0){
+            UIPasteboard.general.string = self.address
+            let alertVC = util.alert(title: "주소 복사", body: "주소가 클립보드에 복사되었습니다.", buttonTitle: "확인", buttonNum: 1, completion: {_ in
+            })
+            self.present(alertVC, animated: false)
+        }
+        else if(sender.tag == 1){
+            let txFeeVC = TXFeeVC()
+            self.present(UINavigationController(rootViewController: txFeeVC), animated: true)
+        }
     }
 }

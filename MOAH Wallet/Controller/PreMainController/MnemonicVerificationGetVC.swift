@@ -134,7 +134,7 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
         errorLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         errorLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
-        nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40).isActive = true
+        nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -screenHeight/20).isActive = true
         nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         nextButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
