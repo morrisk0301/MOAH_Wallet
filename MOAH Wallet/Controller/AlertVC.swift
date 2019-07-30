@@ -25,6 +25,7 @@ class AlertVC: UIViewController{
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.alpha = 0
 
         return view
     }()
@@ -100,6 +101,12 @@ class AlertVC: UIViewController{
             backButton.isHidden = true
             setupOneButton()
         }
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        UIView.animate(withDuration: 0.5, delay: 0, animations: {
+            self.alertView.alpha = 1
+        }, completion: nil)
     }
 
     private func setupLayout(){

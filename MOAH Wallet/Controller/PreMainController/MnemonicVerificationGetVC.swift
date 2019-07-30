@@ -61,6 +61,19 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
         return label
     }()
 
+    let warningLabel: UILabel = {
+        let label = UILabel()
+
+        label.text = "비밀 시드 구문으로 기존 계정을 복원할 수 있습니다.\n\n\nMOAH Wallet은 사용자의 개인키 정보를 수집하지 않으며, 개인키 정보는 암호화 되어 안전하게 저장됩니다."
+        label.font = UIFont(name: "NanumSquareRoundR", size: 14, dynamic: true)
+        label.textColor = UIColor(key: "darker")
+        label.numberOfLines = 0
+
+        label.translatesAutoresizingMaskIntoConstraints = false
+
+        return label
+    }()
+
     let nextButton: CustomButton = {
         let button = CustomButton(type: .system)
         button.setTitle("다음", for: .normal)
@@ -81,6 +94,7 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
         view.addSubview(explainLabel)
         view.addSubview(mnemonicField)
         view.addSubview(errorLabel)
+        view.addSubview(warningLabel)
         view.addSubview(nextButton)
 
         mnemonicField.delegate = self
@@ -127,12 +141,17 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
         mnemonicField.topAnchor.constraint(equalTo: explainLabel.bottomAnchor, constant: screenHeight/30).isActive = true
         mnemonicField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/15).isActive = true
         mnemonicField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/15).isActive = true
-        mnemonicField.heightAnchor.constraint(equalToConstant: screenSize.height/4.5).isActive = true
+        mnemonicField.heightAnchor.constraint(equalToConstant: screenSize.height/6).isActive = true
 
-        errorLabel.topAnchor.constraint(equalTo: mnemonicField.bottomAnchor, constant: 5).isActive = true
+        errorLabel.topAnchor.constraint(equalTo: mnemonicField.bottomAnchor, constant: screenHeight/100).isActive = true
         errorLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         errorLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        errorLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        errorLabel.heightAnchor.constraint(equalToConstant: screenHeight/20).isActive = true
+
+        warningLabel.topAnchor.constraint(equalTo: errorLabel.bottomAnchor, constant: screenHeight/50).isActive = true
+        warningLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenSize.width/15).isActive = true
+        warningLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenSize.width/15).isActive = true
+        warningLabel.heightAnchor.constraint(equalToConstant: screenSize.height/8).isActive = true
 
         nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -screenHeight/20).isActive = true
         nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true

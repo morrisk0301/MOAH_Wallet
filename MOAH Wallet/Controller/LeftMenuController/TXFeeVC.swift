@@ -30,6 +30,6 @@ class TXFeeVC: UIViewController {
     }
 
     @objc func backPressed(_ sender: UIButton){
-        self.dismiss(animated: false)
+        self.dismiss(animated: true)
     }
 }
