@@ -13,7 +13,7 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
 
     let account: EthAccount = EthAccount.accountInstance
     let screenSize = UIScreen.main.bounds
-    let web3: Web3Custom = Web3Custom.web3
+    let web3: CustomWeb3 = CustomWeb3.web3
     let util = Util()
 
     let tableView: UITableView = {

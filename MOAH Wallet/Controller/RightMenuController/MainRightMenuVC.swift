@@ -8,7 +8,7 @@ import UIKit
 
 class MainRightMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
 
-    private let reuseIdentifer = "RightMenuCell"
+    private let reuseIdentifier = "RightMenuCell"
 
     let screenSize = UIScreen.main.bounds
 
@@ -32,7 +32,7 @@ class MainRightMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSou
 
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(RightMenuCell.self, forCellReuseIdentifier: reuseIdentifer)
+        tableView.register(RightMenuCell.self, forCellReuseIdentifier: reuseIdentifier)
         tableView.rowHeight = screenSize.height/15
         tableView.isScrollEnabled = false
 
@@ -50,7 +50,7 @@ class MainRightMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifer, for: indexPath) as! RightMenuCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! RightMenuCell
         cell.descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenSize.width/3.5).isActive = true
 
         let menuOption = RightMenuOption(rawValue: indexPath.row)

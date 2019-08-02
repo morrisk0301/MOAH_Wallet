@@ -8,7 +8,7 @@ import UIKit
 
 class AddAccountVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    private let reuseIdentifer = "MenuCell"
+    private let reuseIdentifier = "MenuCell"
 
     let screenSize = UIScreen.main.bounds
 
@@ -30,7 +30,7 @@ class AddAccountVC: UIViewController, UITableViewDataSource, UITableViewDelegate
 
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(MenuCell.self, forCellReuseIdentifier: reuseIdentifer)
+        tableView.register(MenuCell.self, forCellReuseIdentifier: reuseIdentifier)
 
         view.backgroundColor = UIColor(key: "light3")
         view.addSubview(tableView)
@@ -43,7 +43,7 @@ class AddAccountVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifer, for: indexPath) as! MenuCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! MenuCell
 
         if(indexPath.row == 0){
             cell.menuLabel.text = "계정 생성"

@@ -112,7 +112,7 @@ class PrivateKeyVC: UIViewController {
         warningLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenSize.width/15).isActive = true
         warningLabel.heightAnchor.constraint(equalToConstant: screenSize.height/5).isActive = true
 
-        copyButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40).isActive = true
+        copyButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -screenSize.height/20).isActive = true
         copyButton.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         copyButton.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         copyButton.heightAnchor.constraint(equalToConstant: 50).isActive = true

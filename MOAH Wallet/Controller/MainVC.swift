@@ -16,7 +16,7 @@ class MainVC: UIViewController{
     var delegate: MainControllerDelegate?
 
     let screenSize = UIScreen.main.bounds
-    let web3: Web3Custom = Web3Custom.web3
+    let web3: CustomWeb3 = CustomWeb3.web3
     let util = Util()
 
     let tokenView: MainTokenView = {
@@ -85,6 +85,8 @@ class MainVC: UIViewController{
         //view.addSubview(txView)
         tokenView.setTokenString(tokenString: "Ethereum")
 
+        print(web3.getOption())
+
         /*
         let account: EthAccount = EthAccount.accountInstance
         let KS = account.getKeyStore()
@@ -100,7 +102,6 @@ class MainVC: UIViewController{
         let intermediateTX =  try! web3Kovan.eth.sendETH(to: toAddress, amount: amount, options: options)
         try! intermediateTX.send(password: "123")
         */
-
 
 
         setupLayout()

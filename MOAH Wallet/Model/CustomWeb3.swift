@@ -7,18 +7,23 @@ import Foundation
 import web3swift
 import BigInt
 
-class Web3Custom {
+class CustomWeb3 {
 
     private let _web3Main = Web3(infura: .mainnet, accessToken: "7bdfe4d2582141ef8e00c2cf929c72ee")
     private let _web3Robsten = Web3(infura: .ropsten, accessToken: "7bdfe4d2582141ef8e00c2cf929c72ee")
     private let _web3Kovan = Web3(infura: .kovan, accessToken: "7bdfe4d2582141ef8e00c2cf929c72ee")
     private let _web3Rinkeby = Web3(infura: .rinkeby, accessToken: "7bdfe4d2582141ef8e00c2cf929c72ee")
+    private var _option: Web3Options?
     private var _web3Ins: Web3?
 
-    static let web3 = Web3Custom()
+    let account: EthAccount = EthAccount.accountInstance
+    let userDefaults = UserDefaults.standard
+
+    static let web3 = CustomWeb3()
 
     private init() {
         setNetwork(network: nil)
+        _setOption()
     }
 
     func getWeb3Ins() -> Web3? {
@@ -70,14 +75,79 @@ class Web3Custom {
         }
     }
 
+    func setGas(rate: String){
+        if(_option == nil){ return }
+        switch(rate){
+            case "low":
+                _option?.gasLimit = BigUInt(21000)
+                _option?.gasPrice = BigUInt(1000000000*4)
+                break
+            case "mid":
+                _option?.gasLimit = BigUInt(21000)
+                _option?.gasPrice = BigUInt(1000000000*10)
+                break
+            case "high":
+                _option?.gasLimit = BigUInt(21000)
+                _option?.gasPrice = BigUInt(1000000000*20)
+                break
+            default:
+                break
+        }
+        let gas = CustomGas(rate: rate, price: nil, limit: nil)
+        _saveGas(gas: gas)
+    }
+
+    func setGas(price: BigUInt, limit: BigUInt){
+        if(_option == nil){ return }
+        _option?.gasLimit = price
+        _option?.gasPrice = limit
+
+        let gas = CustomGas(rate: "custom", price: price, limit: limit)
+        _saveGas(gas: gas)
+    }
+
+    func getGas() -> CustomGas? {
+        return _loadGas()
+    }
+
+    func getOption() -> Web3Options? {
+        return _option
+    }
+
+    private func _setOption(){
+        _option = Web3Options.default
+        _option?.from = _getAddress()
+        guard let gas = _loadGas() else {
+            setGas(rate: "mid")
+            return
+        }
+
+        if(gas.rate != "custom"){
+            setGas(rate: gas.rate)
+        }
+        else{
+            setGas(price: gas.price!, limit: gas.limit!)
+        }
+    }
+
+
     private func _getKeyStoreManager() -> KeystoreManager?{
-        let account: EthAccount = EthAccount.accountInstance
         return account.getKeyStoreManager()
     }
 
     private func _getAddress() -> Address?{
-        let account: EthAccount = EthAccount.accountInstance
         return account.getAddress()
+    }
+
+    private func _loadGas() -> CustomGas? {
+        guard let rawGas = userDefaults.value(forKey:"gas") as? Data else { return nil }
+
+        let gas = try! PropertyListDecoder().decode(CustomGas.self, from: rawGas)
+        return gas
+    }
+
+    private func _saveGas(gas: CustomGas){
+        userDefaults.set(try! PropertyListEncoder().encode(gas), forKey:"gas")   
     }
 
 }

@@ -5,13 +5,20 @@
 
 import Foundation
 import UIKit
+import BigInt
 
 struct AnchoredConstraints {
     var top, leading, bottom, trailing, width, height: NSLayoutConstraint?
 }
 
-struct AddressCustom: Codable {
+struct CustomAddress: Codable {
     var address: String
     var name: String
     var isPrivateKey: Bool
+}
+
+struct CustomGas: Codable {
+    var rate: String
+    var price: BigUInt?
+    var limit: BigUInt?
 }

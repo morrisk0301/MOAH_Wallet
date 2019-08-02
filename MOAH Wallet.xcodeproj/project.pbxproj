@@ -21,6 +21,7 @@
 		C051F0D08B61E4AC556E06C1 /* GetAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FFB386BA85B16E2D972D /* GetAccountVC.swift */; };
 		C051F106C4C595A04EAA4FE1 /* AgreementCheckVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F51191A6826F0F867E0E /* AgreementCheckVC.swift */; };
 		C051F159ABCE211D65F59FE8 /* WalletDoneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F1995FE3594C44DEA5F6 /* WalletDoneVC.swift */; };
+		C051F1B94E8FD3A7163B874F /* TXCustomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F01C6821434AF3F35AF7 /* TXCustomVC.swift */; };
 		C051F258B5359AA8ADF748A4 /* CreateAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FE5AAB127B414BFB8543 /* CreateAccountVC.swift */; };
 		C051F2666FCBD43EDDC03FD2 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F49F7A22AF8C42EA4D32 /* MainVC.swift */; };
 		C051F284A7D374FCA7E108A6 /* PasswordCheckVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F9131D6E229A0A07E75C /* PasswordCheckVC.swift */; };
@@ -37,7 +38,7 @@
 		C051F4ADE3AB580DC609A8FB /* AccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F3450FFF47B9DBC83C94 /* AccountCell.swift */; };
 		C051F4F3C611CBCFBDA45DB2 /* MyAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F63AEAD075F1D9237EED /* MyAccountVC.swift */; };
 		C051F522F4C576ED1BD31E84 /* LeftMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F90BE9924E9EE9462DC9 /* LeftMenuCell.swift */; };
-		C051F557FB97A111AA701661 /* Web3Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F97A0E294E3AD06B4979 /* Web3Custom.swift */; };
+		C051F557FB97A111AA701661 /* CustomWeb3.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F97A0E294E3AD06B4979 /* CustomWeb3.swift */; };
 		C051F58BA970A28F5148E884 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FF8E066A1CFE267725CC /* CustomButton.swift */; };
 		C051F5F80BB40708BAE58682 /* MnemonicVerificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FC2158395B4BF65E453E /* MnemonicVerificationVC.swift */; };
 		C051F6991830583F5D879C9C /* AgreementVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FD9079AB28E40C022FDD /* AgreementVC.swift */; };
@@ -62,7 +63,6 @@
 		C051FA62FD875D5F93EDDFD4 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F26E21CD42E0A1B5B53D /* Util.swift */; };
 		C051FACD1A0E01B4C40586F2 /* AlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F78260EE7AE0C72FAED1 /* AlertVC.swift */; };
 		C051FB1FE29301C3EA68F93B /* KeypadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FD83FA4BAE07897C116D /* KeypadView.swift */; };
-		C051FB3EDA8676CDCDBBDEF9 /* KeyboardShowHide.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F29FBC6A1B53190053A7 /* KeyboardShowHide.swift */; };
 		C051FB5E23902398DEF96B30 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F7AC902DA14D067B4A7E /* AppDelegate.swift */; };
 		C051FBC3EE3CCF033DC52F98 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F294C8BB75589DD19F35 /* Error.swift */; };
 		C051FC018077B21A44B84622 /* LeftTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FAAD35BE522484440F32 /* LeftTransition.swift */; };
@@ -108,12 +108,12 @@
 		A5A0C08C22DCD150006F2E83 /* NanumSquareRoundB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRoundB.ttf; sourceTree = "<group>"; };
 		A5A0C08D22DCD150006F2E83 /* NanumSquareRoundEB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRoundEB.ttf; sourceTree = "<group>"; };
 		A5BDDA6322EB45BB00A9EE5C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C051F01C6821434AF3F35AF7 /* TXCustomVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TXCustomVC.swift; sourceTree = "<group>"; };
 		C051F05C4517A9E3F19A8751 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		C051F1995FE3594C44DEA5F6 /* WalletDoneVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletDoneVC.swift; sourceTree = "<group>"; };
 		C051F1FBAE02F542E6EB725F /* TXFeeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TXFeeVC.swift; sourceTree = "<group>"; };
 		C051F26E21CD42E0A1B5B53D /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		C051F294C8BB75589DD19F35 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
-		C051F29FBC6A1B53190053A7 /* KeyboardShowHide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardShowHide.swift; sourceTree = "<group>"; };
 		C051F2A0436A8E675D322837 /* PasswordSettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordSettingVC.swift; sourceTree = "<group>"; };
 		C051F2C7AD63643BFDF3A9C6 /* NanumGothic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file.ttf; path = NanumGothic.ttf; sourceTree = "<group>"; };
 		C051F2FC1D4AD78361437D8A /* KeychainService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
@@ -139,7 +139,7 @@
 		C051F94D8F21FC113B4FD9F2 /* MOAH Wallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MOAH Wallet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C051F956AE867F6089FFE1BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
 		C051F96A941D724CEC53F3B1 /* FAQVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FAQVC.swift; sourceTree = "<group>"; };
-		C051F97A0E294E3AD06B4979 /* Web3Custom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Web3Custom.swift; sourceTree = "<group>"; };
+		C051F97A0E294E3AD06B4979 /* CustomWeb3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomWeb3.swift; sourceTree = "<group>"; };
 		C051F9B011B6E362F3C18BEB /* MainRightMenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainRightMenuVC.swift; sourceTree = "<group>"; };
 		C051FA21B0D87D905D0AD07E /* RightMenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightMenuCell.swift; sourceTree = "<group>"; };
 		C051FA6C9DECCACCA006C620 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -299,7 +299,7 @@
 				C051FA9FF2133358D8774A35 /* EthAccount.swift */,
 				C051F2FC1D4AD78361437D8A /* KeychainService.swift */,
 				C051F478AD26EA7B007B6AF3 /* LeftMenuOption.swift */,
-				C051F97A0E294E3AD06B4979 /* Web3Custom.swift */,
+				C051F97A0E294E3AD06B4979 /* CustomWeb3.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -345,7 +345,6 @@
 			isa = PBXGroup;
 			children = (
 				C051F26E21CD42E0A1B5B53D /* Util.swift */,
-				C051F29FBC6A1B53190053A7 /* KeyboardShowHide.swift */,
 				C051FFB8B9E194F8D83BD639 /* Protocols.swift */,
 				C051F05C4517A9E3F19A8751 /* Extensions.swift */,
 				C051FCF89F1254FD1A2B0D3F /* Structs.swift */,
@@ -381,6 +380,7 @@
 				C051FE5AAB127B414BFB8543 /* CreateAccountVC.swift */,
 				C051FFB386BA85B16E2D972D /* GetAccountVC.swift */,
 				C051F1FBAE02F542E6EB725F /* TXFeeVC.swift */,
+				C051F01C6821434AF3F35AF7 /* TXCustomVC.swift */,
 			);
 			path = LeftMenuController;
 			sourceTree = "<group>";
@@ -644,7 +644,6 @@
 				C051F2666FCBD43EDDC03FD2 /* MainVC.swift in Sources */,
 				C051FC07BFCC39DD3F13BCF3 /* LockVC.swift in Sources */,
 				C051FA62FD875D5F93EDDFD4 /* Util.swift in Sources */,
-				C051FB3EDA8676CDCDBBDEF9 /* KeyboardShowHide.swift in Sources */,
 				C051F957854FA8DC85D649B1 /* MainContainerVC.swift in Sources */,
 				C051FB1FE29301C3EA68F93B /* KeypadView.swift in Sources */,
 				C051F58BA970A28F5148E884 /* CustomButton.swift in Sources */,
@@ -678,7 +677,7 @@
 				C051FF7241A205070C0A26B3 /* TransparentButton.swift in Sources */,
 				C051F3E8704B988773687809 /* TokenSelectVC.swift in Sources */,
 				C051FD0AB2ECBBFC1E2CDA33 /* LeftMenuOption.swift in Sources */,
-				C051F557FB97A111AA701661 /* Web3Custom.swift in Sources */,
+				C051F557FB97A111AA701661 /* CustomWeb3.swift in Sources */,
 				C051F089B9C06C3FD9DB06E9 /* MainLeftMenuVC.swift in Sources */,
 				C051F4F3C611CBCFBDA45DB2 /* MyAccountVC.swift in Sources */,
 				C051F7715A69EEBDEFE0844A /* PrivateKeyVC.swift in Sources */,
@@ -693,6 +692,7 @@
 				C051FBC3EE3CCF033DC52F98 /* Error.swift in Sources */,
 				C051F9448783D3EBAEEE3701 /* TXFeeVC.swift in Sources */,
 				C051F284A7D374FCA7E108A6 /* PasswordCheckVC.swift in Sources */,
+				C051F1B94E8FD3A7163B874F /* TXCustomVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

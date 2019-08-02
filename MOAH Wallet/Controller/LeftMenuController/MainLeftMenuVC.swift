@@ -9,7 +9,7 @@ import web3swift
 
 class MainLeftMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
 
-    private let reuseIdentifer = "LeftMenuCell"
+    private let reuseIdentifier = "LeftMenuCell"
 
     let screenSize = UIScreen.main.bounds
     let account: EthAccount = EthAccount.accountInstance
@@ -35,7 +35,7 @@ class MainLeftMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSour
 
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(LeftMenuCell.self, forCellReuseIdentifier: reuseIdentifer)
+        tableView.register(LeftMenuCell.self, forCellReuseIdentifier: reuseIdentifier)
         tableView.rowHeight = screenSize.height/15
         tableView.isScrollEnabled = false
 
@@ -57,7 +57,7 @@ class MainLeftMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifer, for: indexPath) as! LeftMenuCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! LeftMenuCell
         cell.descriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenSize.width/3.3).isActive = true
 
         let menuOption = LeftMenuOption(rawValue: indexPath.row)

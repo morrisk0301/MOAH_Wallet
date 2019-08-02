@@ -168,9 +168,9 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
             self.navigationController?.pushViewController(passwordVC, animated: true)
         }
         else{
-            let animation = ShakeAnimation()
-            self.view.layer.add(animation, forKey: "position")
-            errorLabel.text = "올바르지 않은 시드 구문입니다!"
+            let util = Util()
+            let alertVC = util.alert(title: "시드 구문 오류", body: "올바르지 않은 시드 구문입니다.", buttonTitle: "확인", buttonNum: 1, completion: {_ in})
+            self.present(alertVC, animated: false)
         }
 
     }

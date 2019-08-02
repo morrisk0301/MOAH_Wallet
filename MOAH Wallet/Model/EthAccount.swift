@@ -23,7 +23,7 @@ class EthAccount {
     private var _isVerified: Bool = false
     private var _timer: Timer?
     private var _address: Address?
-    private var _addressArray: [AddressCustom] = [AddressCustom]()
+    private var _addressArray: [CustomAddress] = [CustomAddress]()
 
     private init() {
     }
@@ -152,7 +152,7 @@ class EthAccount {
                 throw GetAccountError.existingAccount
             }
 
-            let address = AddressCustom(address: keyStore.addresses.first!.description, name: name, isPrivateKey: true)
+            let address = CustomAddress(address: keyStore.addresses.first!.description, name: name, isPrivateKey: true)
             _savePrivateKey(key: key, name: address.name, password: _password!)
             _addAddress(address: address)
             setAddress(address: _addressArray.last!.address)
@@ -175,7 +175,7 @@ class EthAccount {
             try _keyStore?.createNewChildAccount(password: _password!)
             _saveKeyStore()
 
-            let address = AddressCustom(address: _getLastAddress().description, name: name, isPrivateKey: false)
+            let address = CustomAddress(address: _getLastAddress().description, name: name, isPrivateKey: false)
             _addAddress(address: address)
             setAddress(address: _addressArray.last!.address)
         } catch {
@@ -206,7 +206,7 @@ class EthAccount {
         return _address
     }
 
-    func getAddressArray() -> [AddressCustom]? {
+    func getAddressArray() -> [CustomAddress]? {
         return _addressArray
     }
 
@@ -353,7 +353,7 @@ class EthAccount {
 
     private func _loadAddress(){
         if let rawArray = UserDefaults.standard.value(forKey:"address") as? Data {
-            let addressArray = try! PropertyListDecoder().decode([AddressCustom].self, from: rawArray)
+            let addressArray = try! PropertyListDecoder().decode([CustomAddress].self, from: rawArray)
             _addressArray = addressArray
         }
         else{
@@ -361,13 +361,13 @@ class EthAccount {
         }
     }
 
-    private func _addAddress(address: AddressCustom){
+    private func _addAddress(address: CustomAddress){
         _addressArray.append(address)
         _saveAddress()
     }
 
     private func _generateAddressArray(){
-        let address = AddressCustom(address: _keyStore!.addresses.first!.description, name: "주 계정", isPrivateKey: false)
+        let address = CustomAddress(address: _keyStore!.addresses.first!.description, name: "주 계정", isPrivateKey: false)
         _addressArray = [address]
         _saveAddress()
     }
@@ -407,6 +407,6 @@ class EthAccount {
         _keyStore = nil
         _mnemonic = nil
         _address = nil
-        _addressArray = [AddressCustom]()
+        _addressArray = [CustomAddress]()
     }
 }
