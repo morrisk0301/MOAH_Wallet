@@ -101,27 +101,20 @@ class EthAccount {
 
     func verifyMnemonic(index: Int, word: String) -> Bool {
         if (_mnemonic == nil) {
-            return false
+            _mnemonic = try! Mnemonics(_loadMnemonic(password: _password!))
         }
         let mnemonicIns = _mnemonic!.string.components(separatedBy: " ")
 
         if (mnemonicIns[index] == word) {
-            if (index == mnemonicIns.count - 1) {
-                _isVerified = true
-            }
             return true
         } else {
             return false
         }
     }
 
-    func getMnemonic(password: String) -> String? {
-        /*
-        let mnemonic = _loadMnemonic(password: password)
-
+    func getMnemonic() -> String {
+        let mnemonic = _loadMnemonic(password: _password!)
         return mnemonic
-        */
-        return nil
     }
 
     func getPrivateKey() -> String {
@@ -182,6 +175,16 @@ class EthAccount {
             return false
         }
         return true
+    }
+
+    func verifyAccount(){
+        _isVerified = true
+        _saveIsVerified()
+    }
+
+    func unverifyAccount(){
+        _isVerified = false
+        _saveIsVerified()
     }
 
     func getIsVerified() -> Bool {
@@ -331,6 +334,7 @@ class EthAccount {
         _loadAddress()
         _loadAddressSelected()
         _loadKeyStore()
+        _loadIsVerified()
     }
 
     private func _saveAddressSelected() {
@@ -400,9 +404,18 @@ class EthAccount {
         return true
     }
 
+    private func _saveIsVerified(){
+        userDefaults.set(_isVerified, forKey: "isVerified")
+    }
+
+    private func _loadIsVerified(){
+        _isVerified = userDefaults.bool(forKey: "isVerified")
+    }
+
     @objc private func _lockKeyData(_ sender: Timer) {
         _saveKeyStore()
         _saveAddressSelected()
+        _saveIsVerified()
         _password = nil
         _keyStore = nil
         _mnemonic = nil

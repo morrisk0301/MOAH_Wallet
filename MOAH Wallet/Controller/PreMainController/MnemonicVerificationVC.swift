@@ -6,11 +6,13 @@
 import Foundation
 import UIKit
 
-class MnemonicVerificationVC: UIViewController{
+class MnemonicVerificationVC: UIViewController, UITextFieldDelegate{
 
     var wordIndex: Int?
+    var isSetting = false
 
     let screenSize = UIScreen.main.bounds
+    let util = Util()
 
     let headLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 120))
@@ -59,27 +61,13 @@ class MnemonicVerificationVC: UIViewController{
         textField.borderStyle = .none
         textField.returnKeyType = .done
         textField.textColor = UIColor(key: "darker")
-        textField.font = UIFont(name:"NanumSquareRoundR", size: 20, dynamic: true)
+        textField.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
         textField.keyboardType = .asciiCapable
         textField.backgroundColor = .clear
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.addTarget(self, action: #selector(textInput(_:)), for: .editingChanged)
 
         return textField
-    }()
-
-    let errorLabel: UILabel = {
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
-
-        label.text = ""
-        label.font = UIFont(name:"NanumSquareRoundB", size: 14, dynamic: true)
-        label.backgroundColor = .clear
-        label.textColor = UIColor(key: "darker")
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
-
-        return label
     }()
 
     let nextButton: CustomButton = {
@@ -106,11 +94,13 @@ class MnemonicVerificationVC: UIViewController{
         }
 
         view.backgroundColor = UIColor(key: "light3")
+
+        mnemonicField.delegate = self
+
         view.addSubview(headLabel)
         view.addSubview(explainLabel)
         view.addSubview(mnemonicProgress)
         view.addSubview(mnemonicField)
-        view.addSubview(errorLabel)
         view.addSubview(nextButton)
 
         explainLabel.text = "\(wordIndex! + 1)번째 시드 단어를 입력해주세요."
@@ -161,11 +151,6 @@ class MnemonicVerificationVC: UIViewController{
         mnemonicField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/15).isActive = true
         mnemonicField.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
-        errorLabel.topAnchor.constraint(equalTo: mnemonicField.bottomAnchor, constant: 5).isActive = true
-        errorLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        errorLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        errorLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
-
         nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -screenHeight/20).isActive = true
         nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
@@ -178,16 +163,26 @@ class MnemonicVerificationVC: UIViewController{
             if(wordIndex! < 11) {
                 let mnemonicVerificationVC = MnemonicVerificationVC()
                 mnemonicVerificationVC.wordIndex = wordIndex! + 1
+                mnemonicVerificationVC.isSetting = self.isSetting
                 self.navigationController?.pushViewController(mnemonicVerificationVC, animated: false)
             }
             else{
-                let walletDoneVC = WalletDoneVC()
-                if(account.setAccount()){
+                account.verifyAccount()
+                if(isSetting){
+                    let viewControllers: [UIViewController] = self.navigationController!.viewControllers
+                    for aViewController in viewControllers {
+                        if aViewController is MnemonicSettingVC {
+                            let pViewController = aViewController as! MnemonicSettingVC
+                            pViewController.isFinished = true
+                            self.navigationController?.popToViewController(pViewController, animated: true)
+                        }
+                    }
+                }else{
+                    let walletDoneVC = WalletDoneVC()
                     self.present(walletDoneVC, animated: true)
                 }
             }
         }
-        return
     }
 
     @objc private func nextPressed(_ sender: UIButton){
@@ -196,17 +191,27 @@ class MnemonicVerificationVC: UIViewController{
             if(wordIndex! < 11) {
                 let mnemonicVerificationVC = MnemonicVerificationVC()
                 mnemonicVerificationVC.wordIndex = wordIndex! + 1
+                mnemonicVerificationVC.isSetting = self.isSetting
                 self.navigationController?.pushViewController(mnemonicVerificationVC, animated: false)
             }
             else{
-                let walletDoneVC = WalletDoneVC()
-                if(account.setAccount()){
+                account.verifyAccount()
+                if(isSetting){
+                    let viewControllers: [UIViewController] = self.navigationController!.viewControllers
+                    for aViewController in viewControllers {
+                        if aViewController is MnemonicSettingVC {
+                            let pViewController = aViewController as! MnemonicSettingVC
+                            pViewController.isFinished = true
+                            self.navigationController?.popToViewController(pViewController, animated: true)
+                        }
+                    }
+                }else{
+                    let walletDoneVC = WalletDoneVC()
                     self.present(walletDoneVC, animated: true)
                 }
             }
         }
         else{
-            let util = Util()
             let alertVC = util.alert(title: "시드 구문 오류", body: "올바르지 않은 시드 구문입니다.", buttonTitle: "확인", buttonNum: 1, completion: {_ in})
             self.present(alertVC, animated: false)
         }
@@ -216,8 +221,15 @@ class MnemonicVerificationVC: UIViewController{
     @objc private func backPressed(_ sender: UIButton){
         let viewControllers: [UIViewController] = self.navigationController!.viewControllers
         for aViewController in viewControllers {
-            if aViewController is MnemonicVC {
-                self.navigationController?.popToViewController(aViewController, animated: true)
+            if(isSetting){
+                if aViewController is MnemonicSettingVC {
+                    self.navigationController?.popToViewController(aViewController, animated: true)
+                }
+            }
+            else{
+                if aViewController is MnemonicVC {
+                    self.navigationController?.popToViewController(aViewController, animated: true)
+                }
             }
         }
     }

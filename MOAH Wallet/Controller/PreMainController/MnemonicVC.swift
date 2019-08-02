@@ -9,7 +9,8 @@ import UIKit
 class MnemonicVC: UIViewController {
 
     var tempMnemonic: String?
-    var isCopied = false
+    private var isCopied = false
+    var isSetting = false
 
     let screenSize = UIScreen.main.bounds
 
@@ -42,7 +43,7 @@ class MnemonicVC: UIViewController {
     let mnemonicLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 150))
 
-        label.text = "labelTest"
+        label.text = ""
         label.font = UIFont(name: "NanumSquareRoundB", size: 20, dynamic: true)
         label.textColor = UIColor(key: "darker")
         label.numberOfLines = 0
@@ -79,6 +80,9 @@ class MnemonicVC: UIViewController {
         self.transparentNavigationBar()
         self.replaceBackButton(color: "dark")
 
+        self.navigationItem.leftBarButtonItem?.target = self
+        self.navigationItem.leftBarButtonItem?.action = #selector(backPressed(_:))
+
         view.backgroundColor = UIColor(key: "light3")
         view.addSubview(headLabel)
         view.addSubview(explainLabel)
@@ -86,7 +90,18 @@ class MnemonicVC: UIViewController {
         view.addSubview(warningLabel)
         view.addSubview(nextButton)
 
-        let mnemonic: String = tempMnemonic!
+        var mnemonic: String!
+
+        if(isSetting){
+            let account: EthAccount = EthAccount.accountInstance
+
+            self.setNavigationTitle(title: "시드 구문 조회")
+            headLabel.isHidden = true
+            mnemonic = account.getMnemonic()
+            explainLabel.text = "다음은 회원님의 비밀 시드 구문입니다."
+        } else{
+            mnemonic = self.tempMnemonic!
+        }
 
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 10
@@ -110,7 +125,6 @@ class MnemonicVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.nextButton.setTitle("시드 구문 복사하기", for: .normal) 
         self.isCopied = false
-
     }
 
     override func didReceiveMemoryWarning() {
@@ -126,10 +140,16 @@ class MnemonicVC: UIViewController {
         headLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/15).isActive = true
         headLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
 
-        explainLabel.topAnchor.constraint(equalTo: headLabel.bottomAnchor, constant: screenHeight/50).isActive = true
         explainLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/15).isActive = true
         explainLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/15).isActive = true
-        explainLabel.heightAnchor.constraint(equalToConstant: 80).isActive = true
+
+        if(isSetting){
+            explainLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: screenSize.height/30).isActive = true
+            explainLabel.heightAnchor.constraint(equalToConstant: screenSize.height/40).isActive = true
+        }else{
+            explainLabel.topAnchor.constraint(equalTo: headLabel.bottomAnchor, constant: screenHeight/50).isActive = true
+            explainLabel.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        }
 
         mnemonicLabel.topAnchor.constraint(equalTo: explainLabel.bottomAnchor, constant: screenHeight/30).isActive = true
         mnemonicLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/10).isActive = true
@@ -153,6 +173,7 @@ class MnemonicVC: UIViewController {
             UIPasteboard.general.string = self.mnemonicLabel.text
             let alertVC = util.alert(title: "시드 구문 복사", body: "시드 구문이 클립보드에 복사되었습니다.", buttonTitle: "확인", buttonNum: 1, completion: {_ in
                 DispatchQueue.main.async{
+                    if(self.isSetting){ return }
                     self.nextButton.setTitle("시드 구문 인증하기", for: .normal)
                     self.isCopied = true
                 }
@@ -164,5 +185,13 @@ class MnemonicVC: UIViewController {
             self.navigationController?.pushViewController(mnemonicVerificationVc, animated: true)
         }
 
+    }
+
+    @objc private func backPressed(_ sender: UIButton){
+        if(!isSetting){
+            let mainVC = self.navigationController?.viewControllers.first as! MainVC
+            mainVC.signUp = false
+        }
+        self.navigationController?.popViewController(animated: true)
     }
 }

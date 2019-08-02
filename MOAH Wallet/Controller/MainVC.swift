@@ -38,15 +38,6 @@ class MainVC: UIViewController{
         return label
     }()
 
-    let depositButton: TransparentButton = {
-        let button = TransparentButton(type: .system)
-        button.setTitle("입금", for: .normal)
-        button.titleLabel?.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
-        button.translatesAutoresizingMaskIntoConstraints = false
-
-        return button
-    }()
-
     let transferButton: TransparentButton = {
         let button = TransparentButton(type: .system)
         button.setTitle("전송", for: .normal)
@@ -80,12 +71,10 @@ class MainVC: UIViewController{
 
         view.addSubview(tokenView)
         view.addSubview(balanceLabel)
-        view.addSubview(depositButton)
         view.addSubview(transferButton)
         //view.addSubview(txView)
         tokenView.setTokenString(tokenString: "Ethereum")
 
-        print(web3.getOption())
 
         /*
         let account: EthAccount = EthAccount.accountInstance
@@ -168,15 +157,10 @@ class MainVC: UIViewController{
         balanceLabel.centerXAnchor.constraint(equalTo: tokenView.centerXAnchor).isActive = true
         balanceLabel.widthAnchor.constraint(equalToConstant: screenWidth/1.5).isActive = true
 
-        depositButton.topAnchor.constraint(equalTo: balanceLabel.bottomAnchor, constant: screenHeight/15).isActive = true
-        depositButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/7).isActive = true
-        depositButton.heightAnchor.constraint(equalToConstant: screenHeight/20).isActive = true
-        depositButton.widthAnchor.constraint(equalToConstant: screenWidth/3).isActive = true
-
         transferButton.topAnchor.constraint(equalTo: balanceLabel.bottomAnchor, constant: screenHeight/15).isActive = true
-        transferButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/7).isActive = true
+        transferButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         transferButton.heightAnchor.constraint(equalToConstant: screenHeight/20).isActive = true
-        transferButton.widthAnchor.constraint(equalToConstant: screenWidth/3).isActive = true
+        transferButton.widthAnchor.constraint(equalToConstant: screenWidth/2.5).isActive = true
 
         //txView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         //txView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true

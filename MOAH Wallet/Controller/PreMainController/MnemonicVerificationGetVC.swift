@@ -24,7 +24,7 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
     let explainLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 50))
 
-        label.text = "복원하실 지갑의 12자리 비밀 시드 구문을 순서대로 입력해주세요."
+        label.text = "복원하실 지갑의 12자리 비밀 시드 구문을 띄어쓰기를 포함하여 순서대로 입력해주세요."
         label.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
         label.textColor = UIColor(key: "darker")
         label.numberOfLines = 0
@@ -48,23 +48,10 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
         return textView
     }()
 
-    let errorLabel: UILabel = {
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
-
-        label.text = ""
-        label.font = UIFont(name:"NanumSquareRoundB", size: 14, dynamic: true)
-        label.backgroundColor = .clear
-        label.textColor = UIColor(key: "darker")
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-
-        return label
-    }()
-
     let warningLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "비밀 시드 구문으로 기존 계정을 복원할 수 있습니다.\n\n\nMOAH Wallet은 사용자의 개인키 정보를 수집하지 않으며, 개인키 정보는 암호화 되어 안전하게 저장됩니다."
+        label.text = "비밀 시드 구문으로 기존 계정을 복원할 수 있습니다.\n\nMOAH Wallet은 사용자의 개인키 정보를 수집하지 않으며, 개인키 정보는 암호화 되어 안전하게 저장됩니다."
         label.font = UIFont(name: "NanumSquareRoundR", size: 14, dynamic: true)
         label.textColor = UIColor(key: "darker")
         label.numberOfLines = 0
@@ -93,7 +80,6 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
         view.addSubview(mnemonicLabel)
         view.addSubview(explainLabel)
         view.addSubview(mnemonicField)
-        view.addSubview(errorLabel)
         view.addSubview(warningLabel)
         view.addSubview(nextButton)
 
@@ -109,7 +95,6 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
 
     override func viewWillDisappear(_ animated: Bool) {
         mnemonicField.text = ""
-        errorLabel.text = ""
     }
 
     override func didReceiveMemoryWarning() {
@@ -143,12 +128,7 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
         mnemonicField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/15).isActive = true
         mnemonicField.heightAnchor.constraint(equalToConstant: screenSize.height/6).isActive = true
 
-        errorLabel.topAnchor.constraint(equalTo: mnemonicField.bottomAnchor, constant: screenHeight/100).isActive = true
-        errorLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        errorLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        errorLabel.heightAnchor.constraint(equalToConstant: screenHeight/20).isActive = true
-
-        warningLabel.topAnchor.constraint(equalTo: errorLabel.bottomAnchor, constant: screenHeight/50).isActive = true
+        warningLabel.topAnchor.constraint(equalTo: mnemonicField.bottomAnchor, constant: screenHeight/40).isActive = true
         warningLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenSize.width/15).isActive = true
         warningLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenSize.width/15).isActive = true
         warningLabel.heightAnchor.constraint(equalToConstant: screenSize.height/8).isActive = true
