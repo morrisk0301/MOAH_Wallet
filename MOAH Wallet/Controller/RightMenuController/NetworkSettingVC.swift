@@ -7,9 +7,14 @@ import Foundation
 import UIKit
 
 class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+
     private let reuseIdentifier = "networkCell"
 
     let screenSize = UIScreen.main.bounds
+    let web3: CustomWeb3 = CustomWeb3.web3
+
+    var networks: [CustomWeb3Network] = [CustomWeb3Network]()
+    var network: String!
 
     let tableView: UITableView = {
         let tableView = UITableView()
@@ -42,21 +47,33 @@ class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSo
 
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(MenuCell.self, forCellReuseIdentifier: reuseIdentifier)
+        tableView.register(NetworkCell.self, forCellReuseIdentifier: reuseIdentifier)
 
         view.backgroundColor = UIColor(key: "light3")
         view.addSubview(tableView)
         view.addSubview(addButton)
 
+        getNetwork()
         setupLayout()
     }
+
+    override func viewDidAppear(_ animated: Bool) {
+        getNetwork()
+        tableView.reloadData()
+    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 
+    private func getNetwork(){
+        network = web3.getNetwork()
+        networks = web3.getNetworks()
+    }
+
     private func setupLayout(){
-        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: addButton.topAnchor).isActive = true
@@ -67,40 +84,100 @@ class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -screenSize.height/20).isActive = true
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! MenuCell
-        cell.arrowImage.isHidden = true
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        headerView.backgroundColor = .clear
 
-        switch(indexPath.row){
-        case 0:
-            cell.menuLabel.text = "이더리움 메인넷"
+        return headerView
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return screenSize.height/75
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! NetworkCell
+
+        cell.checkImage.isHidden = true
+        cell.networkLabel.textColor = UIColor(key: "darker")
+        cell.urlLabel.text = networks[indexPath.section].url.description
+
+        switch(networks[indexPath.section].name){
+        case "mainnet":
+            cell.networkLabel.text = "Etheruem 메인넷"
             break
-        case 1:
-            cell.menuLabel.text = "Robsten 테스트넷"
+        case "robsten":
+            cell.networkLabel.text = "Robsten 테스트넷"
             break
-        case 2:
-            cell.menuLabel.text = "Kovan 테스트넷"
+        case "kovan":
+            cell.networkLabel.text = "Kovan 테스트넷"
             break
-        case 3:
-            cell.menuLabel.text = "Rinkeby 테스트넷"
+        case "rinkeby":
+            cell.networkLabel.text = "Rinkeby 테스트넷"
             break
         default:
-            break
+            cell.networkLabel.text = networks[indexPath.section].name
+        }
+
+        if(networks[indexPath.section].name == network){
+            cell.networkLabel.textColor = UIColor(key: "dark")
+            cell.checkImage.isHidden = false
         }
 
         return cell
     }
 
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return networks.count
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 1
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return screenSize.height/10
+        return screenSize.height/8
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if(indexPath.section < 4){
+            web3.setNetwork(network: networks[indexPath.section].name)
+        }
+        else{
+            do{
+                try web3.setNetwork(name: networks[indexPath.section].name, url: networks[indexPath.section].url, new: false)
+            }
+            catch{
+                let util = Util()
+                let alertVC = util.alert(title: "네트워크 오류", body: "네트워크에 연결할 수 없습니다.", buttonTitle: "확인", buttonNum: 1, completion: {_ in})
+                self.present(alertVC, animated: false)
+            }
+        }
+        getNetwork()
+        self.tableView.reloadData()
+    }
 
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let deleteButton = UITableViewRowAction(style: .default, title: "삭제") { (action, indexPath) in
+            self.tableView.dataSource?.tableView!(self.tableView, commit: .delete, forRowAt: indexPath)
+            return
+        }
+        deleteButton.backgroundColor = UIColor(key: "dark")
+        return [deleteButton]
+    }
+
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if(indexPath.section < 4){ return false}
+        else { return true}
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            web3.delNetwork(name: networks[indexPath.section].name, url: networks[indexPath.section].url)
+            getNetwork()
+            self.tableView.deleteSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
+            tableView.reloadData()
+        }
     }
 
     @objc func backPressed(_ sender: UIButton){
@@ -110,6 +187,7 @@ class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     }
 
     @objc func addPressed(_ sender: UIButton){
-
+        let controller = AddNetworkVC()
+        self.navigationController?.pushViewController(controller, animated: true)
     }
 }

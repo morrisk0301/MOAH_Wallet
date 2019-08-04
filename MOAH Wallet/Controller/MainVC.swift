@@ -94,6 +94,7 @@ class MainVC: UIViewController{
 
 
         setupLayout()
+        checkChainNetwork()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -166,6 +167,23 @@ class MainVC: UIViewController{
         //txView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         //txView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         //txView.heightAnchor.constraint(equalToConstant: screenHeight/2).isActive = true
+    }
+
+    func checkChainNetwork(){
+        if(web3.getWeb3Ins() == nil){
+            let util = Util()
+
+            let alertVC = util.alert(title: "블록체인 네트워크 오류", body: "네트워크에 연결할 수 없습니다.\n네트워크를 재설정해주세요.", buttonTitle: "확인", buttonNum: 1, completion: {_ in
+                let controller = NetworkSettingVC()
+                let transition = LeftTransition()
+
+                DispatchQueue.main.async{
+                    self.view.window!.layer.add(transition, forKey: kCATransition)
+                    self.present(UINavigationController(rootViewController: controller), animated: false, completion: nil)
+                }
+            })
+            self.present(alertVC, animated: false)
+        }
     }
 
     @objc func leftMenuClicked(_ sender: UIBarButtonItem){

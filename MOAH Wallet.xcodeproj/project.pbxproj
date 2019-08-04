@@ -34,6 +34,7 @@
 		C051F43CB8BBDF5876788661 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FA6C9DECCACCA006C620 /* MainViewController.swift */; };
 		C051F45046E2E4152EDD8712 /* MainTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F635779A9F378E8C0E45 /* MainTokenView.swift */; };
 		C051F49194CE70570CBFED75 /* PasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FA989586C885176EA740 /* PasswordVC.swift */; };
+		C051F49EC6F5A051E1255627 /* NetworkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FFDDCBCDF2BDD405CE0D /* NetworkCell.swift */; };
 		C051F4A7604CFC036FD89FFE /* MnemonicSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F8B5925C8BBCF3AA8E8E /* MnemonicSettingVC.swift */; };
 		C051F4ADE3AB580DC609A8FB /* AccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F3450FFF47B9DBC83C94 /* AccountCell.swift */; };
 		C051F4F3C611CBCFBDA45DB2 /* MyAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F63AEAD075F1D9237EED /* MyAccountVC.swift */; };
@@ -48,6 +49,7 @@
 		C051F7AE7F9AA30993F9E5AD /* MnemonicVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FB1E96548FFD0DEEF195 /* MnemonicVC.swift */; };
 		C051F7C9A6AC866D22C44686 /* PasswordSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F2A0436A8E675D322837 /* PasswordSettingVC.swift */; };
 		C051F7E59E0BC7CD726C46E7 /* AddAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F395F27B1ABD90762B49 /* AddAccountVC.swift */; };
+		C051F85ADEC72DC60A48E614 /* AddNetworkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F4523162BC70026FFC86 /* AddNetworkVC.swift */; };
 		C051F85B2D0020F30D1961C8 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FFB8B9E194F8D83BD639 /* Protocols.swift */; };
 		C051F88E2A48A734D8F1901B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F05C4517A9E3F19A8751 /* Extensions.swift */; };
 		C051F9325D53C154295B5522 /* AgreementViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FD974D93686134C5B4E6 /* AgreementViewVC.swift */; };
@@ -120,6 +122,7 @@
 		C051F326270A0761F1E5315E /* TransparentButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransparentButton.swift; sourceTree = "<group>"; };
 		C051F3450FFF47B9DBC83C94 /* AccountCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountCell.swift; sourceTree = "<group>"; };
 		C051F395F27B1ABD90762B49 /* AddAccountVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAccountVC.swift; sourceTree = "<group>"; };
+		C051F4523162BC70026FFC86 /* AddNetworkVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNetworkVC.swift; sourceTree = "<group>"; };
 		C051F46ECA4D5C3D54C0F6B4 /* NetworkSettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkSettingVC.swift; sourceTree = "<group>"; };
 		C051F478AD26EA7B007B6AF3 /* LeftMenuOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftMenuOption.swift; sourceTree = "<group>"; };
 		C051F49F7A22AF8C42EA4D32 /* MainVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
@@ -170,6 +173,7 @@
 		C051FF8E066A1CFE267725CC /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		C051FFB386BA85B16E2D972D /* GetAccountVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetAccountVC.swift; sourceTree = "<group>"; };
 		C051FFB8B9E194F8D83BD639 /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		C051FFDDCBCDF2BDD405CE0D /* NetworkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkCell.swift; sourceTree = "<group>"; };
 		C051FFF0FD15853474C90D5C /* MainContainerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainContainerVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -277,6 +281,7 @@
 				C051FAA7B42C718BE4204A4A /* AnnouncementVC.swift */,
 				C051F96A941D724CEC53F3B1 /* FAQVC.swift */,
 				C051F51191A6826F0F867E0E /* AgreementCheckVC.swift */,
+				C051F4523162BC70026FFC86 /* AddNetworkVC.swift */,
 			);
 			path = RightMenuController;
 			sourceTree = "<group>";
@@ -410,6 +415,7 @@
 				C051F90BE9924E9EE9462DC9 /* LeftMenuCell.swift */,
 				C051F3450FFF47B9DBC83C94 /* AccountCell.swift */,
 				C051FD1BA4D050D26AE2DB72 /* MenuCell.swift */,
+				C051FFDDCBCDF2BDD405CE0D /* NetworkCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -693,6 +699,8 @@
 				C051F9448783D3EBAEEE3701 /* TXFeeVC.swift in Sources */,
 				C051F284A7D374FCA7E108A6 /* PasswordCheckVC.swift in Sources */,
 				C051F1B94E8FD3A7163B874F /* TXCustomVC.swift in Sources */,
+				C051F85ADEC72DC60A48E614 /* AddNetworkVC.swift in Sources */,
+				C051F49EC6F5A051E1255627 /* NetworkCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

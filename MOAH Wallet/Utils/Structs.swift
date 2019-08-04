@@ -5,6 +5,7 @@
 
 import Foundation
 import UIKit
+import web3swift
 import BigInt
 
 struct AnchoredConstraints {
@@ -21,4 +22,9 @@ struct CustomGas: Codable {
     var rate: String
     var price: BigUInt?
     var limit: BigUInt?
+}
+
+struct CustomWeb3Network: Codable {
+    var name: String
+    var url: URL
 }

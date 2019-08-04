@@ -16,6 +16,17 @@ class CreateAccountVC: UIViewController, UITextFieldDelegate {
     var showConstraint: NSLayoutConstraint?
     var hideConstraint: NSLayoutConstraint?
 
+    let nameLabel: UILabel = {
+        let label = UILabel()
+
+        label.font = UIFont(name:"NanumSquareRoundR", size: 14, dynamic: true)
+        label.textColor = UIColor(key: "darker")
+        label.text = "  계정 이름"
+        label.translatesAutoresizingMaskIntoConstraints = false
+
+        return label
+    }()
+
     let nameField: UITextField = {
         let textField = UITextField()
 
@@ -35,7 +46,7 @@ class CreateAccountVC: UIViewController, UITextFieldDelegate {
 
     let confirmButton: CustomButton = {
         let button = CustomButton(type: .system)
-        button.setTitle("다음", for: .normal)
+        button.setTitle("생성하기", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 20, dynamic: true)
         button.addTarget(self, action: #selector(nextPressed(_:)), for: .touchUpInside)
@@ -54,6 +65,7 @@ class CreateAccountVC: UIViewController, UITextFieldDelegate {
         nameField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
         nameField.delegate = self
 
+        view.addSubview(nameLabel)
         view.addSubview(nameField)
         view.addSubview(confirmButton)
 
@@ -87,7 +99,12 @@ class CreateAccountVC: UIViewController, UITextFieldDelegate {
     }
 
     private func setupLayout(){
-        nameField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -screenSize.height/4).isActive = true
+        nameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -screenSize.height/4).isActive = true
+        nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        nameLabel.heightAnchor.constraint(equalToConstant: screenSize.height/25).isActive = true
+        nameLabel.widthAnchor.constraint(equalToConstant: screenSize.width*0.9).isActive = true
+
+        nameField.topAnchor.constraint(equalTo: nameLabel.bottomAnchor).isActive = true
         nameField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         nameField.heightAnchor.constraint(equalToConstant: screenSize.height/15).isActive = true
         nameField.widthAnchor.constraint(equalToConstant: screenSize.width*0.9).isActive = true

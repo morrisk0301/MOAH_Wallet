@@ -5,8 +5,13 @@
 
 import Foundation
 
-
 enum GetAccountError: Error {
     case invalidPrivateKey
     case existingAccount
+}
+
+enum AddNetworkError: Error {
+    case invalidName
+    case invalidURL
+    case invalidNetwork
 }

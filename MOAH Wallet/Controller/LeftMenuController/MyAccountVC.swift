@@ -94,16 +94,14 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
         guard let accountSelected = account.getAddress() else { return cell}
 
         cell.checkImage.isHidden = true
+        cell.accountLabel.textColor = UIColor(key: "darker")
         cell.privateKeyLabel.isHidden = true
         if(accounts[indexPath.section].address == accountSelected.description){
+            cell.accountLabel.textColor = UIColor(key: "dark")
             cell.checkImage.isHidden = false
         }
         if(accounts[indexPath.section].isPrivateKey){
             cell.privateKeyLabel.isHidden = false
-        }
-
-        if(indexPath.section == 0){
-            cell.accountLabel.textColor = UIColor(key: "dark")
         }
 
         cell.accountLabel.text = accounts[indexPath.section].name
@@ -117,6 +115,26 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
         })
 
         return cell
+    }
+
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let deleteButton = UITableViewRowAction(style: .default, title: "숨기기") { (action, indexPath) in
+            self.tableView.dataSource?.tableView!(self.tableView, commit: .delete, forRowAt: indexPath)
+            return
+        }
+        deleteButton.backgroundColor = UIColor(key: "dark")
+        return [deleteButton]
+    }
+
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if(indexPath.section < 1){ return false}
+        else { return true}
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+
+        }
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

@@ -182,11 +182,6 @@ class EthAccount {
         _saveIsVerified()
     }
 
-    func unverifyAccount(){
-        _isVerified = false
-        _saveIsVerified()
-    }
-
     func getIsVerified() -> Bool {
         return _isVerified
     }

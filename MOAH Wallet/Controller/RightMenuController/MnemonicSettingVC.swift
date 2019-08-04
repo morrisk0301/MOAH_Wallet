@@ -59,8 +59,8 @@ class MnemonicSettingVC: UIViewController, UITableViewDelegate, UITableViewDataS
     override func viewDidAppear(_ animated: Bool) {
         if(isFinished){
             self.verifiedButton.setTitle("인증완료", for: .normal)
-            self.verifiedButton.setTitleColor(UIColor(key: "grey2"), for: .normal)
-            self.verifiedButton.layer.borderColor = UIColor(key: "grey2").cgColor
+            self.verifiedButton.setTitleColor(UIColor(key: "dark"), for: .normal)
+            self.verifiedButton.layer.borderColor = UIColor(key: "dark").cgColor
             self.verifiedButton.layer.borderWidth = 1.0
             self.verifiedButton.backgroundColor = .clear
 
@@ -85,8 +85,8 @@ class MnemonicSettingVC: UIViewController, UITableViewDelegate, UITableViewDataS
 
         if(isVerified){
             verifiedButton.setTitle("인증완료", for: .normal)
-            verifiedButton.setTitleColor(UIColor(key: "grey2"), for: .normal)
-            verifiedButton.layer.borderColor = UIColor(key: "grey2").cgColor
+            verifiedButton.setTitleColor(UIColor(key: "dark"), for: .normal)
+            verifiedButton.layer.borderColor = UIColor(key: "dark").cgColor
             verifiedButton.layer.borderWidth = 1.0
         }else{
             verifiedButton.setTitle("인증하기", for: .normal)

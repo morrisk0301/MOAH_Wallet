@@ -87,6 +87,10 @@ class AccountCell: UITableViewCell{
         addCheck()
     }
 
+    override func prepareForReuse() {
+        accountLabel.textColor = UIColor(key: "darker")
+    }
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

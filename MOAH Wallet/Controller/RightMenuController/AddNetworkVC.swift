@@ -1,13 +1,12 @@
 //
-// Created by 김경인 on 2019-08-02.
+// Created by 김경인 on 2019-08-04.
 // Copyright (c) 2019 Sejong University Alom. All rights reserved.
 //
 
 import Foundation
 import UIKit
-import BigInt
 
-class TXCustomVC: UIViewController, UITextFieldDelegate {
+class AddNetworkVC: UIViewController, UITextFieldDelegate {
 
     let screenSize = UIScreen.main.bounds
     let web3: CustomWeb3 = CustomWeb3.web3
@@ -17,71 +16,60 @@ class TXCustomVC: UIViewController, UITextFieldDelegate {
     var showConstraint: NSLayoutConstraint?
     var hideConstraint: NSLayoutConstraint?
 
-    var price: BigUInt?
-    var limit: BigUInt?
-
-    let priceLabel: UILabel = {
+    let nameLabel: UILabel = {
         let label = UILabel()
 
         label.font = UIFont(name:"NanumSquareRoundR", size: 14, dynamic: true)
         label.textColor = UIColor(key: "darker")
-        label.text = "가스 가격"
+        label.text = "  네트워크 이름"
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
     }()
 
-    let limitLabel: UILabel = {
+    let urlLabel: UILabel = {
         let label = UILabel()
 
         label.font = UIFont(name:"NanumSquareRoundR", size: 14, dynamic: true)
         label.textColor = UIColor(key: "darker")
-        label.text = "가스 한도"
+        label.text = "  RPC URL"
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
     }()
 
-    let priceField: UITextField = {
+    let nameField: UITextField = {
         let textField = UITextField()
 
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.height))
         textField.leftView = paddingView
         textField.leftViewMode = .always
-        textField.placeholder = "가스 가격을 입력해주세요."
+        textField.placeholder = "네트워크 이름을 입력해주세요."
         textField.borderStyle = .none
         textField.returnKeyType = .done
         textField.textColor = UIColor(key: "darker")
         textField.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
         textField.backgroundColor = .white
-        textField.keyboardType = .numberPad
         textField.translatesAutoresizingMaskIntoConstraints = false
-
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: textField.frame.width*0.3, height: textField.frame.height))
-        label.font = UIFont(name:"NanumSquareRoundB", size: 16, dynamic: true)
-        label.textColor = UIColor(key: "darker")
-        label.text = "GWei  "
-        label.translatesAutoresizingMaskIntoConstraints = false
-
-        textField.rightView = label
-        textField.rightViewMode = .always
+        textField.tag = 0
 
         return textField
     }()
 
-    let limitField: UITextField = {
+    let urlField: UITextField = {
         let textField = UITextField()
 
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.height))
         textField.leftView = paddingView
         textField.leftViewMode = .always
-        textField.placeholder = "가스 한도를 입력해주세요."
+        textField.placeholder = "ex) http://0.0.0.0:7545"
         textField.borderStyle = .none
+        textField.returnKeyType = .done
         textField.textColor = UIColor(key: "darker")
         textField.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
         textField.backgroundColor = .white
-        textField.keyboardType = .numberPad
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.tag = 1
 
         return textField
     }()
@@ -89,14 +77,9 @@ class TXCustomVC: UIViewController, UITextFieldDelegate {
     let warningLabel: UILabel = {
         let label = UILabel()
 
-        label.text = """
-                     가스 가격이 높아질수록 전송 속도가 빨라 집니다.\n
-                     가스 한도는 사용할 가스의 최대치를 의미합니다.\n
-                     가스 한도가 너무 낮으면 전송이 거절될 수 있으니, 적절한 한도를 설정하시기 바랍니다.\n
-                     가스 한도나 가격을 너무 높게 설정하면 Block Gas Limit을 초과하여 전송이 불가할 수 있습니다.\n  
-                     """
+        label.text = "MOAH Wallet은 RPC URL을 활용한 사용자 지정 블록체인 망 접근 기능을 제공합니다.\n\n사용자 지정 네트워크(Ganache, Local, Private 등)의 암호화폐를 관리할 수 있습니다."
         label.textColor = UIColor(key: "darker")
-        label.font = UIFont(name:"NanumSquareRoundR", size: 14, dynamic: true)
+        label.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
 
@@ -105,7 +88,7 @@ class TXCustomVC: UIViewController, UITextFieldDelegate {
 
     let confirmButton: CustomButton = {
         let button = CustomButton(type: .system)
-        button.setTitle("가스 설정하기", for: .normal)
+        button.setTitle("추가하기", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 20, dynamic: true)
         button.addTarget(self, action: #selector(nextPressed(_:)), for: .touchUpInside)
@@ -117,21 +100,18 @@ class TXCustomVC: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         self.replaceBackButton(color: "dark")
         self.transparentNavigationBar()
-        self.setNavigationTitle(title: "사용자 지정")
+        self.setNavigationTitle(title: "네트워크 추가")
         self.hideKeyboardWhenTappedAround()
 
         view.backgroundColor = UIColor(key: "light3")
+        nameField.delegate = self
+        nameField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
+        urlField.delegate = self
 
-        priceField.delegate = self
-        limitField.delegate = self
-
-        priceField.text = price?.description
-        limitField.text = limit?.description
-
-        view.addSubview(priceLabel)
-        view.addSubview(limitLabel)
-        view.addSubview(priceField)
-        view.addSubview(limitField)
+        view.addSubview(nameLabel)
+        view.addSubview(nameField)
+        view.addSubview(urlLabel)
+        view.addSubview(urlField)
         view.addSubview(warningLabel)
         view.addSubview(confirmButton)
 
@@ -150,15 +130,15 @@ class TXCustomVC: UIViewController, UITextFieldDelegate {
 
     override func viewDidLayoutSubviews() {
         let border = CALayer()
-        border.frame = CGRect(x:0, y: priceField.frame.height-1, width: priceField.frame.width, height: 1)
+        border.frame = CGRect(x:0, y: nameField.frame.height-1, width: nameField.frame.width, height: 1)
         border.backgroundColor = UIColor(key: "grey2").cgColor
 
         let border2 = CALayer()
-        border2.frame = CGRect(x:0, y: limitField.frame.height-1, width: limitField.frame.width, height: 1)
+        border2.frame = CGRect(x:0, y: urlField.frame.height-1, width: urlField.frame.width, height: 1)
         border2.backgroundColor = UIColor(key: "grey2").cgColor
 
-        priceField.layer.addSublayer(border)
-        limitField.layer.addSublayer(border2)
+        nameField.layer.addSublayer(border)
+        urlField.layer.addSublayer(border2)
     }
 
     override func didReceiveMemoryWarning() {
@@ -166,29 +146,29 @@ class TXCustomVC: UIViewController, UITextFieldDelegate {
     }
 
     private func setupLayout(){
-        priceLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: screenSize.height/30).isActive = true
-        priceLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        priceLabel.heightAnchor.constraint(equalToConstant: screenSize.height/25).isActive = true
-        priceLabel.widthAnchor.constraint(equalToConstant: screenSize.width*0.9).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: screenSize.height/30).isActive = true
+        nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        nameLabel.heightAnchor.constraint(equalToConstant: screenSize.height/25).isActive = true
+        nameLabel.widthAnchor.constraint(equalToConstant: screenSize.width*0.9).isActive = true
 
-        priceField.topAnchor.constraint(equalTo: priceLabel.bottomAnchor).isActive = true
-        priceField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        priceField.heightAnchor.constraint(equalToConstant: screenSize.height/15).isActive = true
-        priceField.widthAnchor.constraint(equalToConstant: screenSize.width*0.9).isActive = true
+        nameField.topAnchor.constraint(equalTo: nameLabel.bottomAnchor).isActive = true
+        nameField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        nameField.heightAnchor.constraint(equalToConstant: screenSize.height/15).isActive = true
+        nameField.widthAnchor.constraint(equalToConstant: screenSize.width*0.9).isActive = true
 
-        limitLabel.topAnchor.constraint(equalTo: priceField.bottomAnchor, constant: screenSize.height/30).isActive = true
-        limitLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        limitLabel.heightAnchor.constraint(equalToConstant: screenSize.height/25).isActive = true
-        limitLabel.widthAnchor.constraint(equalToConstant: screenSize.width*0.9).isActive = true
+        urlLabel.topAnchor.constraint(equalTo: nameField.bottomAnchor, constant: screenSize.height/30).isActive = true
+        urlLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        urlLabel.heightAnchor.constraint(equalToConstant: screenSize.height/25).isActive = true
+        urlLabel.widthAnchor.constraint(equalToConstant: screenSize.width*0.9).isActive = true
 
-        limitField.topAnchor.constraint(equalTo: limitLabel.bottomAnchor).isActive = true
-        limitField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        limitField.heightAnchor.constraint(equalToConstant: screenSize.height/15).isActive = true
-        limitField.widthAnchor.constraint(equalToConstant: screenSize.width*0.9).isActive = true
+        urlField.topAnchor.constraint(equalTo: urlLabel.bottomAnchor).isActive = true
+        urlField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        urlField.heightAnchor.constraint(equalToConstant: screenSize.height/15).isActive = true
+        urlField.widthAnchor.constraint(equalToConstant: screenSize.width*0.9).isActive = true
 
-        warningLabel.topAnchor.constraint(equalTo: limitField.bottomAnchor, constant: screenSize.height/30).isActive = true
+        warningLabel.topAnchor.constraint(equalTo: urlField.bottomAnchor, constant: screenSize.height/30).isActive = true
         warningLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        warningLabel.heightAnchor.constraint(equalToConstant: screenSize.height/4).isActive = true
+        warningLabel.heightAnchor.constraint(equalToConstant: screenSize.height/6).isActive = true
         warningLabel.widthAnchor.constraint(equalToConstant: screenSize.width*0.9).isActive = true
 
         confirmButton.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -199,6 +179,7 @@ class TXCustomVC: UIViewController, UITextFieldDelegate {
     }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if(textField.tag == 1){ return true}
         guard let textFieldText = textField.text,
               let rangeOfTextToReplace = Range(range, in: textFieldText) else {
             return false
@@ -238,22 +219,30 @@ class TXCustomVC: UIViewController, UITextFieldDelegate {
 
     @objc private func nextPressed(_ sender:UIButton){
         let util = Util()
-        if(priceField.text?.count == 0 || BigUInt(priceField.text!) == nil){
-            let alertVC = util.alert(title: "가스 설정 오류", body: "가스 가격 값이 올바르지 않습니다. 가스 가격 값을 확인해주세요.", buttonTitle: "확인", buttonNum: 1, completion: {_ in
-            })
-            self.present(alertVC, animated: false)
-        }
-        else if(limitField.text?.count == 0) || BigUInt(limitField.text!) == nil {
-            let alertVC = util.alert(title: "가스 설정 오류", body: "가스 한도 값이 올바르지 않습니다. 가스 한도 값을 확인해주세요.", buttonTitle: "확인", buttonNum: 1, completion: { _ in
-            })
-            self.present(alertVC, animated: false)
-        }
-        else{
-            let price = BigUInt(Int(priceField.text!)! * 1000000000)
-            let limit = BigUInt(limitField.text!)
+        let name = nameField.text!
+        var errorBody: String?
 
-            web3.setGas(price: price, limit: limit!)
+        do{
+            if(name.count == 0){throw AddNetworkError.invalidName}
+            guard let url = URL(string: urlField.text!.lowercased()) else { throw AddNetworkError.invalidURL }
+            try web3.setNetwork(name: name, url: url, new: true)
             self.navigationController?.popViewController(animated: true)
+        }
+        catch AddNetworkError.invalidURL{
+            errorBody = "올바르지 않은 URL 형식입니다."
+        }
+        catch AddNetworkError.invalidName {
+            errorBody = "네트워크 이름이 중복되었거나,\n사용할 수 없는 네트워크 이름입니다."
+        }
+        catch AddNetworkError.invalidNetwork{
+            errorBody = "네트워크에 연결할 수 없습니다."
+        }
+        catch{
+            print(error)
+        }
+        if(errorBody != nil){
+            let alertVC = util.alert(title: "네트워크 추가 오류", body: errorBody!, buttonTitle: "확인", buttonNum: 1, completion: {_ in})
+            self.present(alertVC, animated: false)
         }
     }
 }

@@ -16,6 +16,28 @@ class GetAccountVC: UIViewController, UITextFieldDelegate {
     var showConstraint: NSLayoutConstraint?
     var hideConstraint: NSLayoutConstraint?
 
+    let nameLabel: UILabel = {
+        let label = UILabel()
+
+        label.font = UIFont(name:"NanumSquareRoundR", size: 14, dynamic: true)
+        label.textColor = UIColor(key: "darker")
+        label.text = "  계정 이름"
+        label.translatesAutoresizingMaskIntoConstraints = false
+
+        return label
+    }()
+
+    let privateKeyLabel: UILabel = {
+        let label = UILabel()
+
+        label.font = UIFont(name:"NanumSquareRoundR", size: 14, dynamic: true)
+        label.textColor = UIColor(key: "darker")
+        label.text = "  개인키"
+        label.translatesAutoresizingMaskIntoConstraints = false
+
+        return label
+    }()
+
     let nameField: UITextField = {
         let textField = UITextField()
 
@@ -66,7 +88,7 @@ class GetAccountVC: UIViewController, UITextFieldDelegate {
 
     let confirmButton: CustomButton = {
         let button = CustomButton(type: .system)
-        button.setTitle("다음", for: .normal)
+        button.setTitle("가져오기", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 20, dynamic: true)
         button.addTarget(self, action: #selector(nextPressed(_:)), for: .touchUpInside)
@@ -86,6 +108,8 @@ class GetAccountVC: UIViewController, UITextFieldDelegate {
         nameField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
         privateKeyField.delegate = self
 
+        view.addSubview(nameLabel)
+        view.addSubview(privateKeyLabel)
         view.addSubview(nameField)
         view.addSubview(privateKeyField)
         view.addSubview(confirmButton)
@@ -122,12 +146,22 @@ class GetAccountVC: UIViewController, UITextFieldDelegate {
     }
 
     private func setupLayout(){
-        nameField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: screenSize.height/30).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: screenSize.height/30).isActive = true
+        nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        nameLabel.heightAnchor.constraint(equalToConstant: screenSize.height/25).isActive = true
+        nameLabel.widthAnchor.constraint(equalToConstant: screenSize.width*0.9).isActive = true
+
+        nameField.topAnchor.constraint(equalTo: nameLabel.bottomAnchor).isActive = true
         nameField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         nameField.heightAnchor.constraint(equalToConstant: screenSize.height/15).isActive = true
         nameField.widthAnchor.constraint(equalToConstant: screenSize.width*0.9).isActive = true
 
-        privateKeyField.topAnchor.constraint(equalTo: nameField.bottomAnchor, constant: screenSize.height/40).isActive = true
+        privateKeyLabel.topAnchor.constraint(equalTo: nameField.bottomAnchor, constant: screenSize.height/30).isActive = true
+        privateKeyLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        privateKeyLabel.heightAnchor.constraint(equalToConstant: screenSize.height/25).isActive = true
+        privateKeyLabel.widthAnchor.constraint(equalToConstant: screenSize.width*0.9).isActive = true
+
+        privateKeyField.topAnchor.constraint(equalTo: privateKeyLabel.bottomAnchor).isActive = true
         privateKeyField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         privateKeyField.heightAnchor.constraint(equalToConstant: screenSize.height/15).isActive = true
         privateKeyField.widthAnchor.constraint(equalToConstant: screenSize.width*0.9).isActive = true
