@@ -37,7 +37,6 @@ class MenuCell: UITableViewCell{
 
         backgroundColor = .clear
 
-        applyShadow()
         setupLayout()
     }
 

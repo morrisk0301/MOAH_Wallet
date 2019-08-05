@@ -14,18 +14,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     let account: EthAccount = EthAccount.accountInstance
-    let defaults = UserDefaults.standard
+    let userDefaults = UserDefaults.standard
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         Thread.sleep(forTimeInterval: 2.0)
         self.window = UIWindow(frame: UIScreen.main.bounds)
         let mainView = MainViewController(nibName: nil, bundle: nil)
 
-        let key = defaults.string(forKey: "salt")
+        let key = userDefaults.string(forKey: "salt")
+        let lock = userDefaults.bool(forKey: "useLock")
+
         if(key != nil){
-            let lockVC = LockVC()
-            self.window?.rootViewController = lockVC
-            self.window?.makeKeyAndVisible()
+            if(lock){
+                let lockVC = LockVC()
+                self.window?.rootViewController = lockVC
+                self.window?.makeKeyAndVisible()
+            }else{
+                self.account.bioProceed()
+                let mainContainerVC = MainContainerVC()
+                self.window?.rootViewController = mainContainerVC
+                self.window?.makeKeyAndVisible()
+            }
         }
         else{
             self.window!.rootViewController = mainView
@@ -45,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(_ application: UIApplication) {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-        let key = defaults.string(forKey: "salt")
+        let key = userDefaults.string(forKey: "salt")
         if(key != nil){
             account.lockAccount()
         }
@@ -54,12 +63,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-        let key = defaults.string(forKey: "salt")
+        let key = userDefaults.string(forKey: "salt")
+        let lock = userDefaults.bool(forKey: "useLock")
+
         if(key != nil){
             if(account.getKeyStoreManager() == nil){
-                let lockVC = LockVC()
-                self.window?.makeKeyAndVisible()
-                self.window?.rootViewController?.present(lockVC, animated: false)
+                if(lock){
+                    let lockVC = LockVC()
+                    self.window?.rootViewController = lockVC
+                    self.window?.makeKeyAndVisible()
+                }else{
+                    self.account.bioProceed()
+                    let mainContainerVC = MainContainerVC()
+                    self.window?.rootViewController = mainContainerVC
+                    self.window?.makeKeyAndVisible()
+                }
             }else{
                 account.invalidateTimer()
             }

@@ -92,7 +92,7 @@ class KeypadView: UIView, UICollectionViewDataSource, UICollectionViewDelegateFl
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
-        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+        AudioServicesPlaySystemSound(1519)
 
         UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions.allowUserInteraction, animations: {cell?.alpha = 0.5}) { (completed) in
             UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions.allowUserInteraction, animations: {cell?.alpha = 1})

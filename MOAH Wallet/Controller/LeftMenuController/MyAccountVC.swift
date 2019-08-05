@@ -6,15 +6,19 @@
 import Foundation
 import UIKit
 import web3swift
+import AudioToolbox
 
 class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    private let reuseIdentifer = "AccountCell"
+    private let reuseIdentifier = "AccountCell"
 
     let account: EthAccount = EthAccount.accountInstance
     let screenSize = UIScreen.main.bounds
     let web3: CustomWeb3 = CustomWeb3.web3
     let util = Util()
+
+    var accounts: [CustomAddress] = [CustomAddress]()
+    var accountSelected: Address!
 
     let tableView: UITableView = {
         let tableView = UITableView()
@@ -38,7 +42,7 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
 
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(AccountCell.self, forCellReuseIdentifier: reuseIdentifer)
+        tableView.register(AccountCell.self, forCellReuseIdentifier: reuseIdentifier)
 
         view.backgroundColor = UIColor(key: "light3")
 
@@ -48,6 +52,7 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     }
 
     override func viewDidAppear(_ animated: Bool) {
+        getAccount()
         tableView.reloadData()
     }
 
@@ -74,8 +79,12 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
         self.navigationItem.rightBarButtonItem = rightButton
     }
 
+    private func getAccount(){
+        accounts = account.getAddressArray()!
+        accountSelected = account.getAddress()
+    }
+
     func numberOfSections(in tableView: UITableView) -> Int {
-        guard let accounts = account.getAddressArray() else { return 0 }
         return accounts.count
     }
 
@@ -88,10 +97,7 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifer, for: indexPath) as! AccountCell
-
-        guard let accounts = account.getAddressArray() else { return cell }
-        guard let accountSelected = account.getAddress() else { return cell}
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! AccountCell
 
         cell.checkImage.isHidden = true
         cell.accountLabel.textColor = UIColor(key: "darker")
@@ -133,7 +139,10 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
-
+            account.deleteAccount(account: accounts[indexPath.section])
+            getAccount()
+            self.tableView.deleteSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
+            tableView.reloadData()
         }
     }
 
@@ -149,7 +158,9 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        AudioServicesPlaySystemSound(1519)
         selectAccount(index: indexPath.section)
+        getAccount()
         self.tableView.reloadData()
     }
 

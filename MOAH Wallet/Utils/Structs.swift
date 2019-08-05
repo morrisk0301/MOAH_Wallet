@@ -16,6 +16,7 @@ struct CustomAddress: Codable {
     var address: String
     var name: String
     var isPrivateKey: Bool
+    var path: String?
 }
 
 struct CustomGas: Codable {

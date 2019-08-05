@@ -98,6 +98,7 @@ class PasswordVC: UIViewController, KeypadViewDelegate {
             }
             else if(confirm && password == passwordTemp){
                 account.savePassword(password!)
+                userDefaults.set(true, forKey: "useLock")
                 authBiometrics()
             }
             else if(confirm && password != passwordTemp){

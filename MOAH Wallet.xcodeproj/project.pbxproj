@@ -34,6 +34,7 @@
 		C051F43CB8BBDF5876788661 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FA6C9DECCACCA006C620 /* MainViewController.swift */; };
 		C051F45046E2E4152EDD8712 /* MainTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F635779A9F378E8C0E45 /* MainTokenView.swift */; };
 		C051F49194CE70570CBFED75 /* PasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FA989586C885176EA740 /* PasswordVC.swift */; };
+		C051F495C42450F871C3B4A9 /* PasswordChangeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FC73CD3F23F0F3FF268A /* PasswordChangeVC.swift */; };
 		C051F49EC6F5A051E1255627 /* NetworkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FFDDCBCDF2BDD405CE0D /* NetworkCell.swift */; };
 		C051F4A7604CFC036FD89FFE /* MnemonicSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F8B5925C8BBCF3AA8E8E /* MnemonicSettingVC.swift */; };
 		C051F4ADE3AB580DC609A8FB /* AccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F3450FFF47B9DBC83C94 /* AccountCell.swift */; };
@@ -153,6 +154,7 @@
 		C051FB1E96548FFD0DEEF195 /* MnemonicVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicVC.swift; sourceTree = "<group>"; };
 		C051FBEC2A31284D49D39064 /* RightMenuOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightMenuOption.swift; sourceTree = "<group>"; };
 		C051FC2158395B4BF65E453E /* MnemonicVerificationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicVerificationVC.swift; sourceTree = "<group>"; };
+		C051FC73CD3F23F0F3FF268A /* PasswordChangeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordChangeVC.swift; sourceTree = "<group>"; };
 		C051FCDFA9CC8D752BE3F74C /* LockVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockVC.swift; sourceTree = "<group>"; };
 		C051FCF89F1254FD1A2B0D3F /* Structs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Structs.swift; sourceTree = "<group>"; };
 		C051FCFAB6F715D632781390 /* Checkbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checkbox.swift; sourceTree = "<group>"; };
@@ -282,6 +284,7 @@
 				C051F96A941D724CEC53F3B1 /* FAQVC.swift */,
 				C051F51191A6826F0F867E0E /* AgreementCheckVC.swift */,
 				C051F4523162BC70026FFC86 /* AddNetworkVC.swift */,
+				C051FC73CD3F23F0F3FF268A /* PasswordChangeVC.swift */,
 			);
 			path = RightMenuController;
 			sourceTree = "<group>";
@@ -487,6 +490,11 @@
 			isa = PBXProject;
 			attributes = {
 				ORGANIZATIONNAME = "Sejong University Alom";
+				TargetAttributes = {
+					C051FB7AA217D8E18157E694 = {
+						DevelopmentTeam = 7UXH6XAW7M;
+					};
+				};
 			};
 			buildConfigurationList = C051FF304EA9E3D34B19C3EB /* Build configuration list for PBXProject "MOAH Wallet" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -701,6 +709,7 @@
 				C051F1B94E8FD3A7163B874F /* TXCustomVC.swift in Sources */,
 				C051F85ADEC72DC60A48E614 /* AddNetworkVC.swift in Sources */,
 				C051F49EC6F5A051E1255627 /* NetworkCell.swift in Sources */,
+				C051F495C42450F871C3B4A9 /* PasswordChangeVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -830,6 +839,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				DEVELOPMENT_TEAM = 7UXH6XAW7M;
 				INFOPLIST_FILE = "MOAH Wallet/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "ALOM.MOAH-Wallet";
@@ -845,6 +855,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				DEVELOPMENT_TEAM = 7UXH6XAW7M;
 				INFOPLIST_FILE = "MOAH Wallet/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "ALOM.MOAH-Wallet";

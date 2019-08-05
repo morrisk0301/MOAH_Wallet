@@ -237,7 +237,6 @@ class CustomWeb3 {
         if(name == "mainnet" || name == "robsten" ||  name == "kovan" || name == "rinkeby"){
             return false
         }
-        if(_customNetwork == nil){return true}
         for network in _customNetwork{
             if(name == network.name){
                 return false

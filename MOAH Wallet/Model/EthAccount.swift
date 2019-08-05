@@ -32,6 +32,16 @@ class EthAccount {
         _unlockAccount()
     }
 
+    func changePassword(_ password: String){
+        print(_password!)
+        let oldPassword = _password!
+        savePassword(password)
+        _regenerateKeyStore(oldPassword: oldPassword, password: _password!)
+        _reencryptMnemonic(oldPassword: oldPassword, password: _password!)
+        _reencryptPrivateKey(oldPassword: oldPassword, password: _password!)
+        print(_password!)
+    }
+
     func savePassword(_ password: String) {
         let passwordArray: [UInt8] = Array(password.utf8)
         let hash = util.randomString(length: 32)
@@ -145,7 +155,7 @@ class EthAccount {
                 throw GetAccountError.existingAccount
             }
 
-            let address = CustomAddress(address: keyStore.addresses.first!.description, name: name, isPrivateKey: true)
+            let address = CustomAddress(address: keyStore.addresses.first!.description, name: name, isPrivateKey: true, path: nil)
             _savePrivateKey(key: key, name: address.name, password: _password!)
             _addAddress(address: address)
             setAddress(address: _addressArray.last!.address)
@@ -165,16 +175,25 @@ class EthAccount {
         guard _checkAccount(name: name) else{ return false }
 
         do {
-            try _keyStore?.createNewChildAccount(password: _password!)
-            _saveKeyStore()
-
-            let address = CustomAddress(address: _getLastAddress().description, name: name, isPrivateKey: false)
-            _addAddress(address: address)
-            setAddress(address: _addressArray.last!.address)
+            try _createAccount(name: name)
         } catch {
             return false
         }
         return true
+    }
+
+    func deleteAccount(account: CustomAddress){
+        if(account.isPrivateKey){
+            _delPrivateKey(name: account.name)
+        }else{
+            _delAddressFromPath(account: account)
+        }
+        if(account.address == _address!.description){
+            setAddress(address: _addressArray.first!.address)
+        }
+        let index = _addressArray.firstIndex(where: {$0.name == account.name})
+        _addressArray.remove(at: index!)
+        _saveAddress()
     }
 
     func verifyAccount(){
@@ -263,6 +282,10 @@ class EthAccount {
         return privateKey
     }
 
+    private func _delPrivateKey(name: String){
+        userDefaults.removeObject(forKey: "name")
+    }
+
     private func _saveIv(iv: [UInt8]) {
         let ivString = String(bytes: iv, encoding: .utf8)!
         if (!KeychainService.savePassword(service: "moahWallet", account: "iv", data: ivString)) {
@@ -273,7 +296,9 @@ class EthAccount {
     private func _loadIv() -> [UInt8] {
         let ivString = KeychainService.loadPassword(service: "moahWallet", account: "iv")
         if(ivString == nil){
-            return Array(util.randomString(length: 16).utf8)
+            let iv = Array(util.randomString(length: 16).utf8)
+            _saveIv(iv: iv)
+            return iv
         }
         else{
             return Array(ivString!.utf8)
@@ -282,6 +307,7 @@ class EthAccount {
 
     private func _generateKeyStore(password: String) {
         _keyStore = try! BIP32Keystore(mnemonics: _mnemonic!, password: password)
+        _keyStoreManager = KeystoreManager([_keyStore!])
     }
 
     private func _saveKeyStore() {
@@ -310,6 +336,26 @@ class EthAccount {
                 let privateKey = _loadPrivateKey(name: address.name, password: _password!)
                 let plainKeyStore = try! PlainKeystore(privateKey: privateKey!)
                 _keyStoreManager!.append(plainKeyStore)
+            }
+        }
+    }
+
+    private func _regenerateKeyStore(oldPassword: String, password: String){
+        try! _keyStore!.regenerate(oldPassword: oldPassword, newPassword: password)
+        _saveKeyStore()
+    }
+
+    private func _reencryptMnemonic(oldPassword: String, password: String){
+        let mnemonic = _loadMnemonic(password: oldPassword)
+        let mnemonicEncrypted = _encryptData(stringData: mnemonic, password: password)
+        userDefaults.set(mnemonicEncrypted, forKey: "mnemonic")
+    }
+
+    private func _reencryptPrivateKey(oldPassword: String, password: String){
+        for address in _addressArray{
+            if(address.isPrivateKey){
+                let privateKey = _loadPrivateKey(name: address.name, password: oldPassword)!
+                _savePrivateKey(key: privateKey, name: address.name, password: password)
             }
         }
     }
@@ -366,7 +412,7 @@ class EthAccount {
     }
 
     private func _generateAddressArray(){
-        let address = CustomAddress(address: _keyStore!.addresses.first!.description, name: "주 계정", isPrivateKey: false)
+        let address = CustomAddress(address: _getLastAddress().description, name: "주 계정", isPrivateKey: false, path: _getLastPath())
         _addressArray = [address]
         _saveAddress()
     }
@@ -378,6 +424,60 @@ class EthAccount {
         let lastAddress = path[pathKey.last!]
 
         return lastAddress!
+    }
+
+    private func _getLastPath() -> String{
+        let path = _keyStore!.paths
+        var pathKey = Array(path.keys)
+        pathKey = pathKey.sorted(by: <)
+
+        return pathKey.last!
+    }
+
+    private func _createAccount(name: String) throws {
+        let path = _keyStore!.paths
+        var pathKey = Array(path.keys)
+        var intArray: [Int] = [Int]()
+        var newPathChar: String = String(pathKey.count)
+        var newPath: String!
+
+        for path in pathKey{
+            intArray.append(Int(path.components(separatedBy: "/").last!)!)
+        }
+        intArray = intArray.sorted(by: <)
+
+        for index in 0...pathKey.count-1{
+            if(index != intArray[index]){
+                newPathChar = String(index)
+                break
+            }
+        }
+
+        newPath = _keyStore!.rootPrefix + "/" + newPathChar
+
+        do{
+            try _keyStore?.createNewCustomChildAccount(password: _password!, path: newPath)
+            _saveKeyStore()
+
+            let address = CustomAddress(address: _keyStore!.paths[newPath]!.description, name: name, isPrivateKey: false, path: newPath)
+            _addAddress(address: address)
+            setAddress(address: _addressArray.last!.address)
+        }
+        catch{
+            throw error
+        }
+    }
+
+    private func _delAddressFromPath(account: CustomAddress){
+        var newPath: [String: Address] = [String: Address]()
+        for path in _keyStore!.paths{
+            if(path.key == account.path){
+                continue
+            }
+            newPath[path.key] = path.value
+        }
+        _keyStore?.paths = newPath
+        _saveKeyStore()
     }
 
     private func _checkAccount(name: String) -> Bool{

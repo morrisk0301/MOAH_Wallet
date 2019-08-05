@@ -18,7 +18,7 @@ class MainLeftMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     var delegate: MainControllerDelegate?
     var address: String?
 
-    var tableView: UITableView = {
+    let tableView: UITableView = {
         let tableView = UITableView()
 
         tableView.backgroundColor = UIColor(key: "light3")
@@ -26,6 +26,18 @@ class MainLeftMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.translatesAutoresizingMaskIntoConstraints = false
 
         return tableView
+    }()
+
+    let versionLabel: UILabel = {
+        let label = UILabel()
+
+        label.text = "v0.0.1"
+        label.textColor = UIColor(key: "grey2")
+        label.font = UIFont(name:"NanumSquareRoundR", size: 14, dynamic: true)
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+
+        return label
     }()
 
     override func viewDidLoad() {
@@ -40,6 +52,7 @@ class MainLeftMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.isScrollEnabled = false
 
         view.addSubview(tableView)
+        view.addSubview(versionLabel)
 
         setupLayout()
     }
@@ -85,10 +98,15 @@ class MainLeftMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
     private func setupLayout(){
-        tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: versionLabel.topAnchor).isActive = true
+
+        versionLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        versionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -screenSize.width/10).isActive = true
+        versionLabel.widthAnchor.constraint(equalToConstant: screenSize.width/2).isActive = true
+        versionLabel.heightAnchor.constraint(equalToConstant: screenSize.height/50).isActive = true
     }
 
     private func mainCellLayout(cell: LeftMenuCell){

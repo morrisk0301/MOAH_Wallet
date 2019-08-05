@@ -29,17 +29,20 @@ extension UIViewController {
         let button: UIButton = UIButton(type: .custom)
         button.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
 
+        let buttonImage = UIImageView(frame: CGRect(x: button.frame.width/2, y: button.frame.height/2, width: view.frame.width/35, height: (view.frame.width/35)*1.5))
+
         if(color == "dark"){
-            button.setImage(UIImage(named: "back"), for: .normal)
+            buttonImage.image = UIImage(named: "back")    
+        }else{
+            buttonImage.image = UIImage(named: "whiteArrow")
         }
-        else if (color == "light"){
-            button.setImage(UIImage(named: "whiteArrow"), for: .normal)
-        }
+
+        button.addSubview(buttonImage)
         button.addTarget(self, action: #selector(backPressed(_:)), for: .touchUpInside)
 
         let leftButton = UIBarButtonItem(customView: button)
-        leftButton.customView?.widthAnchor.constraint(equalToConstant: view.frame.width/35).isActive = true
-        leftButton.customView?.heightAnchor.constraint(equalToConstant: (view.frame.width/35)*1.5).isActive = true
+        leftButton.customView?.widthAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
+        leftButton.customView?.heightAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
 
         self.navigationItem.leftBarButtonItem = leftButton
     }

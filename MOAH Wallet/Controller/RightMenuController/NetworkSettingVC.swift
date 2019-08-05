@@ -5,6 +5,7 @@
 
 import Foundation
 import UIKit
+import AudioToolbox
 
 class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -140,6 +141,7 @@ class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        AudioServicesPlaySystemSound(1519)
         if(indexPath.section < 4){
             web3.setNetwork(network: networks[indexPath.section].name)
         }

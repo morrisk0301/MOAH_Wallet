@@ -249,4 +249,8 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
             return
         }
     }
+
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        self.dismiss(animated: true)
+    }
 }

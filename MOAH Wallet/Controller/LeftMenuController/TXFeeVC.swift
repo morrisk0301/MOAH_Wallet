@@ -6,6 +6,7 @@
 import Foundation
 import UIKit
 import BigInt
+import AudioToolbox
 
 class TXFeeVC: UIViewController, UITableViewDelegate, UITableViewDataSource  {
 
@@ -138,6 +139,7 @@ class TXFeeVC: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        AudioServicesPlaySystemSound(1519)
         switch (indexPath.row){
             case 0:
                 web3.setGas(rate: "low")

@@ -75,7 +75,6 @@ class MainVC: UIViewController{
         //view.addSubview(txView)
         tokenView.setTokenString(tokenString: "Ethereum")
 
-
         /*
         let account: EthAccount = EthAccount.accountInstance
         let KS = account.getKeyStore()
@@ -123,22 +122,34 @@ class MainVC: UIViewController{
         let leftUIButton: UIButton = UIButton(type: .custom)
         leftUIButton.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
 
-        leftUIButton.setImage(UIImage(named: "menuIcon"), for: .normal)
+        let leftBtnImage = UIImageView(image: UIImage(named: "menuIcon"))
+        leftBtnImage.translatesAutoresizingMaskIntoConstraints = false
+        leftUIButton.addSubview(leftBtnImage)
+        leftBtnImage.centerYAnchor.constraint(equalTo: leftUIButton.centerYAnchor).isActive = true
+        leftBtnImage.centerXAnchor.constraint(equalTo: leftUIButton.centerXAnchor).isActive = true
+        leftBtnImage.widthAnchor.constraint(equalToConstant: (view.frame.width/20)*1.2).isActive = true
+        leftBtnImage.heightAnchor.constraint(equalToConstant:(view.frame.height/60)*1.2).isActive = true
         leftUIButton.addTarget(self, action: #selector(leftMenuClicked(_:)), for: .touchUpInside)
 
         let leftButton = UIBarButtonItem(customView: leftUIButton)
-        leftButton.customView?.widthAnchor.constraint(equalToConstant: (view.frame.width/30)*1.5).isActive = true
-        leftButton.customView?.heightAnchor.constraint(equalToConstant: view.frame.width/30).isActive = true
+        leftButton.customView?.widthAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
+        leftButton.customView?.heightAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
 
         let rightUIButton: UIButton = UIButton(type: .custom)
         rightUIButton.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
 
-        rightUIButton.setImage(UIImage(named: "menuIcon2"), for: .normal)
+        let rightBtnImage = UIImageView(image: UIImage(named: "menuIcon2"))
+        rightBtnImage.translatesAutoresizingMaskIntoConstraints = false
+        rightUIButton.addSubview(rightBtnImage)
+        rightBtnImage.centerYAnchor.constraint(equalTo: rightUIButton.centerYAnchor).isActive = true
+        rightBtnImage.centerXAnchor.constraint(equalTo: rightUIButton.centerXAnchor).isActive = true
+        rightBtnImage.widthAnchor.constraint(equalToConstant: view.frame.width/12*1.2).isActive = true
+        rightBtnImage.heightAnchor.constraint(equalToConstant: view.frame.height/25*1.2).isActive = true
         rightUIButton.addTarget(self, action: #selector(rightMenuClicked(_:)), for: .touchUpInside)
 
         let rightButton = UIBarButtonItem(customView: rightUIButton)
-        rightButton.customView?.widthAnchor.constraint(equalToConstant: view.frame.width/12).isActive = true
-        rightButton.customView?.heightAnchor.constraint(equalToConstant: view.frame.width/12).isActive = true
+        rightButton.customView?.widthAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
+        rightButton.customView?.heightAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
 
         navigationItem.leftBarButtonItem = leftButton
         navigationItem.rightBarButtonItem = rightButton

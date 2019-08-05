@@ -108,7 +108,7 @@ class MnemonicVC: UIViewController {
 
         let attrText = NSMutableAttributedString(string: mnemonic,
                 attributes: [NSAttributedString.Key.paragraphStyle: style,
-                             NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundEB", size: 20, dynamic: true), 
+                             NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundEB", size: 20, dynamic: true)!, 
                              NSAttributedString.Key.foregroundColor: UIColor(key: "darker")])
         mnemonicLabel.attributedText = attrText
 
