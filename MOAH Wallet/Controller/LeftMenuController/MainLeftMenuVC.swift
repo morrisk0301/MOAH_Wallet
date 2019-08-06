@@ -89,7 +89,7 @@ class MainLeftMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         if(indexPath.row == 0){
             return screenSize.height*0.6
         }
-        return screenSize.height/12
+        return screenSize.height/15
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

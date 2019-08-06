@@ -31,9 +31,9 @@ class Util {
 
     func trimBalance(balance: BigUInt?) -> String {
         if(balance == nil || balance == 0){
-            return "0.00000 ETH"
+            return "0.00000"
         }
-        let balanceString = balance!.string(unitDecimals: 18, decimals: 4) + " ETH"
+        let balanceString = balance!.string(unitDecimals: 18, decimals: 4)
 
         return balanceString
     }

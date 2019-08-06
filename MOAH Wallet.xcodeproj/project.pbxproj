@@ -30,6 +30,7 @@
 		C051F2EF863672C14C79CE4D /* NanumGothic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C051F2C7AD63643BFDF3A9C6 /* NanumGothic.ttf */; };
 		C051F361ACB751354EDEFC01 /* MOAH_WalletUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FD3DE6EDBDC571CF0639 /* MOAH_WalletUITests.swift */; };
 		C051F373B173AC54AF229DFB /* NetworkSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F46ECA4D5C3D54C0F6B4 /* NetworkSettingVC.swift */; };
+		C051F3B631C59EB4D329669E /* TransferVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F5A58B7F4264F9A38089 /* TransferVC.swift */; };
 		C051F3E8704B988773687809 /* TokenSelectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FF7BB7B279B376C514A0 /* TokenSelectVC.swift */; };
 		C051F43CB8BBDF5876788661 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FA6C9DECCACCA006C620 /* MainViewController.swift */; };
 		C051F45046E2E4152EDD8712 /* MainTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F635779A9F378E8C0E45 /* MainTokenView.swift */; };
@@ -67,11 +68,13 @@
 		C051FACD1A0E01B4C40586F2 /* AlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F78260EE7AE0C72FAED1 /* AlertVC.swift */; };
 		C051FB1FE29301C3EA68F93B /* KeypadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FD83FA4BAE07897C116D /* KeypadView.swift */; };
 		C051FB5E23902398DEF96B30 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F7AC902DA14D067B4A7E /* AppDelegate.swift */; };
+		C051FB797FD7A565861489AB /* Spinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FBC160B4197ACE73265E /* Spinner.swift */; };
 		C051FBC3EE3CCF033DC52F98 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F294C8BB75589DD19F35 /* Error.swift */; };
 		C051FC018077B21A44B84622 /* LeftTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FAAD35BE522484440F32 /* LeftTransition.swift */; };
 		C051FC07BFCC39DD3F13BCF3 /* LockVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FCDFA9CC8D752BE3F74C /* LockVC.swift */; };
 		C051FC24A82139E7B0A58CD6 /* FAQVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F96A941D724CEC53F3B1 /* FAQVC.swift */; };
 		C051FC4AF7558DDA3AA8C5A6 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F2FC1D4AD78361437D8A /* KeychainService.swift */; };
+		C051FC6DEF27F79BBDC29F28 /* SpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F8AB6A0B2E40A27A4859 /* SpinnerView.swift */; };
 		C051FD0AB2ECBBFC1E2CDA33 /* LeftMenuOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F478AD26EA7B007B6AF3 /* LeftMenuOption.swift */; };
 		C051FD6077E544C0242ACD61 /* Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FCFAB6F715D632781390 /* Checkbox.swift */; };
 		C051FEC7D1FC02F093FF50B5 /* MnemonicVerificationGetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F6342A463F4E5602402A /* MnemonicVerificationGetVC.swift */; };
@@ -131,12 +134,14 @@
 		C051F4C8DFE230A876583313 /* ShakeAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShakeAnimation.swift; sourceTree = "<group>"; };
 		C051F4D47F43A88794BDAD9B /* MainLeftMenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainLeftMenuVC.swift; sourceTree = "<group>"; };
 		C051F51191A6826F0F867E0E /* AgreementCheckVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgreementCheckVC.swift; sourceTree = "<group>"; };
+		C051F5A58B7F4264F9A38089 /* TransferVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferVC.swift; sourceTree = "<group>"; };
 		C051F6000A5F24D81AA83484 /* RightTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightTransition.swift; sourceTree = "<group>"; };
 		C051F6342A463F4E5602402A /* MnemonicVerificationGetVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicVerificationGetVC.swift; sourceTree = "<group>"; };
 		C051F635779A9F378E8C0E45 /* MainTokenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTokenView.swift; sourceTree = "<group>"; };
 		C051F63AEAD075F1D9237EED /* MyAccountVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAccountVC.swift; sourceTree = "<group>"; };
 		C051F78260EE7AE0C72FAED1 /* AlertVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertVC.swift; sourceTree = "<group>"; };
 		C051F7AC902DA14D067B4A7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C051F8AB6A0B2E40A27A4859 /* SpinnerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinnerView.swift; sourceTree = "<group>"; };
 		C051F8B5925C8BBCF3AA8E8E /* MnemonicSettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicSettingVC.swift; sourceTree = "<group>"; };
 		C051F90BE9924E9EE9462DC9 /* LeftMenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftMenuCell.swift; sourceTree = "<group>"; };
 		C051F9131D6E229A0A07E75C /* PasswordCheckVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordCheckVC.swift; sourceTree = "<group>"; };
@@ -152,6 +157,7 @@
 		C051FAA7B42C718BE4204A4A /* AnnouncementVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementVC.swift; sourceTree = "<group>"; };
 		C051FAAD35BE522484440F32 /* LeftTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftTransition.swift; sourceTree = "<group>"; };
 		C051FB1E96548FFD0DEEF195 /* MnemonicVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicVC.swift; sourceTree = "<group>"; };
+		C051FBC160B4197ACE73265E /* Spinner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spinner.swift; sourceTree = "<group>"; };
 		C051FBEC2A31284D49D39064 /* RightMenuOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightMenuOption.swift; sourceTree = "<group>"; };
 		C051FC2158395B4BF65E453E /* MnemonicVerificationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicVerificationVC.swift; sourceTree = "<group>"; };
 		C051FC73CD3F23F0F3FF268A /* PasswordChangeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordChangeVC.swift; sourceTree = "<group>"; };
@@ -244,6 +250,7 @@
 				C051FF7BB7B279B376C514A0 /* TokenSelectVC.swift */,
 				C051F9A7B306A8BF12E198F5 /* LeftMenuController */,
 				C051F9131D6E229A0A07E75C /* PasswordCheckVC.swift */,
+				C051F5A58B7F4264F9A38089 /* TransferVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -374,6 +381,8 @@
 				C051F326270A0761F1E5315E /* TransparentButton.swift */,
 				C051FC9AEEF188F0388EE165 /* Cells */,
 				C051F4C8DFE230A876583313 /* ShakeAnimation.swift */,
+				C051F8AB6A0B2E40A27A4859 /* SpinnerView.swift */,
+				C051FBC160B4197ACE73265E /* Spinner.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -710,6 +719,9 @@
 				C051F85ADEC72DC60A48E614 /* AddNetworkVC.swift in Sources */,
 				C051F49EC6F5A051E1255627 /* NetworkCell.swift in Sources */,
 				C051F495C42450F871C3B4A9 /* PasswordChangeVC.swift in Sources */,
+				C051FC6DEF27F79BBDC29F28 /* SpinnerView.swift in Sources */,
+				C051FB797FD7A565861489AB /* Spinner.swift in Sources */,
+				C051F3B631C59EB4D329669E /* TransferVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

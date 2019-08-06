@@ -31,7 +31,7 @@ class PasswordSettingVC: UIViewController, UITableViewDelegate, UITableViewDataS
     let lockSwitch: UISwitch = {
 
         let lockSwitch = UISwitch()
-        lockSwitch.onTintColor = UIColor(key: "dark")
+        lockSwitch.onTintColor = UIColor(key: "regular")
         lockSwitch.translatesAutoresizingMaskIntoConstraints = false
         lockSwitch.addTarget(self, action: #selector(switchPressed(_:)), for: .valueChanged)
         lockSwitch.tag = 0
@@ -43,7 +43,7 @@ class PasswordSettingVC: UIViewController, UITableViewDelegate, UITableViewDataS
     let bioSwitch: UISwitch = {
 
         let bioSwitch = UISwitch()
-        bioSwitch.onTintColor = UIColor(key: "dark")
+        bioSwitch.onTintColor = UIColor(key: "regular")
         bioSwitch.translatesAutoresizingMaskIntoConstraints = false
         bioSwitch.addTarget(self, action: #selector(switchPressed(_:)), for: .valueChanged)
         bioSwitch.tag = 1

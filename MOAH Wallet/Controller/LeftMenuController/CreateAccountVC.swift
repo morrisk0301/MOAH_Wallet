@@ -38,7 +38,10 @@ class CreateAccountVC: UIViewController, UITextFieldDelegate {
         textField.returnKeyType = .done
         textField.textColor = UIColor(key: "darker")
         textField.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
-        textField.backgroundColor = .white
+        textField.layer.cornerRadius = 5
+        textField.backgroundColor = .clear
+        textField.layer.borderColor = UIColor(key: "grey2").cgColor
+        textField.layer.borderWidth = 0.5
         textField.translatesAutoresizingMaskIntoConstraints = false
 
         return textField
@@ -87,11 +90,7 @@ class CreateAccountVC: UIViewController, UITextFieldDelegate {
     }
 
     override func viewDidLayoutSubviews() {
-        let border = CALayer()
-        border.frame = CGRect(x:0, y: nameField.frame.height-1, width: nameField.frame.width, height: 1)
-        border.backgroundColor = UIColor(key: "grey2").cgColor
 
-        nameField.layer.addSublayer(border)
     }
 
     override func didReceiveMemoryWarning() {

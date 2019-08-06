@@ -192,6 +192,10 @@ class MnemonicVC: UIViewController {
             let mainVC = self.navigationController?.viewControllers.first as! MainVC
             mainVC.signUp = false
         }
-        self.navigationController?.popViewController(animated: true)
+        for controller in self.navigationController!.viewControllers{
+            if(controller is MnemonicSettingVC){
+                self.navigationController?.popToViewController(controller, animated: true)
+            }
+        }
     }
 }

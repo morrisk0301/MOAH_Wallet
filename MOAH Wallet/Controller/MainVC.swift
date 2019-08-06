@@ -8,15 +8,18 @@ import UIKit
 import web3swift
 import BigInt
 
-class MainVC: UIViewController{
+class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
+
+    private let reuseIdentifier = "TXHistoryCell"
 
     var signUp = false
     var isExpand = false
     var tempMnemonic: String?
     var delegate: MainControllerDelegate?
+    var balance: String?
+    var symbol = "ETH"
 
     let screenSize = UIScreen.main.bounds
-    let web3: CustomWeb3 = CustomWeb3.web3
     let util = Util()
 
     let tokenView: MainTokenView = {
@@ -29,7 +32,6 @@ class MainVC: UIViewController{
     let balanceLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "0.00000 ETH"
         label.font = UIFont(name:"NanumSquareRoundB", size: 40, dynamic: true)
         label.textColor = .white
         label.textAlignment = .center
@@ -43,17 +45,32 @@ class MainVC: UIViewController{
         button.setTitle("전송", for: .normal)
         button.titleLabel?.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(transferPressed(_:)), for: .touchUpInside)
 
         return button
     }()
 
-    let txView: UIView = {
-        let view = UIView()
+    let txLabel: UILabel = {
+        let label = UILabel()
 
-        view.backgroundColor = UIColor(key: "dark")
-        view.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "거래내역"
+        label.font = UIFont(name:"NanumSquareRoundB", size: 14, dynamic: true)
+        label.textColor = UIColor(key: "darker")
+        label.backgroundColor = .white
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
 
-        return view
+        return label
+    }()
+
+    let txView: UITableView = {
+        let tableView = UITableView()
+
+        tableView.backgroundColor = UIColor(key: "light3")
+        tableView.separatorStyle = .none
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+
+        return tableView
     }()
 
     override func viewDidLoad() {
@@ -72,8 +89,16 @@ class MainVC: UIViewController{
         view.addSubview(tokenView)
         view.addSubview(balanceLabel)
         view.addSubview(transferButton)
-        //view.addSubview(txView)
+        view.addSubview(txLabel)
+        view.addSubview(txView)
+        balanceLabel.text = "0.00000 " + symbol
         tokenView.setTokenString(tokenString: "Ethereum")
+
+        txLabel.applyShadow()
+
+        txView.delegate = self
+        txView.dataSource = self
+        txView.register(MenuCell.self, forCellReuseIdentifier: reuseIdentifier)
 
         /*
         let account: EthAccount = EthAccount.accountInstance
@@ -93,7 +118,6 @@ class MainVC: UIViewController{
 
 
         setupLayout()
-        checkChainNetwork()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -105,13 +129,7 @@ class MainVC: UIViewController{
 
             return
         }
-
-        web3.getBalance(address: nil, completion: {(balance) in
-            DispatchQueue.main.async {
-                let balanceTrimmed = self.util.trimBalance(balance: balance)
-                self.balanceLabel.text = balanceTrimmed
-            }
-        })
+        delegate?.getBalance()
     }
 
     override func didReceiveMemoryWarning() {
@@ -164,37 +182,45 @@ class MainVC: UIViewController{
         tokenView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/5).isActive = true
         tokenView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/5).isActive = true
 
-        balanceLabel.topAnchor.constraint(equalTo: tokenView.bottomAnchor, constant: screenHeight/15).isActive = true
+        balanceLabel.topAnchor.constraint(equalTo: tokenView.bottomAnchor, constant: screenHeight/20).isActive = true
         balanceLabel.heightAnchor.constraint(equalToConstant: screenHeight/20).isActive = true
         balanceLabel.centerXAnchor.constraint(equalTo: tokenView.centerXAnchor).isActive = true
         balanceLabel.widthAnchor.constraint(equalToConstant: screenWidth/1.5).isActive = true
 
-        transferButton.topAnchor.constraint(equalTo: balanceLabel.bottomAnchor, constant: screenHeight/15).isActive = true
+        transferButton.topAnchor.constraint(equalTo: balanceLabel.bottomAnchor, constant: screenHeight/20).isActive = true
         transferButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         transferButton.heightAnchor.constraint(equalToConstant: screenHeight/20).isActive = true
         transferButton.widthAnchor.constraint(equalToConstant: screenWidth/2.5).isActive = true
 
-        //txView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        //txView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        //txView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        //txView.heightAnchor.constraint(equalToConstant: screenHeight/2).isActive = true
+        txLabel.topAnchor.constraint(equalTo: transferButton.bottomAnchor, constant: screenHeight/15).isActive = true
+        txLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        txLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        txLabel.heightAnchor.constraint(equalToConstant: screenHeight/20).isActive = true
+
+        txView.topAnchor.constraint(equalTo: txLabel.bottomAnchor).isActive = true
+        txView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        txView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        txView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
 
-    func checkChainNetwork(){
-        if(web3.getWeb3Ins() == nil){
-            let util = Util()
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! MenuCell
 
-            let alertVC = util.alert(title: "블록체인 네트워크 오류", body: "네트워크에 연결할 수 없습니다.\n네트워크를 재설정해주세요.", buttonTitle: "확인", buttonNum: 1, completion: {_ in
-                let controller = NetworkSettingVC()
-                let transition = LeftTransition()
+        cell.menuLabel.text = "거래내역 테스트"
 
-                DispatchQueue.main.async{
-                    self.view.window!.layer.add(transition, forKey: kCATransition)
-                    self.present(UINavigationController(rootViewController: controller), animated: false, completion: nil)
-                }
-            })
-            self.present(alertVC, animated: false)
-        }
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return screenSize.height/10
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
     }
 
     @objc func leftMenuClicked(_ sender: UIBarButtonItem){
@@ -203,5 +229,29 @@ class MainVC: UIViewController{
 
     @objc func rightMenuClicked(_ sender: UIBarButtonItem){
         delegate?.rightSideMenuClicked(forMenuOption: nil)
+    }
+
+    @objc func transferPressed(_ sender: UIButton){
+        let account: EthAccount = EthAccount.accountInstance
+        if(account.getIsVerified()){
+            let controller = TransferVC()
+            controller.balance = self.balance!
+            controller.symbol = self.symbol
+            self.present(UINavigationController(rootViewController: controller), animated: true)
+        }
+        else{
+            let alertVC = util.alert(title: "미인증 계정", body: "비밀 시드 구문 미인증 계정입니다.\n인증 후 이용해주시기 바랍니다.", buttonTitle: "인증하", buttonNum: 2, completion: {(complete) in
+                if(complete){
+                    DispatchQueue.main.async{
+                        let transition = LeftTransition()
+                        let controller = MnemonicSettingVC()
+                        self.view.window!.layer.add(transition, forKey: kCATransition)
+                        self.present(UINavigationController(rootViewController: controller), animated: false, completion: nil)
+                    }
+                }
+            })
+            self.present(alertVC, animated: false)
+        }
+
     }
 }

@@ -49,6 +49,7 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
         view.addSubview(tableView)
 
         setupLayout()
+        self.showSpinner()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -162,6 +163,10 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
         selectAccount(index: indexPath.section)
         getAccount()
         self.tableView.reloadData()
+    }
+
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        self.hideSpinner()
     }
 
     private func selectAccount(index: Int){

@@ -142,21 +142,33 @@ class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSo
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         AudioServicesPlaySystemSound(1519)
+
         if(indexPath.section < 4){
-            web3.setNetwork(network: networks[indexPath.section].name)
+            self.web3.setNetwork(network: self.networks[indexPath.section].name)
+            self.getNetwork()
+            self.tableView.reloadData()
         }
         else{
-            do{
-                try web3.setNetwork(name: networks[indexPath.section].name, url: networks[indexPath.section].url, new: false)
-            }
-            catch{
-                let util = Util()
-                let alertVC = util.alert(title: "네트워크 오류", body: "네트워크에 연결할 수 없습니다.", buttonTitle: "확인", buttonNum: 1, completion: {_ in})
-                self.present(alertVC, animated: false)
+            self.showSpinner()
+            DispatchQueue.global(qos: .userInitiated).async {
+                do {
+                    try self.web3.setNetwork(name: self.networks[indexPath.section].name, url: self.networks[indexPath.section].url, new: false)
+                } catch {
+                    let util = Util()
+                    DispatchQueue.main.async {
+                        let alertVC = util.alert(title: "네트워크 오류", body: "네트워크에 연결할 수 없습니다.", buttonTitle: "확인", buttonNum: 1, completion: { _ in
+                            self.hideSpinner()
+                        })
+                        self.present(alertVC, animated: false)
+                    }
+                }
+                self.getNetwork()
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                    self.hideSpinner()
+                }
             }
         }
-        getNetwork()
-        self.tableView.reloadData()
     }
 
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {

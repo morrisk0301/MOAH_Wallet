@@ -49,7 +49,10 @@ class AddNetworkVC: UIViewController, UITextFieldDelegate {
         textField.returnKeyType = .done
         textField.textColor = UIColor(key: "darker")
         textField.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
-        textField.backgroundColor = .white
+        textField.layer.cornerRadius = 5
+        textField.backgroundColor = .clear
+        textField.layer.borderColor = UIColor(key: "grey2").cgColor
+        textField.layer.borderWidth = 0.5
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.tag = 0
 
@@ -67,7 +70,10 @@ class AddNetworkVC: UIViewController, UITextFieldDelegate {
         textField.returnKeyType = .done
         textField.textColor = UIColor(key: "darker")
         textField.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
-        textField.backgroundColor = .white
+        textField.layer.cornerRadius = 5
+        textField.backgroundColor = .clear
+        textField.layer.borderColor = UIColor(key: "grey2").cgColor
+        textField.layer.borderWidth = 0.5
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.tag = 1
 
@@ -126,19 +132,6 @@ class AddNetworkVC: UIViewController, UITextFieldDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-
-    override func viewDidLayoutSubviews() {
-        let border = CALayer()
-        border.frame = CGRect(x:0, y: nameField.frame.height-1, width: nameField.frame.width, height: 1)
-        border.backgroundColor = UIColor(key: "grey2").cgColor
-
-        let border2 = CALayer()
-        border2.frame = CGRect(x:0, y: urlField.frame.height-1, width: urlField.frame.width, height: 1)
-        border2.backgroundColor = UIColor(key: "grey2").cgColor
-
-        nameField.layer.addSublayer(border)
-        urlField.layer.addSublayer(border2)
     }
 
     override func didReceiveMemoryWarning() {
@@ -218,31 +211,42 @@ class AddNetworkVC: UIViewController, UITextFieldDelegate {
     }
 
     @objc private func nextPressed(_ sender:UIButton){
+        self.showSpinner()
         let util = Util()
         let name = nameField.text!
+        let url = urlField.text!
         var errorBody: String?
 
-        do{
-            if(name.count == 0){throw AddNetworkError.invalidName}
-            guard let url = URL(string: urlField.text!.lowercased()) else { throw AddNetworkError.invalidURL }
-            try web3.setNetwork(name: name, url: url, new: true)
-            self.navigationController?.popViewController(animated: true)
+        DispatchQueue.global(qos: .userInitiated).async{
+            do{
+                if(name.count == 0){throw AddNetworkError.invalidName}
+                guard let url = URL(string: url.lowercased()) else { throw AddNetworkError.invalidURL }
+                try self.web3.setNetwork(name: name, url: url, new: true)
+                DispatchQueue.main.async{
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
+            catch AddNetworkError.invalidURL{
+                errorBody = "올바르지 않은 URL 형식입니다."
+            }
+            catch AddNetworkError.invalidName {
+                errorBody = "네트워크 이름이 중복되었거나,\n사용할 수 없는 네트워크 이름입니다."
+            }
+            catch AddNetworkError.invalidNetwork{
+                errorBody = "네트워크에 연결할 수 없습니다."
+            }
+            catch{
+                print(error)
+            }
+            if(errorBody != nil){
+                DispatchQueue.main.async{
+                    let alertVC = util.alert(title: "네트워크 추가 오류", body: errorBody!, buttonTitle: "확인", buttonNum: 1, completion: {_ in
+                        self.hideSpinner()
+                    })
+                    self.present(alertVC, animated: false)
+                }
+            }
         }
-        catch AddNetworkError.invalidURL{
-            errorBody = "올바르지 않은 URL 형식입니다."
-        }
-        catch AddNetworkError.invalidName {
-            errorBody = "네트워크 이름이 중복되었거나,\n사용할 수 없는 네트워크 이름입니다."
-        }
-        catch AddNetworkError.invalidNetwork{
-            errorBody = "네트워크에 연결할 수 없습니다."
-        }
-        catch{
-            print(error)
-        }
-        if(errorBody != nil){
-            let alertVC = util.alert(title: "네트워크 추가 오류", body: errorBody!, buttonTitle: "확인", buttonNum: 1, completion: {_ in})
-            self.present(alertVC, animated: false)
-        }
+
     }
 }

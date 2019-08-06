@@ -22,6 +22,10 @@ class PasswordChangeVC: UIViewController, KeypadViewDelegate {
         return lockView
     }()
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.replaceBackButton(color: "light")

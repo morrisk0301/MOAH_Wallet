@@ -22,6 +22,10 @@ class PasswordCheckVC: UIViewController, KeypadViewDelegate {
         return lockView
     }()
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.replaceBackButton(color: "light")
@@ -99,7 +103,8 @@ class PasswordCheckVC: UIViewController, KeypadViewDelegate {
             DispatchQueue.main.async {
                 if (success) {
                     if(self.toView == "mnemonic"){
-                        let controller = MnemonicSettingVC()
+                        let controller = MnemonicVC()
+                        controller.isSetting = true
                         self.navigationController?.pushViewController(controller, animated: true)
                     }
                     else if(self.toView == "password"){
@@ -118,7 +123,11 @@ class PasswordCheckVC: UIViewController, KeypadViewDelegate {
     @objc func backPressed(_ sender: UIButton){
         if(self.toView == "privateKey"){
             self.dismiss(animated: true)
-        }else{
+        }
+        else if(self.toView == "mnemonic"){
+            self.navigationController?.popViewController(animated: true)
+        }
+        else{
             let transition = RightTransition()
             view.window!.layer.add(transition, forKey: kCATransition)
             self.dismiss(animated: false)

@@ -59,6 +59,20 @@ extension UIViewController {
                  NSAttributedString.Key.foregroundColor: UIColor(key: "darker")]
     }
 
+    func showSpinner(){
+        let spinner = Spinner()
+        spinner.frame = view.frame
+        view.addSubview(spinner)
+    }
+
+    func hideSpinner(){
+        for subview in view.subviews{
+            if(subview is  Spinner){
+                subview.removeFromSuperview()
+            }
+        }
+    }
+
     @objc private func backPressed(_ sender: UIButton){
         self.navigationController?.popViewController(animated: true)
     }
@@ -298,7 +312,6 @@ extension UIView {
         layer.masksToBounds = false
         layer.cornerRadius = 4.0
     }
-
 }
 
 extension MutableCollection {

@@ -13,18 +13,28 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
     var isExpandRight = false
     var signUp = false
     var tempMnemonic: String?
+    var symbol = "ETH"
     var mainLeftMenuVC: MainLeftMenuVC!
     var mainRightMenuVC: MainRightMenuVC!
     var tokenSelectVC: TokenSelectVC!
     var centerController: UIViewController!
+    var mainVC: MainVC!
     var transparentView = UIView()
+    var style:UIStatusBarStyle = .default
 
     let screenSize = UIScreen.main.bounds
+    let web3: CustomWeb3 = CustomWeb3.web3
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return self.style
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let mainVC = MainVC()
+        self.style = .lightContent
+
+        mainVC = MainVC()
         mainVC.signUp = self.signUp
         mainVC.tempMnemonic = self.tempMnemonic
         mainVC.delegate = self
@@ -49,6 +59,8 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
                         options: [.curveEaseInOut, UIView.AnimationOptions.allowUserInteraction], animations: {
                     self.transparentView.alpha = 0.3
                     self.centerController.view.frame.origin.x = self.centerController.view.frame.width - self.screenSize.width/5
+                    self.style = .default
+                    self.setNeedsStatusBarAppearanceUpdate()
                 }, completion: nil)
             }
             else if(side == "right"){
@@ -56,6 +68,8 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
                         options: [.curveEaseInOut, UIView.AnimationOptions.allowUserInteraction], animations: {
                     self.transparentView.alpha = 0.3
                     self.centerController.view.frame.origin.x = -(self.centerController.view.frame.width - self.screenSize.width/5)
+                    self.style = .default
+                    self.setNeedsStatusBarAppearanceUpdate()
                 }, completion: nil)
             }
             else if(side == "down"){
@@ -70,6 +84,8 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
                     options: [.curveEaseInOut, UIView.AnimationOptions.allowUserInteraction], animations: {
                 self.transparentView.alpha = 0
                 self.centerController.view.frame.origin.x = 0
+                self.style = .lightContent
+                self.setNeedsStatusBarAppearanceUpdate()
             }, completion: {_ in
                 self.transparentView.removeFromSuperview()
             })
@@ -116,8 +132,7 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
             view.window!.layer.add(transition, forKey: kCATransition)
             present(UINavigationController(rootViewController: controller), animated: false, completion: nil)
         case .WalletMnemonic:
-            let controller = PasswordCheckVC()
-            controller.toView = "mnemonic"
+            let controller = MnemonicSettingVC()
             view.window!.layer.add(transition, forKey: kCATransition)
             present(UINavigationController(rootViewController: controller), animated: false, completion: nil)
         case .WalletPassword:
@@ -148,6 +163,7 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
         switch menuOption {
         case .MyAccount:
             let controller = MyAccountVC()
+            controller.modalPresentationStyle = .overCurrentContext
             present(UINavigationController(rootViewController: controller), animated: true, completion: nil)
         case .PrivateKey:
             let controller = PasswordCheckVC()
@@ -213,6 +229,37 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
         }else{
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(mainViewClicked(_:)))
             transparentView.addGestureRecognizer(tapGesture)
+        }
+    }
+
+    func getBalance() {
+        self.showSpinner()
+        checkChainNetwork()
+        web3.getBalance(address: nil, completion: {(balance) in
+            DispatchQueue.main.async {
+                let util = Util()
+                let balanceTrimmed = util.trimBalance(balance: balance)
+                self.mainVC.balanceLabel.text = balanceTrimmed + " " + self.symbol
+                self.mainVC.balance = balanceTrimmed
+                self.hideSpinner()
+            }
+        })
+    }
+
+    func checkChainNetwork(){
+        if(web3.getWeb3Ins() == nil){
+            self.hideSpinner()
+            let util = Util()
+            let alertVC = util.alert(title: "블록체인 네트워크 오류", body: "네트워크에 연결할 수 없습니다.\n네트워크를 재설정해주세요.", buttonTitle: "확인", buttonNum: 1, completion: {_ in
+                let controller = NetworkSettingVC()
+                let transition = LeftTransition()
+
+                DispatchQueue.main.async{
+                    self.view.window!.layer.add(transition, forKey: kCATransition)
+                    self.present(UINavigationController(rootViewController: controller), animated: false, completion: nil)
+                }
+            })
+            self.present(alertVC, animated: false)
         }
     }
 

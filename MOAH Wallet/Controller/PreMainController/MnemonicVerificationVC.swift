@@ -118,7 +118,7 @@ class MnemonicVerificationVC: UIViewController, UITextFieldDelegate{
     override func viewDidLayoutSubviews() {
         let border = CALayer()
         border.frame = CGRect(x:0, y: mnemonicField.frame.height-1, width: mnemonicField.frame.width, height: 1)
-        border.backgroundColor = UIColor(key: "darker").cgColor
+        border.backgroundColor = UIColor(key: "grey2").cgColor
 
         mnemonicField.layer.addSublayer(border)
     }
@@ -159,7 +159,7 @@ class MnemonicVerificationVC: UIViewController, UITextFieldDelegate{
 
     @objc private func textInput(_ sender: UITextField) {
         let account: EthAccount = EthAccount.accountInstance
-        if(account.verifyMnemonic(index: wordIndex!, word: mnemonicField.text!)){
+        if(account.verifyMnemonic(index: wordIndex!, word: mnemonicField.text!.lowercased())){
             if(wordIndex! < 11) {
                 let mnemonicVerificationVC = MnemonicVerificationVC()
                 mnemonicVerificationVC.wordIndex = wordIndex! + 1
@@ -187,7 +187,7 @@ class MnemonicVerificationVC: UIViewController, UITextFieldDelegate{
 
     @objc private func nextPressed(_ sender: UIButton){
         let account: EthAccount = EthAccount.accountInstance
-        if(account.verifyMnemonic(index: wordIndex!, word: mnemonicField.text!)){
+        if(account.verifyMnemonic(index: wordIndex!, word: mnemonicField.text!.lowercased())){
             if(wordIndex! < 11) {
                 let mnemonicVerificationVC = MnemonicVerificationVC()
                 mnemonicVerificationVC.wordIndex = wordIndex! + 1

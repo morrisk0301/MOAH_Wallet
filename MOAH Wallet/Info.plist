@@ -22,12 +22,23 @@
 	<true/>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Moah Wallet Security</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>NanumSquareRoundR.ttf</string>
+		<string>NanumSquareRoundB.ttf</string>
+		<string>NanumSquareRoundEB.ttf</string>
+		<string>NanumGothic.ttf</string>
+	</array>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleLightContent</string>
+	<key>UIStatusBarHidden</key>
+	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -38,13 +49,6 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UIAppFonts</key>
-	<array>
-		<string>NanumSquareRoundR.ttf</string>
-		<string>NanumSquareRoundB.ttf</string>
-		<string>NanumSquareRoundEB.ttf</string>
-		<string>NanumGothic.ttf</string>
 	</array>
 </dict>
 </plist>

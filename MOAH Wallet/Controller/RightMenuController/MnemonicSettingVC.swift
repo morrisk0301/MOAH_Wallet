@@ -132,8 +132,8 @@ class MnemonicSettingVC: UIViewController, UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch (indexPath.row){
         case 0:
-            let controller = MnemonicVC()
-            controller.isSetting = true
+            let controller = PasswordCheckVC()
+            controller.toView = "mnemonic"
             self.navigationController?.pushViewController(controller, animated: true)
             break
         case 1:

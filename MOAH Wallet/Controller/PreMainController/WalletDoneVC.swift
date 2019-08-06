@@ -39,6 +39,10 @@ class WalletDoneVC: UIViewController{
         return button
     }()
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.replaceBackButton(color: "light")
