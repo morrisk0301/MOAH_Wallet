@@ -33,13 +33,11 @@ class EthAccount {
     }
 
     func changePassword(_ password: String){
-        print(_password!)
         let oldPassword = _password!
         savePassword(password)
         _regenerateKeyStore(oldPassword: oldPassword, password: _password!)
         _reencryptMnemonic(oldPassword: oldPassword, password: _password!)
         _reencryptPrivateKey(oldPassword: oldPassword, password: _password!)
-        print(_password!)
     }
 
     func savePassword(_ password: String) {
@@ -83,7 +81,7 @@ class EthAccount {
     }
 
     func lockAccount() {
-        _timer = Timer.scheduledTimer(timeInterval: 300, target: self, selector: #selector(_lockKeyData(_:)), userInfo: nil, repeats: false)
+        _lockKeyData()
     }
 
     func invalidateTimer() {
@@ -311,6 +309,7 @@ class EthAccount {
     }
 
     private func _saveKeyStore() {
+        print(_keyStore)
         let keyData = try! JSONEncoder().encode(_keyStore!.keystoreParams)
         let fileManager = FileManager.default
         do {
@@ -507,7 +506,7 @@ class EthAccount {
         _isVerified = userDefaults.bool(forKey: "isVerified")
     }
 
-    @objc private func _lockKeyData(_ sender: Timer) {
+    private func _lockKeyData() {
         _saveKeyStore()
         _saveAddressSelected()
         _saveIsVerified()

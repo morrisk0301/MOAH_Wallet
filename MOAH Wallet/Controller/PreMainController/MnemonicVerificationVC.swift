@@ -115,6 +115,10 @@ class MnemonicVerificationVC: UIViewController, UITextFieldDelegate{
         mnemonicField.becomeFirstResponder()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.barStyle = .default
+    }
+
     override func viewDidLayoutSubviews() {
         let border = CALayer()
         border.frame = CGRect(x:0, y: mnemonicField.frame.height-1, width: mnemonicField.frame.width, height: 1)

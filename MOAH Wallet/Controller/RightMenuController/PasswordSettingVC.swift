@@ -76,6 +76,10 @@ class PasswordSettingVC: UIViewController, UITableViewDelegate, UITableViewDataS
         setupLayout()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.barStyle = .default
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }

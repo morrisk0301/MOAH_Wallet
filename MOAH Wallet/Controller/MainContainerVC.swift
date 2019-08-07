@@ -48,6 +48,11 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
         initVCs()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        self.style = .lightContent
+        self.setNeedsStatusBarAppearanceUpdate()
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -161,14 +166,18 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
 
     func didSelectLeftMenuOption(menuOption: LeftMenuOption) {
         switch menuOption {
-        case .MyAccount:
-            let controller = MyAccountVC()
-            controller.modalPresentationStyle = .overCurrentContext
-            present(UINavigationController(rootViewController: controller), animated: true, completion: nil)
-        case .PrivateKey:
-            let controller = PasswordCheckVC()
-            controller.toView = "privateKey"
-            present(UINavigationController(rootViewController: controller), animated: true, completion: nil)
+            case .MyAccount:
+                let controller = MyAccountVC()
+                controller.symbol = self.symbol
+                controller.modalPresentationStyle = .overCurrentContext
+                present(UINavigationController(rootViewController: controller), animated: true, completion: nil)
+            case .PrivateKey:
+                let controller = PasswordCheckVC()
+                controller.toView = "privateKey"
+                present(UINavigationController(rootViewController: controller), animated: true, completion: nil)
+            case .TxFee:
+                let controller = TXFeeVC()
+                present(UINavigationController(rootViewController: controller), animated: true, completion: nil)
         default:
             break
         }
@@ -261,6 +270,18 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
             })
             self.present(alertVC, animated: false)
         }
+    }
+
+    func isSignUp() {
+        let mnemonicVC = MnemonicVC()
+        mnemonicVC.tempMnemonic = self.tempMnemonic!
+        self.present(UINavigationController(rootViewController: mnemonicVC), animated: false)
+    }
+
+    func txFeeClicked() {
+        isExpandLeft = false
+        let menuOption = LeftMenuOption(rawValue: 3)
+        proceedToView(side: "left", menuOption: menuOption)
     }
 
     @objc private func mainViewClicked(_ sender: UIGestureRecognizer) {

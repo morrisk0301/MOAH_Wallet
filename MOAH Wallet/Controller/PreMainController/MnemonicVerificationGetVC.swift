@@ -24,7 +24,7 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
     let explainLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 50))
 
-        label.text = "복원하실 지갑의 12자리 비밀 시드 구문을 띄어쓰기를 포함하여 순서대로 입력해주세요."
+        label.text = "복원하실 지갑의 12자리 비밀 시드 구문을 띄어쓰기 포함하여 순서대로 입력해주세요."
         label.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
         label.textColor = UIColor(key: "darker")
         label.numberOfLines = 0
@@ -86,6 +86,10 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
         mnemonicField.delegate = self
 
         setupLayout()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.barStyle = .default
     }
 
     override func viewDidAppear(_ animated: Bool) {

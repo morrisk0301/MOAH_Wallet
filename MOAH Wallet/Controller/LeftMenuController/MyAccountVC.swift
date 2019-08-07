@@ -19,6 +19,7 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
 
     var accounts: [CustomAddress] = [CustomAddress]()
     var accountSelected: Address!
+    var symbol: String!
 
     let tableView: UITableView = {
         let tableView = UITableView()
@@ -117,7 +118,7 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
         web3.getBalance(address: accounts[indexPath.section].address, completion: {(balance) in
             DispatchQueue.main.async {
                 let balanceTrimmed = self.util.trimBalance(balance: balance)
-                cell.balanceLabel.text = balanceTrimmed
+                cell.balanceLabel.text = balanceTrimmed + " " + self.symbol
             }
         })
 

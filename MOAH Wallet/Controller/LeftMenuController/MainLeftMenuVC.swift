@@ -166,8 +166,7 @@ class MainLeftMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.present(alertVC, animated: false)
         }
         else if(sender.tag == 1){
-            let txFeeVC = TXFeeVC()
-            self.present(UINavigationController(rootViewController: txFeeVC), animated: true)
+            delegate?.txFeeClicked()
         }
     }
 }

@@ -28,7 +28,7 @@ class MainViewController: UIViewController {
 
     let explainLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 60))
-        label.text = "MOAH Wallet은 이더리움 및 ERC20 토큰과\ndApp을 위한 암호화폐 지갑입니다."
+        label.text = "MOAH Wallet은 이더리움 및 이더리움 토큰과\ndApp을 위한 암호화폐 지갑입니다."
         label.font = UIFont(name: "NanumSquareRoundB", size: 16, dynamic: true)
         label.backgroundColor = .clear
         label.textColor = .white
@@ -90,7 +90,7 @@ class MainViewController: UIViewController {
         moahWalletLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         moahWalletLabel.heightAnchor.constraint(equalToConstant: 60).isActive = true
 
-        explainLabel.topAnchor.constraint(equalTo: moahWalletLabel.bottomAnchor, constant: screenHeight/30).isActive = true
+        explainLabel.topAnchor.constraint(equalTo: moahWalletLabel.bottomAnchor, constant: screenHeight/20).isActive = true
         explainLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         explainLabel.widthAnchor.constraint(equalToConstant: screenWidth*(0.85)).isActive = true
         explainLabel.heightAnchor.constraint(equalToConstant: 60).isActive = true

@@ -139,15 +139,17 @@ class TXFeeVC: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        AudioServicesPlaySystemSound(1519)
         switch (indexPath.row){
             case 0:
+                AudioServicesPlaySystemSound(1519)
                 web3.setGas(rate: "low")
                 break
             case 1:
+                AudioServicesPlaySystemSound(1519)
                 web3.setGas(rate: "mid")
                 break
             case 2:
+                AudioServicesPlaySystemSound(1519)
                 web3.setGas(rate: "high")
                 break
             case 3:

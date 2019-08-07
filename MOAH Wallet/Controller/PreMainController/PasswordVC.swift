@@ -31,9 +31,6 @@ class PasswordVC: UIViewController, KeypadViewDelegate {
         return lockView
     }()
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +53,10 @@ class PasswordVC: UIViewController, KeypadViewDelegate {
         }
 
         setupLayout()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.barStyle = .black
     }
 
     override func viewWillDisappear(_ animated: Bool) {

@@ -50,6 +50,7 @@ class AgreementVC: UIViewController {
 
         scrollView.layer.borderColor = UIColor(key: "darker").cgColor
         scrollView.layer.borderWidth = 1.0
+        scrollView.backgroundColor = .clear
         scrollView.translatesAutoresizingMaskIntoConstraints = false
 
         return scrollView
@@ -86,8 +87,13 @@ class AgreementVC: UIViewController {
         setupLayout()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.barStyle = .default
+    }
+
     override func viewDidLayoutSubviews() {
         let agreementView = UITextView(frame: CGRect(x: 10, y: 10, width: agreementScroll.frame.width*(0.95), height: agreementScroll.frame.height))
+        agreementView.backgroundColor = .clear
         agreementView.text = agreement
         agreementView.isEditable = false
         agreementView.font = UIFont(name:"NanumSquareRoundR", size: 12, dynamic: true)

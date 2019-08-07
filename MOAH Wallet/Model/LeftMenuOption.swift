@@ -11,12 +11,14 @@ enum LeftMenuOption: Int, CustomStringConvertible {
     case AccountName
     case MyAccount
     case PrivateKey
+    case TxFee
 
     var description: String {
         switch self {
         case .AccountName: return "주 계정"
         case .MyAccount: return "내 계정"
         case .PrivateKey: return "개인키 조회"
+        case .TxFee: return ""
         }
     }
 }

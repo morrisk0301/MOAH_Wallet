@@ -62,8 +62,6 @@ class PrivateKeyVC: UIViewController {
         return button
     }()
 
-
-
     override func viewDidLoad() {
         super.viewDidLoad()
         self.replaceBackButton(color: "dark")
@@ -83,6 +81,10 @@ class PrivateKeyVC: UIViewController {
         privateKeyLabel.text = account.getPrivateKey()
 
         setupLayout()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.barStyle = .default
     }
 
     override func viewDidLayoutSubviews() {

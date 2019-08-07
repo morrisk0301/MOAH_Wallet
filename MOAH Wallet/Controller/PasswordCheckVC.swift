@@ -22,9 +22,6 @@ class PasswordCheckVC: UIViewController, KeypadViewDelegate {
         return lockView
     }()
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,10 +39,13 @@ class PasswordCheckVC: UIViewController, KeypadViewDelegate {
         setupLayout()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.barStyle = .black
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
 
     private func setupLayout(){
         lock.topAnchor.constraint(equalTo: view.topAnchor).isActive = true

@@ -75,6 +75,10 @@ class MnemonicVC: UIViewController {
         return button
     }()
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.transparentNavigationBar()
@@ -123,6 +127,7 @@ class MnemonicVC: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.barStyle = .default
         self.nextButton.setTitle("시드 구문 복사하기", for: .normal) 
         self.isCopied = false
     }
@@ -189,8 +194,7 @@ class MnemonicVC: UIViewController {
 
     @objc private func backPressed(_ sender: UIButton){
         if(!isSetting){
-            let mainVC = self.navigationController?.viewControllers.first as! MainVC
-            mainVC.signUp = false
+            self.dismiss(animated: true)
         }
         for controller in self.navigationController!.viewControllers{
             if(controller is MnemonicSettingVC){
