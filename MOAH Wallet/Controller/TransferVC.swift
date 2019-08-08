@@ -38,9 +38,9 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
     let amountLabel: UILabel = {
         let label = UILabel()
 
-        label.font = UIFont(name: "NanumSquareRoundR", size: 14, dynamic: true)
+        label.font = UIFont(name: "NanumSquareRoundB", size: 14, dynamic: true)
         label.textColor = UIColor(key: "darker")
-        label.text = "  보낼 금액"
+        label.text = "  전송 금액"
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
@@ -49,7 +49,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
     let addressLabel: UILabel = {
         let label = UILabel()
 
-        label.font = UIFont(name: "NanumSquareRoundR", size: 14, dynamic: true)
+        label.font = UIFont(name: "NanumSquareRoundB", size: 14, dynamic: true)
         label.textColor = UIColor(key: "darker")
         label.text = "  전송 계정 주소"
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -176,6 +176,17 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
         view.addSubview(addressField)
         view.addSubview(warningLabel)
         view.addSubview(confirmButton)
+
+        let rightView = UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width*0.15, height: screenSize.height/20))
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: screenSize.width*0.15, height: screenSize.height/20))
+        label.text = self.symbol
+        label.textColor = UIColor(key: "darker")
+        label.font = UIFont(name: "NanumSquareRoundB", size: 16, dynamic: true)
+        label.textAlignment = .center
+        rightView.addSubview(label)
+
+        amountField.rightView = rightView
+        amountField.rightViewMode = .always
 
         setupLayout()
     }
@@ -390,10 +401,20 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
         let address = addressField.text!
         let amount = amountField.text!
 
+        let confirmVC = util.alert(use: "transfer", title: "전송", body: "test", buttonTitle: "전송", buttonNum: 2, completion: { (confirm) in
+            if(confirm){
+                let controller = PasswordCheckVC()
+                controller.toView = "transfer"
+                controller.tempAmount = amount
+                controller.tempAddress = address
+                self.navigationController?.pushViewController(controller, animated: true)
+            }
+        })
+        self.present(confirmVC, animated: false)
+        /*
         do {
             try web3.preTransfer(address: address, amount: amount)
-            let confirmVC = util.alert(width: UIScreen.main.bounds.width / 1.2, height: UIScreen.main.bounds.height / 2,
-                    title: "전송", body: "test", buttonTitle: "전송", buttonNum: 2, completion: { (confirm) in
+            let confirmVC = util.alert(use: "transfer", title: "전송", body: "test", buttonTitle: "전송", buttonNum: 2, completion: { (confirm) in
                 if(confirm){
                     let controller = PasswordCheckVC()
                     controller.toView = "transfer"
@@ -418,5 +439,6 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
             let alertVC = util.alert(title: "전송 오류", body: errorBody!, buttonTitle: "확인", buttonNum: 1, completion: { _ in })
             self.present(alertVC, animated: false)
         }
+        */
     }
 }

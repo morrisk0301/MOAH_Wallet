@@ -24,7 +24,7 @@ class CustomWeb3 {
     static let web3 = CustomWeb3()
 
     private init() {
-        _setOption()
+        setOption()
         _loadNetwork()
         _loadNetworkArray()
         if (_network == "mainnet" || _network == "robsten" || _network == "kovan" || _network == "rinkeby" || _network == nil) {
@@ -71,9 +71,7 @@ class CustomWeb3 {
     }
 
     func transfer(address: String, amount: String) {
-
-
-
+        _transfer(address: Address(address), amount: BigUInt(amount, decimals: 18)!)
     }
 
     func preTransfer(address: String, amount: String) throws {
@@ -161,16 +159,16 @@ class CustomWeb3 {
         }
         switch (rate) {
         case "low":
-            _option?.gasLimit = BigUInt(21000)
-            _option?.gasPrice = BigUInt(1000000000 * 4)
+            _option!.gasLimit = BigUInt(21000)
+            _option!.gasPrice = BigUInt(1000000000 * 4)
             break
         case "mid":
-            _option?.gasLimit = BigUInt(21000)
-            _option?.gasPrice = BigUInt(1000000000 * 10)
+            _option!.gasLimit = BigUInt(21000)
+            _option!.gasPrice = BigUInt(1000000000 * 10)
             break
         case "high":
-            _option?.gasLimit = BigUInt(21000)
-            _option?.gasPrice = BigUInt(1000000000 * 20)
+            _option!.gasLimit = BigUInt(21000)
+            _option!.gasPrice = BigUInt(1000000000 * 20)
             break
         default:
             break
@@ -183,8 +181,8 @@ class CustomWeb3 {
         if (_option == nil) {
             return
         }
-        _option?.gasLimit = price
-        _option?.gasPrice = limit
+        _option!.gasLimit = price
+        _option!.gasPrice = limit
 
         let gas = CustomGas(rate: "custom", price: price, limit: limit)
         _saveGas(gas: gas)
@@ -198,9 +196,8 @@ class CustomWeb3 {
         return _option
     }
 
-    private func _setOption() {
+    func setOption() {
         _option = Web3Options.default
-        _option?.from = _getAddress()
         guard let gas = _loadGas() else {
             setGas(rate: "mid")
             return
@@ -270,6 +267,23 @@ class CustomWeb3 {
 
     private func _saveNetworkArray() {
         userDefaults.set(try! PropertyListEncoder().encode(_customNetwork), forKey: "customNetwork")
+    }
+
+    private func _transfer(address: Address, amount: BigUInt){
+        let keystoreManager = _getKeyStoreManager()!
+        _web3Ins!.keystoreManager = keystoreManager
+        _option!.from = _getAddress()
+
+        DispatchQueue.global(qos: .userInitiated).async{
+            do{
+                let intermediateTX =  try self._web3Ins!.eth.sendETH(to: address, amount: amount, options: self._option)
+                let keyHex =  KeychainService.loadPassword(service: "moahWallet", account: "password")!
+                try intermediateTX.send(password: keyHex)
+            }
+            catch{
+                print(error)
+            }
+        }
     }
 
 }

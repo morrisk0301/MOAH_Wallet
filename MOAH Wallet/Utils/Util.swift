@@ -16,7 +16,7 @@ class Util {
         return String((0..<length).map{ _ in letters.randomElement()! })
     }
 
-    func alert(title: String, body: String, buttonTitle: String, buttonNum: Int, completion: @escaping (Bool) -> Void) -> AlertVC {
+    func alert(title: String, body: String?, buttonTitle: String?, buttonNum: Int, completion: @escaping (Bool) -> Void) -> AlertVC {
         let alertViewController = AlertVC()
 
         alertViewController.modalPresentationStyle = .overCurrentContext
@@ -29,7 +29,7 @@ class Util {
         return alertViewController
     }
 
-    func alert(width: CGFloat, height: CGFloat, title: String, body: String, buttonTitle: String, buttonNum: Int, completion: @escaping (Bool) -> Void) -> AlertVC {
+    func alert(use: String, title: String?, body: String?, buttonTitle: String, buttonNum: Int, completion: @escaping (Bool) -> Void) -> AlertVC {
         let alertViewController = AlertVC()
 
         alertViewController.modalPresentationStyle = .overCurrentContext
@@ -38,8 +38,7 @@ class Util {
         alertViewController.alertButtonTitle = buttonTitle
         alertViewController.buttonAction = completion
         alertViewController.buttonNum = buttonNum
-        alertViewController.alertWidth = width
-        alertViewController.alertHeight = height
+        alertViewController.use = use
 
         return alertViewController
     }

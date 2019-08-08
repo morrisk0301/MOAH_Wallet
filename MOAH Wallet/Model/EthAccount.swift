@@ -366,6 +366,7 @@ class EthAccount {
     }
 
     private func _unlockAccount() {
+        print("unlocked")
         let keyHex = KeychainService.loadPassword(service: "moahWallet", account: "password")!
         self._password = keyHex
         _loadAddress()

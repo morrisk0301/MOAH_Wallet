@@ -23,7 +23,7 @@ class TXCustomVC: UIViewController, UITextFieldDelegate {
     let priceLabel: UILabel = {
         let label = UILabel()
 
-        label.font = UIFont(name:"NanumSquareRoundR", size: 14, dynamic: true)
+        label.font = UIFont(name:"NanumSquareRoundB", size: 14, dynamic: true)
         label.textColor = UIColor(key: "darker")
         label.text = "가스 가격"
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -34,7 +34,7 @@ class TXCustomVC: UIViewController, UITextFieldDelegate {
     let limitLabel: UILabel = {
         let label = UILabel()
 
-        label.font = UIFont(name:"NanumSquareRoundR", size: 14, dynamic: true)
+        label.font = UIFont(name:"NanumSquareRoundB", size: 14, dynamic: true)
         label.textColor = UIColor(key: "darker")
         label.text = "가스 한도"
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -59,15 +59,6 @@ class TXCustomVC: UIViewController, UITextFieldDelegate {
         textField.layer.borderWidth = 0.5
         textField.keyboardType = .numberPad
         textField.translatesAutoresizingMaskIntoConstraints = false
-
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: textField.frame.width*0.3, height: textField.frame.height))
-        label.font = UIFont(name:"NanumSquareRoundB", size: 16, dynamic: true)
-        label.textColor = UIColor(key: "darker")
-        label.text = "GWei  "
-        label.translatesAutoresizingMaskIntoConstraints = false
-
-        textField.rightView = label
-        textField.rightViewMode = .always
 
         return textField
     }()
@@ -140,6 +131,17 @@ class TXCustomVC: UIViewController, UITextFieldDelegate {
         view.addSubview(limitField)
         view.addSubview(warningLabel)
         view.addSubview(confirmButton)
+
+        let rightView = UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width*0.15, height: screenSize.height/20))
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: screenSize.width*0.15, height: screenSize.height/20))
+        label.text = "GWei"
+        label.textColor = UIColor(key: "darker")
+        label.font = UIFont(name: "NanumSquareRoundB", size: 16, dynamic: true)
+        label.textAlignment = .center
+        rightView.addSubview(label)
+
+        priceField.rightView = rightView
+        priceField.rightViewMode = .always
 
         setupLayout()
     }

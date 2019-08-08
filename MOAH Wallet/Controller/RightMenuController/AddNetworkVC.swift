@@ -19,7 +19,7 @@ class AddNetworkVC: UIViewController, UITextFieldDelegate {
     let nameLabel: UILabel = {
         let label = UILabel()
 
-        label.font = UIFont(name:"NanumSquareRoundR", size: 14, dynamic: true)
+        label.font = UIFont(name:"NanumSquareRoundB", size: 14, dynamic: true)
         label.textColor = UIColor(key: "darker")
         label.text = "  네트워크 이름"
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -30,7 +30,7 @@ class AddNetworkVC: UIViewController, UITextFieldDelegate {
     let urlLabel: UILabel = {
         let label = UILabel()
 
-        label.font = UIFont(name:"NanumSquareRoundR", size: 14, dynamic: true)
+        label.font = UIFont(name:"NanumSquareRoundB", size: 14, dynamic: true)
         label.textColor = UIColor(key: "darker")
         label.text = "  RPC URL"
         label.translatesAutoresizingMaskIntoConstraints = false

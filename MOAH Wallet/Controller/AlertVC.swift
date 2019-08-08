@@ -15,6 +15,9 @@ class AlertVC: UIViewController{
     var buttonAction: ((Bool) -> Void)?
     var buttonbool: Bool?
     var buttonNum = 1
+    var use: String = "alert"
+
+    let screenSize = UIScreen.main.bounds
 
     let alertView: UIView = {
         let view = UIView()
@@ -27,29 +30,6 @@ class AlertVC: UIViewController{
         view.alpha = 0
 
         return view
-    }()
-
-    let titleLabel: UILabel = {
-        let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 50))
-
-        label.textColor = .black
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name:"NanumSquareRoundB", size: 18, dynamic: true)
-
-        return label
-    }()
-
-    let bodyLabel: UILabel = {
-        let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 50))
-
-        label.textColor = UIColor(red: 130, green: 130, blue: 130)
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
-        label.numberOfLines = 0
-
-        return label
     }()
 
     let backButton: UIButton = {
@@ -83,14 +63,40 @@ class AlertVC: UIViewController{
         view.isOpaque = false
 
         view.addSubview(alertView)
-        alertView.addSubview(titleLabel)
-        alertView.addSubview(bodyLabel)
         alertView.addSubview(nextButton)
         alertView.addSubview(backButton)
 
-        titleLabel.text = self.alertTitle!
-        bodyLabel.text = self.alertBody!
         nextButton.setTitle(self.alertButtonTitle!, for: .normal)
+
+        if(use == "transfer"){
+            self.alertHeight = screenSize.height/2
+            let normalAlertView = NormalAlertView()
+
+            normalAlertView.titleLabel.text = self.alertTitle!
+            normalAlertView.bodyLabel.text = self.alertBody!
+            normalAlertView.translatesAutoresizingMaskIntoConstraints = false
+
+            alertView.addSubview(normalAlertView)
+
+            normalAlertView.topAnchor.constraint(equalTo: alertView.topAnchor).isActive = true
+            normalAlertView.leadingAnchor.constraint(equalTo: alertView.leadingAnchor).isActive = true
+            normalAlertView.trailingAnchor.constraint(equalTo: alertView.trailingAnchor).isActive = true
+            normalAlertView.bottomAnchor.constraint(equalTo: nextButton.topAnchor).isActive = true
+        }
+        else{
+            let normalAlertView = NormalAlertView()
+
+            normalAlertView.titleLabel.text = self.alertTitle!
+            normalAlertView.bodyLabel.text = self.alertBody!
+            normalAlertView.translatesAutoresizingMaskIntoConstraints = false
+
+            alertView.addSubview(normalAlertView)
+
+            normalAlertView.topAnchor.constraint(equalTo: alertView.topAnchor).isActive = true
+            normalAlertView.leadingAnchor.constraint(equalTo: alertView.leadingAnchor).isActive = true
+            normalAlertView.trailingAnchor.constraint(equalTo: alertView.trailingAnchor).isActive = true
+            normalAlertView.bottomAnchor.constraint(equalTo: nextButton.topAnchor).isActive = true
+        }
 
         setupLayout()
         if(buttonNum > 1){
@@ -113,35 +119,25 @@ class AlertVC: UIViewController{
         alertView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         alertView.heightAnchor.constraint(equalToConstant: alertHeight).isActive = true
         alertView.widthAnchor.constraint(equalToConstant: alertWidth).isActive = true
-
-        titleLabel.topAnchor.constraint(equalTo: alertView.topAnchor, constant: alertHeight/10).isActive = true
-        titleLabel.leadingAnchor.constraint(equalTo: alertView.leadingAnchor).isActive = true
-        titleLabel.trailingAnchor.constraint(equalTo: alertView.trailingAnchor).isActive = true
-        titleLabel.heightAnchor.constraint(equalToConstant: alertHeight/9).isActive = true
-
-        bodyLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor).isActive = true
-        bodyLabel.leadingAnchor.constraint(equalTo: alertView.leadingAnchor, constant: alertWidth/10).isActive = true
-        bodyLabel.trailingAnchor.constraint(equalTo: alertView.trailingAnchor, constant: -alertWidth/10).isActive = true
-        bodyLabel.bottomAnchor.constraint(equalTo: nextButton.topAnchor).isActive = true
     }
 
     private func setupOneButton(){
         nextButton.bottomAnchor.constraint(equalTo: alertView.bottomAnchor).isActive = true
         nextButton.leadingAnchor.constraint(equalTo: alertView.leadingAnchor).isActive = true
         nextButton.trailingAnchor.constraint(equalTo: alertView.trailingAnchor).isActive = true
-        nextButton.heightAnchor.constraint(equalToConstant: alertHeight/4.5).isActive = true
+        nextButton.heightAnchor.constraint(equalToConstant: screenSize.height/16.5).isActive = true
     }
 
     private func setupTwoButton(){
         backButton.bottomAnchor.constraint(equalTo: alertView.bottomAnchor).isActive = true
         backButton.leadingAnchor.constraint(equalTo: alertView.leadingAnchor).isActive = true
         backButton.trailingAnchor.constraint(equalTo: alertView.centerXAnchor, constant: -0.5).isActive = true
-        backButton.heightAnchor.constraint(equalToConstant: alertHeight/4.5).isActive = true
+        backButton.heightAnchor.constraint(equalToConstant: screenSize.height/16.5).isActive = true
 
         nextButton.bottomAnchor.constraint(equalTo: alertView.bottomAnchor).isActive = true
         nextButton.leadingAnchor.constraint(equalTo: alertView.centerXAnchor).isActive = true
         nextButton.trailingAnchor.constraint(equalTo: alertView.trailingAnchor).isActive = true
-        nextButton.heightAnchor.constraint(equalToConstant: alertHeight/4.5).isActive = true
+        nextButton.heightAnchor.constraint(equalToConstant: screenSize.height/16.5).isActive = true
     }
 
     @objc private func buttonPressed(_ sender: UIButton){
