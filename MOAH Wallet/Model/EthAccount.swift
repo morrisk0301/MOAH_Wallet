@@ -67,9 +67,7 @@ class EthAccount {
 
         if (passwordHashed == key) {
             self._password = keyHex
-            _loadAddress()
-            _loadAddressSelected()
-            _loadKeyStore()
+            _unlockAccount()
             return true
         } else {
             return false
@@ -309,7 +307,6 @@ class EthAccount {
     }
 
     private func _saveKeyStore() {
-        print(_keyStore)
         let keyData = try! JSONEncoder().encode(_keyStore!.keystoreParams)
         let fileManager = FileManager.default
         do {

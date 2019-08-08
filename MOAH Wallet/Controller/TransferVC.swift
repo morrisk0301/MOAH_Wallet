@@ -51,7 +51,7 @@ class TransferVC: UIViewController{
         return label
     }()
 
-    lazy var amountField: UITextField = {
+    let amountField: UITextField = {
         let textField = UITextField()
 
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.height))
@@ -67,9 +67,20 @@ class TransferVC: UIViewController{
         textField.layer.borderColor = UIColor(key: "grey2").cgColor
         textField.layer.borderWidth = 0.5
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.keyboardType = .decimalPad
         textField.tag = 0
 
         return textField
+    }()
+
+    let amountCV: UICollectionView = {
+        let collectionView = UICollectionView()
+
+        collectionView.backgroundColor = UIColor(key: "light3")
+
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+
+        return collectionView
     }()
 
     let addressField: UITextField = {
@@ -88,9 +99,22 @@ class TransferVC: UIViewController{
         textField.backgroundColor = .clear
         textField.layer.borderColor = UIColor(key: "grey2").cgColor
         textField.layer.borderWidth = 0.5
+        textField.keyboardType = .asciiCapable
         textField.tag = 1
 
         return textField
+    }()
+
+    let warningLabel: UILabel = {
+        let label = UILabel()
+
+        label.text = "암호화폐 특성상, 전송 후 어떠한 경우에도 취소가 불가능합니다.\n\n지갑 주소와 전송 금액을 신중하게 입력해주세요."
+        label.font = UIFont(name: "NanumSquareRoundR", size: 15, dynamic: true)
+        label.textColor = UIColor(key: "darker")
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+
+        return label
     }()
 
     let confirmButton: CustomButton = {
@@ -120,24 +144,17 @@ class TransferVC: UIViewController{
         view.addSubview(amountField)
         view.addSubview(addressLabel)
         view.addSubview(addressField)
+        view.addSubview(warningLabel)
         view.addSubview(confirmButton)
 
         setupLayout()
     }
 
     override func viewDidLayoutSubviews() {
-        /*
         let border = CALayer()
-        border.frame = CGRect(x:0, y: amountField.frame.height-1, width: amountField.frame.width, height: 1)
-        border.backgroundColor = UIColor(key: "grey2").cgColor
-
-        let border2 = CALayer()
-        border2.frame = CGRect(x:0, y: addressField.frame.height-1, width: addressField.frame.width, height: 1)
-        border2.backgroundColor = UIColor(key: "grey2").cgColor
-
-        amountField.layer.addSublayer(border)
-        addressField.layer.addSublayer(border2)
-        */
+        border.backgroundColor = UIColor(key: "grey").cgColor
+        border.frame = CGRect(x:0, y: addressField.frame.height+screenSize.height/20, width: addressField.frame.width, height: 1)
+        addressField.layer.addSublayer(border)
     }
 
     override func didReceiveMemoryWarning() {
@@ -145,7 +162,7 @@ class TransferVC: UIViewController{
     }
 
     private func setupLayout(){
-        balanceLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: screenSize.height/20).isActive = true
+        balanceLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: screenSize.height/30).isActive = true
         balanceLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenSize.width/15).isActive = true
         balanceLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenSize.width/15).isActive = true
         balanceLabel.heightAnchor.constraint(equalToConstant: screenSize.width/10).isActive = true
@@ -170,6 +187,11 @@ class TransferVC: UIViewController{
         addressField.heightAnchor.constraint(equalToConstant: screenSize.height/15).isActive = true
         addressField.widthAnchor.constraint(equalToConstant: screenSize.width*0.9).isActive = true
 
+        warningLabel.topAnchor.constraint(equalTo: addressField.bottomAnchor, constant: screenSize.height/12).isActive = true
+        warningLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenSize.width/15).isActive = true
+        warningLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenSize.width/15).isActive = true
+        warningLabel.heightAnchor.constraint(equalToConstant: screenSize.height/10).isActive = true
+
         confirmButton.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         confirmButton.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         confirmButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
@@ -181,6 +203,28 @@ class TransferVC: UIViewController{
     }
 
     @objc private func nextPressed(_ sender: UIButton){
+        var errorBody: String?
+        let util = Util()
+        let address = addressField.text!
+        let amount = amountField.text!
 
+        do{
+            try web3.transfer(address: address, amount: amount)
+            return
+        }
+        catch TransferError.invalidAmount{
+            errorBody = "전송 금액을 확인해주세요."
+        }
+        catch TransferError.invalidAddress{
+            errorBody = "올바르지 않은 주소입니다. 주소를 확인해주세요."
+        }
+        catch TransferError.insufficientAmount{
+            errorBody = "잔액이 부족합니다."
+        }
+        catch{
+
+        }
+        let alertVC = util.alert(title: "전송 오류", body: errorBody!, buttonTitle: "확인", buttonNum: 1, completion: {_ in})
+        self.present(alertVC, animated: false)
     }
 }

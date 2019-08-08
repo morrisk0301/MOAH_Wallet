@@ -132,6 +132,10 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
         let transition = LeftTransition()
 
         switch menuOption {
+        case .Welcome:
+            self.style = .lightContent
+            self.setNeedsStatusBarAppearanceUpdate()
+            break
         case .WalletNetwork:
             let controller = NetworkSettingVC()
             view.window!.layer.add(transition, forKey: kCATransition)
@@ -159,13 +163,15 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
             present(UINavigationController(rootViewController: controller), animated: false, completion: nil)
         case .CSEmail:
             self.sendEmail()
-        default:
-            break
         }
     }
 
     func didSelectLeftMenuOption(menuOption: LeftMenuOption) {
         switch menuOption {
+            case .AccountName:
+                self.style = .lightContent
+                self.setNeedsStatusBarAppearanceUpdate()
+                break
             case .MyAccount:
                 let controller = MyAccountVC()
                 controller.symbol = self.symbol
@@ -178,8 +184,6 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
             case .TxFee:
                 let controller = TXFeeVC()
                 present(UINavigationController(rootViewController: controller), animated: true, completion: nil)
-        default:
-            break
         }
     }
 
@@ -282,6 +286,7 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
         isExpandLeft = false
         let menuOption = LeftMenuOption(rawValue: 3)
         proceedToView(side: "left", menuOption: menuOption)
+        self.transparentView.removeFromSuperview()
     }
 
     @objc private func mainViewClicked(_ sender: UIGestureRecognizer) {

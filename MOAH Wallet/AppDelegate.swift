@@ -62,7 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         backgroundTime = Date()
         foregroundTime = nil
         let key = userDefaults.string(forKey: "salt")
-        if(key != nil){
+        if(key != nil && account.getKeyStoreManager() != nil){
             account.lockAccount()
         }
     }
@@ -83,12 +83,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         self.window?.rootViewController = lockVC
                         self.window?.makeKeyAndVisible()
                     }
+                    else{
+                        self.account.bioProceed()
+                        let mainContainerVC = MainContainerVC()
+                        self.window?.rootViewController = mainContainerVC
+                        self.window?.makeKeyAndVisible()
+                    }
                 }
                 else{
                     self.account.bioProceed()
-                    let mainContainerVC = MainContainerVC()
-                    self.window?.rootViewController = mainContainerVC
-                    self.window?.makeKeyAndVisible()
                 }
             }
             else{

@@ -53,7 +53,10 @@ class TXCustomVC: UIViewController, UITextFieldDelegate {
         textField.returnKeyType = .done
         textField.textColor = UIColor(key: "darker")
         textField.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
-        textField.backgroundColor = .white
+        textField.layer.cornerRadius = 5
+        textField.backgroundColor = .clear
+        textField.layer.borderColor = UIColor(key: "grey2").cgColor
+        textField.layer.borderWidth = 0.5
         textField.keyboardType = .numberPad
         textField.translatesAutoresizingMaskIntoConstraints = false
 
@@ -79,7 +82,10 @@ class TXCustomVC: UIViewController, UITextFieldDelegate {
         textField.borderStyle = .none
         textField.textColor = UIColor(key: "darker")
         textField.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
-        textField.backgroundColor = .white
+        textField.layer.cornerRadius = 5
+        textField.backgroundColor = .clear
+        textField.layer.borderColor = UIColor(key: "grey2").cgColor
+        textField.layer.borderWidth = 0.5
         textField.keyboardType = .numberPad
         textField.translatesAutoresizingMaskIntoConstraints = false
 
@@ -146,19 +152,6 @@ class TXCustomVC: UIViewController, UITextFieldDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-
-    override func viewDidLayoutSubviews() {
-        let border = CALayer()
-        border.frame = CGRect(x:0, y: priceField.frame.height-1, width: priceField.frame.width, height: 1)
-        border.backgroundColor = UIColor(key: "grey2").cgColor
-
-        let border2 = CALayer()
-        border2.frame = CGRect(x:0, y: limitField.frame.height-1, width: limitField.frame.width, height: 1)
-        border2.backgroundColor = UIColor(key: "grey2").cgColor
-
-        priceField.layer.addSublayer(border)
-        limitField.layer.addSublayer(border2)
     }
 
     override func didReceiveMemoryWarning() {

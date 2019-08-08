@@ -7,24 +7,6 @@ import Foundation
 import UIKit
 import AudioToolbox
 
-class KeyCell: UICollectionViewCell {
-
-    let digitsLabel = UILabel()
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
-        addSubview(digitsLabel)
-        digitsLabel.centerInSuperview()
-        //layer.borderWidth = 1.0
-        //layer.borderColor = UIColor.lightGray.cgColor
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented ")
-    }
-}
-
 class KeypadView: UIView, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     fileprivate let cellId = "cellId"

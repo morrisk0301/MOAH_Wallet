@@ -67,8 +67,15 @@ class CustomWeb3 {
                 print(error)
                 completion(nil)
             }
-
         }
+    }
+
+    func transfer(address: String, amount: String) throws {
+        if(amount.count == 0){ throw TransferError.invalidAmount}
+        if(address.count == 0){ throw TransferError.invalidAddress}
+        
+        guard let amount = BigUInt(amount) else { throw TransferError.invalidAmount}
+
     }
 
     func setNetwork(network: String?) {

@@ -61,7 +61,8 @@ class PasswordCheckVC: UIViewController, KeypadViewDelegate {
         if(password.count >= 6){
             if(account.checkPassword(password)){
                 if(self.toView == "mnemonic"){
-                    let controller = MnemonicSettingVC()
+                    let controller = MnemonicVC()
+                    controller.isSetting = true
                     self.navigationController?.pushViewController(controller, animated: true)
                 }
                 else if(self.toView == "password"){

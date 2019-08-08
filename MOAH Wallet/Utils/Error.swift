@@ -15,3 +15,9 @@ enum AddNetworkError: Error {
     case invalidURL
     case invalidNetwork
 }
+
+enum TransferError: Error {
+    case invalidAmount
+    case insufficientAmount
+    case invalidAddress
+}
