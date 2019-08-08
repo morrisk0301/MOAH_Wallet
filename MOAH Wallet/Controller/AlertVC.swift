@@ -7,9 +7,8 @@ import Foundation
 import UIKit
 
 class AlertVC: UIViewController{
-    let alertHeight = UIScreen.main.bounds.height/4
-    let alertWidth = UIScreen.main.bounds.width/1.2
-
+    var alertHeight = UIScreen.main.bounds.height/4
+    var alertWidth = UIScreen.main.bounds.width/1.2
     var alertTitle: String?
     var alertBody: String?
     var alertButtonTitle: String?

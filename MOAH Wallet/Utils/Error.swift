@@ -20,4 +20,5 @@ enum TransferError: Error {
     case invalidAmount
     case insufficientAmount
     case invalidAddress
+    case transferToSelf
 }

@@ -182,6 +182,11 @@ class AddNetworkVC: UIViewController, UITextFieldDelegate {
         return count <= 18
     }
 
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+
     @objc private func keyboardWillShow(_ sender: Notification) {
         if let keyboardFrame = sender.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue

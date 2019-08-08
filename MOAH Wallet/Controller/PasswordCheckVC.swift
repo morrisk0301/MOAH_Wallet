@@ -11,6 +11,8 @@ class PasswordCheckVC: UIViewController, KeypadViewDelegate {
 
     var toView: String!
     var password:String = ""
+    var tempAmount: String?
+    var tempAddress: String?
     let account: EthAccount = EthAccount.accountInstance
     let appDelegate: AppDelegate = (UIApplication.shared.delegate as? AppDelegate)!
     let userDefaults = UserDefaults.standard
@@ -73,6 +75,9 @@ class PasswordCheckVC: UIViewController, KeypadViewDelegate {
                     let controller = PrivateKeyVC()
                     self.navigationController?.pushViewController(controller, animated: true)
                 }
+                else if(self.toView == "transfer"){
+                    proceedTransfer()
+                }
             }
             else{
                 password = ""
@@ -116,16 +121,28 @@ class PasswordCheckVC: UIViewController, KeypadViewDelegate {
                         let controller = PrivateKeyVC()
                         self.navigationController?.pushViewController(controller, animated: true)
                     }
+                    else if(self.toView == "transfer"){
+                        self.proceedTransfer()
+                    }
                 }
             }
         }
+    }
+
+    private func proceedTransfer(){
+        let web3: CustomWeb3 = CustomWeb3.web3
+        web3.transfer(address: self.tempAddress!, amount: self.tempAmount!)
+
+        let controller = WalletDoneVC()
+        controller.isTransfer = true
+        self.present(controller, animated: true)
     }
 
     @objc func backPressed(_ sender: UIButton){
         if(self.toView == "privateKey"){
             self.dismiss(animated: true)
         }
-        else if(self.toView == "mnemonic"){
+        else if(self.toView == "mnemonic" || self.toView == "transfer"){
             self.navigationController?.popViewController(animated: true)
         }
         else{

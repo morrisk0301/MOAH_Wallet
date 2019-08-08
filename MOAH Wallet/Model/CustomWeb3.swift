@@ -70,12 +70,22 @@ class CustomWeb3 {
         }
     }
 
-    func transfer(address: String, amount: String) throws {
+    func transfer(address: String, amount: String) {
+
+
+
+    }
+
+    func preTransfer(address: String, amount: String) throws {
         if(amount.count == 0){ throw TransferError.invalidAmount}
         if(address.count == 0){ throw TransferError.invalidAddress}
-        
-        guard let amount = BigUInt(amount) else { throw TransferError.invalidAmount}
 
+        if(BigUInt(amount, decimals: 18) == nil){ throw TransferError.invalidAmount}
+
+        let address = Address(address)
+        if(!(address).isValid){throw TransferError.invalidAddress}
+
+        if(address == _getAddress()){ throw TransferError.transferToSelf}
     }
 
     func setNetwork(network: String?) {

@@ -29,6 +29,21 @@ class Util {
         return alertViewController
     }
 
+    func alert(width: CGFloat, height: CGFloat, title: String, body: String, buttonTitle: String, buttonNum: Int, completion: @escaping (Bool) -> Void) -> AlertVC {
+        let alertViewController = AlertVC()
+
+        alertViewController.modalPresentationStyle = .overCurrentContext
+        alertViewController.alertTitle = title
+        alertViewController.alertBody = body
+        alertViewController.alertButtonTitle = buttonTitle
+        alertViewController.buttonAction = completion
+        alertViewController.buttonNum = buttonNum
+        alertViewController.alertWidth = width
+        alertViewController.alertHeight = height
+
+        return alertViewController
+    }
+
     func trimBalance(balance: BigUInt?) -> String {
         if(balance == nil || balance == 0){
             return "0.00000"
@@ -36,6 +51,17 @@ class Util {
         let balanceString = balance!.string(unitDecimals: 18, decimals: 4)
 
         return balanceString
+    }
+
+    func returnStringDecimalCount(string: String) -> Int{
+        if(Int(string) != nil){
+            return 0
+        }
+        else{
+            let stringArr = string.components(separatedBy: ".")
+            print(stringArr)
+            return 0
+        }
     }
 
     func generateQRCode(source: String?) -> UIImage? {
