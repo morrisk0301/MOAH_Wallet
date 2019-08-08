@@ -13,7 +13,7 @@ class NormalAlertView: UIView {
     let titleLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 50))
 
-        label.textColor = .black
+        label.textColor = UIColor(key: "darker")
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name:"NanumSquareRoundB", size: 18, dynamic: true)

@@ -11,8 +11,7 @@ class PasswordCheckVC: UIViewController, KeypadViewDelegate {
 
     var toView: String!
     var password:String = ""
-    var tempAmount: String?
-    var tempAddress: String?
+    var tempInfo: TransferInfo?
     let account: EthAccount = EthAccount.accountInstance
     let appDelegate: AppDelegate = (UIApplication.shared.delegate as? AppDelegate)!
     let userDefaults = UserDefaults.standard
@@ -131,7 +130,7 @@ class PasswordCheckVC: UIViewController, KeypadViewDelegate {
 
     private func proceedTransfer(){
         let web3: CustomWeb3 = CustomWeb3.web3
-        web3.transfer(address: self.tempAddress!, amount: self.tempAmount!)
+        web3.transfer(address: tempInfo!.address, amount: tempInfo!.amount)
 
         let controller = WalletDoneVC()
         controller.isTransfer = true

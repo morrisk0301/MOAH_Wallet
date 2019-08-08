@@ -398,28 +398,19 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
     @objc private func nextPressed(_ sender: UIButton) {
         var errorBody: String?
         let util = Util()
-        let address = addressField.text!
+        let gas = web3.getGasInWei()
         let amount = amountField.text!
+        let address = addressField.text!
+        let total = BigUInt(amount, decimals: 18)! + gas
+        let info = TransferInfo(amount: amount, address: address, gas: gas.string(unitDecimals: 18), total: total.string(unitDecimals: 18), symbol: self.symbol)
 
-        let confirmVC = util.alert(use: "transfer", title: "전송", body: "test", buttonTitle: "전송", buttonNum: 2, completion: { (confirm) in
-            if(confirm){
-                let controller = PasswordCheckVC()
-                controller.toView = "transfer"
-                controller.tempAmount = amount
-                controller.tempAddress = address
-                self.navigationController?.pushViewController(controller, animated: true)
-            }
-        })
-        self.present(confirmVC, animated: false)
-        /*
         do {
             try web3.preTransfer(address: address, amount: amount)
-            let confirmVC = util.alert(use: "transfer", title: "전송", body: "test", buttonTitle: "전송", buttonNum: 2, completion: { (confirm) in
+            let confirmVC = util.alert(use: "transfer", title: "전송 확인",info: info, buttonTitle: "전송", buttonNum: 2, completion: { (confirm) in
                 if(confirm){
                     let controller = PasswordCheckVC()
                     controller.toView = "transfer"
-                    controller.tempAmount = amount
-                    controller.tempAddress = address
+                    controller.tempInfo = info
                     self.navigationController?.pushViewController(controller, animated: true)
                 }
             })
@@ -439,6 +430,5 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
             let alertVC = util.alert(title: "전송 오류", body: errorBody!, buttonTitle: "확인", buttonNum: 1, completion: { _ in })
             self.present(alertVC, animated: false)
         }
-        */
     }
 }

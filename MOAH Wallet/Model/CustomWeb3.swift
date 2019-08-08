@@ -192,6 +192,10 @@ class CustomWeb3 {
         return _loadGas()
     }
 
+    func getGasInWei() -> BigUInt {
+        return _option!.gasPrice! * _option!.gasLimit!
+    }
+
     func getOption() -> Web3Options? {
         return _option
     }

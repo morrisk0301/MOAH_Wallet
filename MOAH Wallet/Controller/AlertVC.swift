@@ -13,9 +13,10 @@ class AlertVC: UIViewController{
     var alertBody: String?
     var alertButtonTitle: String?
     var buttonAction: ((Bool) -> Void)?
-    var buttonbool: Bool?
+    var buttonBool: Bool?
     var buttonNum = 1
     var use: String = "alert"
+    var info: TransferInfo?
 
     let screenSize = UIScreen.main.bounds
 
@@ -70,18 +71,17 @@ class AlertVC: UIViewController{
 
         if(use == "transfer"){
             self.alertHeight = screenSize.height/2
-            let normalAlertView = NormalAlertView()
+            let transferAlertView = TransferAlertView(info: self.info!)
 
-            normalAlertView.titleLabel.text = self.alertTitle!
-            normalAlertView.bodyLabel.text = self.alertBody!
-            normalAlertView.translatesAutoresizingMaskIntoConstraints = false
+            transferAlertView.titleLabel.text = self.alertTitle!
+            transferAlertView.translatesAutoresizingMaskIntoConstraints = false
 
-            alertView.addSubview(normalAlertView)
+            alertView.addSubview(transferAlertView)
 
-            normalAlertView.topAnchor.constraint(equalTo: alertView.topAnchor).isActive = true
-            normalAlertView.leadingAnchor.constraint(equalTo: alertView.leadingAnchor).isActive = true
-            normalAlertView.trailingAnchor.constraint(equalTo: alertView.trailingAnchor).isActive = true
-            normalAlertView.bottomAnchor.constraint(equalTo: nextButton.topAnchor).isActive = true
+            transferAlertView.topAnchor.constraint(equalTo: alertView.topAnchor).isActive = true
+            transferAlertView.leadingAnchor.constraint(equalTo: alertView.leadingAnchor).isActive = true
+            transferAlertView.trailingAnchor.constraint(equalTo: alertView.trailingAnchor).isActive = true
+            transferAlertView.bottomAnchor.constraint(equalTo: nextButton.topAnchor).isActive = true
         }
         else{
             let normalAlertView = NormalAlertView()
@@ -143,11 +143,11 @@ class AlertVC: UIViewController{
     @objc private func buttonPressed(_ sender: UIButton){
         if(sender.tag == 1){
             buttonAction?(true)
-            buttonbool = true
+            buttonBool = true
         }
         else{
             buttonAction?(false)
-            buttonbool = false
+            buttonBool = false
         }
         self.dismiss(animated: false)
     }
