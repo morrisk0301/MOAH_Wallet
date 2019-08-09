@@ -39,10 +39,7 @@ class TXFeeVC: UIViewController, UITableViewDelegate, UITableViewDataSource  {
         super.viewDidLoad()
         self.transparentNavigationBar()
         self.setNavigationTitle(title: "전송 수수료 설정")
-        self.replaceBackButton(color: "dark")
-
-        self.navigationItem.leftBarButtonItem?.target = self
-        self.navigationItem.leftBarButtonItem?.action = #selector(backPressed(_:))
+        self.replaceToQuitButton(color: "dark")
 
         view.backgroundColor = UIColor(key: "light3")
 
@@ -162,9 +159,5 @@ class TXFeeVC: UIViewController, UITableViewDelegate, UITableViewDataSource  {
                 break
         }
         self.tableView.reloadData()
-    }
-
-    @objc func backPressed(_ sender: UIButton){
-        self.dismiss(animated: true)
     }
 }

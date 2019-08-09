@@ -7,7 +7,7 @@ import Foundation
 import UIKit
 import LocalAuthentication
 
-class PasswordVC: UIViewController, KeypadViewDelegate {
+class PasswordVC: UIViewController, KeypadViewDelegate, UIGestureRecognizerDelegate {
 
     var toView: String!
     let account: EthAccount = EthAccount.accountInstance
@@ -36,6 +36,7 @@ class PasswordVC: UIViewController, KeypadViewDelegate {
         super.viewDidLoad()
         self.replaceBackButton(color: "light")
         self.transparentNavigationBar()
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
         view.addSubview(lock)
         lock.secureKeypad.delegate = self

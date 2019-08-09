@@ -366,7 +366,6 @@ class EthAccount {
     }
 
     private func _unlockAccount() {
-        print("unlocked")
         let keyHex = KeychainService.loadPassword(service: "moahWallet", account: "password")!
         self._password = keyHex
         _loadAddress()
@@ -505,9 +504,11 @@ class EthAccount {
     }
 
     private func _lockKeyData() {
-        _saveKeyStore()
-        _saveAddressSelected()
-        _saveIsVerified()
+        if(_keyStore != nil){
+            _saveKeyStore()
+            _saveAddressSelected()
+            _saveIsVerified()
+        }
         _password = nil
         _keyStore = nil
         _mnemonic = nil

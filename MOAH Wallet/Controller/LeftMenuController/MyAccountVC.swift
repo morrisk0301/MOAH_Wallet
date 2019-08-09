@@ -31,15 +31,21 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
         return tableView
     }()
 
+    let addButton: CustomButton = {
+        let button = CustomButton(type: .system)
+        button.setTitle("계정 추가", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 20, dynamic: true)
+        button.addTarget(self, action: #selector(addPressed(_:)), for: .touchUpInside)
+
+        return button
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.replaceBackButton(color: "dark")
+        self.replaceToQuitButton(color: "dark")
         self.setNavigationTitle(title: "내 계정")
         self.transparentNavigationBar()
-        self.setRightNavButton()
-
-        self.navigationItem.leftBarButtonItem?.target = self
-        self.navigationItem.leftBarButtonItem?.action = #selector(backPressed(_:))
 
         tableView.delegate = self
         tableView.dataSource = self
@@ -48,6 +54,7 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
         view.backgroundColor = UIColor(key: "light3")
 
         view.addSubview(tableView)
+        view.addSubview(addButton)
 
         setupLayout()
         self.showSpinner()
@@ -66,19 +73,12 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
         tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-    }
+        tableView.bottomAnchor.constraint(equalTo: addButton.topAnchor).isActive = true
 
-    private func setRightNavButton(){
-        let button = UIButton(type: .system)
-        button.setTitle("추가", for: .normal)
-        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 16, dynamic: true)
-        button.setTitleColor(UIColor(key: "dark"), for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(addPressed(_:)), for: .touchUpInside)
-
-        let rightButton = UIBarButtonItem(customView: button)
-        self.navigationItem.rightBarButtonItem = rightButton
+        addButton.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        addButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -screenSize.height/20).isActive = true
     }
 
     private func getAccount(){
@@ -172,10 +172,6 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
 
     private func selectAccount(index: Int){
         account.setAddress(index: index)
-    }
-
-    @objc private func backPressed(_ sender: UIButton){
-        self.dismiss(animated: true)
     }
 
     @objc private func addPressed(_ sender: UIButton){

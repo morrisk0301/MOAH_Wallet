@@ -9,12 +9,9 @@ import UIKit
 class FAQVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.replaceBackButton(color: "dark")
+        self.replaceToQuitButton(color: "dark")
         self.setNavigationTitle(title: "FAQ")
         self.transparentNavigationBar()
-
-        self.navigationItem.leftBarButtonItem?.target = self
-        self.navigationItem.leftBarButtonItem?.action = #selector(backPressed(_:))
 
         view.backgroundColor = UIColor(key: "light3")
         setupLayout()
@@ -28,9 +25,4 @@ class FAQVC: UIViewController {
 
     }
 
-    @objc func backPressed(_ sender: UIButton){
-        let transition = RightTransition()
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.dismiss(animated: false)
-    }
 }

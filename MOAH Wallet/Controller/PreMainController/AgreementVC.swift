@@ -70,11 +70,8 @@ class AgreementVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.replaceBackButton(color: "dark")
+        self.replaceToQuitButton(color: "dark")
         self.transparentNavigationBar()
-
-        self.navigationItem.leftBarButtonItem?.target = self
-        self.navigationItem.leftBarButtonItem?.action = #selector(backPressed(_:))
 
         view.backgroundColor = UIColor(key: "light3")
 
@@ -158,9 +155,4 @@ class AgreementVC: UIViewController {
             self.navigationController?.pushViewController(passwordVC, animated: true)
         }
     }
-
-    @objc private func backPressed(_ sender: UIButton){
-        self.dismiss(animated: true)
-    }
-
 }

@@ -6,8 +6,9 @@
 import Foundation
 import UIKit
 import BigInt
+import web3swift
 
-class TXCustomVC: UIViewController, UITextFieldDelegate {
+class TXCustomVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate {
 
     let screenSize = UIScreen.main.bounds
     let web3: CustomWeb3 = CustomWeb3.web3
@@ -116,13 +117,14 @@ class TXCustomVC: UIViewController, UITextFieldDelegate {
         self.transparentNavigationBar()
         self.setNavigationTitle(title: "사용자 지정")
         self.hideKeyboardWhenTappedAround()
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
         view.backgroundColor = UIColor(key: "light3")
 
         priceField.delegate = self
         limitField.delegate = self
 
-        priceField.text = price?.description
+        priceField.text = price?.string(unitDecimals: 9)
         limitField.text = limit?.description
 
         view.addSubview(priceLabel)

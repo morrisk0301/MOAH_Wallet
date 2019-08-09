@@ -53,6 +53,7 @@ class MainRightMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! RightMenuCell
         cell.descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenSize.width/3.5).isActive = true
 
+        //cell.arrowImage.isHidden = true
         let menuOption = RightMenuOption(rawValue: indexPath.row)
         if(indexPath.row == 0){
             let style = NSMutableParagraphStyle()

@@ -6,7 +6,7 @@
 import Foundation
 import UIKit
 
-class MnemonicVerificationVC: UIViewController, UITextFieldDelegate{
+class MnemonicVerificationVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate{
 
     var wordIndex: Int?
     var isSetting = false
@@ -85,9 +85,7 @@ class MnemonicVerificationVC: UIViewController, UITextFieldDelegate{
         self.hideKeyboardWhenTappedAround()
         self.transparentNavigationBar()
         self.replaceBackButton(color: "dark")
-
-        self.navigationItem.leftBarButtonItem?.target = self
-        self.navigationItem.leftBarButtonItem?.action = #selector(backPressed(_:))
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
         if(wordIndex == nil){
             wordIndex = 0
@@ -103,9 +101,7 @@ class MnemonicVerificationVC: UIViewController, UITextFieldDelegate{
         view.addSubview(mnemonicField)
         view.addSubview(nextButton)
 
-        explainLabel.text = "\(wordIndex! + 1)번째 시드 단어를 입력해주세요."
-
-        mnemonicProgress.progress = Float(wordIndex!)/12
+        self.setVar()
 
         setupLayout()
     }
@@ -161,14 +157,18 @@ class MnemonicVerificationVC: UIViewController, UITextFieldDelegate{
         nextButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
 
+    private func setVar(){
+        self.mnemonicField.text = ""
+        self.explainLabel.text = "\(wordIndex! + 1)번째 시드 단어를 입력해주세요."
+        self.mnemonicProgress.progress = Float(wordIndex!)/12
+    }
+
     @objc private func textInput(_ sender: UITextField) {
         let account: EthAccount = EthAccount.accountInstance
         if(account.verifyMnemonic(index: wordIndex!, word: mnemonicField.text!.lowercased())){
             if(wordIndex! < 11) {
-                let mnemonicVerificationVC = MnemonicVerificationVC()
-                mnemonicVerificationVC.wordIndex = wordIndex! + 1
-                mnemonicVerificationVC.isSetting = self.isSetting
-                self.navigationController?.pushViewController(mnemonicVerificationVC, animated: false)
+                self.wordIndex! += 1
+                self.setVar()
             }
             else{
                 account.verifyAccount()
@@ -193,10 +193,8 @@ class MnemonicVerificationVC: UIViewController, UITextFieldDelegate{
         let account: EthAccount = EthAccount.accountInstance
         if(account.verifyMnemonic(index: wordIndex!, word: mnemonicField.text!.lowercased())){
             if(wordIndex! < 11) {
-                let mnemonicVerificationVC = MnemonicVerificationVC()
-                mnemonicVerificationVC.wordIndex = wordIndex! + 1
-                mnemonicVerificationVC.isSetting = self.isSetting
-                self.navigationController?.pushViewController(mnemonicVerificationVC, animated: false)
+                self.wordIndex! += 1
+                self.setVar()
             }
             else{
                 account.verifyAccount()
@@ -220,21 +218,5 @@ class MnemonicVerificationVC: UIViewController, UITextFieldDelegate{
             self.present(alertVC, animated: false)
         }
 
-    }
-
-    @objc private func backPressed(_ sender: UIButton){
-        let viewControllers: [UIViewController] = self.navigationController!.viewControllers
-        for aViewController in viewControllers {
-            if(isSetting){
-                if aViewController is MnemonicSettingVC {
-                    self.navigationController?.popToViewController(aViewController, animated: true)
-                }
-            }
-            else{
-                if aViewController is MnemonicVC {
-                    self.navigationController?.popToViewController(aViewController, animated: true)
-                }
-            }
-        }
     }
 }

@@ -129,7 +129,6 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
     }
 
     func didSelectRightMenuOption(menuOption: RightMenuOption) {
-        let transition = LeftTransition()
 
         switch menuOption {
         case .Welcome:
@@ -138,29 +137,23 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
             break
         case .WalletNetwork:
             let controller = NetworkSettingVC()
-            view.window!.layer.add(transition, forKey: kCATransition)
-            present(UINavigationController(rootViewController: controller), animated: false, completion: nil)
+            present(UINavigationController(rootViewController: controller), animated: true, completion: nil)
         case .WalletMnemonic:
             let controller = MnemonicSettingVC()
-            view.window!.layer.add(transition, forKey: kCATransition)
-            present(UINavigationController(rootViewController: controller), animated: false, completion: nil)
+            present(UINavigationController(rootViewController: controller), animated: true, completion: nil)
         case .WalletPassword:
             let controller = PasswordCheckVC()
             controller.toView = "password"
-            view.window!.layer.add(transition, forKey: kCATransition)
-            present(UINavigationController(rootViewController: controller), animated: false, completion: nil)
+            present(UINavigationController(rootViewController: controller), animated: true, completion: nil)
         case .CSAnnouncement:
             let controller = AnnouncementVC()
-            view.window!.layer.add(transition, forKey: kCATransition)
-            present(UINavigationController(rootViewController: controller), animated: false, completion: nil)
+            present(UINavigationController(rootViewController: controller), animated: true, completion: nil)
         case .CSFAQ:
             let controller = FAQVC()
-            view.window!.layer.add(transition, forKey: kCATransition)
-            present(UINavigationController(rootViewController: controller), animated: false, completion: nil)
+            present(UINavigationController(rootViewController: controller), animated: true, completion: nil)
         case .CSAgreement:
             let controller = AgreementCheckVC()
-            view.window!.layer.add(transition, forKey: kCATransition)
-            present(UINavigationController(rootViewController: controller), animated: false, completion: nil)
+            present(UINavigationController(rootViewController: controller), animated: true, completion: nil)
         case .CSEmail:
             self.sendEmail()
         }

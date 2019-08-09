@@ -35,12 +35,9 @@ class MnemonicSettingVC: UIViewController, UITableViewDelegate, UITableViewDataS
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.replaceBackButton(color: "dark")
+        self.replaceToQuitButton(color: "dark")
         self.setNavigationTitle(title: "시드 구문 관리")
         self.transparentNavigationBar()
-
-        self.navigationItem.leftBarButtonItem?.target = self
-        self.navigationItem.leftBarButtonItem?.action = #selector(backPressed(_:))
 
         tableView.delegate = self
         tableView.dataSource = self
@@ -50,6 +47,10 @@ class MnemonicSettingVC: UIViewController, UITableViewDelegate, UITableViewDataS
         view.addSubview(tableView)
 
         setupLayout()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.barStyle = .default
     }
 
     override func didReceiveMemoryWarning() {
@@ -147,11 +148,5 @@ class MnemonicSettingVC: UIViewController, UITableViewDelegate, UITableViewDataS
         default:
             break
         }
-    }
-
-    @objc func backPressed(_ sender: UIButton){
-        let transition = RightTransition()
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.dismiss(animated: false)
     }
 }

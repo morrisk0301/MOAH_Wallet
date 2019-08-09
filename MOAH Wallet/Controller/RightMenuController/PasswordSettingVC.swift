@@ -53,12 +53,9 @@ class PasswordSettingVC: UIViewController, UITableViewDelegate, UITableViewDataS
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.replaceBackButton(color: "dark")
+        self.replaceToQuitButton(color: "dark")
         self.setNavigationTitle(title: "비밀번호 및 인증 관리")
         self.transparentNavigationBar()
-
-        self.navigationItem.leftBarButtonItem?.target = self
-        self.navigationItem.leftBarButtonItem?.action = #selector(backPressed(_:))
 
         view.backgroundColor = UIColor(key: "light3")
 
@@ -171,12 +168,6 @@ class PasswordSettingVC: UIViewController, UITableViewDelegate, UITableViewDataS
             let controller = PasswordChangeVC()
             self.navigationController?.pushViewController(controller, animated: true)
         }
-    }
-
-    @objc func backPressed(_ sender: UIButton){
-        let transition = RightTransition()
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.dismiss(animated: false)
     }
 
     @objc func switchPressed(_ sender: UISwitch){

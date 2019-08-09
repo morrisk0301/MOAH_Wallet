@@ -152,12 +152,9 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         self.transparentNavigationBar()
-        self.replaceBackButton(color: "dark")
+        self.replaceToQuitButton(color: "dark")
         self.setNavigationTitle(title: "암호화폐 전송")
         self.hideKeyboardWhenTappedAround()
-
-        self.navigationItem.leftBarButtonItem?.target = self
-        self.navigationItem.leftBarButtonItem?.action = #selector(backPressed(_:))
 
         view.backgroundColor = UIColor(key: "light3")
 

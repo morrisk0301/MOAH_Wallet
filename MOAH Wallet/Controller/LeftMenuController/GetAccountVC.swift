@@ -6,7 +6,7 @@
 import Foundation
 import UIKit
 
-class GetAccountVC: UIViewController, UITextFieldDelegate {
+class GetAccountVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate {
 
     let screenSize = UIScreen.main.bounds
     let account: EthAccount = EthAccount.accountInstance
@@ -108,6 +108,7 @@ class GetAccountVC: UIViewController, UITextFieldDelegate {
         self.transparentNavigationBar()
         self.setNavigationTitle(title: "개인키로 가져오기")
         self.hideKeyboardWhenTappedAround()
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
         view.backgroundColor = UIColor(key: "light3")
         nameField.delegate = self

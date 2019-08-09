@@ -7,6 +7,10 @@ import Foundation
 import UIKit
 
 class AlertVC: UIViewController{
+
+    var transferAlertView: TransferAlertView?
+    var normalAlertView: NormalAlertView?
+
     var alertHeight = UIScreen.main.bounds.height/4
     var alertWidth = UIScreen.main.bounds.width/1.2
     var alertTitle: String?
@@ -71,31 +75,31 @@ class AlertVC: UIViewController{
 
         if(use == "transfer"){
             self.alertHeight = screenSize.height/2
-            let transferAlertView = TransferAlertView(info: self.info!)
+            transferAlertView = TransferAlertView(info: self.info!)
 
-            transferAlertView.titleLabel.text = self.alertTitle!
-            transferAlertView.translatesAutoresizingMaskIntoConstraints = false
+            transferAlertView!.titleLabel.text = self.alertTitle!
+            transferAlertView!.translatesAutoresizingMaskIntoConstraints = false
 
-            alertView.addSubview(transferAlertView)
+            alertView.addSubview(transferAlertView!)
 
-            transferAlertView.topAnchor.constraint(equalTo: alertView.topAnchor).isActive = true
-            transferAlertView.leadingAnchor.constraint(equalTo: alertView.leadingAnchor).isActive = true
-            transferAlertView.trailingAnchor.constraint(equalTo: alertView.trailingAnchor).isActive = true
-            transferAlertView.bottomAnchor.constraint(equalTo: nextButton.topAnchor).isActive = true
+            transferAlertView!.topAnchor.constraint(equalTo: alertView.topAnchor).isActive = true
+            transferAlertView!.leadingAnchor.constraint(equalTo: alertView.leadingAnchor).isActive = true
+            transferAlertView!.trailingAnchor.constraint(equalTo: alertView.trailingAnchor).isActive = true
+            transferAlertView!.bottomAnchor.constraint(equalTo: nextButton.topAnchor).isActive = true
         }
         else{
-            let normalAlertView = NormalAlertView()
+            normalAlertView = NormalAlertView()
 
-            normalAlertView.titleLabel.text = self.alertTitle!
-            normalAlertView.bodyLabel.text = self.alertBody!
-            normalAlertView.translatesAutoresizingMaskIntoConstraints = false
+            normalAlertView!.titleLabel.text = self.alertTitle!
+            normalAlertView!.bodyLabel.text = self.alertBody!
+            normalAlertView!.translatesAutoresizingMaskIntoConstraints = false
 
-            alertView.addSubview(normalAlertView)
+            alertView.addSubview(normalAlertView!)
 
-            normalAlertView.topAnchor.constraint(equalTo: alertView.topAnchor).isActive = true
-            normalAlertView.leadingAnchor.constraint(equalTo: alertView.leadingAnchor).isActive = true
-            normalAlertView.trailingAnchor.constraint(equalTo: alertView.trailingAnchor).isActive = true
-            normalAlertView.bottomAnchor.constraint(equalTo: nextButton.topAnchor).isActive = true
+            normalAlertView!.topAnchor.constraint(equalTo: alertView.topAnchor).isActive = true
+            normalAlertView!.leadingAnchor.constraint(equalTo: alertView.leadingAnchor).isActive = true
+            normalAlertView!.trailingAnchor.constraint(equalTo: alertView.trailingAnchor).isActive = true
+            normalAlertView!.bottomAnchor.constraint(equalTo: nextButton.topAnchor).isActive = true
         }
 
         setupLayout()
@@ -105,6 +109,15 @@ class AlertVC: UIViewController{
         else{
             backButton.isHidden = true
             setupOneButton()
+        }
+    }
+
+    override func viewDidLayoutSubviews() {
+        if(use == "transfer"){
+            let border = CALayer()
+            border.backgroundColor = UIColor(key: "grey").cgColor
+            border.frame = CGRect(x:0, y: -screenSize.height/40, width: alertWidth-(screenSize.width/15)*2, height: 1)
+            transferAlertView!.totalTagLabel.layer.addSublayer(border)
         }
     }
 

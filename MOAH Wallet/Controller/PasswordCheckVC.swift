@@ -7,7 +7,7 @@ import Foundation
 import UIKit
 import LocalAuthentication
 
-class PasswordCheckVC: UIViewController, KeypadViewDelegate {
+class PasswordCheckVC: UIViewController, KeypadViewDelegate, UIGestureRecognizerDelegate {
 
     var toView: String!
     var password:String = ""
@@ -26,7 +26,12 @@ class PasswordCheckVC: UIViewController, KeypadViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.replaceBackButton(color: "light")
+        if(self.toView == "mnemonic" || self.toView == "transfer"){
+            self.replaceBackButton(color: "light")
+            self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        }else{
+            self.replaceToQuitButton(color: "light")
+        }
         self.transparentNavigationBar()
 
         view.addSubview(lock)
@@ -135,19 +140,5 @@ class PasswordCheckVC: UIViewController, KeypadViewDelegate {
         let controller = WalletDoneVC()
         controller.isTransfer = true
         self.present(controller, animated: true)
-    }
-
-    @objc func backPressed(_ sender: UIButton){
-        if(self.toView == "privateKey"){
-            self.dismiss(animated: true)
-        }
-        else if(self.toView == "mnemonic" || self.toView == "transfer"){
-            self.navigationController?.popViewController(animated: true)
-        }
-        else{
-            let transition = RightTransition()
-            view.window!.layer.add(transition, forKey: kCATransition)
-            self.dismiss(animated: false)
-        }
     }
 }

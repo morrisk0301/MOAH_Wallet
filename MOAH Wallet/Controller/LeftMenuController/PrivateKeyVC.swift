@@ -64,12 +64,9 @@ class PrivateKeyVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.replaceBackButton(color: "dark")
+        self.replaceToQuitButton(color: "dark")
         self.setNavigationTitle(title: "개인키 조회")
         self.transparentNavigationBar()
-
-        self.navigationItem.leftBarButtonItem?.target = self
-        self.navigationItem.leftBarButtonItem?.action = #selector(backPressed(_:))
 
         view.backgroundColor = UIColor(key: "light3")
 
@@ -118,10 +115,6 @@ class PrivateKeyVC: UIViewController {
         copyButton.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         copyButton.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         copyButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-    }
-
-    @objc func backPressed(_ sender: UIButton){
-        self.dismiss(animated: true)
     }
 
     @objc func copyPressed(_ sender: UIButton){

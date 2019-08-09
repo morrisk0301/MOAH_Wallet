@@ -6,7 +6,7 @@
 import Foundation
 import UIKit
 
-class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
+class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate, UIGestureRecognizerDelegate {
 
     let screenSize = UIScreen.main.bounds
 
@@ -75,6 +75,7 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
         super.viewDidLoad()
         self.replaceBackButton(color: "dark")
         self.hideKeyboardWhenTappedAround()
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
         view.backgroundColor = UIColor(key: "light3")
         view.addSubview(mnemonicLabel)

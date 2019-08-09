@@ -6,7 +6,7 @@
 import Foundation
 import UIKit
 
-class AddNetworkVC: UIViewController, UITextFieldDelegate {
+class AddNetworkVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate {
 
     let screenSize = UIScreen.main.bounds
     let web3: CustomWeb3 = CustomWeb3.web3
@@ -108,6 +108,7 @@ class AddNetworkVC: UIViewController, UITextFieldDelegate {
         self.transparentNavigationBar()
         self.setNavigationTitle(title: "네트워크 추가")
         self.hideKeyboardWhenTappedAround()
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
         view.backgroundColor = UIColor(key: "light3")
         nameField.delegate = self

@@ -39,12 +39,9 @@ class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSo
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.replaceBackButton(color: "dark")
+        self.replaceToQuitButton(color: "dark")
         self.setNavigationTitle(title: "네트워크 설정")
         self.transparentNavigationBar()
-
-        self.navigationItem.leftBarButtonItem?.target = self
-        self.navigationItem.leftBarButtonItem?.action = #selector(backPressed(_:))
 
         tableView.delegate = self
         tableView.dataSource = self
@@ -192,12 +189,6 @@ class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSo
             self.tableView.deleteSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
             tableView.reloadData()
         }
-    }
-
-    @objc func backPressed(_ sender: UIButton){
-        let transition = RightTransition()
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.dismiss(animated: false)
     }
 
     @objc func addPressed(_ sender: UIButton){

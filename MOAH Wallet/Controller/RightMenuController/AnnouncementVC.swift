@@ -9,12 +9,9 @@ import UIKit
 class AnnouncementVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.replaceBackButton(color: "dark")
+        self.replaceToQuitButton(color: "dark")
         self.setNavigationTitle(title: "공지사항")
         self.transparentNavigationBar()
-
-        self.navigationItem.leftBarButtonItem?.target = self
-        self.navigationItem.leftBarButtonItem?.action = #selector(backPressed(_:))
 
         view.backgroundColor = UIColor(key: "light3")
         setupLayout()
@@ -26,12 +23,6 @@ class AnnouncementVC: UIViewController {
 
     private func setupLayout(){
 
-    }
-
-    @objc func backPressed(_ sender: UIButton){
-        let transition = RightTransition()
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.dismiss(animated: false)
     }
 
 }

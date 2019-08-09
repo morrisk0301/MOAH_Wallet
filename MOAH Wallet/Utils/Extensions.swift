@@ -47,6 +47,29 @@ extension UIViewController {
         self.navigationItem.leftBarButtonItem = leftButton
     }
 
+    func replaceToQuitButton(color: String){
+        self.navigationItem.hidesBackButton = true
+        let button: UIButton = UIButton(type: .custom)
+        button.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+
+        let buttonImage = UIImageView(frame: CGRect(x: button.frame.width/2, y: button.frame.height/2, width: view.frame.width/25, height: view.frame.width/25))
+
+        if(color == "dark"){
+            buttonImage.image = UIImage(named: "quit")
+        }else{
+            buttonImage.image = UIImage(named: "quitWhite")
+        }
+
+        button.addSubview(buttonImage)
+        button.addTarget(self, action: #selector(quitPressed(_:)), for: .touchUpInside)
+
+        let rightButton = UIBarButtonItem(customView: button)
+        rightButton.customView?.widthAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
+        rightButton.customView?.heightAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
+
+        self.navigationItem.rightBarButtonItem = rightButton
+    }
+
     func transparentNavigationBar(){
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
@@ -75,6 +98,10 @@ extension UIViewController {
 
     @objc private func backPressed(_ sender: UIButton){
         self.navigationController?.popViewController(animated: true)
+    }
+
+    @objc private func quitPressed(_ sender: UIButton){
+        self.dismiss(animated: true)
     }
 
     @objc func dismissKeyboard() {

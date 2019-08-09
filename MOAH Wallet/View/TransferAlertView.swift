@@ -36,6 +36,39 @@ class TransferAlertView: UIView {
         return label
     }()
 
+    let amountTagLabel: UILabel = {
+        let label = UILabel()
+
+        label.text = "전송 금액:"
+        label.font = UIFont(name: "NanumSquareRoundR", size: 12, dynamic: true)
+        label.textColor = UIColor(key: "grey")
+        label.translatesAutoresizingMaskIntoConstraints = false
+
+        return label
+    }()
+
+    let gasTagLabel: UILabel = {
+        let label = UILabel()
+
+        label.text = "가스 비용:"
+        label.font = UIFont(name: "NanumSquareRoundR", size: 12, dynamic: true)
+        label.textColor = UIColor(key: "grey")
+        label.translatesAutoresizingMaskIntoConstraints = false
+
+        return label
+    }()
+
+    let totalTagLabel: UILabel = {
+        let label = UILabel()
+
+        label.text = "총 비용:"
+        label.font = UIFont(name: "NanumSquareRoundB", size: 20, dynamic: true)
+        label.textColor = UIColor(key: "grey")
+        label.translatesAutoresizingMaskIntoConstraints = false
+
+        return label
+    }()
+
     let amountLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -73,7 +106,7 @@ class TransferAlertView: UIView {
 
     convenience init(info: TransferInfo){
         self.init()
-        self.address = "0x0E32E68a20928826c5C805aB8b0509cAe3A90517"
+        self.address = info.address
         self.amount = info.amount
         self.symbol = info.symbol
         self.gas = info.gas
@@ -92,8 +125,11 @@ class TransferAlertView: UIView {
 
     private func setupLayout(){
         addSubview(titleLabel)
-        addSubview(amountLabel)
         addSubview(addressLabel)
+        addSubview(amountTagLabel)
+        addSubview(gasTagLabel)
+        addSubview(totalTagLabel)
+        addSubview(amountLabel)
         addSubview(gasLabel)
         addSubview(totalLabel)
         addSubview(warningLabel)
@@ -108,18 +144,33 @@ class TransferAlertView: UIView {
         addressLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -screenSize.width/15).isActive = true
         addressLabel.heightAnchor.constraint(equalToConstant: screenSize.height/15).isActive = true
 
+        amountTagLabel.topAnchor.constraint(equalTo: addressLabel.bottomAnchor, constant: screenSize.height/80).isActive = true
+        amountTagLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: screenSize.width/15).isActive = true
+        amountTagLabel.widthAnchor.constraint(equalToConstant: screenSize.width/7).isActive = true
+        amountTagLabel.heightAnchor.constraint(equalToConstant: screenSize.height/40).isActive = true
+
+        gasTagLabel.topAnchor.constraint(equalTo: amountLabel.bottomAnchor, constant: screenSize.height/80).isActive = true
+        gasTagLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: screenSize.width/15).isActive = true
+        gasTagLabel.widthAnchor.constraint(equalToConstant: screenSize.width/7).isActive = true
+        gasTagLabel.heightAnchor.constraint(equalToConstant: screenSize.height/40).isActive = true
+
+        totalTagLabel.topAnchor.constraint(equalTo: gasLabel.bottomAnchor, constant: screenSize.height/20).isActive = true
+        totalTagLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: screenSize.width/15).isActive = true
+        totalTagLabel.widthAnchor.constraint(equalToConstant: screenSize.width/5).isActive = true
+        totalTagLabel.heightAnchor.constraint(equalToConstant: screenSize.height/30).isActive = true
+
         amountLabel.topAnchor.constraint(equalTo: addressLabel.bottomAnchor, constant: screenSize.height/80).isActive = true
-        amountLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: screenSize.width/15).isActive = true
+        amountLabel.leadingAnchor.constraint(equalTo: amountTagLabel.leadingAnchor, constant: screenSize.width/15).isActive = true
         amountLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -screenSize.width/15).isActive = true
         amountLabel.heightAnchor.constraint(equalToConstant: screenSize.height/40).isActive = true
 
         gasLabel.topAnchor.constraint(equalTo: amountLabel.bottomAnchor, constant: screenSize.height/80).isActive = true
-        gasLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: screenSize.width/15).isActive = true
+        gasLabel.leadingAnchor.constraint(equalTo: gasTagLabel.leadingAnchor, constant: screenSize.width/15).isActive = true
         gasLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -screenSize.width/15).isActive = true
         gasLabel.heightAnchor.constraint(equalToConstant: screenSize.height/40).isActive = true
 
         totalLabel.topAnchor.constraint(equalTo: gasLabel.bottomAnchor, constant: screenSize.height/20).isActive = true
-        totalLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: screenSize.width/15).isActive = true
+        totalLabel.leadingAnchor.constraint(equalTo: totalTagLabel.leadingAnchor, constant: screenSize.width/15).isActive = true
         totalLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -screenSize.width/15).isActive = true
         totalLabel.heightAnchor.constraint(equalToConstant: screenSize.height/30).isActive = true
 
@@ -148,8 +199,11 @@ class TransferAlertView: UIView {
     }
 
     private func setValue(){
+        let style = NSMutableParagraphStyle()
+        style.alignment = .right
+
         let addressAttr = NSMutableAttributedString(string: "전송 계정: ",
-                attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundR", size: 14, dynamic: true)!,
+                attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundR", size: 12, dynamic: true)!,
                              NSAttributedString.Key.foregroundColor: UIColor(key: "grey")])
         addressAttr.append(NSAttributedString(string: self.address,
                 attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundR", size: 14, dynamic: true)!,
@@ -157,39 +211,36 @@ class TransferAlertView: UIView {
 
         addressLabel.attributedText = addressAttr
 
-        let amountAttr = NSMutableAttributedString(string: "전송 금액: ",
-                attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundR", size: 14, dynamic: true)!,
-                             NSAttributedString.Key.foregroundColor: UIColor(key: "grey")])
-        amountAttr.append(NSAttributedString(string: self.amount + " ",
-                attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundR", size: 14, dynamic: true)!,
-                             NSAttributedString.Key.foregroundColor: UIColor(key: "grey")]))
+        let amountAttr = NSMutableAttributedString(string: self.amount + " ",
+                attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundB", size: 14, dynamic: true)!,
+                             NSAttributedString.Key.foregroundColor: UIColor(key: "darker"), 
+                             NSAttributedString.Key.paragraphStyle: style])
         amountAttr.append(NSAttributedString(string: self.symbol,
-                attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundR", size: 14, dynamic: true)!,
-                             NSAttributedString.Key.foregroundColor: UIColor(key: "grey")]))
+                attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundB", size: 14, dynamic: true)!,
+                             NSAttributedString.Key.foregroundColor: UIColor(key: "darker"),
+                             NSAttributedString.Key.paragraphStyle: style]))
 
         amountLabel.attributedText = amountAttr
 
-        let gasAttr = NSMutableAttributedString(string: "가스 비용: ",
-                attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundR", size: 14, dynamic: true)!,
-                             NSAttributedString.Key.foregroundColor: UIColor(key: "grey")])
-        gasAttr.append(NSAttributedString(string: self.gas + " ",
-                attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundR", size: 14, dynamic: true)!,
-                             NSAttributedString.Key.foregroundColor: UIColor(key: "grey")]))
+        let gasAttr = NSMutableAttributedString(string: self.gas + " ",
+                attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundB", size: 14, dynamic: true)!,
+                             NSAttributedString.Key.foregroundColor: UIColor(key: "darker"),
+                             NSAttributedString.Key.paragraphStyle: style])
         gasAttr.append(NSAttributedString(string: self.symbol,
-                attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundR", size: 14, dynamic: true)!,
-                             NSAttributedString.Key.foregroundColor: UIColor(key: "grey")]))
+                attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundB", size: 14, dynamic: true)!,
+                             NSAttributedString.Key.foregroundColor: UIColor(key: "darker"),
+                             NSAttributedString.Key.paragraphStyle: style]))
 
         gasLabel.attributedText = gasAttr
 
-        let totalAttr = NSMutableAttributedString(string: "총 비용: ",
+        let totalAttr = NSMutableAttributedString(string: self.total + " ",
                 attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundB", size: 20, dynamic: true)!,
-                             NSAttributedString.Key.foregroundColor: UIColor(key: "darker")])
-        totalAttr.append(NSAttributedString(string: self.total + " ",
-                attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundB", size: 20, dynamic: true)!,
-                             NSAttributedString.Key.foregroundColor: UIColor(key: "regular")]))
+                             NSAttributedString.Key.foregroundColor: UIColor(key: "regular"),
+                             NSAttributedString.Key.paragraphStyle: style])
         totalAttr.append(NSAttributedString(string: self.symbol,
                 attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundB", size: 20, dynamic: true)!,
-                             NSAttributedString.Key.foregroundColor: UIColor(key: "darker")]))
+                             NSAttributedString.Key.foregroundColor: UIColor(key: "darker"),
+                             NSAttributedString.Key.paragraphStyle: style]))
 
         totalLabel.attributedText = totalAttr
     }

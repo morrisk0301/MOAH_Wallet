@@ -6,7 +6,7 @@
 import Foundation
 import UIKit
 
-class MnemonicVC: UIViewController {
+class MnemonicVC: UIViewController, UIGestureRecognizerDelegate {
 
     var tempMnemonic: String?
     private var isCopied = false
@@ -82,10 +82,6 @@ class MnemonicVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.transparentNavigationBar()
-        self.replaceBackButton(color: "dark")
-
-        self.navigationItem.leftBarButtonItem?.target = self
-        self.navigationItem.leftBarButtonItem?.action = #selector(backPressed(_:))
 
         view.backgroundColor = UIColor(key: "light3")
         view.addSubview(headLabel)
@@ -100,10 +96,22 @@ class MnemonicVC: UIViewController {
             let account: EthAccount = EthAccount.accountInstance
 
             self.setNavigationTitle(title: "시드 구문 조회")
+            self.replaceBackButton(color: "dark")
+            self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+
             headLabel.isHidden = true
             mnemonic = account.getMnemonic()
             explainLabel.text = "다음은 회원님의 비밀 시드 구문입니다."
+
+            var navCounter = 0
+            for controller in self.navigationController!.viewControllers{
+                if(controller is PasswordCheckVC){
+                    self.navigationController?.viewControllers.remove(at: navCounter)
+                }
+                navCounter += 1
+            }
         } else{
+            self.replaceToQuitButton(color: "dark")
             mnemonic = self.tempMnemonic!
         }
 
@@ -190,16 +198,5 @@ class MnemonicVC: UIViewController {
             self.navigationController?.pushViewController(mnemonicVerificationVc, animated: true)
         }
 
-    }
-
-    @objc private func backPressed(_ sender: UIButton){
-        if(!isSetting){
-            self.dismiss(animated: true)
-        }
-        for controller in self.navigationController!.viewControllers{
-            if(controller is MnemonicSettingVC){
-                self.navigationController?.popToViewController(controller, animated: true)
-            }
-        }
     }
 }
