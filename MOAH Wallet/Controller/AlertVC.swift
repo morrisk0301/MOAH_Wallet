@@ -5,6 +5,8 @@
 
 import Foundation
 import UIKit
+import BigInt
+import web3swift
 
 class AlertVC: UIViewController{
 
@@ -21,6 +23,7 @@ class AlertVC: UIViewController{
     var buttonNum = 1
     var use: String = "alert"
     var info: TransferInfo?
+    var balance: BigUInt?
 
     let screenSize = UIScreen.main.bounds
 
@@ -86,6 +89,13 @@ class AlertVC: UIViewController{
             transferAlertView!.leadingAnchor.constraint(equalTo: alertView.leadingAnchor).isActive = true
             transferAlertView!.trailingAnchor.constraint(equalTo: alertView.trailingAnchor).isActive = true
             transferAlertView!.bottomAnchor.constraint(equalTo: nextButton.topAnchor).isActive = true
+
+            if(self.info!.total > self.balance!){
+                transferAlertView?.warningLabel.text = "가스 비용이 부족합니다."
+                transferAlertView?.warningLabel.textColor = UIColor.red
+                nextButton.isEnabled = false
+                nextButton.setTitleColor(UIColor(red: 130, green: 130, blue: 130), for: .normal)
+            }
         }
         else{
             normalAlertView = NormalAlertView()

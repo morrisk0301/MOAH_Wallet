@@ -31,9 +31,9 @@ struct CustomWeb3Network: Codable {
 }
 
 struct TransferInfo: Codable {
-    var amount: String
+    var amount: BigUInt
     var address: String
-    var gas: String
-    var total: String
+    var gas: BigUInt
+    var total: BigUInt
     var symbol: String
 }

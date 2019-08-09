@@ -16,7 +16,8 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
     var isExpand = false
     var tempMnemonic: String?
     var delegate: MainControllerDelegate?
-    var balance: String?
+    var balance: BigUInt?
+    var balanceString: String?
     var symbol = "ETH"
 
     let screenSize = UIScreen.main.bounds
@@ -99,22 +100,6 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
         txView.delegate = self
         txView.dataSource = self
         txView.register(MenuCell.self, forCellReuseIdentifier: reuseIdentifier)
-
-        /*
-        let account: EthAccount = EthAccount.accountInstance
-        let KS = account.getKeyStore()
-        let web3Kovan = Web3(infura: .kovan)
-        let keyStoreManager = KeystoreManager([KS])
-        web3Kovan.keystoreManager = keyStoreManager
-
-        let amount = BigUInt(10000000000000000)
-        let toAddress = Address("0xAa7725FF2Bd0B88e5EA57f0Ea74D2Bf1cA61ddaf")
-        var options = Web3Options.default
-        options.from = KS.addresses.first!
-
-        let intermediateTX =  try! web3Kovan.eth.sendETH(to: toAddress, amount: amount, options: options)
-        try! intermediateTX.send(password: "123")
-        */
 
         if(signUp){
             delegate?.isSignUp()
@@ -230,6 +215,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
         if(account.getIsVerified()){
             let controller = TransferVC()
             controller.balance = self.balance!
+            controller.balanceString = self.balanceString!
             controller.symbol = self.symbol
             self.present(UINavigationController(rootViewController: controller), animated: true)
         }

@@ -70,8 +70,8 @@ class CustomWeb3 {
         }
     }
 
-    func transfer(address: String, amount: String) {
-        _transfer(address: Address(address), amount: BigUInt(amount, decimals: 18)!)
+    func transfer(address: String, amount: BigUInt) {
+        _transfer(address: Address(address), amount: amount)
     }
 
     func preTransfer(address: String, amount: String) throws {

@@ -16,13 +16,14 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
     let web3: CustomWeb3 = CustomWeb3.web3
     let util = Util()
     var amountVerified = false
-    var balance: String!
+    var balanceString: String!
+    var balance: BigUInt!
     var symbol: String!
 
     lazy var balanceLabel: UILabel = {
         let label = UILabel()
 
-        let attrText = NSMutableAttributedString(string: self.balance + " ",
+        let attrText = NSMutableAttributedString(string: self.balanceString + " ",
                 attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundB", size: 30, dynamic: true)!,
                              NSAttributedString.Key.foregroundColor: UIColor(key: "regular")])
         attrText.append(NSAttributedString(string: self.symbol,
@@ -174,17 +175,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
         view.addSubview(warningLabel)
         view.addSubview(confirmButton)
 
-        let rightView = UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width*0.15, height: screenSize.height/20))
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: screenSize.width*0.15, height: screenSize.height/20))
-        label.text = self.symbol
-        label.textColor = UIColor(key: "darker")
-        label.font = UIFont(name: "NanumSquareRoundB", size: 16, dynamic: true)
-        label.textAlignment = .center
-        rightView.addSubview(label)
-
-        amountField.rightView = rightView
-        amountField.rightViewMode = .always
-
+        setRightView()
         setupLayout()
     }
 
@@ -250,6 +241,29 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
         confirmButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -screenSize.height / 20).isActive = true
     }
 
+    private func setRightView(){
+        let rightView = UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width*0.15, height: screenSize.height/20))
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: screenSize.width*0.15, height: screenSize.height/20))
+        label.text = self.symbol
+        label.textColor = UIColor(key: "darker")
+        label.font = UIFont(name: "NanumSquareRoundB", size: 16, dynamic: true)
+        label.textAlignment = .center
+        rightView.addSubview(label)
+
+        amountField.rightView = rightView
+        amountField.rightViewMode = .always
+
+        let tap = UITapGestureRecognizer(target: self, action: #selector(qrPressed(_:)))
+        let rightView2 = UIView(frame: CGRect(x: 0, y: 0, width: screenSize.height/20, height: screenSize.height/20))
+        let imageView = UIImageView(frame: CGRect(x:screenSize.height/160 , y: screenSize.height/80, width: screenSize.height/40, height: screenSize.height/40))
+        imageView.image = UIImage(named: "qr")
+        rightView2.addSubview(imageView)
+        rightView2.addGestureRecognizer(tap)
+
+        addressField.rightView = rightView2
+        addressField.rightViewMode = .always
+    }
+
     private func changeAmountStatus(verify: Bool) {
         if (verify) {
             errorLabel.isHidden = true
@@ -273,7 +287,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
             changeAmountStatus(verify: false)
             return
         }
-        if (BigUInt(self.balance, decimals: 18)! < balanceBig) {
+        if (self.balance! < balanceBig) {
             self.errorLabel.text = "보유 잔액이 부족합니다."
             changeAmountStatus(verify: false)
             return
@@ -312,34 +326,34 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        var balance: BigUInt!
+        var amount: BigUInt!
 
         if (amountField.text?.count == 0) {
-            balance = BigUInt(0)
+            amount = BigUInt(0)
         } else {
-            balance = BigUInt(amountField.text!, decimals: 18)
+            amount = BigUInt(amountField.text!, decimals: 18)
         }
 
         switch (indexPath.item) {
         case 0:
-            balance += BigUInt(1000000000000000)
+            amount += BigUInt(1000000000000000)
             break
         case 1:
-            balance += BigUInt(5000000000000000)
+            amount += BigUInt(5000000000000000)
             break
         case 2:
-            balance += BigUInt(10000000000000000)
+            amount += BigUInt(10000000000000000)
             break
         case 3:
-            balance += BigUInt(50000000000000000)
+            amount += BigUInt(50000000000000000)
             break
         case 4:
-            balance = BigUInt(self.balance, decimals: 18)
+            amount = self.balance
             break
         default:
             break
         }
-        amountField.text = balance.string(unitDecimals: 18)
+        amountField.text = amount.string(unitDecimals: 18)
         checkAmount()
     }
 
@@ -388,6 +402,11 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
         }
     }
 
+    @objc private func qrPressed(_ sender: UITapGestureRecognizer){
+        let controller = QRCodeVC()
+        self.present(UINavigationController(rootViewController: controller), animated: true)
+    }
+
     @objc private func backPressed(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true)
     }
@@ -398,12 +417,12 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
         let gas = web3.getGasInWei()
         let amount = amountField.text!
         let address = addressField.text!
-        let total = BigUInt(amount, decimals: 18)! + gas
-        let info = TransferInfo(amount: amount, address: address, gas: gas.string(unitDecimals: 18), total: total.string(unitDecimals: 18), symbol: self.symbol)
 
         do {
             try web3.preTransfer(address: address, amount: amount)
-            let confirmVC = util.alert(use: "transfer", title: "전송 확인",info: info, buttonTitle: "전송", buttonNum: 2, completion: { (confirm) in
+            let total = BigUInt(amount, decimals: 18)! + gas
+            let info = TransferInfo(amount: BigUInt(amount, decimals: 18)!, address: address, gas: gas, total: total, symbol: self.symbol)
+            let confirmVC = util.alert(use: "transfer", title: "전송 확인", info: info, balance: self.balance, buttonTitle: "전송", buttonNum: 2, completion: { (confirm) in
                 if(confirm){
                     let controller = PasswordCheckVC()
                     controller.toView = "transfer"

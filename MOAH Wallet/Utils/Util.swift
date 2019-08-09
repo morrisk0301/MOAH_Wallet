@@ -29,7 +29,7 @@ class Util {
         return alertViewController
     }
 
-    func alert(use: String, title: String, info: TransferInfo, buttonTitle: String, buttonNum: Int, completion: @escaping (Bool) -> Void) -> AlertVC {
+    func alert(use: String, title: String, info: TransferInfo, balance: BigUInt, buttonTitle: String, buttonNum: Int, completion: @escaping (Bool) -> Void) -> AlertVC {
         let alertViewController = AlertVC()
 
         alertViewController.modalPresentationStyle = .overCurrentContext
@@ -38,6 +38,7 @@ class Util {
         alertViewController.buttonAction = completion
         alertViewController.buttonNum = buttonNum
         alertViewController.info = info
+        alertViewController.balance = balance
         alertViewController.use = use
 
         return alertViewController

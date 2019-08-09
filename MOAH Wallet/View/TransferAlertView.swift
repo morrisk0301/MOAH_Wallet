@@ -5,6 +5,7 @@
 
 import Foundation
 import UIKit
+import web3swift
 
 
 class TransferAlertView: UIView {
@@ -107,10 +108,10 @@ class TransferAlertView: UIView {
     convenience init(info: TransferInfo){
         self.init()
         self.address = info.address
-        self.amount = info.amount
+        self.amount = info.amount.string(unitDecimals: 18)
         self.symbol = info.symbol
-        self.gas = info.gas
-        self.total = info.total
+        self.gas = info.gas.string(unitDecimals: 18)
+        self.total = info.total.string(unitDecimals: 18)
 
         self.cutValue()
         setValue()

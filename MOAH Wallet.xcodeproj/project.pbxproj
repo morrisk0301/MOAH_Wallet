@@ -53,6 +53,7 @@
 		C051F7AE7F9AA30993F9E5AD /* MnemonicVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FB1E96548FFD0DEEF195 /* MnemonicVC.swift */; };
 		C051F7C9A6AC866D22C44686 /* PasswordSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F2A0436A8E675D322837 /* PasswordSettingVC.swift */; };
 		C051F7E59E0BC7CD726C46E7 /* AddAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F395F27B1ABD90762B49 /* AddAccountVC.swift */; };
+		C051F8498EC8FC795AC7B2F9 /* QRCodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F6B167515CE9084BEF6C /* QRCodeVC.swift */; };
 		C051F85ADEC72DC60A48E614 /* AddNetworkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F4523162BC70026FFC86 /* AddNetworkVC.swift */; };
 		C051F85B2D0020F30D1961C8 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FFB8B9E194F8D83BD639 /* Protocols.swift */; };
 		C051F88E2A48A734D8F1901B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F05C4517A9E3F19A8751 /* Extensions.swift */; };
@@ -146,6 +147,7 @@
 		C051F635779A9F378E8C0E45 /* MainTokenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTokenView.swift; sourceTree = "<group>"; };
 		C051F63AEAD075F1D9237EED /* MyAccountVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAccountVC.swift; sourceTree = "<group>"; };
 		C051F67188B96103A709A2FC /* NormalAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NormalAlertView.swift; sourceTree = "<group>"; };
+		C051F6B167515CE9084BEF6C /* QRCodeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeVC.swift; sourceTree = "<group>"; };
 		C051F6D98183AFC7653F5DFE /* KeyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyCell.swift; sourceTree = "<group>"; };
 		C051F78260EE7AE0C72FAED1 /* AlertVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertVC.swift; sourceTree = "<group>"; };
 		C051F7AC902DA14D067B4A7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -259,6 +261,7 @@
 				C051F9A7B306A8BF12E198F5 /* LeftMenuController */,
 				C051F9131D6E229A0A07E75C /* PasswordCheckVC.swift */,
 				C051F5A58B7F4264F9A38089 /* TransferVC.swift */,
+				C051F6B167515CE9084BEF6C /* QRCodeVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -738,6 +741,7 @@
 				C051FC783594B5C34F69CB6B /* AmountCell.swift in Sources */,
 				C051FAE771AFBEEAFA7DE235 /* NormalAlertView.swift in Sources */,
 				C051F19A2C74D3A3F7A53F6C /* TransferAlertView.swift in Sources */,
+				C051F8498EC8FC795AC7B2F9 /* QRCodeVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

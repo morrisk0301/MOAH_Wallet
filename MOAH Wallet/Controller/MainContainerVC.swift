@@ -245,8 +245,9 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
             DispatchQueue.main.async {
                 let util = Util()
                 let balanceTrimmed = util.trimBalance(balance: balance)
+                self.mainVC.balance = balance
+                self.mainVC.balanceString = balanceTrimmed
                 self.mainVC.balanceLabel.text = balanceTrimmed + " " + self.symbol
-                self.mainVC.balance = balanceTrimmed
                 self.hideSpinner()
             }
         })
