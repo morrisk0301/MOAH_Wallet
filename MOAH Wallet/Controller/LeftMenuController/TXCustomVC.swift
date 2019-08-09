@@ -8,7 +8,7 @@ import UIKit
 import BigInt
 import web3swift
 
-class TXCustomVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate {
+class TXCustomVC: UIViewController, UITextFieldDelegate {
 
     let screenSize = UIScreen.main.bounds
     let web3: CustomWeb3 = CustomWeb3.web3
@@ -117,7 +117,6 @@ class TXCustomVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDele
         self.transparentNavigationBar()
         self.setNavigationTitle(title: "사용자 지정")
         self.hideKeyboardWhenTappedAround()
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
         view.backgroundColor = UIColor(key: "light3")
 

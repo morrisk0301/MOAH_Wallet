@@ -6,7 +6,7 @@
 import Foundation
 import UIKit
 
-class MnemonicSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
+class MnemonicSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate{
 
     private let reuseIdentifier = "mnemonicCell"
 
@@ -38,6 +38,7 @@ class MnemonicSettingVC: UIViewController, UITableViewDelegate, UITableViewDataS
         self.replaceToQuitButton(color: "dark")
         self.setNavigationTitle(title: "시드 구문 관리")
         self.transparentNavigationBar()
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
         tableView.delegate = self
         tableView.dataSource = self

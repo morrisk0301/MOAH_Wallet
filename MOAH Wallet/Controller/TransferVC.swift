@@ -8,7 +8,7 @@ import UIKit
 import BigInt
 import web3swift
 
-class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, QRCodeReadDelegate {
 
     private let reuseIdentifier = "AmountCell"
 
@@ -384,6 +384,35 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
         return false
     }
 
+    func qrCodeRead(value: String) {
+        if(value.contains("ethereum:")){
+            let stringArr = value.components(separatedBy: ":")
+            if(stringArr.count > 1){
+                checkQr(value: stringArr[1])
+            }
+            else{
+                qrFail()
+            }
+        }
+        else{
+            checkQr(value: value)
+        }
+    }
+
+    func checkQr(value: String){
+        let address = Address(value)
+        if(address.isValid){
+            self.addressField.text = value
+            return
+        }
+        qrFail()
+    }
+
+    func qrFail(){
+        let alertVC = util.alert(title: "QR코드 오류", body: "올바른 주소 형식이 아닙니다.", buttonTitle: "확인", buttonNum: 1, completion: {_ in})
+        self.present(alertVC, animated: false)
+    }
+
     @objc private func amountInput(_ sender: UITextField) {
         checkAmount()
         guard let decimal = Decimal(string: sender.text!) else {
@@ -403,8 +432,9 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
     }
 
     @objc private func qrPressed(_ sender: UITapGestureRecognizer){
-        let controller = QRCodeVC()
-        self.present(UINavigationController(rootViewController: controller), animated: true)
+        let qrCodeVC = QRCodeVC()
+        qrCodeVC.delegate = self
+        self.present(UINavigationController(rootViewController: qrCodeVC), animated: true)
     }
 
     @objc private func backPressed(_ sender: UIBarButtonItem) {

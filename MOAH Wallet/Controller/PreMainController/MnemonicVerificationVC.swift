@@ -6,7 +6,7 @@
 import Foundation
 import UIKit
 
-class MnemonicVerificationVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate{
+class MnemonicVerificationVC: UIViewController, UITextFieldDelegate{
 
     var wordIndex: Int?
     var isSetting = false
@@ -85,7 +85,6 @@ class MnemonicVerificationVC: UIViewController, UITextFieldDelegate, UIGestureRe
         self.hideKeyboardWhenTappedAround()
         self.transparentNavigationBar()
         self.replaceBackButton(color: "dark")
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
         if(wordIndex == nil){
             wordIndex = 0

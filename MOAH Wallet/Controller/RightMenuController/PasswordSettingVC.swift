@@ -7,7 +7,7 @@ import Foundation
 import UIKit
 import LocalAuthentication
 
-class PasswordSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class PasswordSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate {
 
     private let reuseIdentifier = "networkCell"
 
@@ -56,6 +56,15 @@ class PasswordSettingVC: UIViewController, UITableViewDelegate, UITableViewDataS
         self.replaceToQuitButton(color: "dark")
         self.setNavigationTitle(title: "비밀번호 및 인증 관리")
         self.transparentNavigationBar()
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+
+        var navCounter = 0
+        for controller in self.navigationController!.viewControllers{
+            if(controller is PasswordCheckVC){
+                self.navigationController?.viewControllers.remove(at: navCounter)
+            }
+            navCounter += 1
+        }
 
         view.backgroundColor = UIColor(key: "light3")
 

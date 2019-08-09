@@ -8,7 +8,7 @@ import UIKit
 import web3swift
 import AudioToolbox
 
-class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate {
 
     private let reuseIdentifier = "AccountCell"
 
@@ -46,6 +46,7 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
         self.replaceToQuitButton(color: "dark")
         self.setNavigationTitle(title: "내 계정")
         self.transparentNavigationBar()
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
         tableView.delegate = self
         tableView.dataSource = self

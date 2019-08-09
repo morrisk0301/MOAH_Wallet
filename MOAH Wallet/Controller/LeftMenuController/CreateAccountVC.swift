@@ -6,7 +6,7 @@
 import Foundation
 import UIKit
 
-class CreateAccountVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate {
+class CreateAccountVC: UIViewController, UITextFieldDelegate {
 
     let screenSize = UIScreen.main.bounds
     let account: EthAccount = EthAccount.accountInstance
@@ -63,7 +63,6 @@ class CreateAccountVC: UIViewController, UITextFieldDelegate, UIGestureRecognize
         self.transparentNavigationBar()
         self.setNavigationTitle(title: "계정 생성")
         self.hideKeyboardWhenTappedAround()
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
         view.backgroundColor = UIColor(key: "light3")
         nameField.smartInsertDeleteType = UITextSmartInsertDeleteType.no

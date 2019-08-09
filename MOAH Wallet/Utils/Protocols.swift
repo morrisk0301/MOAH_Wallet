@@ -16,3 +16,7 @@ protocol MainControllerDelegate {
     func getBalance()
     func isSignUp()
 }
+
+protocol QRCodeReadDelegate {
+    func qrCodeRead(value: String)
+}

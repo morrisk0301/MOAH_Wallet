@@ -8,7 +8,7 @@ import UIKit
 import BigInt
 import AudioToolbox
 
-class TXFeeVC: UIViewController, UITableViewDelegate, UITableViewDataSource  {
+class TXFeeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate  {
 
     private let reuseIdentifier = "TXCell"
 
@@ -40,6 +40,7 @@ class TXFeeVC: UIViewController, UITableViewDelegate, UITableViewDataSource  {
         self.transparentNavigationBar()
         self.setNavigationTitle(title: "전송 수수료 설정")
         self.replaceToQuitButton(color: "dark")
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
         view.backgroundColor = UIColor(key: "light3")
 

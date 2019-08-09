@@ -7,7 +7,7 @@ import Foundation
 import UIKit
 import AudioToolbox
 
-class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate {
 
     private let reuseIdentifier = "networkCell"
 
@@ -42,6 +42,8 @@ class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         self.replaceToQuitButton(color: "dark")
         self.setNavigationTitle(title: "네트워크 설정")
         self.transparentNavigationBar()
+
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
         tableView.delegate = self
         tableView.dataSource = self

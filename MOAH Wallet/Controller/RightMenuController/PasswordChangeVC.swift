@@ -6,7 +6,7 @@
 import Foundation
 import UIKit
 
-class PasswordChangeVC: UIViewController, KeypadViewDelegate, UIGestureRecognizerDelegate {
+class PasswordChangeVC: UIViewController, KeypadViewDelegate {
 
     var passwordNew: String?
     var password: String = ""
@@ -26,7 +26,6 @@ class PasswordChangeVC: UIViewController, KeypadViewDelegate, UIGestureRecognize
         super.viewDidLoad()
         self.replaceBackButton(color: "light")
         self.transparentNavigationBar()
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
         view.addSubview(lock)
         lock.secureKeypad.delegate = self

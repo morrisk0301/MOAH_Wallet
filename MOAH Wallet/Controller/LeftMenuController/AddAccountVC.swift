@@ -6,7 +6,7 @@
 import Foundation
 import UIKit
 
-class AddAccountVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate {
+class AddAccountVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     private let reuseIdentifier = "MenuCell"
 
@@ -27,7 +27,6 @@ class AddAccountVC: UIViewController, UITableViewDataSource, UITableViewDelegate
         self.replaceBackButton(color: "dark")
         self.transparentNavigationBar()
         self.setNavigationTitle(title: "계정 추가")
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
         tableView.delegate = self
         tableView.dataSource = self

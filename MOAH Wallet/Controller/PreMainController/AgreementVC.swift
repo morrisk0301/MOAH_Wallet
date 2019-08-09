@@ -6,7 +6,7 @@
 import Foundation
 import UIKit
 
-class AgreementVC: UIViewController {
+class AgreementVC: UIViewController, UIGestureRecognizerDelegate {
 
     var getWallet = false
     var checked = false
@@ -72,6 +72,7 @@ class AgreementVC: UIViewController {
         super.viewDidLoad()
         self.replaceToQuitButton(color: "dark")
         self.transparentNavigationBar()
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
         view.backgroundColor = UIColor(key: "light3")
 

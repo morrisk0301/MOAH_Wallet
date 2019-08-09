@@ -97,7 +97,6 @@ class MnemonicVC: UIViewController, UIGestureRecognizerDelegate {
 
             self.setNavigationTitle(title: "시드 구문 조회")
             self.replaceBackButton(color: "dark")
-            self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
             headLabel.isHidden = true
             mnemonic = account.getMnemonic()
@@ -111,6 +110,7 @@ class MnemonicVC: UIViewController, UIGestureRecognizerDelegate {
                 navCounter += 1
             }
         } else{
+            self.navigationController?.interactivePopGestureRecognizer?.delegate = self
             self.replaceToQuitButton(color: "dark")
             mnemonic = self.tempMnemonic!
         }

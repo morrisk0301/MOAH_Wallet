@@ -29,6 +29,8 @@
 		<string>NanumSquareRoundEB.ttf</string>
 		<string>NanumGothic.ttf</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>MOAH Wallet QR Code</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
