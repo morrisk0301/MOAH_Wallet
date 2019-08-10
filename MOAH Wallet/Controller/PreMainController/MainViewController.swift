@@ -103,7 +103,7 @@ class MainViewController: UIViewController {
         getWalletButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/20).isActive = true
         getWalletButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/20).isActive = true
         getWalletButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50).isActive = true
-        getWalletButton. heightAnchor.constraint(equalToConstant: screenSize.height/16).isActive = true
+        getWalletButton.heightAnchor.constraint(equalToConstant: screenSize.height/16).isActive = true
     }
 
     @objc private func buttonPressed(_ sender: UIButton){
