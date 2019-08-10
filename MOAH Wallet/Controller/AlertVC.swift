@@ -13,7 +13,7 @@ class AlertVC: UIViewController{
     var transferAlertView: TransferAlertView?
     var normalAlertView: NormalAlertView?
 
-    var alertHeight = UIScreen.main.bounds.height/4
+    var alertHeight = UIScreen.main.bounds.height/3.8
     var alertWidth = UIScreen.main.bounds.width/1.2
     var alertTitle: String?
     var alertBody: String?
@@ -101,7 +101,7 @@ class AlertVC: UIViewController{
             normalAlertView = NormalAlertView()
 
             normalAlertView!.titleLabel.text = self.alertTitle!
-            normalAlertView!.bodyLabel.text = self.alertBody!
+            normalAlertView!.setBodyText(text: self.alertBody!)
             normalAlertView!.translatesAutoresizingMaskIntoConstraints = false
 
             alertView.addSubview(normalAlertView!)

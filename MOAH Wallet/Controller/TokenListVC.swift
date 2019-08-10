@@ -56,6 +56,10 @@ class TokenListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         self.navigationController?.navigationBar.barStyle = .default
     }
 
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+
     private func setupLayout(){
         tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -99,7 +103,12 @@ class TokenListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if(indexPath.row == 0){ return }
+        let util = Util()
+        let alertVC = util.alert(title: "토큰 추가", body: "NMT 토큰 추가를 완료하였습니다.", buttonTitle: "확인", buttonNum: 1, completion: {_ in
 
+        })
+        self.present(alertVC, animated: false)
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -107,6 +116,7 @@ class TokenListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     }
 
     @objc private func addPressed(_ sender: UIButton){
-
+        let controller = TokenAddVC()
+        self.navigationController?.pushViewController(controller, animated: true)
     }
 }

@@ -24,10 +24,7 @@ class NormalAlertView: UIView {
     let bodyLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 50))
 
-        label.textColor = UIColor(red: 130, green: 130, blue: 130)
-        label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
         label.numberOfLines = 0
 
         return label
@@ -53,6 +50,19 @@ class NormalAlertView: UIView {
         bodyLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: screenSize.width/12).isActive = true
         bodyLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -screenSize.width/12).isActive = true
         bodyLabel.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+    }
+
+    func setBodyText(text: String){
+        let style = NSMutableParagraphStyle()
+        style.alignment = .center
+        style.lineSpacing = 10
+
+        let attrText = NSMutableAttributedString(string: text,
+                attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundR", size: 15, dynamic: true)!, 
+                             NSAttributedString.Key.foregroundColor: UIColor(red: 130, green: 130, blue: 130),
+                             NSAttributedString.Key.paragraphStyle: style])
+
+        bodyLabel.attributedText = attrText
     }
 
     required init?(coder aDecoder: NSCoder) {

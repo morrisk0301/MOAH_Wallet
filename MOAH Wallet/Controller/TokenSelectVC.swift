@@ -6,7 +6,10 @@
 import Foundation
 import UIKit
 
-class TokenSelectVC: UIViewController {
+class TokenSelectVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+
+    private let reuseIdentifier = "TokenSelectCell"
+
     let screenSize = UIScreen.main.bounds
 
     var alertTitle: String?
@@ -50,6 +53,16 @@ class TokenSelectVC: UIViewController {
         return button
     }()
 
+    let tableView: UITableView = {
+        let tableView = UITableView()
+
+        tableView.backgroundColor = UIColor(key: "light3")
+        tableView.separatorStyle = .none
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+
+        return tableView
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -57,9 +70,13 @@ class TokenSelectVC: UIViewController {
         view.layer.cornerRadius = 20
         view.layer.masksToBounds = true
 
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(TokenCell.self, forCellReuseIdentifier: reuseIdentifier)
+
         view.addSubview(titleLabel)
         view.addSubview(addButton)
-
+        view.addSubview(tableView)
 
         setupLayout()
     }
@@ -68,18 +85,36 @@ class TokenSelectVC: UIViewController {
         titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: screenSize.height/200).isActive = true
         titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        titleLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        titleLabel.heightAnchor.constraint(equalToConstant: screenSize.height/16).isActive = true
 
         addButton.topAnchor.constraint(equalTo: view.topAnchor, constant: screenSize.height/200).isActive = true
         addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenSize.width/20).isActive = true
-        addButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        addButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        addButton.heightAnchor.constraint(equalToConstant: screenSize.height/16).isActive = true
+        addButton.widthAnchor.constraint(equalToConstant: screenSize.height/16).isActive = true
+
+        tableView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
 
-    func showAlertView(){
-        UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseInOut, UIView.AnimationOptions.allowUserInteraction], animations: {
-            self.alertView.transform = .identity
-        }, completion: nil)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! TokenCell
+        cell.setTokenValue(name: "NaraMalsamiToken", address: "0x9e45b139922836616459385088531ae2a24f49a1", logo: nil)
+
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return screenSize.height/15
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
     }
 
     @objc func addPressed(_ sender: UIButton){
