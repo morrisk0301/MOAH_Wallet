@@ -388,14 +388,14 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
         if(value.contains("ethereum:")){
             let stringArr = value.components(separatedBy: ":")
             if(stringArr.count > 1){
-                checkQr(value: stringArr[1])
+                self.checkQr(value: stringArr[1])
             }
             else{
-                qrFail()
+                self.qrFail()
             }
         }
         else{
-            checkQr(value: value)
+            self.checkQr(value: value)
         }
     }
 

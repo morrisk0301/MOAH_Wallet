@@ -12,8 +12,7 @@ class TokenSelectVC: UIViewController {
     var alertTitle: String?
     var alertBody: String?
     var alertButtonTitle: String?
-    var buttonAction: ((Bool) -> Void)?
-    var buttonbool: Bool?
+    var delegate: MainControllerDelegate?
 
     let alertView: UIView = {
         let view = UIView()
@@ -42,22 +41,11 @@ class TokenSelectVC: UIViewController {
     let addButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("추가", for: .normal)
-        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 20, dynamic: true)
+        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 16, dynamic: true)
         button.setTitleColor(UIColor(key: "dark"), for: .normal)
         button.tag = 1
         button.translatesAutoresizingMaskIntoConstraints = false
-
-        return button
-    }()
-
-    let backButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("취소", for: .normal)
-        button.setTitleColor(UIColor(red: 130, green: 130, blue: 130), for: .normal)
-        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 16, dynamic: true)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.tag = 0
-        button.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(addPressed(_:)), for: .touchUpInside)
 
         return button
     }()
@@ -86,12 +74,6 @@ class TokenSelectVC: UIViewController {
         addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenSize.width/20).isActive = true
         addButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         addButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
-
-        /*
-        backButton.bottomAnchor.constraint(equalTo: alertView.bottomAnchor).isActive = true
-        backButton.leadingAnchor.constraint(equalTo: alertView.leadingAnchor).isActive = true
-        backButton.trailingAnchor.constraint(equalTo: alertView.centerXAnchor, constant: -0.5).isActive = true
-        backButton.heightAnchor.constraint(equalToConstant: alertHeight/5).isActive = true*/
     }
 
     func showAlertView(){
@@ -100,16 +82,8 @@ class TokenSelectVC: UIViewController {
         }, completion: nil)
     }
 
-    @objc private func buttonPressed(_ sender: UIButton){
-        if(sender.tag == 1){
-            buttonAction?(true)
-            buttonbool = true
-        }
-        else{
-            buttonAction?(false)
-            buttonbool = false
-        }
-        self.dismiss(animated: false)
+    @objc func addPressed(_ sender: UIButton){
+        self.delegate?.tokenAddClicked()
     }
 
 }

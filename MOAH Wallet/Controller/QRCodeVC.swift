@@ -131,11 +131,15 @@ class QRCodeVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
             AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
             found(code: stringValue)
         }
-        dismiss(animated: true)
+        else{
+            dismiss(animated: true)
+        }
     }
 
     func found(code: String) {
-        delegate?.qrCodeRead(value: code)
+        self.dismiss(animated: true, completion: {() in
+            self.delegate?.qrCodeRead(value: code)
+        })
     }
 
     override var prefersStatusBarHidden: Bool {

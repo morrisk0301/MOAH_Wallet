@@ -67,6 +67,7 @@
 		C051F957854FA8DC85D649B1 /* MainContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FFF0FD15853474C90D5C /* MainContainerVC.swift */; };
 		C051F9790CC44994FE169C8E /* Structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FCF89F1254FD1A2B0D3F /* Structs.swift */; };
 		C051F9D4CD5F97DE4AA25F2E /* MOAH_WalletTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FDAF143D94C8A37998D7 /* MOAH_WalletTests.swift */; };
+		C051FA0D6265C37401BCD195 /* TokenListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F26B45756590CE49C8EC /* TokenListVC.swift */; };
 		C051FA62FD875D5F93EDDFD4 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F26E21CD42E0A1B5B53D /* Util.swift */; };
 		C051FACD1A0E01B4C40586F2 /* AlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F78260EE7AE0C72FAED1 /* AlertVC.swift */; };
 		C051FAE771AFBEEAFA7DE235 /* NormalAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F67188B96103A709A2FC /* NormalAlertView.swift */; };
@@ -124,6 +125,7 @@
 		C051F1995FE3594C44DEA5F6 /* WalletDoneVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletDoneVC.swift; sourceTree = "<group>"; };
 		C051F1FBAE02F542E6EB725F /* TXFeeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TXFeeVC.swift; sourceTree = "<group>"; };
 		C051F252F03BC7813457F213 /* TransferAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferAlertView.swift; sourceTree = "<group>"; };
+		C051F26B45756590CE49C8EC /* TokenListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenListVC.swift; sourceTree = "<group>"; };
 		C051F26E21CD42E0A1B5B53D /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		C051F294C8BB75589DD19F35 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		C051F2A0436A8E675D322837 /* PasswordSettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordSettingVC.swift; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 				C051F9131D6E229A0A07E75C /* PasswordCheckVC.swift */,
 				C051F5A58B7F4264F9A38089 /* TransferVC.swift */,
 				C051F6B167515CE9084BEF6C /* QRCodeVC.swift */,
+				C051F26B45756590CE49C8EC /* TokenListVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -742,6 +745,7 @@
 				C051FAE771AFBEEAFA7DE235 /* NormalAlertView.swift in Sources */,
 				C051F19A2C74D3A3F7A53F6C /* TransferAlertView.swift in Sources */,
 				C051F8498EC8FC795AC7B2F9 /* QRCodeVC.swift in Sources */,
+				C051FA0D6265C37401BCD195 /* TokenListVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

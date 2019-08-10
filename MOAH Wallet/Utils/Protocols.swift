@@ -12,6 +12,7 @@ protocol MainControllerDelegate {
     func leftSideMenuClicked(forMenuOption menuOption: LeftMenuOption?)
     func rightSideMenuClicked(forMenuOption menuOption: RightMenuOption?)
     func tokenViewClicked()
+    func tokenAddClicked()
     func txFeeClicked()
     func getBalance()
     func isSignUp()

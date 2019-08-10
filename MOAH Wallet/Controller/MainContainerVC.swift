@@ -110,6 +110,12 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
             self.view.insertSubview(self.mainLeftMenuVC.view, at: 0)
             self.addChild(self.mainLeftMenuVC)
             self.mainLeftMenuVC.didMove(toParent: self)
+
+            self.tokenSelectVC = TokenSelectVC()
+            self.tokenSelectVC.delegate = self
+            self.tokenSelectVC.view.frame = CGRect(x: 0, y: self.screenSize.height, width: self.screenSize.width, height: self.screenSize.height/2)
+            self.addChild(self.tokenSelectVC)
+            self.tokenSelectVC.didMove(toParent: self)
         }
     }
 
@@ -209,18 +215,22 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
     func tokenViewClicked() {
         addTransparentView(side: "down")
 
-        if(tokenSelectVC == nil){
-            tokenSelectVC = TokenSelectVC()
-
-            tokenSelectVC.view.frame = CGRect(x: 0, y: screenSize.height, width: screenSize.width, height: screenSize.height/2)
-            view.addSubview(tokenSelectVC.view)
-            addChild(tokenSelectVC)
-            tokenSelectVC.didMove(toParent: self)
-        }else{
-            view.addSubview(tokenSelectVC.view)
-        }
-
+        view.addSubview(tokenSelectVC.view)
         animatePanel(shouldExpand: true, side: "down", menuOption: nil)
+    }
+
+    func tokenAddClicked() {
+        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0,
+                options: .curveEaseInOut, animations: {
+            self.transparentView.alpha = 0
+            self.tokenSelectVC.view.frame = CGRect(x: 0, y: self.screenSize.height, width: self.screenSize.width, height: self.screenSize.height/2)
+        }, completion: {_ in
+            self.transparentView.removeFromSuperview()
+            self.tokenSelectVC.removeFromParent()
+
+            let controller = TokenListVC()
+            self.present(UINavigationController(rootViewController: controller), animated: true)
+        })
     }
 
     func addTransparentView(side: String){
@@ -282,24 +292,6 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
         proceedToView(side: "left", menuOption: menuOption)
         self.transparentView.removeFromSuperview()
     }
-
-    @objc private func mainViewClicked(_ sender: UIGestureRecognizer) {
-        isExpandRight = false
-        isExpandLeft = false
-        animatePanel(shouldExpand: false, side: nil, menuOption: nil)
-    }
-
-    @objc private func transparentViewClicked(_ sender: UITapGestureRecognizer){
-        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0,
-                options: .curveEaseInOut, animations: {
-            self.transparentView.alpha = 0
-            self.tokenSelectVC.view.frame = CGRect(x: 0, y: self.screenSize.height, width: self.screenSize.width, height: self.screenSize.height/2)
-        }, completion: {_ in
-            self.transparentView.removeFromSuperview()
-            self.tokenSelectVC.removeFromParent()
-        })
-    }
-
     func sendEmail(){
         if(MFMailComposeViewController.canSendMail()){
             let emailTitle = ""
@@ -320,4 +312,22 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         self.dismiss(animated: true)
     }
+
+    @objc private func mainViewClicked(_ sender: UIGestureRecognizer) {
+        isExpandRight = false
+        isExpandLeft = false
+        animatePanel(shouldExpand: false, side: nil, menuOption: nil)
+    }
+
+    @objc private func transparentViewClicked(_ sender: UITapGestureRecognizer){
+        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0,
+                options: .curveEaseInOut, animations: {
+            self.transparentView.alpha = 0
+            self.tokenSelectVC.view.frame = CGRect(x: 0, y: self.screenSize.height, width: self.screenSize.width, height: self.screenSize.height/2)
+        }, completion: {_ in
+            self.transparentView.removeFromSuperview()
+            self.tokenSelectVC.removeFromParent()
+        })
+    }
+
 }
