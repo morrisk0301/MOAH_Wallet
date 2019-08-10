@@ -21,6 +21,7 @@
 		C051F0D08B61E4AC556E06C1 /* GetAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FFB386BA85B16E2D972D /* GetAccountVC.swift */; };
 		C051F106C4C595A04EAA4FE1 /* AgreementCheckVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F51191A6826F0F867E0E /* AgreementCheckVC.swift */; };
 		C051F159ABCE211D65F59FE8 /* WalletDoneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F1995FE3594C44DEA5F6 /* WalletDoneVC.swift */; };
+		C051F177EDCC505D4EC389F1 /* TokenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F7E7608DA47B7C17D4F1 /* TokenCell.swift */; };
 		C051F19A2C74D3A3F7A53F6C /* TransferAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F252F03BC7813457F213 /* TransferAlertView.swift */; };
 		C051F1B94E8FD3A7163B874F /* TXCustomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F01C6821434AF3F35AF7 /* TXCustomVC.swift */; };
 		C051F258B5359AA8ADF748A4 /* CreateAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FE5AAB127B414BFB8543 /* CreateAccountVC.swift */; };
@@ -153,6 +154,7 @@
 		C051F6D98183AFC7653F5DFE /* KeyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyCell.swift; sourceTree = "<group>"; };
 		C051F78260EE7AE0C72FAED1 /* AlertVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertVC.swift; sourceTree = "<group>"; };
 		C051F7AC902DA14D067B4A7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C051F7E7608DA47B7C17D4F1 /* TokenCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenCell.swift; sourceTree = "<group>"; };
 		C051F8AB6A0B2E40A27A4859 /* SpinnerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinnerView.swift; sourceTree = "<group>"; };
 		C051F8B5925C8BBCF3AA8E8E /* MnemonicSettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicSettingVC.swift; sourceTree = "<group>"; };
 		C051F90BE9924E9EE9462DC9 /* LeftMenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftMenuCell.swift; sourceTree = "<group>"; };
@@ -446,6 +448,7 @@
 				C051FFDDCBCDF2BDD405CE0D /* NetworkCell.swift */,
 				C051F6D98183AFC7653F5DFE /* KeyCell.swift */,
 				C051F3FDB4E39A417D318A93 /* AmountCell.swift */,
+				C051F7E7608DA47B7C17D4F1 /* TokenCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -746,6 +749,7 @@
 				C051F19A2C74D3A3F7A53F6C /* TransferAlertView.swift in Sources */,
 				C051F8498EC8FC795AC7B2F9 /* QRCodeVC.swift in Sources */,
 				C051FA0D6265C37401BCD195 /* TokenListVC.swift in Sources */,
+				C051F177EDCC505D4EC389F1 /* TokenCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
