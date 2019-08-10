@@ -114,7 +114,7 @@ class WalletDoneVC: UIViewController{
         backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/20).isActive = true
         backButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/20).isActive = true
         backButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50).isActive = true
-        backButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        backButton.heightAnchor.constraint(equalToConstant: screenSize.height/16).isActive = true
     }
 
     @objc private func backPressed(_ sender: UIButton){

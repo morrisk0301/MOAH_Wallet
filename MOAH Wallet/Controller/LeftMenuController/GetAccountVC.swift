@@ -181,7 +181,7 @@ class GetAccountVC: UIViewController, UITextFieldDelegate {
 
         confirmButton.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         confirmButton.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        confirmButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        confirmButton.heightAnchor.constraint(equalToConstant: screenSize.height/16).isActive = true
         hideConstraint = confirmButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -screenSize.height/20)
         hideConstraint!.isActive = true
     }

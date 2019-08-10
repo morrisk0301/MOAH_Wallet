@@ -12,7 +12,7 @@ class RightMenuCell: UITableViewCell {
 
         let label = UILabel()
         label.textColor = UIColor(key: "darker")
-        label.font = UIFont(name:"NanumSquareRound", size: 15, dynamic: true)!
+        label.font = UIFont(name:"NanumSquareRoundR", size: 15, dynamic: true)!
         label.text = ""
         label.translatesAutoresizingMaskIntoConstraints = false
 

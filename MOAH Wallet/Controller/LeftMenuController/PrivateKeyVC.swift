@@ -114,7 +114,7 @@ class PrivateKeyVC: UIViewController {
         copyButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -screenSize.height/20).isActive = true
         copyButton.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         copyButton.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        copyButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        copyButton.heightAnchor.constraint(equalToConstant: screenSize.height/16).isActive = true
     }
 
     @objc func copyPressed(_ sender: UIButton){

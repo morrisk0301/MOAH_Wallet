@@ -177,7 +177,7 @@ class MnemonicVC: UIViewController, UIGestureRecognizerDelegate {
         nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -screenHeight/20).isActive = true
         nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        nextButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        nextButton.heightAnchor.constraint(equalToConstant: screenSize.height/16).isActive = true
     }
 
     @objc private func nextPressed(_ sender: UIButton) {

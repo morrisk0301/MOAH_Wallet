@@ -80,7 +80,7 @@ class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSo
 
         addButton.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        addButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        addButton.heightAnchor.constraint(equalToConstant: screenSize.height/16).isActive = true
         addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -screenSize.height/20).isActive = true
     }
 
