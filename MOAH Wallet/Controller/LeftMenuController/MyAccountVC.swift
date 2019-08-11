@@ -18,7 +18,7 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     let util = Util()
 
     var accounts: [CustomAddress] = [CustomAddress]()
-    var accountSelected: Address!
+    var accountSelected: EthereumAddress!
     var symbol: String!
 
     let tableView: UITableView = {
@@ -105,7 +105,7 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         cell.checkImage.isHidden = true
         cell.accountLabel.textColor = UIColor(key: "darker")
         cell.privateKeyLabel.isHidden = true
-        if(accounts[indexPath.section].address == accountSelected.description){
+        if(accounts[indexPath.section].address == accountSelected!.address){
             cell.accountLabel.textColor = UIColor(key: "dark")
             cell.checkImage.isHidden = false
         }

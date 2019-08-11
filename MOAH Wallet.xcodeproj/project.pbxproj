@@ -71,7 +71,6 @@
 		C051F9D4CD5F97DE4AA25F2E /* MOAH_WalletTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FDAF143D94C8A37998D7 /* MOAH_WalletTests.swift */; };
 		C051FA0D6265C37401BCD195 /* TokenListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F26B45756590CE49C8EC /* TokenListVC.swift */; };
 		C051FA62FD875D5F93EDDFD4 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F26E21CD42E0A1B5B53D /* Util.swift */; };
-		C051FA9F0DB52070E16A4BEA /* UInt256.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F70F92855F2BCCACA120 /* UInt256.swift */; };
 		C051FACD1A0E01B4C40586F2 /* AlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F78260EE7AE0C72FAED1 /* AlertVC.swift */; };
 		C051FAE771AFBEEAFA7DE235 /* NormalAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F67188B96103A709A2FC /* NormalAlertView.swift */; };
 		C051FB1FE29301C3EA68F93B /* KeypadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FD83FA4BAE07897C116D /* KeypadView.swift */; };
@@ -154,7 +153,6 @@
 		C051F67188B96103A709A2FC /* NormalAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NormalAlertView.swift; sourceTree = "<group>"; };
 		C051F6B167515CE9084BEF6C /* QRCodeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeVC.swift; sourceTree = "<group>"; };
 		C051F6D98183AFC7653F5DFE /* KeyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyCell.swift; sourceTree = "<group>"; };
-		C051F70F92855F2BCCACA120 /* UInt256.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UInt256.swift; sourceTree = "<group>"; };
 		C051F78260EE7AE0C72FAED1 /* AlertVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertVC.swift; sourceTree = "<group>"; };
 		C051F7AC902DA14D067B4A7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C051F7E7608DA47B7C17D4F1 /* TokenCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenCell.swift; sourceTree = "<group>"; };
@@ -385,7 +383,6 @@
 				C051F05C4517A9E3F19A8751 /* Extensions.swift */,
 				C051FCF89F1254FD1A2B0D3F /* Structs.swift */,
 				C051F294C8BB75589DD19F35 /* Error.swift */,
-				C051F70F92855F2BCCACA120 /* UInt256.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -753,7 +750,6 @@
 				C051FA0D6265C37401BCD195 /* TokenListVC.swift in Sources */,
 				C051F177EDCC505D4EC389F1 /* TokenCell.swift in Sources */,
 				C051F2A97F6A57B745B623FA /* TokenAddVC.swift in Sources */,
-				C051FA9F0DB52070E16A4BEA /* UInt256.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

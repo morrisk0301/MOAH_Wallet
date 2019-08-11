@@ -17,6 +17,7 @@ class TransferAlertView: UIView {
     var total: String!
 
     let screenSize = UIScreen.main.bounds
+    let util = Util()
 
     let titleLabel: UILabel = {
         let label = UILabel()
@@ -108,10 +109,10 @@ class TransferAlertView: UIView {
     convenience init(info: TransferInfo){
         self.init()
         self.address = info.address
-        self.amount = info.amount.string(unitDecimals: 18)
+        self.amount = util.trimZero(balance: Web3Utils.formatToEthereumUnits(info.amount, decimals: 18))
         self.symbol = info.symbol
-        self.gas = info.gas.string(unitDecimals: 18)
-        self.total = info.total.string(unitDecimals: 18)
+        self.gas = util.trimZero(balance: Web3Utils.formatToEthereumUnits(info.gas, decimals: 18))
+        self.total = util.trimZero(balance: Web3Utils.formatToEthereumUnits(info.total, decimals: 18))
 
         self.cutValue()
         setValue()
@@ -227,7 +228,7 @@ class TransferAlertView: UIView {
                 attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundB", size: 14, dynamic: true)!,
                              NSAttributedString.Key.foregroundColor: UIColor(key: "darker"),
                              NSAttributedString.Key.paragraphStyle: style])
-        gasAttr.append(NSAttributedString(string: self.symbol,
+        gasAttr.append(NSAttributedString(string: "ETH",
                 attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundB", size: 14, dynamic: true)!,
                              NSAttributedString.Key.foregroundColor: UIColor(key: "darker"),
                              NSAttributedString.Key.paragraphStyle: style]))

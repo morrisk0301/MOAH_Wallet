@@ -9,6 +9,7 @@ import UIKit
 class TokenAddVC: UIViewController, UITextFieldDelegate {
 
     let screenSize = UIScreen.main.bounds
+    var token: CustomToken?
 
     let contractLabel: UILabel = {
         let label = UILabel()
@@ -71,6 +72,7 @@ class TokenAddVC: UIViewController, UITextFieldDelegate {
         textField.layer.borderWidth = 0.5
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.tag = 0
+        textField.addTarget(self, action: #selector(contractInput(_:)), for: .editingDidEnd)
 
         return textField
     }()
@@ -81,7 +83,6 @@ class TokenAddVC: UIViewController, UITextFieldDelegate {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.height))
         textField.leftView = paddingView
         textField.leftViewMode = .always
-        textField.placeholder = "심볼명(1~7자리 알파벳)을 입력해주세요."
         textField.borderStyle = .none
         textField.returnKeyType = .done
         textField.textColor = UIColor(key: "darker")
@@ -91,6 +92,7 @@ class TokenAddVC: UIViewController, UITextFieldDelegate {
         textField.layer.borderColor = UIColor(key: "grey2").cgColor
         textField.layer.borderWidth = 0.5
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.isEnabled = false
         textField.tag = 1
 
         return textField
@@ -102,7 +104,6 @@ class TokenAddVC: UIViewController, UITextFieldDelegate {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.height))
         textField.leftView = paddingView
         textField.leftViewMode = .always
-        textField.placeholder = "소숫점 자리수를 입력해주세요."
         textField.borderStyle = .none
         textField.returnKeyType = .done
         textField.textColor = UIColor(key: "darker")
@@ -112,6 +113,7 @@ class TokenAddVC: UIViewController, UITextFieldDelegate {
         textField.layer.borderColor = UIColor(key: "grey2").cgColor
         textField.layer.borderWidth = 0.5
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.isEnabled = false
         textField.tag = 1
 
         return textField
@@ -123,7 +125,6 @@ class TokenAddVC: UIViewController, UITextFieldDelegate {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.height))
         textField.leftView = paddingView
         textField.leftViewMode = .always
-        textField.placeholder = "토큰명을 입력해주세요."
         textField.borderStyle = .none
         textField.returnKeyType = .done
         textField.textColor = UIColor(key: "darker")
@@ -133,6 +134,7 @@ class TokenAddVC: UIViewController, UITextFieldDelegate {
         textField.layer.borderColor = UIColor(key: "grey2").cgColor
         textField.layer.borderWidth = 0.5
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.isEnabled = false
         textField.tag = 1
 
         return textField
@@ -143,6 +145,8 @@ class TokenAddVC: UIViewController, UITextFieldDelegate {
         button.setTitle("추가하기", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 20, dynamic: true)
+        button.isEnabled = false
+        button.backgroundColor = UIColor(key: "light")
         button.addTarget(self, action: #selector(nextPressed(_:)), for: .touchUpInside)
 
         return button
@@ -235,13 +239,57 @@ class TokenAddVC: UIViewController, UITextFieldDelegate {
         return false
     }
 
-    @objc func nextPressed(_ sender: UIButton){
+    @objc func contractInput(_ sender: UITextField){
+        if(contractField.text!.count == 0){ return }
         let web3: CustomWeb3 = CustomWeb3.web3
-        do{
-            try web3.addToken(address: contractField.text!, name: "", symbol: "", decimals: 3)
-        }
-        catch{
-            print(error)
+        let util = Util()
+        var errorBody: String?
+        self.showSpinner()
+
+        DispatchQueue.global(qos: .userInitiated).async {
+            do {
+                let token = try web3.getTokenInfo(address: self.contractField.text!)
+                DispatchQueue.main.async {
+                    self.token = token
+                    self.symbolField.text = token.symbol
+                    self.decimalField.text = token.decimals.description
+                    self.nameField.text = token.name
+                    self.confirmButton.isEnabled = true
+                    self.confirmButton.backgroundColor = UIColor(key: "regular")
+                    self.hideSpinner()
+                    return
+                }
+            } catch GetTokenError.invalidAddress {
+                errorBody = "올바르지 않은 주소입니다.\n주소를 확인해주세요."
+            } catch GetTokenError.tokenNil {
+                errorBody = "토큰을 확인할 수 없습니다."
+            } catch GetTokenError.existingToken{
+                errorBody = "이미 추가된 토큰입니다."
+            } catch {
+                errorBody = "토큰을 확인할 수 없습니다."
+            }
+            if(errorBody != nil){
+                DispatchQueue.main.async {
+                    let alertVC = util.alert(title: "토큰 추가 오류", body: errorBody!, buttonTitle: "확인", buttonNum: 1, completion: { _ in
+                        self.hideSpinner()
+                        self.contractField.text = ""
+                    })
+                    self.present(alertVC, animated: false)
+                }
+            }
         }
     }
+
+    @objc func nextPressed(_ sender: UIButton) {
+        let util = Util()
+        let account: EthAccount = EthAccount.accountInstance
+        account.addToken(token: token!)
+        account.setToken(token: token!)
+
+        let alertVC = util.alert(title: "토큰 추가", body: token!.symbol+" 토큰 추가를 완료하였습니다.", buttonTitle: "확인", buttonNum: 1, completion: {_ in
+            self.navigationController?.popViewController(animated: true)
+        })
+        self.present(alertVC, animated: false)
+    }
+
 }

@@ -81,9 +81,28 @@ class TokenCell: UITableViewCell {
                 attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundB", size: 16, dynamic: true)!, 
                              NSAttributedString.Key.foregroundColor: UIColor(key: "darker"), 
                              NSAttributedString.Key.paragraphStyle: style])
-        attrText.append(NSAttributedString(string: "\n"+address,
-                attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRound", size: 10, dynamic: true)!, 
+        attrText.append(NSAttributedString(string: "\n"+trimMiddle(address: address),
+                attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRound", size: 11, dynamic: true)!, 
                              NSAttributedString.Key.foregroundColor: UIColor(key: "grey2")]))
         tokenLabel.attributedText = attrText
+    }
+
+    func setAsEther(){
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 5
+
+        let attrText = NSMutableAttributedString(string: "Ethereum",
+                attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundB", size: 20, dynamic: true)!,
+                             NSAttributedString.Key.foregroundColor: UIColor(key: "darker"),
+                             NSAttributedString.Key.paragraphStyle: style])
+        tokenLabel.attributedText = attrText
+    }
+
+    private func trimMiddle(address: String) -> String{
+        var trim = address
+        let range = address.index(address.startIndex, offsetBy: 20)..<address.index(address.startIndex, offsetBy: 30)
+        trim.replaceSubrange(range, with: "...")
+
+        return trim
     }
 }

@@ -5,17 +5,21 @@
 
 import Foundation
 import UIKit
+import AudioToolbox
 
 class TokenSelectVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     private let reuseIdentifier = "TokenSelectCell"
 
     let screenSize = UIScreen.main.bounds
+    let account: EthAccount = EthAccount.accountInstance
 
     var alertTitle: String?
     var alertBody: String?
     var alertButtonTitle: String?
     var delegate: MainControllerDelegate?
+    var tokenArray: [CustomToken]!
+    var token: CustomToken!
 
     let alertView: UIView = {
         let view = UIView()
@@ -63,6 +67,13 @@ class TokenSelectVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         return tableView
     }()
 
+    let checkImage: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "checkDark"))
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+
+        return imageView
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -79,6 +90,7 @@ class TokenSelectVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         view.addSubview(tableView)
 
         setupLayout()
+        getToken()
     }
 
     private func setupLayout(){
@@ -90,7 +102,7 @@ class TokenSelectVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         addButton.topAnchor.constraint(equalTo: view.topAnchor, constant: screenSize.height/200).isActive = true
         addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenSize.width/20).isActive = true
         addButton.heightAnchor.constraint(equalToConstant: screenSize.height/16).isActive = true
-        addButton.widthAnchor.constraint(equalToConstant: screenSize.height/16).isActive = true
+        addButton.widthAnchor.constraint(equalToConstant: screenSize.width/10).isActive = true
 
         tableView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -98,15 +110,38 @@ class TokenSelectVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
 
+    private func getToken(){
+        token = account.getToken()
+    }
+
+    private func addCheckImage(cell: UITableViewCell){
+        cell.addSubview(checkImage)
+
+        checkImage.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
+        checkImage.trailingAnchor.constraint(equalTo: cell.trailingAnchor, constant: -screenSize.width/15).isActive = true
+        checkImage.heightAnchor.constraint(equalToConstant: screenSize.width/30).isActive = true
+        checkImage.widthAnchor.constraint(equalToConstant: screenSize.width/22.5).isActive = true
+    }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! TokenCell
-        cell.setTokenValue(name: "NaraMalsamiToken", address: "0x9e45b139922836616459385088531ae2a24f49a1", logo: nil)
+        if(indexPath.row == 0){
+            cell.setAsEther()
+            if(token == nil){ addCheckImage(cell: cell) }
+            return cell
+        }
+        let nameLabel = tokenArray[indexPath.row-1].symbol + " - " + tokenArray[indexPath.row-1].name
+        cell.setTokenValue(name: nameLabel, address: tokenArray[indexPath.row-1].address.address, logo: nil)
+
+        if(token != nil && tokenArray[indexPath.row-1].address == token.address){
+            addCheckImage(cell: cell)
+        }
 
         return cell
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return tokenArray.count + 1
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -114,7 +149,15 @@ class TokenSelectVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
+        AudioServicesPlaySystemSound(1519)
+        if(indexPath.row == 0){
+            account.setToken(index: nil)
+        }
+        else{
+            account.setToken(index: indexPath.row-1)
+        }
+        getToken()
+        tableView.reloadData()
     }
 
     @objc func addPressed(_ sender: UIButton){

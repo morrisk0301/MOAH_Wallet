@@ -23,6 +23,9 @@ enum TransferError: Error {
     case transferToSelf
 }
 
-enum AddTokenError: Error {
+enum GetTokenError: Error {
     case invalidAddress
+    case tokenNil
+    case existingToken
+    case unidentifiedError
 }

@@ -123,8 +123,10 @@ class TXCustomVC: UIViewController, UITextFieldDelegate {
         priceField.delegate = self
         limitField.delegate = self
 
-        priceField.text = price?.string(unitDecimals: 9)
-        limitField.text = limit?.description
+        if(price != nil){
+            priceField.text = Web3Utils.formatToEthereumUnits(price!, toUnits: .Gwei)
+            limitField.text = limit?.description
+        }
 
         view.addSubview(priceLabel)
         view.addSubview(limitLabel)

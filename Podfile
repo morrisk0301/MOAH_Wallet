@@ -17,7 +17,8 @@ target 'MOAH Wallet' do
     # Pods for testing
   end
 
-pod 'web3swift.pod'
+#pod 'web3swift.pod'
+pod 'web3.swift.pod', '~> 2.2.0'
 pod 'CryptoSwift', :git => "https://github.com/krzyzanowskim/CryptoSwift", :branch => "master"
 
 end

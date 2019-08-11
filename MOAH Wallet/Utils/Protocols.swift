@@ -14,7 +14,6 @@ protocol MainControllerDelegate {
     func tokenViewClicked()
     func tokenAddClicked()
     func txFeeClicked()
-    func getBalance()
     func isSignUp()
 }
 

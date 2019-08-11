@@ -24,6 +24,8 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
 
     let screenSize = UIScreen.main.bounds
     let web3: CustomWeb3 = CustomWeb3.web3
+    let account: EthAccount = EthAccount.accountInstance
+    let util = Util()
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return self.style
@@ -44,8 +46,12 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
         view.addSubview(centerController.view)
         addChild(centerController)
         centerController.didMove(toParent: self)
+    }
 
+    override func viewDidAppear(_ animated: Bool) {
+        self.showSpinner()
         initVCs()
+        loadData()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -248,25 +254,31 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
         }
     }
 
-    func getBalance() {
-        self.showSpinner()
-        checkChainNetwork()
-        web3.getBalance(address: nil, completion: {(balance) in
-            DispatchQueue.main.async {
-                let util = Util()
-                let balanceTrimmed = util.trimBalance(balance: balance)
-                self.mainVC.balance = balance
-                self.mainVC.balanceString = balanceTrimmed
-                self.mainVC.balanceLabel.text = balanceTrimmed + " " + self.symbol
-                self.hideSpinner()
+    func loadData(){
+        DispatchQueue.global(qos: .userInitiated).async{
+            let tokenArray = self.account.getTokenArray()
+            var symbol = "ETH"
+            if(self.account.getToken() != nil){
+                symbol = self.account.getToken()!.symbol
             }
-        })
+            self.checkChainNetwork()
+            self.web3.getBalance(address: nil, completion: {(balance) in
+                let balanceTrimmed = self.util.trimBalance(balance: balance)
+                DispatchQueue.main.async {
+                    self.mainVC.balance = balance
+                    self.mainVC.balanceString = balanceTrimmed
+                    self.mainVC.balanceLabel.text = balanceTrimmed + " " + symbol
+                    self.tokenSelectVC.tokenArray = tokenArray
+                    self.tokenSelectVC.tableView.reloadData()
+                    self.hideSpinner()
+                }
+            })
+        }
     }
 
     func checkChainNetwork(){
         if(web3.getWeb3Ins() == nil){
             self.hideSpinner()
-            let util = Util()
             let alertVC = util.alert(title: "블록체인 네트워크 오류", body: "네트워크에 연결할 수 없습니다.\n네트워크를 재설정해주세요.", buttonTitle: "확인", buttonNum: 1, completion: {_ in
                 let controller = NetworkSettingVC()
                 let transition = LeftTransition()
@@ -325,8 +337,11 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
             self.transparentView.alpha = 0
             self.tokenSelectVC.view.frame = CGRect(x: 0, y: self.screenSize.height, width: self.screenSize.width, height: self.screenSize.height/2)
         }, completion: {_ in
+            self.showSpinner()
             self.transparentView.removeFromSuperview()
             self.tokenSelectVC.removeFromParent()
+            self.loadData()
+
         })
     }
 

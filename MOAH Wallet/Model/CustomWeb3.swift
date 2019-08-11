@@ -9,14 +9,13 @@ import BigInt
 
 class CustomWeb3 {
 
-    private let _web3Main = Web3(infura: .mainnet, accessToken: "7bdfe4d2582141ef8e00c2cf929c72ee")
-    private let _web3Robsten = Web3(infura: .ropsten, accessToken: "7bdfe4d2582141ef8e00c2cf929c72ee")
-    private let _web3Kovan = Web3(infura: .kovan, accessToken: "7bdfe4d2582141ef8e00c2cf929c72ee")
-    private let _web3Rinkeby = Web3(infura: .rinkeby, accessToken: "7bdfe4d2582141ef8e00c2cf929c72ee")
+    private let _web3Main = Web3.InfuraMainnetWeb3(accessToken: "7bdfe4d2582141ef8e00c2cf929c72ee")
+    private let _web3Robsten = Web3.InfuraRopstenWeb3(accessToken: "7bdfe4d2582141ef8e00c2cf929c72ee")
+    private let _web3Rinkeby = Web3.InfuraRinkebyWeb3(accessToken: "7bdfe4d2582141ef8e00c2cf929c72ee")
     private var _customNetwork: [CustomWeb3Network] = [CustomWeb3Network]()
     private var _network: String?
-    private var _option: Web3Options?
-    private var _web3Ins: Web3?
+    private var _option: TransactionOptions?
+    private var _web3Ins: web3?
 
     let account: EthAccount = EthAccount.accountInstance
     let userDefaults = UserDefaults.standard
@@ -27,7 +26,7 @@ class CustomWeb3 {
         setOption()
         _loadNetwork()
         _loadNetworkArray()
-        if (_network == "mainnet" || _network == "robsten" || _network == "kovan" || _network == "rinkeby" || _network == nil) {
+        if (_network == "mainnet" || _network == "robsten" ||  _network == "rinkeby" || _network == nil) {
             setNetwork(network: _network)
         } else {
             for network in _customNetwork {
@@ -43,44 +42,64 @@ class CustomWeb3 {
         }
     }
 
-    func addToken(address: String, name: String, symbol: String, decimals: UInt) throws {
-        let address = Address(address)
-        if(!address.isValid){ throw AddTokenError.invalidAddress}
+    func addToken(token: CustomToken){
+
+    }
+
+    func addToken(name: String, symbol: String, address: String, decimals: UInt8){
+
+    }
+
+    func getTokenInfo(address: String) throws -> CustomToken {
+        guard let address = EthereumAddress(address) else {throw GetTokenError.invalidAddress}
+        if(account.checkToken(address: address)){ throw GetTokenError.existingToken }
 
         do{
-            /*
-            print(Web3.default.provider.url)
-            let token = ERC20(address)
-            */
-            let token = ERC20(address)
-            try print(token.balance(of: Address("0xAa7725FF2Bd0B88e5EA57f0Ea74D2Bf1cA61ddaf")))
-            transferToken(token: address, address: "0xAa7725FF2Bd0B88e5EA57f0Ea74D2Bf1cA61ddaf", amount: BigUInt("10000000000000000000", decimals: 18)!)
+            let token = _web3Ins!.contract(Web3Utils.erc20ABI, at: address)
 
+            let name = try token!.method("name", transactionOptions: _option)?.call()["0"] as! String
+            if(name.count == 0){ throw GetTokenError.tokenNil }
 
+            var symbol = try token!.method("symbol", transactionOptions: _option)?.call()["0"] as! String
+            symbol = symbol.onlyAlphabet()
+
+            var decimals = try token!.method("decimals", transactionOptions: _option)?.call()["0"] as? BigUInt
+            if(decimals == nil) {decimals = BigUInt(0)}
+
+            let erc20 = CustomToken(name: name, symbol: symbol, address: address, decimals: decimals!, logo: nil)
+
+            return erc20
         }catch{
-            print(error)
+            throw error
         }
     }
 
-    func getWeb3Ins() -> Web3? {
+    func getWeb3Ins() -> web3? {
         return _web3Ins
     }
 
     func getBalance(address: String?, completion: @escaping (BigUInt?) -> ()) {
-        var addressModified: Address?
+        var addressModified: EthereumAddress?
         if (address == nil) {
             addressModified = _getAddress()
         } else {
-            addressModified = Address(address!)
+            addressModified = EthereumAddress(address!)
         }
 
         DispatchQueue.global(qos: .userInitiated).async {
+            let token = self.account.getToken()
             do {
                 if (addressModified == nil) {
                     completion(nil)
                 } else {
-                    let balance = try self._web3Ins?.eth.getBalance(address: addressModified!)
-                    completion(balance)
+                    if(token == nil){
+                        let balance = try self._web3Ins?.eth.getBalance(address: addressModified!)
+                        completion(balance)
+                    }
+                    else{
+                        let balance = self.getTokenBalance(token: token!)
+                        completion(balance)
+                    }
                 }
             } catch {
                 print(error)
@@ -89,46 +108,43 @@ class CustomWeb3 {
         }
     }
 
-    func transfer(address: String, amount: BigUInt) {
-        _transfer(address: Address(address), amount: amount)
+    func getTokenBalance(token: CustomToken) -> BigUInt{
+        let contract = _web3Ins?.contract(Web3Utils.erc20ABI, at: token.address)
+        let from = _getAddress()
+        _option!.from = from
+
+        let balance = try! contract?.method("balanceOf", parameters: [from] as [AnyObject], transactionOptions: _option)?.call()["0"] as! BigUInt
+
+        return balance
     }
 
-    func transferToken(token: Address, address: String, amount: BigUInt){
-        _transferToken(token: token, address: Address(address), amount: amount)
+    func transfer(address: String, amount: BigUInt) {
+        _transfer(address: EthereumAddress(address)!, amount: amount)
+    }
+
+    func transferToken(token: EthereumAddress, address: String, amount: BigUInt){
+        _transferToken(token: token, address: EthereumAddress(address)!, amount: amount)
     }
 
     func preTransfer(address: String, amount: String) throws {
         if(amount.count == 0){ throw TransferError.invalidAmount}
-        if(address.count == 0){ throw TransferError.invalidAddress}
-
-        if(BigUInt(amount, decimals: 18) == nil){ throw TransferError.invalidAmount}
-
-        let address = Address(address)
-        if(!(address).isValid){throw TransferError.invalidAddress}
-
+        guard let address = EthereumAddress(address) else { throw TransferError.invalidAddress }
+        if(Web3Utils.parseToBigUInt(amount, decimals: 18) == nil){ throw TransferError.invalidAmount}
         if(address == _getAddress()){ throw TransferError.transferToSelf}
     }
 
     func setNetwork(network: String?) {
         switch (network) {
         case "mainnet":
-            Web3.default = _web3Main
-            _web3Ins = Web3.default
+            _web3Ins = _web3Main
             _network = "mainnet"
             break
         case "robsten":
-            Web3.default = _web3Robsten
-            _web3Ins = Web3.default
+            _web3Ins = _web3Robsten
             _network = "robsten"
             break
-        case "kovan":
-            Web3.default = _web3Kovan
-            _web3Ins = Web3.default
-            _network = "kovan"
-            break
         case "rinkeby":
-            Web3.default = _web3Rinkeby
-            _web3Ins = Web3.default
+            _web3Ins = _web3Rinkeby
             _network = "rinkeby"
             break
         default:
@@ -145,14 +161,15 @@ class CustomWeb3 {
                 throw AddNetworkError.invalidName
             }
         }
-        guard let network = Web3(url: url) else {
+        do{
+            let network = try Web3.new(url)
+            _network = name
+            _web3Ins = network
+            _saveNetwork()
+            if(new){_addNetwork(name: name, url: url)}
+        }catch{
             throw AddNetworkError.invalidNetwork
         }
-
-        _network = name
-        _web3Ins = network
-        _saveNetwork()
-        if(new){_addNetwork(name: name, url: url)}
     }
 
     func getNetwork() -> String {
@@ -163,7 +180,6 @@ class CustomWeb3 {
         var networks: [CustomWeb3Network] = [
             CustomWeb3Network(name: "mainnet", url: URL(string: "https://api.infura.io/v1/jsonrpc/mainnet")!),
             CustomWeb3Network(name: "robsten", url: URL(string: "https://api.infura.io/v1/jsonrpc/robsten")!),
-            CustomWeb3Network(name: "kovan", url: URL(string: "https://api.infura.io/v1/jsonrpc/kovan")!),
             CustomWeb3Network(name: "rinkeby", url: URL(string: "https://api.infura.io/v1/jsonrpc/rinkeby")!)    
         ]
         networks.append(contentsOf: _customNetwork)
@@ -184,23 +200,26 @@ class CustomWeb3 {
         if (_option == nil) {
             return
         }
+        var gas: CustomGas!
         switch (rate) {
         case "low":
-            _option!.gasLimit = BigUInt(21000)
-            _option!.gasPrice = BigUInt(1000000000 * 4)
+            _option!.gasLimit = TransactionOptions.GasLimitPolicy.manual(BigUInt(21000))
+            _option!.gasPrice = TransactionOptions.GasPricePolicy.manual(BigUInt(1000000000 * 4))
+            gas = CustomGas(rate: rate, price: BigUInt(1000000000 * 4), limit: BigUInt(21000))
             break
         case "mid":
-            _option!.gasLimit = BigUInt(21000)
-            _option!.gasPrice = BigUInt(1000000000 * 10)
+            _option!.gasLimit = TransactionOptions.GasLimitPolicy.manual(BigUInt(21000))
+            _option!.gasPrice = TransactionOptions.GasPricePolicy.manual(BigUInt(1000000000 * 10))
+            gas = CustomGas(rate: rate, price: BigUInt(1000000000 * 10), limit: BigUInt(21000))
             break
         case "high":
-            _option!.gasLimit = BigUInt(21000)
-            _option!.gasPrice = BigUInt(1000000000 * 20)
+            _option!.gasLimit = TransactionOptions.GasLimitPolicy.manual(BigUInt(21000))
+            _option!.gasPrice = TransactionOptions.GasPricePolicy.manual(BigUInt(1000000000 * 20))
+            gas = CustomGas(rate: rate, price: BigUInt(1000000000 * 20), limit: BigUInt(21000))
             break
         default:
             break
         }
-        let gas = CustomGas(rate: rate, price: nil, limit: nil)
         _saveGas(gas: gas)
     }
 
@@ -208,8 +227,8 @@ class CustomWeb3 {
         if (_option == nil) {
             return
         }
-        _option!.gasLimit = price
-        _option!.gasPrice = limit
+        _option!.gasLimit = TransactionOptions.GasLimitPolicy.manual(price)
+        _option!.gasPrice = TransactionOptions.GasPricePolicy.manual(limit)
 
         let gas = CustomGas(rate: "custom", price: price, limit: limit)
         _saveGas(gas: gas)
@@ -220,15 +239,16 @@ class CustomWeb3 {
     }
 
     func getGasInWei() -> BigUInt {
-        return _option!.gasPrice! * _option!.gasLimit!
+        let gas = _loadGas()!
+        return gas.price! * gas.limit!
     }
 
-    func getOption() -> Web3Options? {
+    func getOption() -> TransactionOptions? {
         return _option
     }
 
     func setOption() {
-        _option = Web3Options.default
+        _option = TransactionOptions.defaultOptions
         guard let gas = _loadGas() else {
             setGas(rate: "mid")
             return
@@ -241,12 +261,15 @@ class CustomWeb3 {
         }
     }
 
-
     private func _getKeyStoreManager() -> KeystoreManager? {
         return account.getKeyStoreManager()
     }
 
-    private func _getAddress() -> Address? {
+    private func _getPlainKeystoreManager() -> KeystoreManager? {
+        return account.getPlainKeyStoreManager()
+    }
+
+    private func _getAddress() -> EthereumAddress? {
         return account.getAddress()
     }
 
@@ -279,7 +302,7 @@ class CustomWeb3 {
     }
 
     private func _checkNetwork(name: String) -> Bool {
-        if(name == "mainnet" || name == "robsten" ||  name == "kovan" || name == "rinkeby"){
+        if(name == "mainnet" || name == "robsten" ||  name == "rinkeby"){
             return false
         }
         for network in _customNetwork{
@@ -300,16 +323,25 @@ class CustomWeb3 {
         userDefaults.set(try! PropertyListEncoder().encode(_customNetwork), forKey: "customNetwork")
     }
 
-    private func _transfer(address: Address, amount: BigUInt){
-        let keystoreManager = _getKeyStoreManager()!
-        _web3Ins!.keystoreManager = keystoreManager
+    private func _transfer(address: EthereumAddress, amount: BigUInt){
+        let from = _getAddress()
+        var keystoreManager: KeystoreManager!
+        if(account.checkPrivate(checkAddress: from!.address)){
+            keystoreManager = _getPlainKeystoreManager()!
+        }
+        else{
+            keystoreManager = _getKeyStoreManager()!
+        }
+
+        _web3Ins!.addKeystoreManager(keystoreManager)
         _option!.from = _getAddress()
 
         DispatchQueue.global(qos: .userInitiated).async{
             do{
-                let intermediateTX =  try self._web3Ins!.eth.sendETH(to: address, amount: amount, options: self._option)
+                let intermediateTX =  self._web3Ins!.eth.sendETH(to: address, amount: amount, transactionOptions: self._option)
                 let keyHex =  KeychainService.loadPassword(service: "moahWallet", account: "password")!
-                try intermediateTX.send(password: keyHex)
+                let txHash = try intermediateTX?.send(password: keyHex)
+                print(txHash)
             }
             catch{
                 print(error)
@@ -317,19 +349,20 @@ class CustomWeb3 {
         }
     }
 
-    private func _transferToken(token: Address, address: Address, amount: BigUInt){
+    private func _transferToken(token: EthereumAddress, address: EthereumAddress, amount: BigUInt){
         let keystoreManager = _getKeyStoreManager()!
         let from = _getAddress()!
-        _web3Ins!.keystoreManager = keystoreManager
+        _web3Ins?.addKeystoreManager(keystoreManager)
         _option!.from = from
 
         DispatchQueue.global(qos: .userInitiated).async{
             do{
+                /*
                 let keyHex =  KeychainService.loadPassword(service: "moahWallet", account: "password")!
                 let token = ERC20(address, from: from, password: keyHex)
                 token.options = self._option!
                 let intermediateTX = try token.transfer(to: address, amount: amount)
-                print(intermediateTX)
+                print(intermediateTX)*/
             }
             catch{
                 print(error)

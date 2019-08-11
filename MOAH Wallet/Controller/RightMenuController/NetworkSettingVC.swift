@@ -109,9 +109,6 @@ class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         case "robsten":
             cell.networkLabel.text = "Robsten 테스트넷"
             break
-        case "kovan":
-            cell.networkLabel.text = "Kovan 테스트넷"
-            break
         case "rinkeby":
             cell.networkLabel.text = "Rinkeby 테스트넷"
             break

@@ -131,7 +131,7 @@ class MainLeftMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.addSubview(cell.addressButton)
         cell.addSubview(cell.txFeeButton)
 
-        address = account.getAddress()?.description
+        address = account.getAddress()?.address
         cell.addressLabel.text = address
 
         let qrImage = util.generateQRCode(source: address?.description)

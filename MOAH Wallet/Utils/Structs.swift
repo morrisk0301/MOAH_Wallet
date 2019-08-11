@@ -37,3 +37,11 @@ struct TransferInfo: Codable {
     var total: BigUInt
     var symbol: String
 }
+
+struct CustomToken: Codable {
+    var name: String!
+    var symbol: String!
+    var address: EthereumAddress!
+    var decimals: BigUInt
+    var logo: Data?
+}

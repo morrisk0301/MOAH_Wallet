@@ -361,6 +361,11 @@ extension String {
     func replace(target: String, withString: String) -> String {
         return self.replacingOccurrences(of: target, with: withString, options: NSString.CompareOptions.literal, range: nil)
     }
+
+    func onlyAlphabet() -> String{
+        let pattern = "[^A-Za-z0-9]+"
+        return self.replacingOccurrences(of: pattern, with: "", options: [.regularExpression])
+    }
 }
 
 extension UIDevice {

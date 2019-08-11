@@ -37,6 +37,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
         label.textColor = .white
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
 
         return label
     }()
@@ -107,10 +108,6 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
         setupLayout()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        delegate?.getBalance()
-    }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -164,7 +161,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
         balanceLabel.topAnchor.constraint(equalTo: tokenView.bottomAnchor, constant: screenHeight/20).isActive = true
         balanceLabel.heightAnchor.constraint(equalToConstant: screenHeight/20).isActive = true
         balanceLabel.centerXAnchor.constraint(equalTo: tokenView.centerXAnchor).isActive = true
-        balanceLabel.widthAnchor.constraint(equalToConstant: screenWidth/1.5).isActive = true
+        balanceLabel.widthAnchor.constraint(equalToConstant: screenWidth*0.9).isActive = true
 
         transferButton.topAnchor.constraint(equalTo: balanceLabel.bottomAnchor, constant: screenHeight/20).isActive = true
         transferButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true

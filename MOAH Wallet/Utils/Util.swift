@@ -6,6 +6,7 @@
 import Foundation
 import CoreImage
 import BigInt
+import web3swift
 import UIKit
 
 class Util {
@@ -48,9 +49,21 @@ class Util {
         if(balance == nil || balance == 0){
             return "0.00000"
         }
-        let balanceString = balance!.string(unitDecimals: 18, decimals: 4)
+        var balanceString = Web3Utils.formatToEthereumUnits(balance!, toUnits: .eth)!
+        if(balanceString.count > 8){
+            balanceString.removeLast(balanceString.count - 8)
+            balanceString += "..."
+        }
 
         return balanceString
+    }
+
+    func trimZero(balance: String?) -> String {
+        guard var trimString = balance else {return "0"}
+        while(trimString.last == "0"){
+            trimString.removeLast()
+        }
+        return trimString
     }
 
     func returnStringDecimalCount(string: String) -> Int{

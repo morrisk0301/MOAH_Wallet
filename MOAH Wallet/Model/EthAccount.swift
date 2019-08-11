@@ -16,14 +16,17 @@ class EthAccount {
     let userDir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
 
     private var _keyStoreManager: KeystoreManager?
+    private var _plainKeyStoreManager: KeystoreManager?
     private var _keyStore: BIP32Keystore?
     private var _plainKeystore: [PlainKeystore]?
-    private var _mnemonic: Mnemonics?
+    private var _mnemonic: String?
     private var _password: String?
     private var _isVerified: Bool = false
     private var _timer: Timer?
-    private var _address: Address?
+    private var _address: EthereumAddress?
     private var _addressArray: [CustomAddress] = [CustomAddress]()
+    private var _token: CustomToken?
+    private var _tokenArray: [CustomToken] = [CustomToken]()
 
     private init() {
     }
@@ -78,6 +81,10 @@ class EthAccount {
         return _keyStoreManager
     }
 
+    func getPlainKeyStoreManager() -> KeystoreManager? {
+        return _plainKeyStoreManager
+    }
+
     func lockAccount() {
         _lockKeyData()
     }
@@ -88,17 +95,16 @@ class EthAccount {
     }
 
     func generateMnemonic() -> String {
-        let mnemonicSize = EntropySize(rawValue: 128)
-        let mnemonic = Mnemonics(entropySize: mnemonicSize!)
+        let mnemonic = try! BIP39.generateMnemonics(bitsOfEntropy: 128)
         _mnemonic = mnemonic
 
-        return mnemonic.string
+        return mnemonic!
     }
 
     func setMnemonic(mnemonicString: String) -> Bool {
         do {
-            let mnemonic = try Mnemonics(mnemonicString)
-            _mnemonic = mnemonic
+            _ = try BIP32Keystore(mnemonics: mnemonicString)
+            _mnemonic = mnemonicString
             return true
         } catch {
             return false
@@ -107,9 +113,9 @@ class EthAccount {
 
     func verifyMnemonic(index: Int, word: String) -> Bool {
         if (_mnemonic == nil) {
-            _mnemonic = try! Mnemonics(_loadMnemonic(password: _password!))
+            _mnemonic =  _loadMnemonic(password: _password!)
         }
-        let mnemonicIns = _mnemonic!.string.components(separatedBy: " ")
+        let mnemonicIns = _mnemonic!.components(separatedBy: " ")
 
         if (mnemonicIns[index] == word) {
             return true
@@ -132,6 +138,11 @@ class EthAccount {
         return privateKey
     }
 
+    func addToken(token: CustomToken){
+        _tokenArray.append(token)
+        _saveToken()
+    }
+
     func setAccount() -> Bool {
         _saveMnemonic(password: _password!)
         _generateKeyStore(password: _password!)
@@ -144,14 +155,13 @@ class EthAccount {
 
     func getAccount(key: String, name: String) throws -> Bool{
         guard _checkAccount(name: name) else{ return false }
-
+        guard let keyStore = PlainKeystore(privateKey: key) else{ throw GetAccountError.invalidPrivateKey }
         do{
-            let keyStore = try PlainKeystore(privateKey: key)
-            if(!_checkAccount(account: keyStore.addresses.first!.description)){
+            if(!_checkAccount(account: keyStore.addresses!.first!.address)){
                 throw GetAccountError.existingAccount
             }
 
-            let address = CustomAddress(address: keyStore.addresses.first!.description, name: name, isPrivateKey: true, path: nil)
+            let address = CustomAddress(address: keyStore.addresses!.first!.address, name: name, isPrivateKey: true, path: nil)
             _savePrivateKey(key: key, name: address.name, password: _password!)
             _addAddress(address: address)
             setAddress(address: _addressArray.last!.address)
@@ -184,7 +194,7 @@ class EthAccount {
         }else{
             _delAddressFromPath(account: account)
         }
-        if(account.address == _address!.description){
+        if(account.address == _address!.address){
             setAddress(address: _addressArray.first!.address)
         }
         let index = _addressArray.firstIndex(where: {$0.name == account.name})
@@ -203,19 +213,19 @@ class EthAccount {
 
     func setAddress(index: Int?) {
         if (index == nil || index! > 9) {
-            _address = Address(_addressArray.first!.address)
+            _address = EthereumAddress(_addressArray.first!.address)
         } else {
-            _address = Address(_addressArray[index!].address)
+            _address = EthereumAddress(_addressArray[index!].address)
         }
         _saveAddressSelected()
     }
 
     func setAddress(address: String) {
-        _address = Address(address)
+        _address = EthereumAddress(address)
         _saveAddressSelected()
     }
 
-    func getAddress() -> Address? {
+    func getAddress() -> EthereumAddress? {
         return _address
     }
 
@@ -225,11 +235,52 @@ class EthAccount {
 
     func getAddressName() -> String? {
         for address in _addressArray{
-            if(_address!.description == address.address){
+            if(_address!.address == address.address){
                 return address.name
             }
         }
         return nil
+    }
+
+    func getTokenArray() -> [CustomToken]? {
+        return _tokenArray
+    }
+
+    func getToken() -> CustomToken? {
+         return _token
+    }
+
+    func setToken(index: Int?) {
+        if(index == nil) {
+            _token = nil
+            _saveTokenSelected()
+            return
+        }
+        _token = _tokenArray[index!]
+        _saveTokenSelected()
+    }
+
+    func setToken(token: CustomToken) {
+        _token = token
+        _saveTokenSelected()
+    }
+
+    func checkToken(address: EthereumAddress) -> Bool{
+        for token in _tokenArray{
+            if(token.address == address){
+                return true
+            }
+        }
+        return false
+    }
+
+    func checkPrivate(checkAddress: String) -> Bool {
+        for address in _addressArray{
+            if(checkAddress == address.address && address.isPrivateKey){
+                return true
+            }
+        }
+        return false
     }
 
     private func _encryptData(stringData: String, password: String) -> Data {
@@ -255,7 +306,7 @@ class EthAccount {
 
 
     private func _saveMnemonic(password: String) {
-        let mnemonicEncrypted = _encryptData(stringData: _mnemonic!.string, password: password)
+        let mnemonicEncrypted = _encryptData(stringData: _mnemonic!, password: password)
         userDefaults.set(mnemonicEncrypted, forKey: "mnemonic")
     }
 
@@ -320,20 +371,24 @@ class EthAccount {
     private func _loadKeyStore() {
         let fileHandle = FileHandle.init(forReadingAtPath: userDir + "/keystore/key.json")
         let jsonFile = fileHandle?.readDataToEndOfFile()
-        _keyStore = BIP32Keystore(jsonFile!)!
+        _keyStore = BIP32Keystore(jsonFile!)
         _keyStoreManager = KeystoreManager([_keyStore!])
 
         _loadPlainKeyStore()
     }
 
+
     private func _loadPlainKeyStore(){
+        var plainArray: [PlainKeystore] = [PlainKeystore]()
+
         for address in _addressArray{
             if(address.isPrivateKey == true){
                 let privateKey = _loadPrivateKey(name: address.name, password: _password!)
-                let plainKeyStore = try! PlainKeystore(privateKey: privateKey!)
-                _keyStoreManager!.append(plainKeyStore)
+                let plainKeyStore = PlainKeystore(privateKey: privateKey!)!
+                plainArray.append(plainKeyStore)
             }
         }
+        _plainKeyStoreManager = KeystoreManager(plainArray)
     }
 
     private func _regenerateKeyStore(oldPassword: String, password: String){
@@ -368,14 +423,16 @@ class EthAccount {
     private func _unlockAccount() {
         let keyHex = KeychainService.loadPassword(service: "moahWallet", account: "password")!
         self._password = keyHex
+        _loadKeyStore()
         _loadAddress()
         _loadAddressSelected()
-        _loadKeyStore()
+        _loadToken()
+        _loadTokenSelected()
         _loadIsVerified()
     }
 
     private func _saveAddressSelected() {
-        let addressSelected = _address?.description
+        let addressSelected = _address?.address
         userDefaults.set(addressSelected, forKey: "addressSelected")
     }
 
@@ -408,18 +465,46 @@ class EthAccount {
     }
 
     private func _generateAddressArray(){
-        let address = CustomAddress(address: _getLastAddress().description, name: "주 계정", isPrivateKey: false, path: _getLastPath())
+        let address = CustomAddress(address: _getLastAddress().address, name: "주 계정", isPrivateKey: false, path: _getLastPath())
         _addressArray = [address]
         _saveAddress()
     }
 
-    private func _getLastAddress() -> Address{
+    private func _getLastAddress() -> EthereumAddress{
         let path = _keyStore!.paths
         var pathKey = Array(path.keys)
         pathKey = pathKey.sorted(by: <)
         let lastAddress = path[pathKey.last!]
 
         return lastAddress!
+    }
+
+    private func _saveToken() {
+        userDefaults.set(try! PropertyListEncoder().encode(_tokenArray), forKey:"token")
+    }
+
+    private func _loadToken() {
+        if let rawArray = UserDefaults.standard.value(forKey:"token") as? Data {
+            let tokenArray = try! PropertyListDecoder().decode([CustomToken].self, from: rawArray)
+            _tokenArray = tokenArray
+        }
+        else{
+            return
+        }
+    }
+
+    private func _saveTokenSelected() {
+        userDefaults.set(try? PropertyListEncoder().encode(_token), forKey:"tokenSelected")
+    }
+
+    private func _loadTokenSelected(){
+        if let rawArray = UserDefaults.standard.value(forKey:"tokenSelected") as? Data {
+            let token = try! PropertyListDecoder().decode(CustomToken.self, from: rawArray)
+            _token = token
+        }
+        else{
+            return
+        }
     }
 
     private func _getLastPath() -> String{
@@ -432,7 +517,7 @@ class EthAccount {
 
     private func _createAccount(name: String) throws {
         let path = _keyStore!.paths
-        var pathKey = Array(path.keys)
+        let pathKey = Array(path.keys)
         var intArray: [Int] = [Int]()
         var newPathChar: String = String(pathKey.count)
         var newPath: String!
@@ -455,7 +540,7 @@ class EthAccount {
             try _keyStore?.createNewCustomChildAccount(password: _password!, path: newPath)
             _saveKeyStore()
 
-            let address = CustomAddress(address: _keyStore!.paths[newPath]!.description, name: name, isPrivateKey: false, path: newPath)
+            let address = CustomAddress(address: _keyStore!.paths[newPath]!.address, name: name, isPrivateKey: false, path: newPath)
             _addAddress(address: address)
             setAddress(address: _addressArray.last!.address)
         }
@@ -465,7 +550,7 @@ class EthAccount {
     }
 
     private func _delAddressFromPath(account: CustomAddress){
-        var newPath: [String: Address] = [String: Address]()
+        var newPath: [String: EthereumAddress] = [String: EthereumAddress]()
         for path in _keyStore!.paths{
             if(path.key == account.path){
                 continue
@@ -506,13 +591,19 @@ class EthAccount {
     private func _lockKeyData() {
         if(_keyStore != nil){
             _saveKeyStore()
+            _saveAddress()
             _saveAddressSelected()
+            _saveToken()
+            _saveTokenSelected()
             _saveIsVerified()
         }
         _password = nil
         _keyStore = nil
         _mnemonic = nil
         _address = nil
+        _token = nil
+        _plainKeyStoreManager = nil
+        _tokenArray = [CustomToken]()
         _addressArray = [CustomAddress]()
     }
 }

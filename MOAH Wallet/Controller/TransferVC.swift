@@ -277,7 +277,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
     }
 
     private func checkAmount() {
-        guard let balanceBig = BigUInt(amountField.text!, decimals: 18) else {
+        guard let balanceBig = Web3Utils.parseToBigUInt(amountField.text!, decimals: 18) else {
             self.errorLabel.text = "올바르지 않은 형식입니다."
             changeAmountStatus(verify: false)
             return
@@ -331,7 +331,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
         if (amountField.text?.count == 0) {
             amount = BigUInt(0)
         } else {
-            amount = BigUInt(amountField.text!, decimals: 18)
+            amount = Web3Utils.parseToBigUInt(amountField.text!, decimals: 18)
         }
 
         switch (indexPath.item) {
@@ -353,7 +353,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
         default:
             break
         }
-        amountField.text = amount.string(unitDecimals: 18)
+        amountField.text = util.trimZero(balance: Web3Utils.formatToEthereumUnits(amount, decimals: 18))
         checkAmount()
     }
 
@@ -400,12 +400,11 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
     }
 
     func checkQr(value: String){
-        let address = Address(value)
-        if(address.isValid){
-            self.addressField.text = value
+        guard let address = EthereumAddress(value) else {
+            qrFail()
             return
         }
-        qrFail()
+        self.addressField.text = value
     }
 
     func qrFail(){
@@ -450,8 +449,8 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
 
         do {
             try web3.preTransfer(address: address, amount: amount)
-            let total = BigUInt(amount, decimals: 18)! + gas
-            let info = TransferInfo(amount: BigUInt(amount, decimals: 18)!, address: address, gas: gas, total: total, symbol: self.symbol)
+            let total = Web3Utils.parseToBigUInt(amount, decimals: 18)! + gas
+            let info = TransferInfo(amount: Web3Utils.parseToBigUInt(amount, decimals: 18)!, address: address, gas: gas, total: total, symbol: self.symbol)
             let confirmVC = util.alert(use: "transfer", title: "전송 확인", info: info, balance: self.balance, buttonTitle: "전송", buttonNum: 2, completion: { (confirm) in
                 if(confirm){
                     let controller = PasswordCheckVC()
