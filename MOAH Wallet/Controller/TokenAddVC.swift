@@ -236,6 +236,12 @@ class TokenAddVC: UIViewController, UITextFieldDelegate {
     }
 
     @objc func nextPressed(_ sender: UIButton){
-
+        let web3: CustomWeb3 = CustomWeb3.web3
+        do{
+            try web3.addToken(address: contractField.text!, name: "", symbol: "", decimals: 3)
+        }
+        catch{
+            print(error)
+        }
     }
 }

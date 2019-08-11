@@ -6,7 +6,7 @@
 import Foundation
 import UIKit
 
-class TokenListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate {
+class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate {
 
     private let reuseIdentifier = "TokenCell"
 
@@ -37,6 +37,7 @@ class TokenListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         self.transparentNavigationBar()
         self.replaceToQuitButton(color: "dark")
         self.setNavigationTitle(title: "토큰 선택")
+        self.hideKeyboardWhenTappedAround()
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
         tableView.delegate = self
@@ -72,6 +73,11 @@ class TokenListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -screenSize.height/20).isActive = true
     }
 
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! TokenCell
 
@@ -82,6 +88,7 @@ class TokenListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
             cell.searchField.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
             cell.searchField.widthAnchor.constraint(equalToConstant: screenSize.width*0.9).isActive = true
             cell.searchField.heightAnchor.constraint(equalToConstant: screenSize.height/20).isActive = true
+            cell.searchField.delegate = self
         }
         else{
             cell.setTokenValue(name: "NaraMalsamiToken", address: "0x9e45b139922836616459385088531ae2a24f49a1", logo: nil)

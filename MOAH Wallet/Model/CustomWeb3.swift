@@ -43,6 +43,25 @@ class CustomWeb3 {
         }
     }
 
+    func addToken(address: String, name: String, symbol: String, decimals: UInt) throws {
+        let address = Address(address)
+        if(!address.isValid){ throw AddTokenError.invalidAddress}
+
+        do{
+            /*
+            print(Web3.default.provider.url)
+            let token = ERC20(address)
+            */
+            let token = ERC20(address)
+            try print(token.balance(of: Address("0xAa7725FF2Bd0B88e5EA57f0Ea74D2Bf1cA61ddaf")))
+            transferToken(token: address, address: "0xAa7725FF2Bd0B88e5EA57f0Ea74D2Bf1cA61ddaf", amount: BigUInt("10000000000000000000", decimals: 18)!)
+
+
+        }catch{
+            print(error)
+        }
+    }
+
     func getWeb3Ins() -> Web3? {
         return _web3Ins
     }
@@ -74,6 +93,10 @@ class CustomWeb3 {
         _transfer(address: Address(address), amount: amount)
     }
 
+    func transferToken(token: Address, address: String, amount: BigUInt){
+        _transferToken(token: token, address: Address(address), amount: amount)
+    }
+
     func preTransfer(address: String, amount: String) throws {
         if(amount.count == 0){ throw TransferError.invalidAmount}
         if(address.count == 0){ throw TransferError.invalidAddress}
@@ -89,19 +112,23 @@ class CustomWeb3 {
     func setNetwork(network: String?) {
         switch (network) {
         case "mainnet":
-            _web3Ins = _web3Main
+            Web3.default = _web3Main
+            _web3Ins = Web3.default
             _network = "mainnet"
             break
         case "robsten":
-            _web3Ins = _web3Robsten
+            Web3.default = _web3Robsten
+            _web3Ins = Web3.default
             _network = "robsten"
             break
         case "kovan":
-            _web3Ins = _web3Kovan
+            Web3.default = _web3Kovan
+            _web3Ins = Web3.default
             _network = "kovan"
             break
         case "rinkeby":
-            _web3Ins = _web3Rinkeby
+            Web3.default = _web3Rinkeby
+            _web3Ins = Web3.default
             _network = "rinkeby"
             break
         default:
@@ -283,6 +310,26 @@ class CustomWeb3 {
                 let intermediateTX =  try self._web3Ins!.eth.sendETH(to: address, amount: amount, options: self._option)
                 let keyHex =  KeychainService.loadPassword(service: "moahWallet", account: "password")!
                 try intermediateTX.send(password: keyHex)
+            }
+            catch{
+                print(error)
+            }
+        }
+    }
+
+    private func _transferToken(token: Address, address: Address, amount: BigUInt){
+        let keystoreManager = _getKeyStoreManager()!
+        let from = _getAddress()!
+        _web3Ins!.keystoreManager = keystoreManager
+        _option!.from = from
+
+        DispatchQueue.global(qos: .userInitiated).async{
+            do{
+                let keyHex =  KeychainService.loadPassword(service: "moahWallet", account: "password")!
+                let token = ERC20(address, from: from, password: keyHex)
+                token.options = self._option!
+                let intermediateTX = try token.transfer(to: address, amount: amount)
+                print(intermediateTX)
             }
             catch{
                 print(error)

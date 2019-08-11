@@ -134,21 +134,6 @@ class GetAccountVC: UIViewController, UITextFieldDelegate {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
-    override func viewDidLayoutSubviews() {
-        /*
-        let border = CALayer()
-        border.frame = CGRect(x:0, y: nameField.frame.height-1, width: nameField.frame.width, height: 1)
-        border.backgroundColor = UIColor(key: "grey2").cgColor
-
-        let border2 = CALayer()
-        border2.frame = CGRect(x:0, y: privateKeyField.frame.height-1, width: privateKeyField.frame.width, height: 1)
-        border2.backgroundColor = UIColor(key: "grey2").cgColor
-
-        nameField.layer.addSublayer(border)
-        privateKeyField.layer.addSublayer(border2)
-        */
-    }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }

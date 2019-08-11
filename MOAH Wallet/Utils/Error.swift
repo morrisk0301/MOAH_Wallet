@@ -22,3 +22,7 @@ enum TransferError: Error {
     case invalidAddress
     case transferToSelf
 }
+
+enum AddTokenError: Error {
+    case invalidAddress
+}
