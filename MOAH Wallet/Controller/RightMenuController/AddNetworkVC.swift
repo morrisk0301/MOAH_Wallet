@@ -226,7 +226,7 @@ class AddNetworkVC: UIViewController, UITextFieldDelegate{
             do{
                 if(name.count == 0){throw AddNetworkError.invalidName}
                 guard let url = URL(string: url.lowercased()) else { throw AddNetworkError.invalidURL }
-                try self.web3.setNetwork(name: name, url: url, new: true)
+                try self.web3.setNetwork(network: CustomWeb3Network(name: name, url: url), new: true)
                 DispatchQueue.main.async{
                     self.navigationController?.popViewController(animated: true)
                 }

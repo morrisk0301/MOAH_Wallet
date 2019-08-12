@@ -13,26 +13,38 @@ class CustomWeb3 {
     private let _web3Robsten = Web3.InfuraRopstenWeb3(accessToken: "7bdfe4d2582141ef8e00c2cf929c72ee")
     private let _web3Rinkeby = Web3.InfuraRinkebyWeb3(accessToken: "7bdfe4d2582141ef8e00c2cf929c72ee")
     private var _customNetwork: [CustomWeb3Network] = [CustomWeb3Network]()
-    private var _network: String?
     private var _option: TransactionOptions?
     private var _web3Ins: web3?
+    private var _network: CustomWeb3Network?
+    private var observers: [NetworkObserver] = [NetworkObserver]()
 
     let account: EthAccount = EthAccount.accountInstance
     let userDefaults = UserDefaults.standard
 
     static let web3 = CustomWeb3()
 
+    var network: CustomWeb3Network? {
+        set(value){
+            _network = value
+            _saveNetwork()
+            notify()
+        }
+        get{
+            return _network
+        }
+    }
+
     private init() {
         setOption()
         _loadNetwork()
         _loadNetworkArray()
-        if (_network == "mainnet" || _network == "robsten" ||  _network == "rinkeby" || _network == nil) {
-            setNetwork(network: _network)
+        if (network == nil || network!.name == "mainnet" || network!.name == "robsten" ||  network!.name == "rinkeby") {
+            setNetwork(network: network)
         } else {
             for network in _customNetwork {
-                if (network.name == _network!) {
+                if (network == self.network!) {
                     do{
-                        try setNetwork(name: _network!, url: network.url, new: false)
+                        try setNetwork(network: self.network!, new: false)
                     }
                     catch{
                         print(error)
@@ -133,47 +145,43 @@ class CustomWeb3 {
         if(address == _getAddress()){ throw TransferError.transferToSelf}
     }
 
-    func setNetwork(network: String?) {
-        switch (network) {
+    func setNetwork(network: CustomWeb3Network?) {
+        switch (network?.name) {
         case "mainnet":
             _web3Ins = _web3Main
-            _network = "mainnet"
+            self.network = network
             break
         case "robsten":
             _web3Ins = _web3Robsten
-            _network = "robsten"
+            self.network = network
             break
         case "rinkeby":
             _web3Ins = _web3Rinkeby
-            _network = "rinkeby"
+            self.network = network
             break
         default:
             _web3Ins = _web3Main
-            _network = "mainnet"
+            self.network = CustomWeb3Network(name: "mainnet", url: URL(string: "https://api.infura.io/v1/jsonrpc/mainnet")!)
             break
         }
-        _saveNetwork()
     }
 
-    func setNetwork(name: String, url: URL, new: Bool) throws {
+    func setNetwork(network: CustomWeb3Network, new: Bool) throws {
         if(new){
-            if(!_checkNetwork(name: name)){
+            if(!_checkNetwork(name: network.name)){
                 throw AddNetworkError.invalidName
             }
         }
         do{
-            let network = try Web3.new(url)
-            _network = name
-            _web3Ins = network
-            _saveNetwork()
-            if(new){_addNetwork(name: name, url: url)}
+            let newWeb3 = try Web3.new(network.url)
+            _web3Ins = newWeb3
+            if(new){
+                _addNetwork(network: network)
+                self.network = network
+            }
         }catch{
             throw AddNetworkError.invalidNetwork
         }
-    }
-
-    func getNetwork() -> String {
-        return _network!
     }
 
     func getNetworks() -> [CustomWeb3Network] {
@@ -187,11 +195,11 @@ class CustomWeb3 {
         return networks
     }
 
-    func delNetwork(name: String, url: URL){
-        if(name == _network){
-            setNetwork(network: "mainnet")
+    func delNetwork(network: CustomWeb3Network){
+        if(network == network){
+            setNetwork(network: CustomWeb3Network(name: "mainnet", url: URL(string: "https://api.infura.io/v1/jsonrpc/mainnet")!))
         }
-        let index = _customNetwork.firstIndex(where: {$0.name == name && $0.url == url})
+        let index = _customNetwork.firstIndex(where: {$0 == network})
         _customNetwork.remove(at: index!)
         _saveNetworkArray()
     }
@@ -261,6 +269,23 @@ class CustomWeb3 {
         }
     }
 
+    func attachNetworkObserver(_ observer: NetworkObserver){
+        observers.append(observer)
+    }
+
+    func detachNetworkObserver(_ delObserver: NetworkObserver){
+        guard let index = self.observers.firstIndex(where: { $0.id == delObserver.id }) else {
+            return
+        }
+        self.observers.remove(at: index)
+    }
+
+    private func notify(){
+        for observer in observers {
+            observer.networkChanged(network: self.network!)
+        }
+    }
+
     private func _getKeyStoreManager() -> KeystoreManager? {
         return account.getKeyStoreManager()
     }
@@ -286,17 +311,21 @@ class CustomWeb3 {
         userDefaults.set(try! PropertyListEncoder().encode(gas), forKey: "gas")
     }
 
+    private func _loadNetwork(){
+        if let rawArray = UserDefaults.standard.value(forKey:"network") as? Data {
+            let network = try! PropertyListDecoder().decode(CustomWeb3Network.self, from: rawArray)
+            self.network = network
+        }
+        else{
+            return
+        }
+    }
+
     private func _saveNetwork() {
-        userDefaults.set(_network, forKey: "network")
+        userDefaults.set(try! PropertyListEncoder().encode(network), forKey:"network")
     }
 
-    private func _loadNetwork() {
-        let network = userDefaults.string(forKey: "network")
-        _network = network
-    }
-
-    private func _addNetwork(name: String, url: URL) {
-        let network = CustomWeb3Network(name: name, url: url)
+    private func _addNetwork(network: CustomWeb3Network) {
         _customNetwork.append(network)
         _saveNetworkArray()
     }

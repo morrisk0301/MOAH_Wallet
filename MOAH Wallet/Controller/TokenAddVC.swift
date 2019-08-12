@@ -280,6 +280,11 @@ class TokenAddVC: UIViewController, UITextFieldDelegate {
         }
     }
 
+    func reloadRootView(){
+        let vc = self.presentingViewController as! MainContainerVC
+        vc.isReload = true
+    }
+
     @objc func nextPressed(_ sender: UIButton) {
         let util = Util()
         let account: EthAccount = EthAccount.accountInstance
@@ -287,6 +292,7 @@ class TokenAddVC: UIViewController, UITextFieldDelegate {
         account.setToken(token: token!)
 
         let alertVC = util.alert(title: "토큰 추가", body: token!.symbol+" 토큰 추가를 완료하였습니다.", buttonTitle: "확인", buttonNum: 1, completion: {_ in
+            self.reloadRootView()
             self.navigationController?.popViewController(animated: true)
         })
         self.present(alertVC, animated: false)

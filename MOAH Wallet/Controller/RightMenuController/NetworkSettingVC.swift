@@ -7,7 +7,7 @@ import Foundation
 import UIKit
 import AudioToolbox
 
-class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate {
+class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, NetworkObserver {
 
     private let reuseIdentifier = "networkCell"
 
@@ -15,7 +15,8 @@ class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     let web3: CustomWeb3 = CustomWeb3.web3
 
     var networks: [CustomWeb3Network] = [CustomWeb3Network]()
-    var network: String!
+    var network: CustomWeb3Network
+    var id: String = "NetworkSettingVC"
 
     let tableView: UITableView = {
         let tableView = UITableView()
@@ -36,6 +37,16 @@ class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSo
 
         return button
     }()
+
+    init(){
+        self.network = web3.network!
+        super.init(nibName: nil, bundle: nil)
+        web3.attachNetworkObserver(self)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,13 +73,15 @@ class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         tableView.reloadData()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        web3.detachNetworkObserver(self)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 
     private func getNetwork(){
-        network = web3.getNetwork()
         networks = web3.getNetworks()
     }
 
@@ -116,7 +129,7 @@ class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSo
             cell.networkLabel.text = networks[indexPath.section].name
         }
 
-        if(networks[indexPath.section].name == network){
+        if(networks[indexPath.section] == network){
             cell.networkLabel.textColor = UIColor(key: "dark")
             cell.checkImage.isHidden = false
         }
@@ -140,15 +153,16 @@ class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         AudioServicesPlaySystemSound(1519)
 
         if(indexPath.section < 4){
-            self.web3.setNetwork(network: self.networks[indexPath.section].name)
+            self.web3.setNetwork(network: self.networks[indexPath.section])
             self.getNetwork()
             self.tableView.reloadData()
+            reloadRootView()
         }
         else{
             self.showSpinner()
             DispatchQueue.global(qos: .userInitiated).async {
                 do {
-                    try self.web3.setNetwork(name: self.networks[indexPath.section].name, url: self.networks[indexPath.section].url, new: false)
+                    try self.web3.setNetwork(network: self.networks[indexPath.section], new: false)
                 } catch {
                     let util = Util()
                     DispatchQueue.main.async {
@@ -183,11 +197,20 @@ class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSo
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
-            web3.delNetwork(name: networks[indexPath.section].name, url: networks[indexPath.section].url)
+            web3.delNetwork(network: networks[indexPath.section])
             getNetwork()
             self.tableView.deleteSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
             tableView.reloadData()
         }
+    }
+
+    func networkChanged(network: CustomWeb3Network) {
+        self.network = network
+    }
+
+    func reloadRootView(){
+        let vc = self.presentingViewController as! MainContainerVC
+        vc.isReload = true
     }
 
     @objc func addPressed(_ sender: UIButton){

@@ -158,17 +158,17 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
         tokenView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/5).isActive = true
         tokenView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/5).isActive = true
 
-        balanceLabel.topAnchor.constraint(equalTo: tokenView.bottomAnchor, constant: screenHeight/20).isActive = true
-        balanceLabel.heightAnchor.constraint(equalToConstant: screenHeight/20).isActive = true
+        balanceLabel.topAnchor.constraint(equalTo: tokenView.bottomAnchor).isActive = true
+        balanceLabel.heightAnchor.constraint(equalToConstant: screenHeight/6).isActive = true
         balanceLabel.centerXAnchor.constraint(equalTo: tokenView.centerXAnchor).isActive = true
         balanceLabel.widthAnchor.constraint(equalToConstant: screenWidth*0.9).isActive = true
 
-        transferButton.topAnchor.constraint(equalTo: balanceLabel.bottomAnchor, constant: screenHeight/20).isActive = true
+        transferButton.topAnchor.constraint(equalTo: balanceLabel.bottomAnchor).isActive = true
         transferButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         transferButton.heightAnchor.constraint(equalToConstant: screenHeight/20).isActive = true
         transferButton.widthAnchor.constraint(equalToConstant: screenWidth/2.5).isActive = true
 
-        txLabel.topAnchor.constraint(equalTo: transferButton.bottomAnchor, constant: screenHeight/15).isActive = true
+        txLabel.topAnchor.constraint(equalTo: transferButton.bottomAnchor, constant: screenHeight/20).isActive = true
         txLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         txLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         txLabel.heightAnchor.constraint(equalToConstant: screenHeight/20).isActive = true

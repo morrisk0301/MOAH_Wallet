@@ -158,10 +158,11 @@ class TokenSelectVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         }
         getToken()
         tableView.reloadData()
+        self.delegate?.tokenEnded(selected: true)
     }
 
     @objc func addPressed(_ sender: UIButton){
-        self.delegate?.tokenAddClicked()
+        self.delegate?.tokenEnded(selected: false)
     }
 
 }

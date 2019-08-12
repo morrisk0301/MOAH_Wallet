@@ -48,7 +48,6 @@ class MainTokenView: UIView {
         attachImage.image = UIImage(named: "downArrow")
         attachImage.bounds = CGRect(x: 0, y: 0, width: (UIScreen.main.bounds.width/35)*1.5, height: (UIScreen.main.bounds.width/35))
 
-        //let attrText = NSMutableAttributedString(string: "Ethereum  ", attributes: [
         let attrText = NSMutableAttributedString(string: tokenString+"  " , attributes: [
             NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundB", size: 20, dynamic: true)!,
             NSAttributedString.Key.foregroundColor: UIColor.white,

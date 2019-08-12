@@ -39,9 +39,28 @@ struct TransferInfo: Codable {
 }
 
 struct CustomToken: Codable {
-    var name: String!
-    var symbol: String!
-    var address: EthereumAddress!
+    var name: String
+    var symbol: String
+    var address: EthereumAddress
     var decimals: BigUInt
     var logo: Data?
+}
+
+struct TxInfo: Codable{
+    var txHash: String
+    var result: String
+}
+
+struct NetworkData: Codable {
+    var network: String
+    var tokenSelected: CustomToken?
+    var tokenArray: [CustomToken] = [CustomToken]()
+    var txHistory: [TxInfo] = [TxInfo]()
+}
+
+func ==(left: CustomWeb3Network, right: CustomWeb3Network) -> Bool{
+    if(left.name == right.name && left.url == right.url){
+        return true
+    }
+    return false
 }

@@ -7,13 +7,15 @@ import Foundation
 import web3swift
 import CryptoSwift
 
-class EthAccount {
+class EthAccount: NetworkObserver {
 
     static let accountInstance = EthAccount()
 
     let util = Util()
     let userDefaults = UserDefaults.standard
     let userDir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+
+    var id: String = ""
 
     private var _keyStoreManager: KeystoreManager?
     private var _plainKeyStoreManager: KeystoreManager?
@@ -25,8 +27,8 @@ class EthAccount {
     private var _timer: Timer?
     private var _address: EthereumAddress?
     private var _addressArray: [CustomAddress] = [CustomAddress]()
-    private var _token: CustomToken?
-    private var _tokenArray: [CustomToken] = [CustomToken]()
+    private var _networkData: NetworkData?
+    private var network: CustomWeb3Network?
 
     private init() {
     }
@@ -139,8 +141,8 @@ class EthAccount {
     }
 
     func addToken(token: CustomToken){
-        _tokenArray.append(token)
-        _saveToken()
+        _networkData!.tokenArray.append(token)
+        _saveNetworkData()
     }
 
     func setAccount() -> Bool {
@@ -243,30 +245,30 @@ class EthAccount {
     }
 
     func getTokenArray() -> [CustomToken]? {
-        return _tokenArray
+        return _networkData?.tokenArray
     }
 
     func getToken() -> CustomToken? {
-         return _token
+         return _networkData?.tokenSelected
     }
 
     func setToken(index: Int?) {
         if(index == nil) {
-            _token = nil
-            _saveTokenSelected()
-            return
+            _networkData!.tokenSelected = nil
         }
-        _token = _tokenArray[index!]
-        _saveTokenSelected()
+        else{
+            _networkData!.tokenSelected = _networkData!.tokenArray[index!]
+        }
+        _saveNetworkData()
     }
 
     func setToken(token: CustomToken) {
-        _token = token
-        _saveTokenSelected()
+        _networkData!.tokenSelected = token
+        _saveNetworkData()
     }
 
     func checkToken(address: EthereumAddress) -> Bool{
-        for token in _tokenArray{
+        for token in _networkData!.tokenArray{
             if(token.address == address){
                 return true
             }
@@ -415,6 +417,17 @@ class EthAccount {
         _password = password
     }
 
+    func connectNetwork(){
+        let web3: CustomWeb3 = CustomWeb3.web3
+        web3.attachNetworkObserver(self)
+        self.network = web3.network
+        _loadNetworkData()
+    }
+
+    func networkChanged(network: CustomWeb3Network) {
+        self.network = network
+    }
+
     private func _hashPassword(password: [UInt8], salt: [UInt8]) -> [UInt8] {
         let hash = try! PKCS5.PBKDF2(password: password, salt: salt, iterations: 4096, keyLength: 32, variant: .sha256).calculate()
         return hash
@@ -426,8 +439,6 @@ class EthAccount {
         _loadKeyStore()
         _loadAddress()
         _loadAddressSelected()
-        _loadToken()
-        _loadTokenSelected()
         _loadIsVerified()
     }
 
@@ -479,31 +490,17 @@ class EthAccount {
         return lastAddress!
     }
 
-    private func _saveToken() {
-        userDefaults.set(try! PropertyListEncoder().encode(_tokenArray), forKey:"token")
+    private func _saveNetworkData() {
+        userDefaults.set(try! PropertyListEncoder().encode(_networkData), forKey: network!.name)
     }
 
-    private func _loadToken() {
-        if let rawArray = UserDefaults.standard.value(forKey:"token") as? Data {
-            let tokenArray = try! PropertyListDecoder().decode([CustomToken].self, from: rawArray)
-            _tokenArray = tokenArray
+    private func _loadNetworkData() {
+        if let rawArray = UserDefaults.standard.value(forKey: network!.name) as? Data {
+            let networkData = try! PropertyListDecoder().decode(NetworkData.self, from: rawArray)
+            _networkData = networkData
         }
         else{
-            return
-        }
-    }
-
-    private func _saveTokenSelected() {
-        userDefaults.set(try? PropertyListEncoder().encode(_token), forKey:"tokenSelected")
-    }
-
-    private func _loadTokenSelected(){
-        if let rawArray = UserDefaults.standard.value(forKey:"tokenSelected") as? Data {
-            let token = try! PropertyListDecoder().decode(CustomToken.self, from: rawArray)
-            _token = token
-        }
-        else{
-            return
+            _networkData = NetworkData(network: network!.name, tokenSelected: nil, tokenArray: [], txHistory: [])
         }
     }
 
@@ -593,17 +590,15 @@ class EthAccount {
             _saveKeyStore()
             _saveAddress()
             _saveAddressSelected()
-            _saveToken()
-            _saveTokenSelected()
+            _saveNetworkData()
             _saveIsVerified()
         }
         _password = nil
         _keyStore = nil
         _mnemonic = nil
         _address = nil
-        _token = nil
+        _networkData = nil
         _plainKeyStoreManager = nil
-        _tokenArray = [CustomToken]()
         _addressArray = [CustomAddress]()
     }
 }

@@ -12,6 +12,8 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
     var isExpandLeft = false
     var isExpandRight = false
     var signUp = false
+    var isInit = true
+    var isReload = false
     var tempMnemonic: String?
     var symbol = "ETH"
     var mainLeftMenuVC: MainLeftMenuVC!
@@ -33,6 +35,7 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.isReload = true
 
         self.style = .lightContent
 
@@ -49,9 +52,11 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        self.showSpinner()
-        initVCs()
-        loadData()
+        if(isReload){
+            self.showSpinner()
+            initVCs()
+            loadData()
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -105,23 +110,27 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
 
     func initVCs(){
         DispatchQueue.main.async{
-            self.mainRightMenuVC = MainRightMenuVC()
-            self.mainRightMenuVC.delegate = self
-            self.view.insertSubview(self.mainRightMenuVC.view, at: 0)
-            self.addChild(self.mainRightMenuVC)
-            self.mainRightMenuVC.didMove(toParent: self)
+            if(self.isInit){
+                self.mainRightMenuVC = MainRightMenuVC()
+                self.mainRightMenuVC.delegate = self
+                self.view.insertSubview(self.mainRightMenuVC.view, at: 0)
+                self.addChild(self.mainRightMenuVC)
+                self.mainRightMenuVC.didMove(toParent: self)
 
-            self.mainLeftMenuVC = MainLeftMenuVC()
-            self.mainLeftMenuVC.delegate = self
-            self.view.insertSubview(self.mainLeftMenuVC.view, at: 0)
-            self.addChild(self.mainLeftMenuVC)
-            self.mainLeftMenuVC.didMove(toParent: self)
+                self.mainLeftMenuVC = MainLeftMenuVC()
+                self.mainLeftMenuVC.delegate = self
+                self.view.insertSubview(self.mainLeftMenuVC.view, at: 0)
+                self.addChild(self.mainLeftMenuVC)
+                self.mainLeftMenuVC.didMove(toParent: self)
+            }
 
             self.tokenSelectVC = TokenSelectVC()
             self.tokenSelectVC.delegate = self
             self.tokenSelectVC.view.frame = CGRect(x: 0, y: self.screenSize.height, width: self.screenSize.width, height: self.screenSize.height/2)
             self.addChild(self.tokenSelectVC)
             self.tokenSelectVC.didMove(toParent: self)
+
+            self.isInit = false
         }
     }
 
@@ -225,18 +234,8 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
         animatePanel(shouldExpand: true, side: "down", menuOption: nil)
     }
 
-    func tokenAddClicked() {
-        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0,
-                options: .curveEaseInOut, animations: {
-            self.transparentView.alpha = 0
-            self.tokenSelectVC.view.frame = CGRect(x: 0, y: self.screenSize.height, width: self.screenSize.width, height: self.screenSize.height/2)
-        }, completion: {_ in
-            self.transparentView.removeFromSuperview()
-            self.tokenSelectVC.removeFromParent()
-
-            let controller = TokenListVC()
-            self.present(UINavigationController(rootViewController: controller), animated: true)
-        })
+    func tokenEnded(selected: Bool) {
+        proceedAfterTokenView(add: !selected, selected: selected)
     }
 
     func addTransparentView(side: String){
@@ -256,20 +255,25 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
 
     func loadData(){
         DispatchQueue.global(qos: .userInitiated).async{
+            self.account.connectNetwork()
             let tokenArray = self.account.getTokenArray()
             var symbol = "ETH"
+            var name = "Ethereum"
             if(self.account.getToken() != nil){
                 symbol = self.account.getToken()!.symbol
+                name = self.account.getToken()!.name
             }
             self.checkChainNetwork()
             self.web3.getBalance(address: nil, completion: {(balance) in
                 let balanceTrimmed = self.util.trimBalance(balance: balance)
                 DispatchQueue.main.async {
                     self.mainVC.balance = balance
+                    self.mainVC.tokenView.setTokenString(tokenString: name)
                     self.mainVC.balanceString = balanceTrimmed
                     self.mainVC.balanceLabel.text = balanceTrimmed + " " + symbol
                     self.tokenSelectVC.tokenArray = tokenArray
                     self.tokenSelectVC.tableView.reloadData()
+                    self.isReload = false
                     self.hideSpinner()
                 }
             })
@@ -304,6 +308,7 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
         proceedToView(side: "left", menuOption: menuOption)
         self.transparentView.removeFromSuperview()
     }
+
     func sendEmail(){
         if(MFMailComposeViewController.canSendMail()){
             let emailTitle = ""
@@ -325,6 +330,25 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
         self.dismiss(animated: true)
     }
 
+    func proceedAfterTokenView(add: Bool, selected: Bool){
+        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0,
+                options: .curveEaseInOut, animations: {
+            self.transparentView.alpha = 0
+            self.tokenSelectVC.view.frame = CGRect(x: 0, y: self.screenSize.height, width: self.screenSize.width, height: self.screenSize.height/2)
+        }, completion: {_ in
+            self.transparentView.removeFromSuperview()
+            self.tokenSelectVC.removeFromParent()
+            if(add){
+                let controller = TokenListVC()
+                self.present(UINavigationController(rootViewController: controller), animated: true)
+            }
+            else if(selected){
+                self.showSpinner()
+                self.loadData()
+            }
+        })
+    }
+
     @objc private func mainViewClicked(_ sender: UIGestureRecognizer) {
         isExpandRight = false
         isExpandLeft = false
@@ -332,17 +356,7 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
     }
 
     @objc private func transparentViewClicked(_ sender: UITapGestureRecognizer){
-        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0,
-                options: .curveEaseInOut, animations: {
-            self.transparentView.alpha = 0
-            self.tokenSelectVC.view.frame = CGRect(x: 0, y: self.screenSize.height, width: self.screenSize.width, height: self.screenSize.height/2)
-        }, completion: {_ in
-            self.showSpinner()
-            self.transparentView.removeFromSuperview()
-            self.tokenSelectVC.removeFromParent()
-            self.loadData()
-
-        })
+        proceedAfterTokenView(add: false, selected: false)
     }
 
 }

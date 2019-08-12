@@ -50,8 +50,8 @@ class Util {
             return "0.00000"
         }
         var balanceString = Web3Utils.formatToEthereumUnits(balance!, toUnits: .eth)!
-        if(balanceString.count > 8){
-            balanceString.removeLast(balanceString.count - 8)
+        if(balanceString.count > 24){
+            balanceString.removeLast(balanceString.count - 24)
             balanceString += "..."
         }
 
@@ -106,4 +106,5 @@ class Util {
 
         return processedImage
     }
+
 }

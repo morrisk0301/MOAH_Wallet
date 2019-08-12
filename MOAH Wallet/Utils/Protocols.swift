@@ -12,11 +12,25 @@ protocol MainControllerDelegate {
     func leftSideMenuClicked(forMenuOption menuOption: LeftMenuOption?)
     func rightSideMenuClicked(forMenuOption menuOption: RightMenuOption?)
     func tokenViewClicked()
-    func tokenAddClicked()
+    func tokenEnded(selected: Bool)
     func txFeeClicked()
     func isSignUp()
 }
 
 protocol QRCodeReadDelegate {
     func qrCodeRead(value: String)
+}
+
+protocol Observer {
+    func networkChanged(network: CustomWeb3Network)
+    func networkAdded(network: CustomWeb3Network)
+    func tokenChanged(token: CustomToken)
+    func tokenAdded(token: CustomToken)
+    func addressChanged(account: CustomAddress)
+    func addressAdded(account: CustomAddress)
+}
+
+protocol NetworkObserver {
+    var id : String { get set }
+    func networkChanged(network: CustomWeb3Network)
 }
