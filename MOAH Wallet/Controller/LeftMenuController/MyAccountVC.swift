@@ -7,6 +7,7 @@ import Foundation
 import UIKit
 import web3swift
 import AudioToolbox
+import BigInt
 
 class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate {
 
@@ -20,6 +21,7 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     var accounts: [CustomAddress] = [CustomAddress]()
     var accountSelected: EthereumAddress!
     var symbol: String!
+    var balance: [String] = [String]()
 
     let tableView: UITableView = {
         let tableView = UITableView()
@@ -54,16 +56,24 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
         view.backgroundColor = UIColor(key: "light3")
 
-        view.addSubview(tableView)
-        view.addSubview(addButton)
+    }
 
-        setupLayout()
+    override func viewWillAppear(_ animated: Bool) {
         self.showSpinner()
     }
 
     override func viewDidAppear(_ animated: Bool) {
+
         getAccount()
-        tableView.reloadData()
+        getBalance(completion: {
+            DispatchQueue.main.async{
+                self.view.addSubview(self.tableView)
+                self.view.addSubview(self.addButton)
+
+                self.setupLayout()
+                self.tableView.reloadData()
+            }
+        })
     }
 
     override func didReceiveMemoryWarning() {
@@ -87,6 +97,30 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         accountSelected = account.getAddress()
     }
 
+    private func getBalance(completion: @escaping () -> ()){
+        self.balance = []
+
+        let group = DispatchGroup()
+        group.enter()
+
+        DispatchQueue.global(qos: .userInteractive).sync{
+            for index in 0..<self.accounts.count{
+                let indexPath = IndexPath(row: 0, section: index)
+                //var balance = BigUInt(0)
+                web3.getBalanceSync(address: accounts[indexPath.section].address, completion: {(balance) in
+                    let balanceTrimmed = self.util.trimBalance(balance: balance)
+                    let text = balanceTrimmed + " " + self.symbol
+                    self.balance.append(text)
+                })
+            }
+            group.leave()
+        }
+
+        group.notify(queue: .global(qos: .userInteractive)){
+            completion()
+        }
+    }
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return accounts.count
     }
@@ -102,6 +136,7 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! AccountCell
 
+        cell.addSymbol(symbol: self.symbol)
         cell.checkImage.isHidden = true
         cell.accountLabel.textColor = UIColor(key: "darker")
         cell.privateKeyLabel.isHidden = true
@@ -115,13 +150,7 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
         cell.accountLabel.text = accounts[indexPath.section].name
         cell.addressLabel.text = accounts[indexPath.section].address
-
-        web3.getBalance(address: accounts[indexPath.section].address, completion: {(balance) in
-            DispatchQueue.main.async {
-                let balanceTrimmed = self.util.trimBalance(balance: balance)
-                cell.balanceLabel.text = balanceTrimmed + " " + self.symbol
-            }
-        })
+        cell.balanceLabel.text = self.balance[indexPath.section]
 
         return cell
     }
@@ -145,6 +174,7 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
             account.deleteAccount(account: accounts[indexPath.section])
             getAccount()
             self.tableView.deleteSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
+            self.balance.remove(at: indexPath.section)
             tableView.reloadData()
         }
     }
@@ -165,6 +195,7 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         selectAccount(index: indexPath.section)
         getAccount()
         self.tableView.reloadData()
+        self.reloadMainContainerVC()
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

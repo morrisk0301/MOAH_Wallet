@@ -20,17 +20,8 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
     var balance: BigUInt!
     var symbol: String!
 
-    lazy var balanceLabel: UILabel = {
+    let balanceLabel: UILabel = {
         let label = UILabel()
-
-        let attrText = NSMutableAttributedString(string: self.balanceString + " ",
-                attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundB", size: 30, dynamic: true)!,
-                             NSAttributedString.Key.foregroundColor: UIColor(key: "regular")])
-        attrText.append(NSAttributedString(string: self.symbol,
-                attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundB", size: 30, dynamic: true)!,
-                             NSAttributedString.Key.foregroundColor: UIColor(key: "darker")]))
-
-        label.attributedText = attrText
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
@@ -146,6 +137,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleLabel?.font = UIFont(name: "NanumSquareRoundB", size: 20, dynamic: true)
         button.addTarget(self, action: #selector(nextPressed(_:)), for: .touchUpInside)
+        button.isEnabled = false
 
         return button
     }()
@@ -177,6 +169,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
 
         setRightView()
         setupLayout()
+        setBalanceLabel()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -192,6 +185,25 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+
+    private func setBalanceLabel(){
+
+        var balanceString = self.balanceString!
+
+        if(balanceString.count > 11){
+            balanceString.removeLast(balanceString.count - 11)
+            balanceString += "..."
+        }
+
+        let attrText = NSMutableAttributedString(string: balanceString + " ",
+                attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundB", size: 30, dynamic: true)!,
+                             NSAttributedString.Key.foregroundColor: UIColor(key: "regular")])
+        attrText.append(NSAttributedString(string: self.symbol,
+                attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundB", size: 30, dynamic: true)!,
+                             NSAttributedString.Key.foregroundColor: UIColor(key: "darker")]))
+
+        balanceLabel.attributedText = attrText
     }
 
     private func setupLayout() {
@@ -443,23 +455,32 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
     @objc private func nextPressed(_ sender: UIButton) {
         var errorBody: String?
         let util = Util()
-        let gas = web3.getGasInWei()
         let amount = amountField.text!
         let address = addressField.text!
+        var gas = web3.getGasInWei()
 
         do {
-            try web3.preTransfer(address: address, amount: amount)
-            let total = Web3Utils.parseToBigUInt(amount, decimals: 18)! + gas
-            let info = TransferInfo(amount: Web3Utils.parseToBigUInt(amount, decimals: 18)!, address: address, gas: gas, total: total, symbol: self.symbol)
-            let confirmVC = util.alert(use: "transfer", title: "전송 확인", info: info, balance: self.balance, buttonTitle: "전송", buttonNum: 2, completion: { (confirm) in
-                if(confirm){
-                    let controller = PasswordCheckVC()
-                    controller.toView = "transfer"
-                    controller.tempInfo = info
-                    self.navigationController?.pushViewController(controller, animated: true)
+            self.showSpinner()
+            try web3.preTransfer(address: address, amount: amount, completion: {(tx, estimateGas) in
+                DispatchQueue.main.async{
+                    self.hideSpinner()
+                    if(gas == nil){
+                        gas = estimateGas
+                    }
+                    let total = Web3Utils.parseToBigUInt(amount, decimals: 18)! + gas!
+                    let info = TransferInfo(amount: Web3Utils.parseToBigUInt(amount, decimals: 18)!, address: address, gas: gas!, total: total, symbol: self.symbol)
+                    let confirmVC = util.alert(use: "transfer", title: "전송 확인", info: info, balance: self.balance, isToken: self.symbol != "ETH",
+                            buttonTitle: "전송", buttonNum: 2, completion: { (confirm) in
+                        if(confirm){
+                            let controller = PasswordCheckVC()
+                            controller.toView = "transfer"
+                            controller.tempTx = tx
+                            self.navigationController?.pushViewController(controller, animated: true)
+                        }
+                    })
+                    self.present(confirmVC, animated: false)
                 }
             })
-            self.present(confirmVC, animated: false)
         } catch TransferError.invalidAmount {
             errorBody = "전송 금액을 확인해주세요."
         } catch TransferError.invalidAddress {
@@ -472,7 +493,9 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
             errorBody = "기타 오류."
         }
         if(errorBody != nil){
-            let alertVC = util.alert(title: "전송 오류", body: errorBody!, buttonTitle: "확인", buttonNum: 1, completion: { _ in })
+            let alertVC = util.alert(title: "전송 오류", body: errorBody!, buttonTitle: "확인", buttonNum: 1, completion: { _ in
+                self.hideSpinner()
+            })
             self.present(alertVC, animated: false)
         }
     }

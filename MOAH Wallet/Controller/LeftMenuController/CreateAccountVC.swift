@@ -168,6 +168,7 @@ class CreateAccountVC: UIViewController, UITextFieldDelegate {
         else if(account.generateAccount(name: name)){
             for controller in self.navigationController!.viewControllers{
                 guard let vc = controller as? MyAccountVC else { continue }
+                self.reloadMainContainerVC()
                 self.navigationController?.popToViewController(vc, animated: true)
             }
         }

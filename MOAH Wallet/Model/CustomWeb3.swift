@@ -109,7 +109,7 @@ class CustomWeb3 {
                         completion(balance)
                     }
                     else{
-                        let balance = self.getTokenBalance(token: token!)
+                        let balance = self.getTokenBalance(address: addressModified!)
                         completion(balance)
                     }
                 }
@@ -120,29 +120,91 @@ class CustomWeb3 {
         }
     }
 
-    func getTokenBalance(token: CustomToken) -> BigUInt{
-        let contract = _web3Ins?.contract(Web3Utils.erc20ABI, at: token.address)
-        let from = _getAddress()
-        _option!.from = from
+    func getBalanceSync(address: String?, completion: @escaping (BigUInt?) -> ()) {
+        var addressModified: EthereumAddress?
+        if (address == nil) {
+            addressModified = _getAddress()
+        } else {
+            addressModified = EthereumAddress(address!)
+        }
 
-        let balance = try! contract?.method("balanceOf", parameters: [from] as [AnyObject], transactionOptions: _option)?.call()["0"] as! BigUInt
+        let token = self.account.getToken()
+        do {
+            if (addressModified == nil) {
+                completion(nil)
+            } else {
+                if(token == nil){
+                    let balance = try self._web3Ins?.eth.getBalance(address: addressModified!)
+                    completion(balance)
+                }
+                else{
+                    let balance = self.getTokenBalance(address: addressModified!)
+                    completion(balance)
+                }
+            }
+        } catch {
+            print(error)
+            completion(nil)
+        }
+    }
+
+    func getTokenBalance(address: EthereumAddress) -> BigUInt{
+        let token = account.getToken()!
+        let contract = _web3Ins?.contract(Web3Utils.erc20ABI, at: token.address)
+        _option!.from = address
+
+        let balance = try! contract?.method("balanceOf", parameters: [address] as [AnyObject], transactionOptions: _option)?.call()["0"] as! BigUInt
 
         return balance
     }
 
-    func transfer(address: String, amount: BigUInt) {
-        _transfer(address: EthereumAddress(address)!, amount: amount)
+    func transfer(tx: WriteTransaction) {
+        _transfer(tx: tx)
     }
 
-    func transferToken(token: EthereumAddress, address: String, amount: BigUInt){
-        _transferToken(token: token, address: EthereumAddress(address)!, amount: amount)
+    func transferToken(tx: WriteTransaction){
+        _transfer(tx: tx)
     }
 
-    func preTransfer(address: String, amount: String) throws {
+    func preTransfer(address: String, amount: String, completion: @escaping (WriteTransaction?, BigUInt?) -> ()) throws {
         if(amount.count == 0){ throw TransferError.invalidAmount}
         guard let address = EthereumAddress(address) else { throw TransferError.invalidAddress }
         if(Web3Utils.parseToBigUInt(amount, decimals: 18) == nil){ throw TransferError.invalidAmount}
         if(address == _getAddress()){ throw TransferError.transferToSelf}
+
+
+        DispatchQueue.global(qos: .userInteractive).async{
+            do{
+                let from = self._getAddress()!
+                let token = self.account.getToken()
+                let gasPrice = try self._web3Ins?.eth.getGasPrice()
+
+                self._option!.from = from
+
+                if(token == nil){
+                    let amount = Web3Utils.parseToBigUInt(amount, decimals: 18)!
+                    let tx =  self._web3Ins!.eth.sendETH(to: address, amount: amount, transactionOptions: self._option)!
+                    let gas = try self._web3Ins!.eth.estimateGas(tx.transaction, transactionOptions: self._option!)
+
+                    completion(tx, gas*gasPrice!)
+                }else{
+                    let tokenAddress = token!.address
+                    let amount = Web3Utils.parseToBigUInt(amount, decimals: Int(token!.decimals.description)!)
+
+                    let tokenContract = self._web3Ins!.contract(Web3Utils.erc20ABI, at: tokenAddress)
+                    let tx = tokenContract!.write("transfer", parameters: [address, amount] as [AnyObject],
+                            extraData: Data(), transactionOptions: self._option)!
+                    let gas = try self._web3Ins!.eth.estimateGas(tx.transaction, transactionOptions: self._option!)
+                    let gasPrice = try self._web3Ins?.eth.getGasPrice()
+
+                    completion(tx, gas*gasPrice!)
+                }
+            }
+            catch{
+                print(error)
+                completion(nil, nil)
+            }
+        }
     }
 
     func setNetwork(network: CustomWeb3Network?) {
@@ -209,21 +271,35 @@ class CustomWeb3 {
             return
         }
         var gas: CustomGas!
+        var gasLimit: BigUInt!
+        let isToken = account.getToken() != nil
+
+        if(isToken){
+            gasLimit = BigUInt(100000)
+        }
+        else{
+            gasLimit = BigUInt(21000)
+        }
         switch (rate) {
         case "low":
-            _option!.gasLimit = TransactionOptions.GasLimitPolicy.manual(BigUInt(21000))
-            _option!.gasPrice = TransactionOptions.GasPricePolicy.manual(BigUInt(1000000000 * 4))
-            gas = CustomGas(rate: rate, price: BigUInt(1000000000 * 4), limit: BigUInt(21000))
+            _option!.gasLimit = .manual(gasLimit)
+            _option!.gasPrice = .manual(BigUInt(1000000000 * 4))
+            gas = CustomGas(rate: rate, price: BigUInt(1000000000 * 4), limit: gasLimit)
             break
         case "mid":
-            _option!.gasLimit = TransactionOptions.GasLimitPolicy.manual(BigUInt(21000))
-            _option!.gasPrice = TransactionOptions.GasPricePolicy.manual(BigUInt(1000000000 * 10))
-            gas = CustomGas(rate: rate, price: BigUInt(1000000000 * 10), limit: BigUInt(21000))
+            _option!.gasLimit = .manual(gasLimit)
+            _option!.gasPrice = .manual(BigUInt(1000000000 * 10))
+            gas = CustomGas(rate: rate, price: BigUInt(1000000000 * 10), limit: gasLimit)
             break
         case "high":
-            _option!.gasLimit = TransactionOptions.GasLimitPolicy.manual(BigUInt(21000))
-            _option!.gasPrice = TransactionOptions.GasPricePolicy.manual(BigUInt(1000000000 * 20))
-            gas = CustomGas(rate: rate, price: BigUInt(1000000000 * 20), limit: BigUInt(21000))
+            _option!.gasLimit = .manual(gasLimit)
+            _option!.gasPrice = .manual(BigUInt(1000000000 * 20))
+            gas = CustomGas(rate: rate, price: BigUInt(1000000000 * 20), limit: gasLimit)
+            break
+        case "auto":
+            _option!.gasLimit = .automatic
+            _option!.gasPrice = .automatic
+            gas = CustomGas(rate: rate, price: nil, limit: nil)
             break
         default:
             break
@@ -235,8 +311,8 @@ class CustomWeb3 {
         if (_option == nil) {
             return
         }
-        _option!.gasLimit = TransactionOptions.GasLimitPolicy.manual(price)
-        _option!.gasPrice = TransactionOptions.GasPricePolicy.manual(limit)
+        _option!.gasLimit = .manual(price)
+        _option!.gasPrice = .manual(limit)
 
         let gas = CustomGas(rate: "custom", price: price, limit: limit)
         _saveGas(gas: gas)
@@ -246,9 +322,11 @@ class CustomWeb3 {
         return _loadGas()
     }
 
-    func getGasInWei() -> BigUInt {
+    func getGasInWei() -> BigUInt? {
         let gas = _loadGas()!
-        return gas.price! * gas.limit!
+        guard let price = gas.price else {return nil}
+
+        return price * gas.limit!
     }
 
     func getOption() -> TransactionOptions? {
@@ -258,7 +336,7 @@ class CustomWeb3 {
     func setOption() {
         _option = TransactionOptions.defaultOptions
         guard let gas = _loadGas() else {
-            setGas(rate: "mid")
+            setGas(rate: "auto")
             return
         }
 
@@ -352,7 +430,8 @@ class CustomWeb3 {
         userDefaults.set(try! PropertyListEncoder().encode(_customNetwork), forKey: "customNetwork")
     }
 
-    private func _transfer(address: EthereumAddress, amount: BigUInt){
+
+    private func _transfer(tx: WriteTransaction){
         let from = _getAddress()
         var keystoreManager: KeystoreManager!
         if(account.checkPrivate(checkAddress: from!.address)){
@@ -361,37 +440,13 @@ class CustomWeb3 {
         else{
             keystoreManager = _getKeyStoreManager()!
         }
-
-        _web3Ins!.addKeystoreManager(keystoreManager)
-        _option!.from = _getAddress()
-
-        DispatchQueue.global(qos: .userInitiated).async{
-            do{
-                let intermediateTX =  self._web3Ins!.eth.sendETH(to: address, amount: amount, transactionOptions: self._option)
-                let keyHex =  KeychainService.loadPassword(service: "moahWallet", account: "password")!
-                let txHash = try intermediateTX?.send(password: keyHex)
-                print(txHash)
-            }
-            catch{
-                print(error)
-            }
-        }
-    }
-
-    private func _transferToken(token: EthereumAddress, address: EthereumAddress, amount: BigUInt){
-        let keystoreManager = _getKeyStoreManager()!
-        let from = _getAddress()!
         _web3Ins?.addKeystoreManager(keystoreManager)
-        _option!.from = from
 
         DispatchQueue.global(qos: .userInitiated).async{
             do{
-                /*
                 let keyHex =  KeychainService.loadPassword(service: "moahWallet", account: "password")!
-                let token = ERC20(address, from: from, password: keyHex)
-                token.options = self._option!
-                let intermediateTX = try token.transfer(to: address, amount: amount)
-                print(intermediateTX)*/
+                let txHash = try tx.send(password: keyHex)
+                print(txHash)
             }
             catch{
                 print(error)

@@ -24,6 +24,7 @@ class AlertVC: UIViewController{
     var use: String = "alert"
     var info: TransferInfo?
     var balance: BigUInt?
+    var isToken = false
 
     let screenSize = UIScreen.main.bounds
 
@@ -77,8 +78,8 @@ class AlertVC: UIViewController{
         nextButton.setTitle(self.alertButtonTitle!, for: .normal)
 
         if(use == "transfer"){
-            self.alertHeight = screenSize.height/2
-            transferAlertView = TransferAlertView(info: self.info!)
+            self.alertHeight = screenSize.height/1.8
+            transferAlertView = TransferAlertView(info: self.info!, isToken: self.isToken)
 
             transferAlertView!.titleLabel.text = self.alertTitle!
             transferAlertView!.translatesAutoresizingMaskIntoConstraints = false
@@ -90,11 +91,20 @@ class AlertVC: UIViewController{
             transferAlertView!.trailingAnchor.constraint(equalTo: alertView.trailingAnchor).isActive = true
             transferAlertView!.bottomAnchor.constraint(equalTo: nextButton.topAnchor).isActive = true
 
-            if(self.info!.total > self.balance!){
-                transferAlertView?.warningLabel.text = "가스 비용이 부족합니다."
-                transferAlertView?.warningLabel.textColor = UIColor.red
-                nextButton.isEnabled = false
-                nextButton.setTitleColor(UIColor(red: 130, green: 130, blue: 130), for: .normal)
+            if(self.isToken){
+                if(self.info!.gas > self.balance!){
+                    transferAlertView?.warningLabel.text = "가스 비용이 부족합니다."
+                    transferAlertView?.warningLabel.textColor = UIColor.red
+                    nextButton.isEnabled = false
+                    nextButton.setTitleColor(UIColor(red: 130, green: 130, blue: 130), for: .normal)
+                }
+            }else{
+                if(self.info!.total > self.balance!){
+                    transferAlertView?.warningLabel.text = "가스 비용이 부족합니다."
+                    transferAlertView?.warningLabel.textColor = UIColor.red
+                    nextButton.isEnabled = false
+                    nextButton.setTitleColor(UIColor(red: 130, green: 130, blue: 130), for: .normal)
+                }
             }
         }
         else{

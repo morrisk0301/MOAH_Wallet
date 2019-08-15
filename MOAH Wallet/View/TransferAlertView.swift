@@ -15,6 +15,7 @@ class TransferAlertView: UIView {
     var symbol: String!
     var gas: String!
     var total: String!
+    var isToken = false
 
     let screenSize = UIScreen.main.bounds
     let util = Util()
@@ -106,23 +107,30 @@ class TransferAlertView: UIView {
         return label
     }()
 
-    convenience init(info: TransferInfo){
+    convenience init(info: TransferInfo, isToken: Bool){
         self.init()
         self.address = info.address
         self.amount = util.trimZero(balance: Web3Utils.formatToEthereumUnits(info.amount, decimals: 18))
         self.symbol = info.symbol
         self.gas = util.trimZero(balance: Web3Utils.formatToEthereumUnits(info.gas, decimals: 18))
-        self.total = util.trimZero(balance: Web3Utils.formatToEthereumUnits(info.total, decimals: 18))
+        self.isToken = isToken
+        if(isToken){
+            self.total = self.amount
+        }
+        else{
+            self.total = util.trimZero(balance: Web3Utils.formatToEthereumUnits(info.total, decimals: 18))
+        }
 
         self.cutValue()
         setValue()
+
+        setupLayout()
     }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
         backgroundColor = UIColor(key: "light3")
-        setupLayout()
     }
 
     private func setupLayout(){
@@ -141,17 +149,17 @@ class TransferAlertView: UIView {
         titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         titleLabel.heightAnchor.constraint(equalToConstant: screenSize.height/36).isActive = true
 
-        addressLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: screenSize.height/30).isActive = true
+        addressLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: screenSize.height/25).isActive = true
         addressLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: screenSize.width/15).isActive = true
         addressLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -screenSize.width/15).isActive = true
         addressLabel.heightAnchor.constraint(equalToConstant: screenSize.height/15).isActive = true
 
-        amountTagLabel.topAnchor.constraint(equalTo: addressLabel.bottomAnchor, constant: screenSize.height/80).isActive = true
+        amountTagLabel.topAnchor.constraint(equalTo: addressLabel.bottomAnchor, constant: screenSize.height/79).isActive = true
         amountTagLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: screenSize.width/15).isActive = true
         amountTagLabel.widthAnchor.constraint(equalToConstant: screenSize.width/7).isActive = true
         amountTagLabel.heightAnchor.constraint(equalToConstant: screenSize.height/40).isActive = true
 
-        gasTagLabel.topAnchor.constraint(equalTo: amountLabel.bottomAnchor, constant: screenSize.height/80).isActive = true
+        gasTagLabel.topAnchor.constraint(equalTo: amountLabel.bottomAnchor, constant: screenSize.height/70).isActive = true
         gasTagLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: screenSize.width/15).isActive = true
         gasTagLabel.widthAnchor.constraint(equalToConstant: screenSize.width/7).isActive = true
         gasTagLabel.heightAnchor.constraint(equalToConstant: screenSize.height/40).isActive = true
@@ -160,6 +168,7 @@ class TransferAlertView: UIView {
         totalTagLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: screenSize.width/15).isActive = true
         totalTagLabel.widthAnchor.constraint(equalToConstant: screenSize.width/5).isActive = true
         totalTagLabel.heightAnchor.constraint(equalToConstant: screenSize.height/30).isActive = true
+
 
         amountLabel.topAnchor.constraint(equalTo: addressLabel.bottomAnchor, constant: screenSize.height/80).isActive = true
         amountLabel.leadingAnchor.constraint(equalTo: amountTagLabel.leadingAnchor, constant: screenSize.width/15).isActive = true
@@ -174,7 +183,12 @@ class TransferAlertView: UIView {
         totalLabel.topAnchor.constraint(equalTo: gasLabel.bottomAnchor, constant: screenSize.height/20).isActive = true
         totalLabel.leadingAnchor.constraint(equalTo: totalTagLabel.leadingAnchor, constant: screenSize.width/15).isActive = true
         totalLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -screenSize.width/15).isActive = true
-        totalLabel.heightAnchor.constraint(equalToConstant: screenSize.height/30).isActive = true
+        if(isToken){
+            totalLabel.heightAnchor.constraint(equalToConstant: screenSize.height/13).isActive = true
+        }
+        else{
+            totalLabel.heightAnchor.constraint(equalToConstant: screenSize.height/30).isActive = true
+        }
 
         warningLabel.topAnchor.constraint(equalTo: totalLabel.bottomAnchor).isActive = true
         warningLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: screenSize.width/15).isActive = true
@@ -235,14 +249,42 @@ class TransferAlertView: UIView {
 
         gasLabel.attributedText = gasAttr
 
-        let totalAttr = NSMutableAttributedString(string: self.total + " ",
-                attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundB", size: 20, dynamic: true)!,
-                             NSAttributedString.Key.foregroundColor: UIColor(key: "regular"),
-                             NSAttributedString.Key.paragraphStyle: style])
-        totalAttr.append(NSAttributedString(string: self.symbol,
-                attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundB", size: 20, dynamic: true)!,
-                             NSAttributedString.Key.foregroundColor: UIColor(key: "darker"),
-                             NSAttributedString.Key.paragraphStyle: style]))
+        var totalAttr: NSMutableAttributedString!
+        if(isToken){
+            style.lineSpacing = 5
+            var gas = self.gas!
+            if(gas.count > 11){
+                gas.removeLast(gas.count - 11)
+                gas = gas + "..."
+            }
+
+            totalAttr = NSMutableAttributedString(string: self.total + " ",
+                    attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundB", size: 20, dynamic: true)!,
+                                 NSAttributedString.Key.foregroundColor: UIColor(key: "regular"),
+                                 NSAttributedString.Key.paragraphStyle: style])
+            totalAttr.append(NSAttributedString(string: self.symbol,
+                    attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundB", size: 20, dynamic: true)!,
+                                 NSAttributedString.Key.foregroundColor: UIColor(key: "darker"),
+                                 NSAttributedString.Key.paragraphStyle: style]))
+            totalAttr.append(NSAttributedString(string: "\n+" + gas + " ",
+                    attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundB", size: 20, dynamic: true)!,
+                                 NSAttributedString.Key.foregroundColor: UIColor(key: "regular"),
+                                 NSAttributedString.Key.paragraphStyle: style]))
+            totalAttr.append(NSAttributedString(string: "ETH",
+                    attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundB", size: 20, dynamic: true)!,
+                                 NSAttributedString.Key.foregroundColor: UIColor(key: "darker"),
+                                 NSAttributedString.Key.paragraphStyle: style]))
+        }
+        else{
+            totalAttr = NSMutableAttributedString(string: self.total + " ",
+                    attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundB", size: 20, dynamic: true)!,
+                                 NSAttributedString.Key.foregroundColor: UIColor(key: "regular"),
+                                 NSAttributedString.Key.paragraphStyle: style])
+            totalAttr.append(NSAttributedString(string: self.symbol,
+                    attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundB", size: 20, dynamic: true)!,
+                                 NSAttributedString.Key.foregroundColor: UIColor(key: "darker"),
+                                 NSAttributedString.Key.paragraphStyle: style]))
+        }
 
         totalLabel.attributedText = totalAttr
     }

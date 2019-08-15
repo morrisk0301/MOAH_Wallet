@@ -253,12 +253,15 @@ class EthAccount: NetworkObserver {
     }
 
     func setToken(index: Int?) {
+        let web3: CustomWeb3 = CustomWeb3.web3
+
         if(index == nil) {
             _networkData!.tokenSelected = nil
         }
         else{
             _networkData!.tokenSelected = _networkData!.tokenArray[index!]
         }
+        web3.setGas(rate: web3.getGas()!.rate)
         _saveNetworkData()
     }
 
@@ -440,6 +443,7 @@ class EthAccount: NetworkObserver {
         _loadAddress()
         _loadAddressSelected()
         _loadIsVerified()
+        connectNetwork()
     }
 
     private func _saveAddressSelected() {

@@ -10,6 +10,8 @@ class AccountCell: UITableViewCell{
 
     let screenSize = UIScreen.main.bounds
 
+    var symbol: String!
+
     let accountLabel: UILabel = {
         let label = UILabel()
 
@@ -24,7 +26,6 @@ class AccountCell: UITableViewCell{
     let balanceLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "0.00000 ETH"
         label.textColor = UIColor(key: "darker")
         label.font = UIFont(name:"NanumSquareRoundB", size: 20, dynamic: true)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -93,6 +94,10 @@ class AccountCell: UITableViewCell{
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func addSymbol(symbol: String){
+        self.balanceLabel.text = "0.00000 "+symbol
     }
 
     private func addContentView(){

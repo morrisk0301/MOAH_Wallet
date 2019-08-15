@@ -5,12 +5,14 @@
 
 import Foundation
 import UIKit
+import web3swift
 import LocalAuthentication
 
 class PasswordCheckVC: UIViewController, KeypadViewDelegate, UIGestureRecognizerDelegate {
 
     var toView: String!
     var password:String = ""
+    var tempTx: WriteTransaction?
     var tempInfo: TransferInfo?
     let account: EthAccount = EthAccount.accountInstance
     let appDelegate: AppDelegate = (UIApplication.shared.delegate as? AppDelegate)!
@@ -135,7 +137,8 @@ class PasswordCheckVC: UIViewController, KeypadViewDelegate, UIGestureRecognizer
 
     private func proceedTransfer(){
         let web3: CustomWeb3 = CustomWeb3.web3
-        web3.transfer(address: tempInfo!.address, amount: tempInfo!.amount)
+        web3.transferToken(tx: tempTx!)
+
 
         let controller = WalletDoneVC()
         controller.isTransfer = true

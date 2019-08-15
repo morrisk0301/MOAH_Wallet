@@ -17,6 +17,7 @@ class TXFeeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIG
 
     var price: BigUInt?
     var limit: BigUInt?
+    var gasLimit: String!
 
     let tableView: UITableView = {
         let tableView = UITableView()
@@ -49,6 +50,14 @@ class TXFeeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIG
         tableView.register(MenuCell.self, forCellReuseIdentifier: reuseIdentifier)
 
         view.addSubview(tableView)
+
+        let account: EthAccount = EthAccount.accountInstance
+        if(account.getToken() == nil){
+            gasLimit = "21000"
+        }
+        else{
+            gasLimit = "100000"
+        }
 
         setupLayout()
     }
@@ -85,36 +94,43 @@ class TXFeeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIG
 
         switch(indexPath.row){
         case 0:
+            if(gas?.rate == "auto"){ addCheckImage(cell: cell)}
+            let attrText = NSMutableAttributedString(string: "자동",
+                    attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)!,
+                                 NSAttributedString.Key.foregroundColor: UIColor(key: "darker")])
+            cell.menuLabel.attributedText = attrText
+            break
+        case 1:
             if(gas?.rate == "low"){ addCheckImage(cell: cell)}
             let attrText = NSMutableAttributedString(string: "낮음", 
                     attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)!, 
                                  NSAttributedString.Key.foregroundColor: UIColor(key: "darker")])
-            attrText.append(NSAttributedString(string: " (가스 가격: 4 GWei / 가스 한도 21000)",
-                    attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12),
-                                 NSAttributedString.Key.foregroundColor: UIColor(key: "darker")]))
-            cell.menuLabel.attributedText = attrText
-            break
-        case 1:
-            if(gas?.rate == "mid"){ addCheckImage(cell: cell)}
-            let attrText = NSMutableAttributedString(string: "보통",
-                    attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)!,
-                                 NSAttributedString.Key.foregroundColor: UIColor(key: "darker")])
-            attrText.append(NSAttributedString(string: " (가스 가격: 10 GWei / 가스 한도 21000)",
+            attrText.append(NSAttributedString(string: " (가스 가격: 4 GWei / 가스 한도 "+self.gasLimit+")",
                     attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12),
                                  NSAttributedString.Key.foregroundColor: UIColor(key: "darker")]))
             cell.menuLabel.attributedText = attrText
             break
         case 2:
-            if(gas?.rate == "high"){ addCheckImage(cell: cell)}
-            let attrText = NSMutableAttributedString(string: "높음",
+            if(gas?.rate == "mid"){ addCheckImage(cell: cell)}
+            let attrText = NSMutableAttributedString(string: "보통",
                     attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)!,
                                  NSAttributedString.Key.foregroundColor: UIColor(key: "darker")])
-            attrText.append(NSAttributedString(string: " (가스 가격: 20 GWei / 가스 한도 21000)",
+            attrText.append(NSAttributedString(string: " (가스 가격: 10 GWei / 가스 한도 "+self.gasLimit+")",
                     attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12),
                                  NSAttributedString.Key.foregroundColor: UIColor(key: "darker")]))
             cell.menuLabel.attributedText = attrText
             break
         case 3:
+            if(gas?.rate == "high"){ addCheckImage(cell: cell)}
+            let attrText = NSMutableAttributedString(string: "높음",
+                    attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)!,
+                                 NSAttributedString.Key.foregroundColor: UIColor(key: "darker")])
+            attrText.append(NSAttributedString(string: " (가스 가격: 20 GWei / 가스 한도 "+self.gasLimit+")",
+                    attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12),
+                                 NSAttributedString.Key.foregroundColor: UIColor(key: "darker")]))
+            cell.menuLabel.attributedText = attrText
+            break
+        case 4:
             if(gas?.rate == "custom"){ addCheckImage(cell: cell)}
             cell.menuLabel.text = "사용자 지정"
             self.price = gas?.price
@@ -129,7 +145,7 @@ class TXFeeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIG
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 5
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -140,17 +156,21 @@ class TXFeeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIG
         switch (indexPath.row){
             case 0:
                 AudioServicesPlaySystemSound(1519)
-                web3.setGas(rate: "low")
+                web3.setGas(rate: "auto")
                 break
             case 1:
                 AudioServicesPlaySystemSound(1519)
-                web3.setGas(rate: "mid")
+                web3.setGas(rate: "low")
                 break
             case 2:
                 AudioServicesPlaySystemSound(1519)
-                web3.setGas(rate: "high")
+                web3.setGas(rate: "mid")
                 break
             case 3:
+                AudioServicesPlaySystemSound(1519)
+                web3.setGas(rate: "high")
+                break
+            case 4:
                 let controller = TXCustomVC()
                 controller.price = self.price
                 controller.limit = self.limit

@@ -257,20 +257,22 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
         DispatchQueue.global(qos: .userInitiated).async{
             self.account.connectNetwork()
             let tokenArray = self.account.getTokenArray()
-            var symbol = "ETH"
             var name = "Ethereum"
             if(self.account.getToken() != nil){
-                symbol = self.account.getToken()!.symbol
+                self.symbol = self.account.getToken()!.symbol
                 name = self.account.getToken()!.name
+            }else{
+                self.symbol = "ETH"
             }
             self.checkChainNetwork()
             self.web3.getBalance(address: nil, completion: {(balance) in
                 let balanceTrimmed = self.util.trimBalance(balance: balance)
                 DispatchQueue.main.async {
                     self.mainVC.balance = balance
+                    self.mainVC.symbol = self.symbol
                     self.mainVC.tokenView.setTokenString(tokenString: name)
                     self.mainVC.balanceString = balanceTrimmed
-                    self.mainVC.balanceLabel.text = balanceTrimmed + " " + symbol
+                    self.mainVC.balanceLabel.text = balanceTrimmed + " " + self.symbol
                     self.tokenSelectVC.tokenArray = tokenArray
                     self.tokenSelectVC.tableView.reloadData()
                     self.isReload = false

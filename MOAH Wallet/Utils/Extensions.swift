@@ -96,6 +96,11 @@ extension UIViewController {
         }
     }
 
+    func reloadMainContainerVC(){
+        let vc = self.presentingViewController as! MainContainerVC
+        vc.isReload = true
+    }
+
     @objc private func backPressed(_ sender: UIButton){
         self.navigationController?.popViewController(animated: true)
     }

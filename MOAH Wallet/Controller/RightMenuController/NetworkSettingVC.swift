@@ -156,7 +156,7 @@ class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSo
             self.web3.setNetwork(network: self.networks[indexPath.section])
             self.getNetwork()
             self.tableView.reloadData()
-            reloadRootView()
+            self.reloadMainContainerVC()
         }
         else{
             self.showSpinner()
@@ -206,11 +206,6 @@ class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSo
 
     func networkChanged(network: CustomWeb3Network) {
         self.network = network
-    }
-
-    func reloadRootView(){
-        let vc = self.presentingViewController as! MainContainerVC
-        vc.isReload = true
     }
 
     @objc func addPressed(_ sender: UIButton){
