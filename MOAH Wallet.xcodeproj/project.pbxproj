@@ -15,6 +15,7 @@
 		A5A0C08E22DCD151006F2E83 /* NanumSquareRoundB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5A0C08C22DCD150006F2E83 /* NanumSquareRoundB.ttf */; };
 		A5A0C08F22DCD154006F2E83 /* NanumSquareRoundEB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5A0C08D22DCD150006F2E83 /* NanumSquareRoundEB.ttf */; };
 		A5A0C09022DCD155006F2E83 /* NanumSquareRoundR.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5A0C08B22DCD150006F2E83 /* NanumSquareRoundR.ttf */; };
+		A5ADC9DA23083EBD00912A7D /* MOAHData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A5ADC9D823083EBD00912A7D /* MOAHData.xcdatamodeld */; };
 		A5BDDA6422EB45BB00A9EE5C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5BDDA6322EB45BB00A9EE5C /* Assets.xcassets */; };
 		C051F089B9C06C3FD9DB06E9 /* MainLeftMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F4D47F43A88794BDAD9B /* MainLeftMenuVC.swift */; };
 		C051F0B1BAA75AD894DD0193 /* RightMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FA21B0D87D905D0AD07E /* RightMenuCell.swift */; };
@@ -124,6 +125,7 @@
 		A5A0C08B22DCD150006F2E83 /* NanumSquareRoundR.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRoundR.ttf; sourceTree = "<group>"; };
 		A5A0C08C22DCD150006F2E83 /* NanumSquareRoundB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRoundB.ttf; sourceTree = "<group>"; };
 		A5A0C08D22DCD150006F2E83 /* NanumSquareRoundEB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRoundEB.ttf; sourceTree = "<group>"; };
+		A5ADC9D923083EBD00912A7D /* TXHistory.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TXHistory.xcdatamodel; sourceTree = "<group>"; };
 		A5BDDA6322EB45BB00A9EE5C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C051F01C6821434AF3F35AF7 /* TXCustomVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TXCustomVC.swift; sourceTree = "<group>"; };
 		C051F05C4517A9E3F19A8751 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 				C051F1543F153AB463143264 /* Resources */,
 				C051F978BFB84B4B06445E34 /* View */,
 				C051F5478E2DF7DBC6F4F331 /* Model */,
+				A5ADC9D823083EBD00912A7D /* MOAHData.xcdatamodeld */,
 			);
 			path = "MOAH Wallet";
 			sourceTree = "<group>";
@@ -756,6 +759,7 @@
 				C051FAE771AFBEEAFA7DE235 /* NormalAlertView.swift in Sources */,
 				C051F19A2C74D3A3F7A53F6C /* TransferAlertView.swift in Sources */,
 				C051F8498EC8FC795AC7B2F9 /* QRCodeVC.swift in Sources */,
+				A5ADC9DA23083EBD00912A7D /* MOAHData.xcdatamodeld in Sources */,
 				C051FA0D6265C37401BCD195 /* TokenListVC.swift in Sources */,
 				C051F177EDCC505D4EC389F1 /* TokenCell.swift in Sources */,
 				C051F2A97F6A57B745B623FA /* TokenAddVC.swift in Sources */,
@@ -1061,6 +1065,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		A5ADC9D823083EBD00912A7D /* MOAHData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A5ADC9D923083EBD00912A7D /* TXHistory.xcdatamodel */,
+			);
+			currentVersion = A5ADC9D923083EBD00912A7D /* TXHistory.xcdatamodel */;
+			path = MOAHData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = C051F9DAD87FCA8A61C06861 /* Project object */;
 }

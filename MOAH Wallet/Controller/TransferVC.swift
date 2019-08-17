@@ -19,6 +19,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
     var balanceString: String!
     var balance: BigUInt!
     var symbol: String!
+    var decimals: Int!
 
     let balanceLabel: UILabel = {
         let label = UILabel()
@@ -289,7 +290,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
     }
 
     private func checkAmount() {
-        guard let balanceBig = Web3Utils.parseToBigUInt(amountField.text!, decimals: 18) else {
+        guard let balanceBig = Web3Utils.parseToBigUInt(amountField.text!, decimals: decimals) else {
             self.errorLabel.text = "올바르지 않은 형식입니다."
             changeAmountStatus(verify: false)
             return
@@ -343,7 +344,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
         if (amountField.text?.count == 0) {
             amount = BigUInt(0)
         } else {
-            amount = Web3Utils.parseToBigUInt(amountField.text!, decimals: 18)
+            amount = Web3Utils.parseToBigUInt(amountField.text!, decimals: decimals)
         }
 
         switch (indexPath.item) {
@@ -365,7 +366,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
         default:
             break
         }
-        amountField.text = util.trimZero(balance: Web3Utils.formatToEthereumUnits(amount, decimals: 18))
+        amountField.text = util.trimZero(balance: Web3Utils.formatToEthereumUnits(amount, decimals: decimals))
         checkAmount()
     }
 
@@ -412,7 +413,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
     }
 
     func checkQr(value: String){
-        guard let address = EthereumAddress(value) else {
+        guard let _ = EthereumAddress(value) else {
             qrFail()
             return
         }
@@ -457,25 +458,22 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
         let util = Util()
         let amount = amountField.text!
         let address = addressField.text!
-        var gas = web3.getGasInWei()
 
         do {
             self.showSpinner()
-            try web3.preTransfer(address: address, amount: amount, completion: {(tx, estimateGas, isToken) in
+            try web3.preTransfer(address: address, amount: amount, completion: {(tx, estimateGas, subInfo) in
                 DispatchQueue.main.async{
                     self.hideSpinner()
-                    if(gas == nil){
-                        gas = estimateGas
-                    }
-                    let total = Web3Utils.parseToBigUInt(amount, decimals: 18)! + gas!
-                    let info = TransferInfo(amount: Web3Utils.parseToBigUInt(amount, decimals: 18)!, address: address, gas: gas!, total: total, symbol: self.symbol)
+                    let total = Web3Utils.parseToBigUInt(amount, decimals: self.decimals)! + estimateGas!
+                    let info = TransferInfo(amount: Web3Utils.parseToBigUInt(amount, decimals: self.decimals)!,
+                            address: address, gas: estimateGas!, total: total, symbol: self.symbol, decimals: self.decimals)
                     let confirmVC = util.alert(use: "transfer", title: "전송 확인", info: info, balance: self.balance, isToken: self.symbol != "ETH",
                             buttonTitle: "전송", buttonNum: 2, completion: { (confirm) in
                         if(confirm){
                             let controller = PasswordCheckVC()
                             controller.toView = "transfer"
                             controller.tempTx = tx
-                            controller.isToken = isToken
+                            controller.subInfo = subInfo
                             self.navigationController?.pushViewController(controller, animated: true)
                         }
                     })

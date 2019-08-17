@@ -6,6 +6,7 @@
 import Foundation
 import web3swift
 import CryptoSwift
+import CoreData
 
 class EthAccount: NetworkObserver {
 
@@ -29,6 +30,14 @@ class EthAccount: NetworkObserver {
     private var _addressArray: [CustomAddress] = [CustomAddress]()
     private var _networkData: NetworkData?
     private var network: CustomWeb3Network?
+
+    private var managedContext: NSManagedObjectContext? {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return nil
+        }
+
+        return appDelegate.persistentContainer.viewContext
+    }
 
     private init() {
     }
@@ -261,12 +270,28 @@ class EthAccount: NetworkObserver {
         else{
             _networkData!.tokenSelected = _networkData!.tokenArray[index!]
         }
-        web3.setGas(rate: web3.getGas()!.rate)
+
+        let getGas = web3.getGas()!
+        if(getGas.rate == "custom"){
+            web3.setGas(price: getGas.price!, limit: getGas.limit!)
+        }
+        else{
+            web3.setGas(rate: getGas.rate)
+        }
         _saveNetworkData()
     }
 
     func setToken(token: CustomToken) {
+        let web3: CustomWeb3 = CustomWeb3.web3
         _networkData!.tokenSelected = token
+
+        let getGas = web3.getGas()!
+        if(getGas.rate == "custom"){
+            web3.setGas(price: getGas.price!, limit: getGas.limit!)
+        }
+        else{
+            web3.setGas(rate: getGas.rate)
+        }
         _saveNetworkData()
     }
 
@@ -288,6 +313,7 @@ class EthAccount: NetworkObserver {
         return false
     }
 
+    /*
     func saveTxInfo(txInfo: TXInfo){
         _networkData!.txHistory.append(txInfo)
         _saveNetworkData()
@@ -296,6 +322,7 @@ class EthAccount: NetworkObserver {
     func getTxHistory() -> [TXInfo] {
         return _networkData!.txHistory
     }
+    */
 
     private func _encryptData(stringData: String, password: String) -> Data {
         let data: Data = stringData.data(using: String.Encoding.utf8)!
@@ -428,6 +455,80 @@ class EthAccount: NetworkObserver {
         _password = password
     }
 
+    func initTXInfo(tx: String, error: String, subInfo: TXSubInfo) {
+        guard let managedContext = managedContext else { return }
+        guard let entity = NSEntityDescription.entity(forEntityName: "TXInfo", in: managedContext) else { return }
+
+        let util = Util()
+        let newTX = NSManagedObject(entity: entity, insertInto: managedContext)
+        let status = error == "" ? "notYetProcessed" : "failed"
+        let amount = util.trimZero(balance: Web3Utils.formatToEthereumUnits(subInfo.amount, decimals: subInfo.decimals)!)
+        let gasPrice = util.trimZero(balance: Web3Utils.formatToEthereumUnits(subInfo.gasPrice, toUnits: .Gwei)!)
+        let gasLimit = util.trimZero(balance: Web3Utils.formatToEthereumUnits(subInfo.gasLimit, toUnits: .wei)!)
+
+        newTX.setValue(_address!.address, forKey: "account")
+        newTX.setValue(amount, forKey: "amount")
+        newTX.setValue(subInfo.category, forKey: "category")
+        newTX.setValue(Date(), forKey: "date")
+        newTX.setValue(subInfo.decimals, forKey: "decimals")
+        newTX.setValue(error, forKey: "error")
+        newTX.setValue(_address!.address, forKey: "from")
+        newTX.setValue(gasLimit, forKey: "gasLimit")
+        newTX.setValue(gasPrice, forKey: "gasPrice")
+        newTX.setValue(network!.name, forKey: "network")
+        newTX.setValue(status, forKey: "status")
+        newTX.setValue(subInfo.symbol, forKey: "symbol")
+        newTX.setValue(subInfo.to, forKey: "to")
+        newTX.setValue(tx, forKey: "txHash")
+
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("error: \(error)")
+        }
+    }
+
+    func fetchTXInfo() -> [TXInfo] {
+        guard let managedContext = managedContext else {
+            return []
+        }
+
+        let fetchRequest = NSFetchRequest<TXInfo>(entityName: "TXInfo")
+        let networkPredicate = NSPredicate(format: "network = %@", network!.name)
+        let accountPredicate = NSPredicate(format: "account = %@", _address!.address)
+        let andPredicate = NSCompoundPredicate(type: .and, subpredicates: [networkPredicate, accountPredicate])
+        fetchRequest.predicate = andPredicate
+
+        do {
+            let result = try managedContext.fetch(fetchRequest)
+            return result
+        } catch let error as NSError {
+            print("error : \(error)")
+        }
+
+        return []
+    }
+
+    func updateTXStatus(tx: String, status: String){
+        guard let managedContext = managedContext else { return }
+
+        let fetchRequest = NSFetchRequest<TXInfo>(entityName: "TXInfo")
+        let hashPredicate = NSPredicate(format: "txHash = %@", tx)
+        fetchRequest.predicate = hashPredicate
+
+        do {
+            let result = try managedContext.fetch(fetchRequest)
+
+            let objectUpdate = result[0]
+            objectUpdate.setValue(status, forKey: "status")
+
+            try managedContext.save()
+
+        } catch let error as NSError {
+            print("error: \(error)")
+        }
+    }
+
     func connectNetwork(){
         let web3: CustomWeb3 = CustomWeb3.web3
         web3.attachNetworkObserver(self)
@@ -514,7 +615,7 @@ class EthAccount: NetworkObserver {
             _networkData = networkData
         }
         else{
-            _networkData = NetworkData(network: network!.name, tokenSelected: nil, tokenArray: [], txHistory: [])
+            _networkData = NetworkData(network: network!.name, tokenSelected: nil, tokenArray: [])
             _saveNetworkData()
         }
     }

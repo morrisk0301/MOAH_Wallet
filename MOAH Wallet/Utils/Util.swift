@@ -108,5 +108,4 @@ class Util {
 
         return processedImage
     }
-
 }

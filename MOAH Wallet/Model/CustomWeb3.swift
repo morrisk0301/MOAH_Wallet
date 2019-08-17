@@ -7,6 +7,7 @@ import Foundation
 import web3swift
 import BigInt
 import PromiseKit
+import CoreData
 
 class CustomWeb3 {
 
@@ -161,11 +162,11 @@ class CustomWeb3 {
         return balance
     }
 
-    func transfer(tx: WriteTransaction, isToken: Bool){
-        _transfer(tx: tx, isToken: isToken)
+    func transfer(tx: WriteTransaction, subInfo: TXSubInfo){
+        _transfer(tx: tx, subInfo: subInfo)
     }
 
-    func preTransfer(address: String, amount: String, completion: @escaping (WriteTransaction?, BigUInt?, Bool) -> ()) throws {
+    func preTransfer(address: String, amount: String, completion: @escaping (WriteTransaction?, BigUInt?, TXSubInfo?) -> ()) throws {
         if(amount.count == 0){ throw TransferError.invalidAmount}
         guard let address = EthereumAddress(address) else { throw TransferError.invalidAddress }
         if(Web3Utils.parseToBigUInt(amount, decimals: 18) == nil){ throw TransferError.invalidAmount}
@@ -176,32 +177,49 @@ class CustomWeb3 {
             do{
                 let from = self._getAddress()!
                 let token = self.account.getToken()
-                let gasPrice = try self._web3Ins?.eth.getGasPrice()
+                let auto = self.getGasInWei() == nil
+                let gas = self.getGas()
+                var gasPrice = gas?.price
+                var gasLimit = gas?.limit
 
                 self._option!.from = from
 
                 if(token == nil){
                     let amount = Web3Utils.parseToBigUInt(amount, decimals: 18)!
                     let tx =  self._web3Ins!.eth.sendETH(to: address, amount: amount, transactionOptions: self._option)!
-                    let gas = try self._web3Ins!.eth.estimateGas(tx.transaction, transactionOptions: self._option!)
 
-                    completion(tx, gas*gasPrice!, false)
+                    if(auto){
+                        gasLimit = try self._web3Ins!.eth.estimateGas(tx.transaction, transactionOptions: self._option!)
+                        gasPrice = try self._web3Ins?.eth.getGasPrice()
+                    }
+
+
+                    let subInfo = TXSubInfo(to: address.address, from: from.address, category: "이더리움 전송", 
+                            amount: amount, symbol: "ETH", decimals: 18, gasPrice: gasPrice!, gasLimit: gasLimit!)
+                    completion(tx, gasLimit!*gasPrice!, subInfo)
                 }else{
                     let tokenAddress = token!.address
-                    let amount = Web3Utils.parseToBigUInt(amount, decimals: Int(token!.decimals.description)!)
+                    let amount = Web3Utils.parseToBigUInt(amount, decimals: Int(token!.decimals.description)!)!
 
                     let tokenContract = self._web3Ins!.contract(Web3Utils.erc20ABI, at: tokenAddress)
                     let tx = tokenContract!.write("transfer", parameters: [address, amount] as [AnyObject],
                             extraData: Data(), transactionOptions: self._option)!
-                    let gas = try self._web3Ins!.eth.estimateGas(tx.transaction, transactionOptions: self._option!)
-                    let gasPrice = try self._web3Ins?.eth.getGasPrice()
 
-                    completion(tx, gas*gasPrice!, true)
+                    if(auto){
+                        gasLimit = try self._web3Ins!.eth.estimateGas(tx.transaction, transactionOptions: self._option!)
+                        gasPrice = try self._web3Ins?.eth.getGasPrice()
+                    }
+
+                    let subInfo = TXSubInfo(to: address.address, from: from.address, category: "토큰 전송", 
+                            amount: amount, symbol: token!.symbol, decimals: Int(token!.decimals.description)!,
+                            gasPrice: gasPrice!, gasLimit: gasLimit!)
+
+                    completion(tx, gasLimit!*gasPrice!, subInfo)
                 }
             }
             catch{
                 print(error)
-                completion(nil, nil, false)
+                completion(nil, nil, nil)
             }
         }
     }
@@ -261,7 +279,7 @@ class CustomWeb3 {
     }
 
     func delNetwork(network: CustomWeb3Network){
-        if(network == network){
+        if(network == self.network!){
             setNetwork(network: CustomWeb3Network(name: "mainnet", url: URL(string: "https://api.infura.io/v1/jsonrpc/mainnet")!))
         }
         let index = _customNetwork.firstIndex(where: {$0 == network})
@@ -456,7 +474,7 @@ class CustomWeb3 {
     }
 
 
-    private func _transfer(tx: WriteTransaction?, isToken: Bool){
+    private func _transfer(tx: WriteTransaction?, subInfo: TXSubInfo){
         let from = _getAddress()
         var keystoreManager: KeystoreManager!
         if(account.checkPrivate(checkAddress: from!.address)){
@@ -472,25 +490,26 @@ class CustomWeb3 {
                 let keyHex =  KeychainService.loadPassword(service: "moahWallet", account: "password")!
                 if(tx == nil){throw TransferError.gasError}
                 let txHash = try tx!.send(password: keyHex)
-                self._saveTxResult(tx: txHash, isToken: isToken)
+                self._saveTxResult(tx: txHash, subInfo: subInfo)
+            }
+            catch Web3Error.nodeError(let desc) {
+                self._saveTxResult(error: desc, subInfo: subInfo)
+            }
+            catch Web3Error.processingError(let desc) {
+                self._saveTxResult(error: desc, subInfo: subInfo)
             }
             catch{
                 print(error)
+                self._saveTxResult(error: "기타 오류", subInfo: subInfo)
             }
         }
     }
 
-    private func _saveTxResult(tx: TransactionSendingResult, isToken: Bool){
-        let date = Date()
-        let category = isToken ? "토큰 전송" : "이더리움 전송"
-        let txInfo = TXInfo(txHash: tx.hash, category: category, error: nil, date: date, status: "notYetProcessed")
-        account.saveTxInfo(txInfo: txInfo)
+    private func _saveTxResult(tx: TransactionSendingResult, subInfo: TXSubInfo){
+        account.initTXInfo(tx: tx.hash, error: "", subInfo: subInfo)
     }
 
-    private func _saveTxResult(error: String, isToken: Bool){
-        let date = Date()
-        let category = isToken ? "토큰 전송" : "이더리움 전송"
-        let txInfo = TXInfo(txHash: "", category: category, error: error, date: date, status: "failed")
-        account.saveTxInfo(txInfo: txInfo)
+    private func _saveTxResult(error: String, subInfo: TXSubInfo){
+        account.initTXInfo(tx: "", error: error, subInfo: subInfo)
     }
 }

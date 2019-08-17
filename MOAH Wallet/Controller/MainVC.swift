@@ -18,6 +18,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
     var delegate: MainControllerDelegate?
     var balance: BigUInt?
     var balanceString: String?
+    var decimals = 18
     var symbol = "ETH"
     var txHistory: [TXInfo] = [TXInfo]()
     var refreshControl = UIRefreshControl()
@@ -194,8 +195,11 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
             return cell
         }
         cell.nonBlankConstraint.isActive = true
-        cell.setTXValue(category: self.txHistory[indexPath.row].category, date: self.txHistory[indexPath.row].date)
-        cell.setStatusLabel(status: self.txHistory[indexPath.row].status)
+        let category = self.txHistory[indexPath.row].value(forKey: "category") as! String
+        let date = self.txHistory[indexPath.row].value(forKey: "date") as! Date
+        let status = self.txHistory[indexPath.row].value(forKey: "status") as! String
+        cell.setTXValue(category: category, date: date)
+        cell.setStatusLabel(status: status)
 
         return cell
     }
@@ -209,7 +213,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if(self.txHistory.count == 0){
-            screenSize.height/10
+            return screenSize.height/10
         }
         return screenSize.height/12
     }
@@ -235,6 +239,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
         let account: EthAccount = EthAccount.accountInstance
         if(account.getIsVerified()){
             let controller = TransferVC()
+            controller.decimals = self.decimals
             controller.balance = self.balance!
             controller.balanceString = self.balanceString!
             controller.symbol = self.symbol

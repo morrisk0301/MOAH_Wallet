@@ -16,6 +16,7 @@ class TransferAlertView: UIView {
     var gas: String!
     var total: String!
     var isToken = false
+    var decimals: Int!
 
     let screenSize = UIScreen.main.bounds
     let util = Util()
@@ -110,7 +111,8 @@ class TransferAlertView: UIView {
     convenience init(info: TransferInfo, isToken: Bool){
         self.init()
         self.address = info.address
-        self.amount = util.trimZero(balance: Web3Utils.formatToEthereumUnits(info.amount, decimals: 18))
+        self.decimals = info.decimals
+        self.amount = util.trimZero(balance: Web3Utils.formatToEthereumUnits(info.amount, decimals: self.decimals))
         self.symbol = info.symbol
         self.gas = util.trimZero(balance: Web3Utils.formatToEthereumUnits(info.gas, decimals: 18))
         self.isToken = isToken
@@ -168,7 +170,6 @@ class TransferAlertView: UIView {
         totalTagLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: screenSize.width/15).isActive = true
         totalTagLabel.widthAnchor.constraint(equalToConstant: screenSize.width/5).isActive = true
         totalTagLabel.heightAnchor.constraint(equalToConstant: screenSize.height/30).isActive = true
-
 
         amountLabel.topAnchor.constraint(equalTo: addressLabel.bottomAnchor, constant: screenSize.height/80).isActive = true
         amountLabel.leadingAnchor.constraint(equalTo: amountTagLabel.leadingAnchor, constant: screenSize.width/15).isActive = true

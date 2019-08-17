@@ -36,6 +36,7 @@ struct TransferInfo: Codable {
     var gas: BigUInt
     var total: BigUInt
     var symbol: String
+    var decimals: Int
 }
 
 struct CustomToken: Codable {
@@ -46,19 +47,21 @@ struct CustomToken: Codable {
     var logo: Data?
 }
 
-struct TXInfo: Codable{
-    var txHash: String
+struct TXSubInfo {
+    var to: String
+    var from: String
     var category: String
-    var error: String?
-    var date: Date
-    var status: String
+    var amount: BigUInt
+    var symbol: String
+    var decimals: Int
+    var gasPrice: BigUInt
+    var gasLimit: BigUInt
 }
 
 struct NetworkData: Codable {
     var network: String
     var tokenSelected: CustomToken?
     var tokenArray: [CustomToken] = [CustomToken]()
-    var txHistory: [TXInfo] = [TXInfo]()
 }
 
 func ==(left: CustomWeb3Network, right: CustomWeb3Network) -> Bool{
