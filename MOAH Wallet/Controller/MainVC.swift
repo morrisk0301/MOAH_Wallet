@@ -19,6 +19,8 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
     var balance: BigUInt?
     var balanceString: String?
     var symbol = "ETH"
+    var txHistory: [TXInfo] = [TXInfo]()
+    var refreshControl = UIRefreshControl()
 
     let screenSize = UIScreen.main.bounds
     let util = Util()
@@ -86,6 +88,10 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
 
         self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(screenSize.height/300, for: .default)
 
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(refresh(_:)), for: UIControl.Event.valueChanged)
+
+
         setupBarButton()
 
         view.addSubview(tokenView)
@@ -95,12 +101,13 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
         view.addSubview(txView)
         balanceLabel.text = "0.00000 " + symbol
         tokenView.setTokenString(tokenString: "Ethereum")
+        //tokenView.addSubview(refreshControl)
 
         txLabel.applyShadow()
 
         txView.delegate = self
         txView.dataSource = self
-        txView.register(MenuCell.self, forCellReuseIdentifier: reuseIdentifier)
+        txView.register(TXCell.self, forCellReuseIdentifier: reuseIdentifier)
 
         if(signUp){
             delegate?.isSignUp()
@@ -180,23 +187,40 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! MenuCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! TXCell
 
-        cell.menuLabel.text = "거래내역 테스트"
+        if(self.txHistory.count == 0){
+            cell.nonTX()
+            return cell
+        }
+        cell.nonBlankConstraint.isActive = true
+        cell.setTXValue(category: self.txHistory[indexPath.row].category, date: self.txHistory[indexPath.row].date)
+        cell.setStatusLabel(status: self.txHistory[indexPath.row].status)
 
         return cell
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        if(self.txHistory.count == 0){
+            return 1
+        }
+        return self.txHistory.count
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return screenSize.height/10
+        if(self.txHistory.count == 0){
+            screenSize.height/10
+        }
+        return screenSize.height/12
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
+        if(self.txHistory.count == 0){
+            return
+        }
+        let controller = TXDetailVC()
+        controller.txInfo = self.txHistory[indexPath.row]
+        self.present(UINavigationController(rootViewController: controller), animated: true)
     }
 
     @objc func leftMenuClicked(_ sender: UIBarButtonItem){
@@ -230,5 +254,9 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
             self.present(alertVC, animated: false)
         }
 
+    }
+
+    @objc private func refresh(_ sender: UIRefreshControl) {
+        print("refresh")
     }
 }

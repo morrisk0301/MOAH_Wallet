@@ -21,6 +21,7 @@ enum TransferError: Error {
     case insufficientAmount
     case invalidAddress
     case transferToSelf
+    case gasError
 }
 
 enum GetTokenError: Error {

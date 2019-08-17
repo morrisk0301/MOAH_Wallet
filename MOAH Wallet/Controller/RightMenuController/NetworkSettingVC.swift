@@ -17,6 +17,7 @@ class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     var networks: [CustomWeb3Network] = [CustomWeb3Network]()
     var network: CustomWeb3Network
     var id: String = "NetworkSettingVC"
+    var isInit = true
 
     let tableView: UITableView = {
         let tableView = UITableView()
@@ -42,6 +43,7 @@ class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         self.network = web3.network!
         super.init(nibName: nil, bundle: nil)
         web3.attachNetworkObserver(self)
+        isInit = false
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -69,6 +71,10 @@ class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     }
 
     override func viewDidAppear(_ animated: Bool) {
+        if(!isInit){
+            self.network = web3.network!
+            web3.attachNetworkObserver(self)
+        }
         getNetwork()
         tableView.reloadData()
     }
@@ -150,13 +156,13 @@ class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.reloadMainContainerVC()
         AudioServicesPlaySystemSound(1519)
 
-        if(indexPath.section < 4){
+        if(indexPath.section < 3){
             self.web3.setNetwork(network: self.networks[indexPath.section])
             self.getNetwork()
             self.tableView.reloadData()
-            self.reloadMainContainerVC()
         }
         else{
             self.showSpinner()
@@ -191,7 +197,7 @@ class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     }
 
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if(indexPath.section < 4){ return false}
+        if(indexPath.section < 3){ return false}
         else { return true}
     }
 

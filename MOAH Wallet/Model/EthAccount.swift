@@ -288,6 +288,15 @@ class EthAccount: NetworkObserver {
         return false
     }
 
+    func saveTxInfo(txInfo: TXInfo){
+        _networkData!.txHistory.append(txInfo)
+        _saveNetworkData()
+    }
+
+    func getTxHistory() -> [TXInfo] {
+        return _networkData!.txHistory
+    }
+
     private func _encryptData(stringData: String, password: String) -> Data {
         let data: Data = stringData.data(using: String.Encoding.utf8)!
         let key256 = Array<UInt8>(hex: password)
@@ -324,11 +333,11 @@ class EthAccount: NetworkObserver {
 
     private func _savePrivateKey(key: String, name: String, password: String) {
         let encryptPrivateKey = _encryptData(stringData: key, password: password)
-        userDefaults.set(encryptPrivateKey, forKey: name)
+        userDefaults.set(encryptPrivateKey, forKey: "private_key"+name)
     }
 
     private func _loadPrivateKey(name: String, password: String) -> String? {
-        guard let encryptPrivateKey = userDefaults.data(forKey: name) else { return nil }
+        guard let encryptPrivateKey = userDefaults.data(forKey: "private_key"+name) else { return nil }
         let privateKey = _decryptData(encryptedData: encryptPrivateKey, password: password)
 
         return privateKey
@@ -385,7 +394,6 @@ class EthAccount: NetworkObserver {
 
     private func _loadPlainKeyStore(){
         var plainArray: [PlainKeystore] = [PlainKeystore]()
-
         for address in _addressArray{
             if(address.isPrivateKey == true){
                 let privateKey = _loadPrivateKey(name: address.name, password: _password!)
@@ -424,11 +432,13 @@ class EthAccount: NetworkObserver {
         let web3: CustomWeb3 = CustomWeb3.web3
         web3.attachNetworkObserver(self)
         self.network = web3.network
+        web3.setOption()
         _loadNetworkData()
     }
 
     func networkChanged(network: CustomWeb3Network) {
         self.network = network
+        _loadNetworkData()
     }
 
     private func _hashPassword(password: [UInt8], salt: [UInt8]) -> [UInt8] {
@@ -439,9 +449,9 @@ class EthAccount: NetworkObserver {
     private func _unlockAccount() {
         let keyHex = KeychainService.loadPassword(service: "moahWallet", account: "password")!
         self._password = keyHex
-        _loadKeyStore()
         _loadAddress()
         _loadAddressSelected()
+        _loadKeyStore()
         _loadIsVerified()
         connectNetwork()
     }
@@ -505,6 +515,7 @@ class EthAccount: NetworkObserver {
         }
         else{
             _networkData = NetworkData(network: network!.name, tokenSelected: nil, tokenArray: [], txHistory: [])
+            _saveNetworkData()
         }
     }
 

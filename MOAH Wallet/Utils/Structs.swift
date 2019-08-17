@@ -46,16 +46,19 @@ struct CustomToken: Codable {
     var logo: Data?
 }
 
-struct TxInfo: Codable{
+struct TXInfo: Codable{
     var txHash: String
-    var result: String
+    var category: String
+    var error: String?
+    var date: Date
+    var status: String
 }
 
 struct NetworkData: Codable {
     var network: String
     var tokenSelected: CustomToken?
     var tokenArray: [CustomToken] = [CustomToken]()
-    var txHistory: [TxInfo] = [TxInfo]()
+    var txHistory: [TXInfo] = [TXInfo]()
 }
 
 func ==(left: CustomWeb3Network, right: CustomWeb3Network) -> Bool{

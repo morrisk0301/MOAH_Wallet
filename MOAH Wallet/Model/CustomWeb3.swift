@@ -6,6 +6,7 @@
 import Foundation
 import web3swift
 import BigInt
+import PromiseKit
 
 class CustomWeb3 {
 
@@ -17,6 +18,9 @@ class CustomWeb3 {
     private var _web3Ins: web3?
     private var _network: CustomWeb3Network?
     private var observers: [NetworkObserver] = [NetworkObserver]()
+    private var socketProvider2: WebsocketProvider?
+    private var socketProvider: InfuraWebsocketProvider?
+    private var httpProvider: Web3HttpProvider?
 
     let account: EthAccount = EthAccount.accountInstance
     let userDefaults = UserDefaults.standard
@@ -35,7 +39,6 @@ class CustomWeb3 {
     }
 
     private init() {
-        setOption()
         _loadNetwork()
         _loadNetworkArray()
         if (network == nil || network!.name == "mainnet" || network!.name == "robsten" ||  network!.name == "rinkeby") {
@@ -158,15 +161,11 @@ class CustomWeb3 {
         return balance
     }
 
-    func transfer(tx: WriteTransaction) {
-        _transfer(tx: tx)
+    func transfer(tx: WriteTransaction, isToken: Bool){
+        _transfer(tx: tx, isToken: isToken)
     }
 
-    func transferToken(tx: WriteTransaction){
-        _transfer(tx: tx)
-    }
-
-    func preTransfer(address: String, amount: String, completion: @escaping (WriteTransaction?, BigUInt?) -> ()) throws {
+    func preTransfer(address: String, amount: String, completion: @escaping (WriteTransaction?, BigUInt?, Bool) -> ()) throws {
         if(amount.count == 0){ throw TransferError.invalidAmount}
         guard let address = EthereumAddress(address) else { throw TransferError.invalidAddress }
         if(Web3Utils.parseToBigUInt(amount, decimals: 18) == nil){ throw TransferError.invalidAmount}
@@ -186,7 +185,7 @@ class CustomWeb3 {
                     let tx =  self._web3Ins!.eth.sendETH(to: address, amount: amount, transactionOptions: self._option)!
                     let gas = try self._web3Ins!.eth.estimateGas(tx.transaction, transactionOptions: self._option!)
 
-                    completion(tx, gas*gasPrice!)
+                    completion(tx, gas*gasPrice!, false)
                 }else{
                     let tokenAddress = token!.address
                     let amount = Web3Utils.parseToBigUInt(amount, decimals: Int(token!.decimals.description)!)
@@ -197,12 +196,12 @@ class CustomWeb3 {
                     let gas = try self._web3Ins!.eth.estimateGas(tx.transaction, transactionOptions: self._option!)
                     let gasPrice = try self._web3Ins?.eth.getGasPrice()
 
-                    completion(tx, gas*gasPrice!)
+                    completion(tx, gas*gasPrice!, true)
                 }
             }
             catch{
                 print(error)
-                completion(nil, nil)
+                completion(nil, nil, false)
             }
         }
     }
@@ -233,13 +232,17 @@ class CustomWeb3 {
             if(!_checkNetwork(name: network.name)){
                 throw AddNetworkError.invalidName
             }
+            if(network.name.contains("private_key")){
+                throw AddNetworkError.invalidName
+            }
         }
         do{
             let newWeb3 = try Web3.new(network.url)
             _web3Ins = newWeb3
+            self.network = network
+
             if(new){
                 _addNetwork(network: network)
-                self.network = network
             }
         }catch{
             throw AddNetworkError.invalidNetwork
@@ -347,6 +350,28 @@ class CustomWeb3 {
         }
     }
 
+    func getTXReceipt(hash: String) -> TransactionReceipt? {
+        var tx: TransactionReceipt?
+        do{
+            tx = try _web3Ins!.eth.getTransactionReceipt(hash)
+        }
+        catch{
+            print(error)
+        }
+        return tx
+    }
+
+    func getTXDetail(hash: String) -> TransactionDetails? {
+        var tx: TransactionDetails?
+        do{
+            tx = try _web3Ins!.eth.getTransactionDetails(hash)
+        }
+        catch{
+            print(error)
+        }
+        return tx
+    }
+
     func attachNetworkObserver(_ observer: NetworkObserver){
         observers.append(observer)
     }
@@ -431,7 +456,7 @@ class CustomWeb3 {
     }
 
 
-    private func _transfer(tx: WriteTransaction){
+    private func _transfer(tx: WriteTransaction?, isToken: Bool){
         let from = _getAddress()
         var keystoreManager: KeystoreManager!
         if(account.checkPrivate(checkAddress: from!.address)){
@@ -445,8 +470,9 @@ class CustomWeb3 {
         DispatchQueue.global(qos: .userInitiated).async{
             do{
                 let keyHex =  KeychainService.loadPassword(service: "moahWallet", account: "password")!
-                let txHash = try tx.send(password: keyHex)
-                print(txHash)
+                if(tx == nil){throw TransferError.gasError}
+                let txHash = try tx!.send(password: keyHex)
+                self._saveTxResult(tx: txHash, isToken: isToken)
             }
             catch{
                 print(error)
@@ -454,4 +480,17 @@ class CustomWeb3 {
         }
     }
 
+    private func _saveTxResult(tx: TransactionSendingResult, isToken: Bool){
+        let date = Date()
+        let category = isToken ? "토큰 전송" : "이더리움 전송"
+        let txInfo = TXInfo(txHash: tx.hash, category: category, error: nil, date: date, status: "notYetProcessed")
+        account.saveTxInfo(txInfo: txInfo)
+    }
+
+    private func _saveTxResult(error: String, isToken: Bool){
+        let date = Date()
+        let category = isToken ? "토큰 전송" : "이더리움 전송"
+        let txInfo = TXInfo(txHash: "", category: category, error: error, date: date, status: "failed")
+        account.saveTxInfo(txInfo: txInfo)
+    }
 }

@@ -43,6 +43,7 @@
 		C051F4A7604CFC036FD89FFE /* MnemonicSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F8B5925C8BBCF3AA8E8E /* MnemonicSettingVC.swift */; };
 		C051F4ADE3AB580DC609A8FB /* AccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F3450FFF47B9DBC83C94 /* AccountCell.swift */; };
 		C051F4F3C611CBCFBDA45DB2 /* MyAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F63AEAD075F1D9237EED /* MyAccountVC.swift */; };
+		C051F50DD1F8B7D4B6B9E216 /* TXCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FC04D836A1FFB447B213 /* TXCell.swift */; };
 		C051F522F4C576ED1BD31E84 /* LeftMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F90BE9924E9EE9462DC9 /* LeftMenuCell.swift */; };
 		C051F557FB97A111AA701661 /* CustomWeb3.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F97A0E294E3AD06B4979 /* CustomWeb3.swift */; };
 		C051F58BA970A28F5148E884 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FF8E066A1CFE267725CC /* CustomButton.swift */; };
@@ -85,7 +86,9 @@
 		C051FC783594B5C34F69CB6B /* AmountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F3FDB4E39A417D318A93 /* AmountCell.swift */; };
 		C051FD0AB2ECBBFC1E2CDA33 /* LeftMenuOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F478AD26EA7B007B6AF3 /* LeftMenuOption.swift */; };
 		C051FD6077E544C0242ACD61 /* Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FCFAB6F715D632781390 /* Checkbox.swift */; };
+		C051FE5F3EB1D13B43313058 /* TransparentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FE49AB23C38632F34583 /* TransparentView.swift */; };
 		C051FEC7D1FC02F093FF50B5 /* MnemonicVerificationGetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F6342A463F4E5602402A /* MnemonicVerificationGetVC.swift */; };
+		C051FF6C099B444A7C6B18D5 /* TXDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F8A729E9515650C206EC /* TXDetailVC.swift */; };
 		C051FF7241A205070C0A26B3 /* TransparentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F326270A0761F1E5315E /* TransparentButton.swift */; };
 /* End PBXBuildFile section */
 
@@ -156,6 +159,7 @@
 		C051F78260EE7AE0C72FAED1 /* AlertVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertVC.swift; sourceTree = "<group>"; };
 		C051F7AC902DA14D067B4A7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C051F7E7608DA47B7C17D4F1 /* TokenCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenCell.swift; sourceTree = "<group>"; };
+		C051F8A729E9515650C206EC /* TXDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TXDetailVC.swift; sourceTree = "<group>"; };
 		C051F8AB6A0B2E40A27A4859 /* SpinnerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinnerView.swift; sourceTree = "<group>"; };
 		C051F8B5925C8BBCF3AA8E8E /* MnemonicSettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicSettingVC.swift; sourceTree = "<group>"; };
 		C051F90BE9924E9EE9462DC9 /* LeftMenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftMenuCell.swift; sourceTree = "<group>"; };
@@ -175,6 +179,7 @@
 		C051FB58794E833DEFDCEEC4 /* TokenAddVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenAddVC.swift; sourceTree = "<group>"; };
 		C051FBC160B4197ACE73265E /* Spinner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spinner.swift; sourceTree = "<group>"; };
 		C051FBEC2A31284D49D39064 /* RightMenuOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightMenuOption.swift; sourceTree = "<group>"; };
+		C051FC04D836A1FFB447B213 /* TXCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TXCell.swift; sourceTree = "<group>"; };
 		C051FC2158395B4BF65E453E /* MnemonicVerificationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicVerificationVC.swift; sourceTree = "<group>"; };
 		C051FC73CD3F23F0F3FF268A /* PasswordChangeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordChangeVC.swift; sourceTree = "<group>"; };
 		C051FCDFA9CC8D752BE3F74C /* LockVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockVC.swift; sourceTree = "<group>"; };
@@ -189,6 +194,7 @@
 		C051FD974D93686134C5B4E6 /* AgreementViewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgreementViewVC.swift; sourceTree = "<group>"; };
 		C051FDAF143D94C8A37998D7 /* MOAH_WalletTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOAH_WalletTests.swift; sourceTree = "<group>"; };
 		C051FDE2A021837D18D0871F /* PrivateKeyVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateKeyVC.swift; sourceTree = "<group>"; };
+		C051FE49AB23C38632F34583 /* TransparentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransparentView.swift; sourceTree = "<group>"; };
 		C051FE5AAB127B414BFB8543 /* CreateAccountVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAccountVC.swift; sourceTree = "<group>"; };
 		C051FE634D5A6B9DF45C940E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C051FECD2DA7B560A0904BBE /* LockView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockView.swift; sourceTree = "<group>"; };
@@ -270,6 +276,7 @@
 				C051F6B167515CE9084BEF6C /* QRCodeVC.swift */,
 				C051F26B45756590CE49C8EC /* TokenListVC.swift */,
 				C051FB58794E833DEFDCEEC4 /* TokenAddVC.swift */,
+				C051F8A729E9515650C206EC /* TXDetailVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -404,6 +411,7 @@
 				C051FBC160B4197ACE73265E /* Spinner.swift */,
 				C051F67188B96103A709A2FC /* NormalAlertView.swift */,
 				C051F252F03BC7813457F213 /* TransferAlertView.swift */,
+				C051FE49AB23C38632F34583 /* TransparentView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -452,6 +460,7 @@
 				C051F6D98183AFC7653F5DFE /* KeyCell.swift */,
 				C051F3FDB4E39A417D318A93 /* AmountCell.swift */,
 				C051F7E7608DA47B7C17D4F1 /* TokenCell.swift */,
+				C051FC04D836A1FFB447B213 /* TXCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -750,6 +759,9 @@
 				C051FA0D6265C37401BCD195 /* TokenListVC.swift in Sources */,
 				C051F177EDCC505D4EC389F1 /* TokenCell.swift in Sources */,
 				C051F2A97F6A57B745B623FA /* TokenAddVC.swift in Sources */,
+				C051FE5F3EB1D13B43313058 /* TransparentView.swift in Sources */,
+				C051F50DD1F8B7D4B6B9E216 /* TXCell.swift in Sources */,
+				C051FF6C099B444A7C6B18D5 /* TXDetailVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -461,7 +461,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
 
         do {
             self.showSpinner()
-            try web3.preTransfer(address: address, amount: amount, completion: {(tx, estimateGas) in
+            try web3.preTransfer(address: address, amount: amount, completion: {(tx, estimateGas, isToken) in
                 DispatchQueue.main.async{
                     self.hideSpinner()
                     if(gas == nil){
@@ -475,6 +475,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
                             let controller = PasswordCheckVC()
                             controller.toView = "transfer"
                             controller.tempTx = tx
+                            controller.isToken = isToken
                             self.navigationController?.pushViewController(controller, animated: true)
                         }
                     })

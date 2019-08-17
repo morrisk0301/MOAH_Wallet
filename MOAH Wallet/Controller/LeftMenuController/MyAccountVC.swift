@@ -22,6 +22,7 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     var accountSelected: EthereumAddress!
     var symbol: String!
     var balance: [String] = [String]()
+    var refreshControl = UIRefreshControl()
 
     let tableView: UITableView = {
         let tableView = UITableView()
@@ -63,7 +64,6 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     }
 
     override func viewDidAppear(_ animated: Bool) {
-
         getAccount()
         getBalance(completion: {
             DispatchQueue.main.async{
@@ -71,6 +71,10 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                 self.view.addSubview(self.addButton)
 
                 self.setupLayout()
+
+                self.refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+                self.tableView.addSubview(self.refreshControl)
+
                 self.tableView.reloadData()
             }
         })
@@ -200,6 +204,7 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         self.hideSpinner()
+        self.hideTransparentView()
     }
 
     private func selectAccount(index: Int){
@@ -209,5 +214,18 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     @objc private func addPressed(_ sender: UIButton){
         let addAccountVC = AddAccountVC()
         self.navigationController?.pushViewController(addAccountVC, animated: true)
+    }
+
+    @objc private func refresh(_ sender: UIRefreshControl) {
+        self.showTransparentView()
+        getAccount()
+        DispatchQueue.global(qos: .userInitiated).async{
+            self.getBalance(completion: {
+                DispatchQueue.main.async{
+                    self.tableView.reloadData()
+                    self.refreshControl.endRefreshing()
+                }
+            })
+        }
     }
 }

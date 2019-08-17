@@ -5,6 +5,7 @@
 
 import Foundation
 import UIKit
+import web3swift
 
 extension UIViewController {
     func hideKeyboardWhenTappedAround() {
@@ -86,12 +87,38 @@ extension UIViewController {
         let spinner = Spinner()
         spinner.frame = view.frame
         view.addSubview(spinner)
+        view.isUserInteractionEnabled = false
+        self.navigationItem.leftBarButtonItem?.isEnabled = false
+        self.navigationItem.rightBarButtonItem?.isEnabled = false
     }
 
     func hideSpinner(){
         for subview in view.subviews{
             if(subview is  Spinner){
                 subview.removeFromSuperview()
+                view.isUserInteractionEnabled = true
+                self.navigationItem.leftBarButtonItem?.isEnabled = true
+                self.navigationItem.rightBarButtonItem?.isEnabled = true
+            }
+        }
+    }
+
+    func showTransparentView(){
+        let tView = TransparentView()
+        tView.frame = view.frame
+        view.addSubview(tView)
+        view.isUserInteractionEnabled = false
+        self.navigationItem.leftBarButtonItem?.isEnabled = false
+        self.navigationItem.rightBarButtonItem?.isEnabled = false
+    }
+
+    func hideTransparentView(){
+        for subview in view.subviews{
+            if(subview is  TransparentView){
+                subview.removeFromSuperview()
+                view.isUserInteractionEnabled = true
+                self.navigationItem.leftBarButtonItem?.isEnabled = true
+                self.navigationItem.rightBarButtonItem?.isEnabled = true
             }
         }
     }
@@ -432,6 +459,19 @@ extension UINavigationController:UINavigationControllerDelegate {
             } else {
                 interactivePopGestureRecognizer?.isEnabled = false
             }
+        }
+    }
+}
+
+extension TransactionReceipt.TXStatus{
+    var description: String {
+        switch(self){
+        case .failed:
+            return "failed"
+        case .notYetProcessed:
+            return "notYetProcessed"
+        case .ok:
+            return "ok"
         }
     }
 }

@@ -6,6 +6,7 @@
 import Foundation
 import UIKit
 import MessageUI
+import web3swift
 
 class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeViewControllerDelegate, UIGestureRecognizerDelegate{
 
@@ -23,6 +24,7 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
     var mainVC: MainVC!
     var transparentView = UIView()
     var style:UIStatusBarStyle = .default
+    var txHistory: [TXInfo]?
 
     let screenSize = UIScreen.main.bounds
     let web3: CustomWeb3 = CustomWeb3.web3
@@ -54,6 +56,9 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
     override func viewDidAppear(_ animated: Bool) {
         if(isReload){
             self.showSpinner()
+            if(isInit){
+                account.connectNetwork()
+            }
             initVCs()
             loadData()
         }
@@ -255,7 +260,6 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
 
     func loadData(){
         DispatchQueue.global(qos: .userInitiated).async{
-            self.account.connectNetwork()
             let tokenArray = self.account.getTokenArray()
             var name = "Ethereum"
             if(self.account.getToken() != nil){
@@ -265,19 +269,25 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
                 self.symbol = "ETH"
             }
             self.checkChainNetwork()
+            self.txHistory = self.account.getTxHistory()
+            self.getStatus(completion: {() in})
             self.web3.getBalance(address: nil, completion: {(balance) in
                 let balanceTrimmed = self.util.trimBalance(balance: balance)
-                DispatchQueue.main.async {
-                    self.mainVC.balance = balance
-                    self.mainVC.symbol = self.symbol
-                    self.mainVC.tokenView.setTokenString(tokenString: name)
-                    self.mainVC.balanceString = balanceTrimmed
-                    self.mainVC.balanceLabel.text = balanceTrimmed + " " + self.symbol
-                    self.tokenSelectVC.tokenArray = tokenArray
-                    self.tokenSelectVC.tableView.reloadData()
-                    self.isReload = false
-                    self.hideSpinner()
-                }
+                self.getStatus(completion: {
+                    DispatchQueue.main.async {
+                        self.mainVC.balance = balance
+                        self.mainVC.symbol = self.symbol
+                        self.mainVC.txHistory = self.txHistory!
+                        self.mainVC.tokenView.setTokenString(tokenString: name)
+                        self.mainVC.balanceString = balanceTrimmed
+                        self.mainVC.balanceLabel.text = balanceTrimmed + " " + self.symbol
+                        self.mainVC.txView.reloadData()
+                        self.tokenSelectVC.tokenArray = tokenArray
+                        self.tokenSelectVC.tableView.reloadData()
+                        self.isReload = false
+                        self.hideSpinner()
+                    }
+                })
             })
         }
     }
@@ -349,6 +359,25 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
                 self.loadData()
             }
         })
+    }
+
+    func getStatus(completion: @escaping () -> ()){
+        let group = DispatchGroup()
+        group.enter()
+
+        DispatchQueue.global(qos: .userInteractive).sync{
+            for index in 0..<self.txHistory!.count{
+                if(self.txHistory![index].status == "notYetProcessed"){
+                    guard let receipt = web3.getTXReceipt(hash: txHistory![index].txHash) else{ continue }
+                    self.txHistory![index].status = receipt.status.description
+                }
+            }
+            group.leave()
+        }
+
+        group.notify(queue: .global(qos: .userInteractive)){
+            completion()
+        }
     }
 
     @objc private func mainViewClicked(_ sender: UIGestureRecognizer) {
