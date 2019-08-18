@@ -53,6 +53,7 @@
 		C051F66E78ED71C296DF73DD /* EthAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F97B0F9CE93C94AD4963 /* EthAddress.swift */; };
 		C051F6991830583F5D879C9C /* AgreementVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FD9079AB28E40C022FDD /* AgreementVC.swift */; };
 		C051F722D5ED0A6958B239A0 /* AnnouncementVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FAA7B42C718BE4204A4A /* AnnouncementVC.swift */; };
+		C051F73DF164885E19C30778 /* TXQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FAF4C47BBB7C2D364EEB /* TXQueue.swift */; };
 		C051F7715A69EEBDEFE0844A /* PrivateKeyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FDE2A021837D18D0871F /* PrivateKeyVC.swift */; };
 		C051F772637081EBC090ADE2 /* ShakeAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F4C8DFE230A876583313 /* ShakeAnimation.swift */; };
 		C051F7AE7F9AA30993F9E5AD /* MnemonicVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FB1E96548FFD0DEEF195 /* MnemonicVC.swift */; };
@@ -182,6 +183,7 @@
 		C051FA9FF2133358D8774A35 /* EthAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthAccount.swift; sourceTree = "<group>"; };
 		C051FAA7B42C718BE4204A4A /* AnnouncementVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementVC.swift; sourceTree = "<group>"; };
 		C051FAAD35BE522484440F32 /* LeftTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftTransition.swift; sourceTree = "<group>"; };
+		C051FAF4C47BBB7C2D364EEB /* TXQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TXQueue.swift; sourceTree = "<group>"; };
 		C051FB1E96548FFD0DEEF195 /* MnemonicVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicVC.swift; sourceTree = "<group>"; };
 		C051FB58794E833DEFDCEEC4 /* TokenAddVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenAddVC.swift; sourceTree = "<group>"; };
 		C051FBC160B4197ACE73265E /* Spinner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spinner.swift; sourceTree = "<group>"; };
@@ -353,6 +355,7 @@
 				C051FD564ED667258A4FAC9E /* EthTXHistory.swift */,
 				C051F97B0F9CE93C94AD4963 /* EthAddress.swift */,
 				C051F3B3FF5E0625A2414188 /* EthToken.swift */,
+				C051FAF4C47BBB7C2D364EEB /* TXQueue.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -778,6 +781,7 @@
 				C051FAFECCA32CA64FBA19D5 /* EthTXHistory.swift in Sources */,
 				C051F66E78ED71C296DF73DD /* EthAddress.swift in Sources */,
 				C051FEDE7102C06B73E0EF77 /* EthToken.swift in Sources */,
+				C051F73DF164885E19C30778 /* TXQueue.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -19,6 +19,10 @@ protocol MainControllerDelegate {
     func isSignUp()
 }
 
+protocol TransactionDelegate {
+    func transactionComplete()
+}
+
 protocol QRCodeReadDelegate {
     func qrCodeRead(value: String)
 }

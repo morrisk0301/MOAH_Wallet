@@ -9,7 +9,7 @@ import MessageUI
 import web3swift
 import CoreData
 
-class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeViewControllerDelegate, UIGestureRecognizerDelegate{
+class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeViewControllerDelegate, UIGestureRecognizerDelegate, TransactionDelegate{
 
     var isExpandLeft = false
     var isExpandRight = false
@@ -28,6 +28,7 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
     var style:UIStatusBarStyle = .default
     var txHistory: [TXInfo]?
 
+    let txQueue = TXQueue.queue
     let screenSize = UIScreen.main.bounds
     let web3: CustomWeb3 = CustomWeb3.web3
     let account: EthAccount = EthAccount.accountInstance
@@ -53,6 +54,8 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
         view.addSubview(centerController.view)
         addChild(centerController)
         centerController.didMove(toParent: self)
+
+        txQueue.delegate = self
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -60,6 +63,7 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
             self.showSpinner()
             if(isInit){
                 account.connectNetwork()
+                txQueue.refreshTX()
             }
             initVCs()
             loadData()
@@ -266,7 +270,8 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
             let web3 = CustomWeb3.web3
             let networkPredicate = NSPredicate(format: "network = %@", web3.network!.name)
             let tokenArray = ethToken.fetchToken(networkPredicate)
-            let txHistory = EthTXHistory()
+            let ethTxHistory = EthTXHistory()
+
             var name = "Ethereum"
             if(ethToken.token != nil){
                 self.symbol = ethToken.token!.symbol
@@ -277,11 +282,9 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
                 self.decimals = 18
             }
             self.checkChainNetwork()
-            self.txHistory = txHistory.fetchTXInfo()
-            self.getStatus(completion: {() in})
+            self.txHistory = ethTxHistory.fetchTXInfo()
             self.web3.getBalance(address: nil, completion: {(balance) in
                 let balanceTrimmed = self.util.trimBalance(balance: balance)
-                self.getStatus(completion: {
                     DispatchQueue.main.async {
                         self.mainVC.balance = balance
                         self.mainVC.symbol = self.symbol
@@ -296,7 +299,6 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
                         self.isReload = false
                         self.hideSpinner()
                     }
-                })
             })
         }
     }
@@ -370,24 +372,10 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
         })
     }
 
-    func getStatus(completion: @escaping () -> ()){
-        let group = DispatchGroup()
-        group.enter()
-
-        DispatchQueue.global(qos: .userInteractive).sync{
-            for index in 0..<self.txHistory!.count{
-                if(self.txHistory![index].status == "notYetProcessed"){
-                    let hash = txHistory![index].value(forKey: "txHash") as! String
-                    let txHistory = EthTXHistory()
-                    guard let receipt = web3.getTXReceipt(hash: hash) else{ continue }
-                    txHistory.updateTXStatus(tx: hash, status: receipt.status.description)
-                }
-            }
-            group.leave()
-        }
-
-        group.notify(queue: .global(qos: .userInteractive)){
-            completion()
+    func transactionComplete() {
+        DispatchQueue.main.async{
+            self.showSpinner()
+            self.loadData()
         }
     }
 

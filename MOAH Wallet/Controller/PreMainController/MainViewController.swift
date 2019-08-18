@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import UserNotifications
 
 
 class MainViewController: UIViewController {
 
     let screenSize = UIScreen.main.bounds
+    let userDefaults = UserDefaults.standard
 
     let moahWalletLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 60))
@@ -75,6 +77,31 @@ class MainViewController: UIViewController {
         view.addSubview(getWalletButton)
 
         setupLayout()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        let check = userDefaults.bool(forKey: "alarmCheck")
+        if(!check) {
+            let util = Util()
+            let alertVC = util.alert(title: "푸시 알림 설정", body: "MOAH Wallet의 푸시 알림을 원하시면 동의 버튼을 눌러주세요.", buttonTitle: "동의", buttonNum: 2, completion: {(agree) in 
+                if(agree){
+                    self.userDefaults.set(true, forKey: "alarm")
+                    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge], completionHandler: {(success, error) in
+                        if(success){
+                            self.userDefaults.set(true, forKey: "alarm")
+                        }
+                        else{
+                            self.userDefaults.set(false, forKey: "alarm")        
+                        }
+                    })
+                }
+                else{
+                    self.userDefaults.set(false, forKey: "alarm")    
+                }
+                self.userDefaults.set(true, forKey: "alarmCheck")
+            })
+            self.present(alertVC, animated: false)
+        }
     }
 
     override func didReceiveMemoryWarning() {

@@ -463,6 +463,14 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
             self.showSpinner()
             try web3.preTransfer(address: address, amount: amount, completion: {(tx, estimateGas, subInfo) in
                 DispatchQueue.main.async{
+                    guard let _ = tx else{
+                        let alertVC = util.alert(title: "전송 오류", body: "올바르지 않은 주소입니다. 주소를 확인해주세요.", buttonTitle: "확인", buttonNum: 1, completion: { _ in
+                            self.hideSpinner()
+                        })
+                        self.present(alertVC, animated: false)
+                        return
+                    }
+
                     self.hideSpinner()
                     let total = Web3Utils.parseToBigUInt(amount, decimals: self.decimals)! + estimateGas!
                     let info = TransferInfo(amount: Web3Utils.parseToBigUInt(amount, decimals: self.decimals)!,
@@ -492,10 +500,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
             errorBody = "기타 오류."
         }
         if(errorBody != nil){
-            let alertVC = util.alert(title: "전송 오류", body: errorBody!, buttonTitle: "확인", buttonNum: 1, completion: { _ in
-                self.hideSpinner()
-            })
-            self.present(alertVC, animated: false)
+
         }
     }
 }

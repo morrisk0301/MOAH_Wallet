@@ -89,7 +89,7 @@ class LockVC: UIViewController, KeypadViewDelegate {
 
     private func bioVerification() {
         let autoContext = LAContext()
-        autoContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "MOAH Wallet 생체 인식") { (success, error) in
+        autoContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "MOAH Wallet 생체인식") { (success, error) in
             DispatchQueue.main.async {
                 if (success) {
                     self.account.bioProceed()

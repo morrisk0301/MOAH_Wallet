@@ -11,6 +11,9 @@ class EthTXHistory: NetworkObserver, AddressObserver {
 
     private var network: CustomWeb3Network
     private var address: CustomAddress
+    private let txQueue = DispatchQueue.global(qos: .background)
+
+    var delegate: TransactionDelegate?
     var id: String = "ETHTXHistory"
 
     private var managedContext: NSManagedObjectContext? {
@@ -58,6 +61,8 @@ class EthTXHistory: NetworkObserver, AddressObserver {
 
         do {
             try managedContext.save()
+            let txQueue = TXQueue.queue
+            txQueue.addTXTask(txHash: tx)
         } catch let error as NSError {
             print("error: \(error)")
         }

@@ -21,7 +21,7 @@ enum RightMenuOption: Int, CustomStringConvertible {
         case .Welcome: return "\n안녕하세요,\nMOAH Wallet 입니다."
         case .WalletNetwork: return "네트워크 설정"
         case .WalletMnemonic: return "비밀 시드 구문"
-        case .WalletPassword: return "비밀번호 및 인증"
+        case .WalletPassword: return "보안 및 알림"
         case .CSAnnouncement: return "공지사항"
         case .CSFAQ: return "FAQ"
         case .CSAgreement: return "약관 및 정책"
