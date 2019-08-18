@@ -22,7 +22,7 @@ class TXDetailVC: UIViewController{
     var network: CustomWeb3Network?
     var symbol: String!
 
-    let fromLabel: UILabel = {
+    let hashLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
@@ -251,7 +251,7 @@ class TXDetailVC: UIViewController{
     }
 
     private func setupLayout(){
-        view.addSubview(fromLabel)
+        view.addSubview(hashLabel)
         view.addSubview(toLabel)
         view.addSubview(dateTag)
         view.addSubview(dateLabel)
@@ -271,12 +271,16 @@ class TXDetailVC: UIViewController{
         view.addSubview(totalTag)
         view.addSubview(totalLabel)
 
-        fromLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: screenSize.height/40).isActive = true
-        fromLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenSize.width/15).isActive = true
-        fromLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenSize.width/15).isActive = true
-        fromLabel.heightAnchor.constraint(equalToConstant: screenSize.height/14).isActive = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(hashPressed(_:)))
+        hashLabel.addGestureRecognizer(tap)
+        hashLabel.isUserInteractionEnabled = true
 
-        toLabel.topAnchor.constraint(equalTo: fromLabel.bottomAnchor, constant: screenSize.height/80).isActive = true
+        hashLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: screenSize.height/40).isActive = true
+        hashLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenSize.width/15).isActive = true
+        hashLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenSize.width/15).isActive = true
+        hashLabel.heightAnchor.constraint(equalToConstant: screenSize.height/14).isActive = true
+
+        toLabel.topAnchor.constraint(equalTo: hashLabel.bottomAnchor, constant: screenSize.height/80).isActive = true
         toLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenSize.width/15).isActive = true
         toLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenSize.width/15).isActive = true
         toLabel.heightAnchor.constraint(equalToConstant: screenSize.height/14).isActive = true
@@ -421,17 +425,28 @@ class TXDetailVC: UIViewController{
         let gasPrice = txInfo.value(forKey: "gasPrice") as! String
         let gasLimit = txInfo.value(forKey: "gasLimit") as! String
 
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone.autoupdatingCurrent
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let dateModified = dateFormatter.string(from: date)
+
+        let attachImage = NSTextAttachment()
+        attachImage.image = UIImage(named: "copy")
+        attachImage.bounds = CGRect(x: 0, y: -1, width: (UIScreen.main.bounds.width/30), height: (UIScreen.main.bounds.width/28))
+
         let style = NSMutableParagraphStyle()
         style.alignment = .right
 
-        let fromAttr = NSMutableAttributedString(string: "거래 Hash: ",
+        let hashAttr = NSMutableAttributedString(string: "거래 Hash: ",
                 attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundR", size: 14, dynamic: true)!,
                              NSAttributedString.Key.foregroundColor: UIColor(key: "grey")])
-        fromAttr.append(NSAttributedString(string: hash,
+        hashAttr.append(NSAttributedString(string: hash+"  ",
                 attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundR", size: 14, dynamic: true)!,
                              NSAttributedString.Key.foregroundColor: UIColor(key: "grey")]))
+        hashAttr.append(NSAttributedString(attachment: attachImage))
 
-        fromLabel.attributedText = fromAttr
+        hashLabel.attributedText = hashAttr
+
 
         let toAttr = NSMutableAttributedString(string: "전송 계정: ",
                 attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundR", size: 14, dynamic: true)!,
@@ -442,7 +457,7 @@ class TXDetailVC: UIViewController{
 
         toLabel.attributedText = toAttr
 
-        let dateAttr = NSMutableAttributedString(string: date.description,
+        let dateAttr = NSMutableAttributedString(string: dateModified,
                 attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundR", size: 14, dynamic: true)!,
                              NSAttributedString.Key.foregroundColor: UIColor(key: "darker"),
                              NSAttributedString.Key.paragraphStyle: style])
@@ -581,5 +596,13 @@ class TXDetailVC: UIViewController{
             url = URL(string: "https://"+network!.name+".etherscan.io/tx/"+txHash)
         }
         UIApplication.shared.open(url)
+    }
+
+    @objc private func hashPressed(_ sender: UITapGestureRecognizer){
+        let util = Util()
+        let hash = self.txInfo.value(forKey: "txHash") as! String
+        UIPasteboard.general.string = hash
+        let alertVC = util.alert(title: "TX Hash 복사", body: "TX Hash가 클립보드에 복사되었습니다.", buttonTitle: "확인", buttonNum: 1, completion: {_ in})
+        self.present(alertVC, animated: false)
     }
 }

@@ -75,7 +75,7 @@ class EthTXHistory: NetworkObserver, AddressObserver {
 
         do {
             let result = try managedContext.fetch(fetchRequest)
-            return result
+            return _sortTxBackwards(array: result)
         } catch let error as NSError {
             print("error : \(error)")
         }
@@ -109,5 +109,15 @@ class EthTXHistory: NetworkObserver, AddressObserver {
 
     func addressChanged(address: CustomAddress) {
         self.address = address
+    }
+
+    private func _sortTxBackwards(array: [TXInfo]) -> [TXInfo] {
+        var arrayModified = [TXInfo]()
+
+        for i in (0..<array.count).reversed(){
+            arrayModified.append(array[i])
+        }
+
+        return arrayModified
     }
 }

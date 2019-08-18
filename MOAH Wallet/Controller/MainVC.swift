@@ -190,14 +190,17 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! TXCell
 
+        tableView.isScrollEnabled = true
         if(self.txHistory.count == 0){
             cell.nonTX()
+            tableView.isScrollEnabled = false
             return cell
         }
         cell.nonBlankConstraint.isActive = true
+
         let category = self.txHistory[indexPath.row].value(forKey: "category") as! String
-        let date = self.txHistory[indexPath.row].value(forKey: "date") as! Date
         let status = self.txHistory[indexPath.row].value(forKey: "status") as! String
+        let date = self.txHistory[indexPath.row].value(forKey: "date") as! Date
         cell.setTXValue(category: category, date: date)
         cell.setStatusLabel(status: status)
 

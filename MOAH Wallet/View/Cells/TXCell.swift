@@ -74,7 +74,12 @@ class TXCell: UITableViewCell {
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 5
 
-        let attrText = NSMutableAttributedString(string: date.description,
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone.autoupdatingCurrent
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let dateModified = dateFormatter.string(from: date)
+
+        let attrText = NSMutableAttributedString(string: dateModified,
                 attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundR", size: 12, dynamic: true)!,
                              NSAttributedString.Key.foregroundColor: UIColor(key: "grey2"),
                              NSAttributedString.Key.paragraphStyle: style])
