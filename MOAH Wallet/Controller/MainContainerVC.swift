@@ -7,6 +7,7 @@ import Foundation
 import UIKit
 import MessageUI
 import web3swift
+import CoreData
 
 class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeViewControllerDelegate, UIGestureRecognizerDelegate{
 
@@ -261,18 +262,22 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
 
     func loadData(){
         DispatchQueue.global(qos: .userInitiated).async{
-            let tokenArray = self.account.getTokenArray()
+            let ethToken = EthToken.token
+            let web3 = CustomWeb3.web3
+            let networkPredicate = NSPredicate(format: "network = %@", web3.network!.name)
+            let tokenArray = ethToken.fetchToken(networkPredicate)
+            let txHistory = EthTXHistory()
             var name = "Ethereum"
-            if(self.account.getToken() != nil){
-                self.symbol = self.account.getToken()!.symbol
-                self.decimals = Int(self.account.getToken()!.decimals.description)!
-                name = self.account.getToken()!.name
+            if(ethToken.token != nil){
+                self.symbol = ethToken.token!.symbol
+                self.decimals = ethToken.token!.decimals
+                name = ethToken.token!.name
             }else{
                 self.symbol = "ETH"
                 self.decimals = 18
             }
             self.checkChainNetwork()
-            self.txHistory = self.account.fetchTXInfo()
+            self.txHistory = txHistory.fetchTXInfo()
             self.getStatus(completion: {() in})
             self.web3.getBalance(address: nil, completion: {(balance) in
                 let balanceTrimmed = self.util.trimBalance(balance: balance)
@@ -373,8 +378,9 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
             for index in 0..<self.txHistory!.count{
                 if(self.txHistory![index].status == "notYetProcessed"){
                     let hash = txHistory![index].value(forKey: "txHash") as! String
+                    let txHistory = EthTXHistory()
                     guard let receipt = web3.getTXReceipt(hash: hash) else{ continue }
-                    account.updateTXStatus(tx: hash, status: receipt.status.description)
+                    txHistory.updateTXStatus(tx: hash, status: receipt.status.description)
                 }
             }
             group.leave()

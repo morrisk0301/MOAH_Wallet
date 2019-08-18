@@ -7,17 +7,19 @@ import Foundation
 import UIKit
 import web3swift
 
-class MainLeftMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
+class MainLeftMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource, AddressObserver{
 
     private let reuseIdentifier = "LeftMenuCell"
 
     let screenSize = UIScreen.main.bounds
     let account: EthAccount = EthAccount.accountInstance
+    let ethAddress = EthAddress.address
+    var address: CustomAddress
     let util = Util()
 
     var delegate: MainControllerDelegate?
-    var address: String?
-
+    var isInit = true
+    var id: String = "MainLeftMenuVC"
     let tableView: UITableView = {
         let tableView = UITableView()
 
@@ -40,6 +42,17 @@ class MainLeftMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         return label
     }()
 
+    init(){
+        self.address = ethAddress.address!
+        super.init(nibName: nil, bundle: nil)
+        ethAddress.attachAddressObserver(self)
+        isInit = false
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -58,7 +71,15 @@ class MainLeftMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
     override func viewDidAppear(_ animated: Bool) {
+        if(!isInit){
+            self.address = ethAddress.address!
+            ethAddress.attachAddressObserver(self)
+        }
         tableView.reloadData()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        ethAddress.detachAddressObserver(self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -114,7 +135,7 @@ class MainLeftMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         border.backgroundColor = UIColor(key: "grey").cgColor
         border.frame = CGRect(x:0, y: cell.frame.height*0.95, width: screenSize.width, height: 0.5)
 
-        cell.descriptionLabel.text = account.getAddressName()
+        cell.descriptionLabel.text = address.name
 
         cell.descriptionLabel.font = UIFont(name:"NanumSquareRoundB", size: 22, dynamic: true)!
         cell.descriptionLabel.textColor = UIColor(key: "darker")
@@ -131,10 +152,9 @@ class MainLeftMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.addSubview(cell.addressButton)
         cell.addSubview(cell.txFeeButton)
 
-        address = account.getAddress()?.address
-        cell.addressLabel.text = address
+        cell.addressLabel.text = address.address
 
-        let qrImage = util.generateQRCode(source: address?.description)
+        let qrImage = util.generateQRCode(source: address.address)
         cell.qrCodeImage.image = qrImage
 
         cell.qrCodeImage.topAnchor.constraint(equalTo: cell.descriptionLabel.bottomAnchor, constant: screenSize.height/30).isActive = true
@@ -158,9 +178,13 @@ class MainLeftMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.addressLabel.heightAnchor.constraint(equalToConstant: screenSize.height/17).isActive = true
     }
 
+    func addressChanged(address: CustomAddress) {
+        self.address = address
+    }
+
     @objc func buttonPressed(_ sender: UIButton){
         if(sender.tag == 0){
-            UIPasteboard.general.string = self.address
+            UIPasteboard.general.string = self.address.address
             let alertVC = util.alert(title: "주소 복사", body: "주소가 클립보드에 복사되었습니다.", buttonTitle: "확인", buttonNum: 1, completion: {_ in
             })
             self.present(alertVC, animated: false)

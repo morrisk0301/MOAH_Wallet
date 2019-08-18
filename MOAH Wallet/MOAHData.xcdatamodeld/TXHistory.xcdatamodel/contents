@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14492.1" systemVersion="18G87" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="MOAHAddress" representedClassName="MOAHAddress" syncable="YES" codeGenerationType="class">
+        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isPrivateKey" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="path" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="TokenInfo" representedClassName="TokenInfo" syncable="YES" codeGenerationType="class">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="decimals" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="logo" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="network" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="symbol" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="TXInfo" representedClassName="TXInfo" syncable="YES" codeGenerationType="class">
@@ -25,6 +32,7 @@
     </entity>
     <elements>
         <element name="TXInfo" positionX="-63" positionY="-18" width="128" height="255"/>
-        <element name="TokenInfo" positionX="-36" positionY="99" width="128" height="120"/>
+        <element name="TokenInfo" positionX="-36" positionY="99" width="128" height="135"/>
+        <element name="MOAHAddress" positionX="-9" positionY="126" width="128" height="105"/>
     </elements>
 </model>

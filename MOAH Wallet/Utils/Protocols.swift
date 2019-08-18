@@ -3,6 +3,8 @@
 // Copyright (c) 2019 Sejong University Alom. All rights reserved.
 //
 
+import web3swift
+
 protocol KeypadViewDelegate {
     func cellPressed(_ cellItem: String)
     func delPressed()
@@ -21,16 +23,18 @@ protocol QRCodeReadDelegate {
     func qrCodeRead(value: String)
 }
 
-protocol Observer {
-    func networkChanged(network: CustomWeb3Network)
-    func networkAdded(network: CustomWeb3Network)
-    func tokenChanged(token: CustomToken)
-    func tokenAdded(token: CustomToken)
-    func addressChanged(account: CustomAddress)
-    func addressAdded(account: CustomAddress)
-}
-
 protocol NetworkObserver {
     var id : String { get set }
     func networkChanged(network: CustomWeb3Network)
 }
+
+protocol AddressObserver {
+    var id : String { get set}
+    func addressChanged(address: CustomAddress)
+}
+
+protocol TokenObserver {
+    var id : String { get set}
+    func tokenChanged(token: CustomToken?)
+}
+

@@ -9,20 +9,23 @@ import web3swift
 import AudioToolbox
 import BigInt
 
-class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate {
+class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, AddressObserver {
 
     private let reuseIdentifier = "AccountCell"
 
     let account: EthAccount = EthAccount.accountInstance
     let screenSize = UIScreen.main.bounds
     let web3: CustomWeb3 = CustomWeb3.web3
+    let ethAddress = EthAddress.address
     let util = Util()
 
-    var accounts: [CustomAddress] = [CustomAddress]()
-    var accountSelected: EthereumAddress!
+    var accounts: [MOAHAddress] = [MOAHAddress]()
     var symbol: String!
     var balance: [String] = [String]()
     var refreshControl = UIRefreshControl()
+    var address: CustomAddress!
+    var id: String = "MyAccountVC"
+    var isInit = true
 
     let tableView: UITableView = {
         let tableView = UITableView()
@@ -44,6 +47,17 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         return button
     }()
 
+    init(){
+        self.address = ethAddress.address!
+        super.init(nibName: nil, bundle: nil)
+        ethAddress.attachAddressObserver(self)
+        isInit = false
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.replaceToQuitButton(color: "dark")
@@ -64,6 +78,10 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     }
 
     override func viewDidAppear(_ animated: Bool) {
+        if(!isInit){
+            self.address = ethAddress.address!
+            ethAddress.attachAddressObserver(self)
+        }
         getAccount()
         getBalance(completion: {
             DispatchQueue.main.async{
@@ -78,6 +96,10 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                 self.tableView.reloadData()
             }
         })
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        ethAddress.detachAddressObserver(self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -97,8 +119,7 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     }
 
     private func getAccount(){
-        accounts = account.getAddressArray()!
-        accountSelected = account.getAddress()
+        accounts = ethAddress.fetchAddress(nil)
     }
 
     private func getBalance(completion: @escaping () -> ()){
@@ -111,7 +132,8 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
             for index in 0..<self.accounts.count{
                 let indexPath = IndexPath(row: 0, section: index)
                 //var balance = BigUInt(0)
-                web3.getBalanceSync(address: accounts[indexPath.section].address, completion: {(balance) in
+                let address = accounts[indexPath.section].value(forKey: "address") as! String
+                web3.getBalanceSync(address: address, completion: {(balance) in
                     let balanceTrimmed = self.util.trimBalance(balance: balance)
                     let text = balanceTrimmed + " " + self.symbol
                     self.balance.append(text)
@@ -139,21 +161,25 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! AccountCell
+        let currentAddress = accounts[indexPath.section].value(forKey: "address") as! String
+        let currentName = accounts[indexPath.section].value(forKey: "name") as! String
+        let currentIsPrivateKey = accounts[indexPath.section].value(forKey: "isPrivateKey") as! Bool
 
         cell.addSymbol(symbol: self.symbol)
         cell.checkImage.isHidden = true
         cell.accountLabel.textColor = UIColor(key: "darker")
         cell.privateKeyLabel.isHidden = true
-        if(accounts[indexPath.section].address == accountSelected!.address){
+
+        if(currentAddress == address.address){
             cell.accountLabel.textColor = UIColor(key: "dark")
             cell.checkImage.isHidden = false
         }
-        if(accounts[indexPath.section].isPrivateKey){
+        if(currentIsPrivateKey){
             cell.privateKeyLabel.isHidden = false
         }
 
-        cell.accountLabel.text = accounts[indexPath.section].name
-        cell.addressLabel.text = accounts[indexPath.section].address
+        cell.accountLabel.text = currentName
+        cell.addressLabel.text = currentAddress
         cell.balanceLabel.text = self.balance[indexPath.section]
 
         return cell
@@ -175,7 +201,7 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
-            account.deleteAccount(account: accounts[indexPath.section])
+            account.deleteAccount(account: self.address)
             getAccount()
             self.tableView.deleteSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
             self.balance.remove(at: indexPath.section)
@@ -208,7 +234,11 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     }
 
     private func selectAccount(index: Int){
-        account.setAddress(index: index)
+        ethAddress.setAddress(index: index)
+    }
+
+    func addressChanged(address: CustomAddress) {
+        self.address = address
     }
 
     @objc private func addPressed(_ sender: UIButton){

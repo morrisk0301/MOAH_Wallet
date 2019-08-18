@@ -69,6 +69,7 @@ class MnemonicSettingVC: UIViewController, UITableViewDelegate, UITableViewDataS
 
             let util = Util()
             let alertVC = util.alert(title: "시드 구문 인증 완료", body: "지금부터 MOAH Wallet의 모든 기능을 사용할 수 있습니다.", buttonTitle: "확인", buttonNum: 1, completion: {_ in
+                self.reloadMainContainerVC()
                 self.isFinished = false
             })
             self.present(alertVC, animated: false)

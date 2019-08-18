@@ -9,7 +9,7 @@ import BigInt
 import PromiseKit
 import CoreData
 
-class CustomWeb3 {
+class CustomWeb3: AddressObserver {
 
     private let _web3Main = Web3.InfuraMainnetWeb3(accessToken: "7bdfe4d2582141ef8e00c2cf929c72ee")
     private let _web3Robsten = Web3.InfuraRopstenWeb3(accessToken: "7bdfe4d2582141ef8e00c2cf929c72ee")
@@ -18,11 +18,12 @@ class CustomWeb3 {
     private var _option: TransactionOptions?
     private var _web3Ins: web3?
     private var _network: CustomWeb3Network?
+    private var _address: CustomAddress?
     private var observers: [NetworkObserver] = [NetworkObserver]()
     private var socketProvider2: WebsocketProvider?
     private var socketProvider: InfuraWebsocketProvider?
     private var httpProvider: Web3HttpProvider?
-
+    var id: String = "CustomWeb3"
     let account: EthAccount = EthAccount.accountInstance
     let userDefaults = UserDefaults.standard
 
@@ -40,6 +41,9 @@ class CustomWeb3 {
     }
 
     private init() {
+        let ethAddress: EthAddress = EthAddress.address
+        self._address = ethAddress.address
+        ethAddress.attachAddressObserver(self)
         _loadNetwork()
         _loadNetworkArray()
         if (network == nil || network!.name == "mainnet" || network!.name == "robsten" ||  network!.name == "rinkeby") {
@@ -58,38 +62,6 @@ class CustomWeb3 {
         }
     }
 
-    func addToken(token: CustomToken){
-
-    }
-
-    func addToken(name: String, symbol: String, address: String, decimals: UInt8){
-
-    }
-
-    func getTokenInfo(address: String) throws -> CustomToken {
-        guard let address = EthereumAddress(address) else {throw GetTokenError.invalidAddress}
-        if(account.checkToken(address: address)){ throw GetTokenError.existingToken }
-
-        do{
-            let token = _web3Ins!.contract(Web3Utils.erc20ABI, at: address)
-
-            let name = try token!.method("name", transactionOptions: _option)?.call()["0"] as! String
-            if(name.count == 0){ throw GetTokenError.tokenNil }
-
-            var symbol = try token!.method("symbol", transactionOptions: _option)?.call()["0"] as! String
-            symbol = symbol.onlyAlphabet()
-
-            var decimals = try token!.method("decimals", transactionOptions: _option)?.call()["0"] as? BigUInt
-            if(decimals == nil) {decimals = BigUInt(0)}
-
-            let erc20 = CustomToken(name: name, symbol: symbol, address: address, decimals: decimals!, logo: nil)
-
-            return erc20
-        }catch{
-            throw error
-        }
-    }
-
     func getWeb3Ins() -> web3? {
         return _web3Ins
     }
@@ -97,13 +69,14 @@ class CustomWeb3 {
     func getBalance(address: String?, completion: @escaping (BigUInt?) -> ()) {
         var addressModified: EthereumAddress?
         if (address == nil) {
-            addressModified = _getAddress()
+            addressModified = EthereumAddress(_address!.address)!
         } else {
             addressModified = EthereumAddress(address!)
         }
 
         DispatchQueue.global(qos: .userInitiated).async {
-            let token = self.account.getToken()
+            let ethToken = EthToken.token
+            let token = ethToken.token
             do {
                 if (addressModified == nil) {
                     completion(nil)
@@ -113,7 +86,7 @@ class CustomWeb3 {
                         completion(balance)
                     }
                     else{
-                        let balance = self.getTokenBalance(address: addressModified!)
+                        let balance = ethToken.getTokenBalance(address: addressModified!)
                         completion(balance)
                     }
                 }
@@ -127,12 +100,14 @@ class CustomWeb3 {
     func getBalanceSync(address: String?, completion: @escaping (BigUInt?) -> ()) {
         var addressModified: EthereumAddress?
         if (address == nil) {
-            addressModified = _getAddress()
+            addressModified = EthereumAddress(_address!.address)!
         } else {
             addressModified = EthereumAddress(address!)
         }
 
-        let token = self.account.getToken()
+        let ethToken = EthToken.token
+        let token = ethToken.token
+
         do {
             if (addressModified == nil) {
                 completion(nil)
@@ -142,7 +117,7 @@ class CustomWeb3 {
                     completion(balance)
                 }
                 else{
-                    let balance = self.getTokenBalance(address: addressModified!)
+                    let balance = ethToken.getTokenBalance(address: addressModified!)
                     completion(balance)
                 }
             }
@@ -152,37 +127,28 @@ class CustomWeb3 {
         }
     }
 
-    func getTokenBalance(address: EthereumAddress) -> BigUInt{
-        let token = account.getToken()!
-        let contract = _web3Ins?.contract(Web3Utils.erc20ABI, at: token.address)
-        _option!.from = address
-
-        let balance = try! contract?.method("balanceOf", parameters: [address] as [AnyObject], transactionOptions: _option)?.call()["0"] as! BigUInt
-
-        return balance
-    }
-
     func transfer(tx: WriteTransaction, subInfo: TXSubInfo){
         _transfer(tx: tx, subInfo: subInfo)
     }
 
     func preTransfer(address: String, amount: String, completion: @escaping (WriteTransaction?, BigUInt?, TXSubInfo?) -> ()) throws {
         if(amount.count == 0){ throw TransferError.invalidAmount}
+        if(address == _address!.address){ throw TransferError.transferToSelf}
         guard let address = EthereumAddress(address) else { throw TransferError.invalidAddress }
         if(Web3Utils.parseToBigUInt(amount, decimals: 18) == nil){ throw TransferError.invalidAmount}
-        if(address == _getAddress()){ throw TransferError.transferToSelf}
 
 
         DispatchQueue.global(qos: .userInteractive).async{
             do{
-                let from = self._getAddress()!
-                let token = self.account.getToken()
+                let ethToken = EthToken.token
+                let token = ethToken.token
+                let from = self._address!.address
                 let auto = self.getGasInWei() == nil
                 let gas = self.getGas()
                 var gasPrice = gas?.price
                 var gasLimit = gas?.limit
 
-                self._option!.from = from
+                self._option!.from = EthereumAddress(from)!
 
                 if(token == nil){
                     let amount = Web3Utils.parseToBigUInt(amount, decimals: 18)!
@@ -194,11 +160,11 @@ class CustomWeb3 {
                     }
 
 
-                    let subInfo = TXSubInfo(to: address.address, from: from.address, category: "이더리움 전송", 
+                    let subInfo = TXSubInfo(to: address.address, from: from, category: "이더리움 전송", 
                             amount: amount, symbol: "ETH", decimals: 18, gasPrice: gasPrice!, gasLimit: gasLimit!)
                     completion(tx, gasLimit!*gasPrice!, subInfo)
                 }else{
-                    let tokenAddress = token!.address
+                    let tokenAddress = EthereumAddress(token!.address)!
                     let amount = Web3Utils.parseToBigUInt(amount, decimals: Int(token!.decimals.description)!)!
 
                     let tokenContract = self._web3Ins!.contract(Web3Utils.erc20ABI, at: tokenAddress)
@@ -210,7 +176,7 @@ class CustomWeb3 {
                         gasPrice = try self._web3Ins?.eth.getGasPrice()
                     }
 
-                    let subInfo = TXSubInfo(to: address.address, from: from.address, category: "토큰 전송", 
+                    let subInfo = TXSubInfo(to: address.address, from: from, category: "토큰 전송", 
                             amount: amount, symbol: token!.symbol, decimals: Int(token!.decimals.description)!,
                             gasPrice: gasPrice!, gasLimit: gasLimit!)
 
@@ -293,7 +259,8 @@ class CustomWeb3 {
         }
         var gas: CustomGas!
         var gasLimit: BigUInt!
-        let isToken = account.getToken() != nil
+        let ethToken = EthToken.token
+        let isToken = ethToken.token != nil
 
         if(isToken){
             gasLimit = BigUInt(100000)
@@ -401,6 +368,10 @@ class CustomWeb3 {
         self.observers.remove(at: index)
     }
 
+    func addressChanged(address: CustomAddress) {
+        self._address = address
+    }
+
     private func notify(){
         for observer in observers {
             observer.networkChanged(network: self.network!)
@@ -413,10 +384,6 @@ class CustomWeb3 {
 
     private func _getPlainKeystoreManager() -> KeystoreManager? {
         return account.getPlainKeyStoreManager()
-    }
-
-    private func _getAddress() -> EthereumAddress? {
-        return account.getAddress()
     }
 
     private func _loadGas() -> CustomGas? {
@@ -475,9 +442,10 @@ class CustomWeb3 {
 
 
     private func _transfer(tx: WriteTransaction?, subInfo: TXSubInfo){
-        let from = _getAddress()
+        let ethAddress: EthAddress = EthAddress.address
         var keystoreManager: KeystoreManager!
-        if(account.checkPrivate(checkAddress: from!.address)){
+
+        if(ethAddress.checkPrivate(self._address!.address)){
             keystoreManager = _getPlainKeystoreManager()!
         }
         else{
@@ -506,10 +474,12 @@ class CustomWeb3 {
     }
 
     private func _saveTxResult(tx: TransactionSendingResult, subInfo: TXSubInfo){
-        account.initTXInfo(tx: tx.hash, error: "", subInfo: subInfo)
+        let txHistory = EthTXHistory()
+        txHistory.initTXInfo(tx: tx.hash, error: "", subInfo: subInfo)
     }
 
     private func _saveTxResult(error: String, subInfo: TXSubInfo){
-        account.initTXInfo(tx: "", error: error, subInfo: subInfo)
+        let txHistory = EthTXHistory()
+        txHistory.initTXInfo(tx: "", error: error, subInfo: subInfo)
     }
 }

@@ -241,14 +241,14 @@ class TokenAddVC: UIViewController, UITextFieldDelegate {
 
     @objc func contractInput(_ sender: UITextField){
         if(contractField.text!.count == 0){ return }
-        let web3: CustomWeb3 = CustomWeb3.web3
+        let token = EthToken.token
         let util = Util()
         var errorBody: String?
         self.showSpinner()
 
         DispatchQueue.global(qos: .userInitiated).async {
             do {
-                let token = try web3.getTokenInfo(address: self.contractField.text!)
+                let token = try token.getTokenInfo(address: self.contractField.text!)
                 DispatchQueue.main.async {
                     self.token = token
                     self.symbolField.text = token.symbol
@@ -282,9 +282,8 @@ class TokenAddVC: UIViewController, UITextFieldDelegate {
 
     @objc func nextPressed(_ sender: UIButton) {
         let util = Util()
-        let account: EthAccount = EthAccount.accountInstance
-        account.addToken(token: token!)
-        account.setToken(token: token!)
+        let ethToken = EthToken.token
+        ethToken.addToken(self.token!)
 
         let alertVC = util.alert(title: "토큰 추가", body: token!.symbol+" 토큰 추가를 완료하였습니다.", buttonTitle: "확인", buttonNum: 1, completion: {_ in
             self.reloadMainContainerVC()

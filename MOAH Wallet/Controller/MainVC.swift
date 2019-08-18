@@ -249,10 +249,8 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
             let alertVC = util.alert(title: "미인증 계정", body: "비밀 시드 구문 미인증 계정입니다.\n인증 후 이용해주시기 바랍니다.", buttonTitle: "인증하기", buttonNum: 2, completion: {(complete) in
                 if(complete){
                     DispatchQueue.main.async{
-                        let transition = LeftTransition()
                         let controller = MnemonicSettingVC()
-                        self.view.window!.layer.add(transition, forKey: kCATransition)
-                        self.present(UINavigationController(rootViewController: controller), animated: false, completion: nil)
+                        self.present(UINavigationController(rootViewController: controller), animated: true, completion: nil)
                     }
                 }
             })

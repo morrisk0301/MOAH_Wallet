@@ -50,6 +50,7 @@
 		C051F58BA970A28F5148E884 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FF8E066A1CFE267725CC /* CustomButton.swift */; };
 		C051F5F80BB40708BAE58682 /* MnemonicVerificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FC2158395B4BF65E453E /* MnemonicVerificationVC.swift */; };
 		C051F65CB21D06711E706AD4 /* KeyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F6D98183AFC7653F5DFE /* KeyCell.swift */; };
+		C051F66E78ED71C296DF73DD /* EthAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F97B0F9CE93C94AD4963 /* EthAddress.swift */; };
 		C051F6991830583F5D879C9C /* AgreementVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FD9079AB28E40C022FDD /* AgreementVC.swift */; };
 		C051F722D5ED0A6958B239A0 /* AnnouncementVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FAA7B42C718BE4204A4A /* AnnouncementVC.swift */; };
 		C051F7715A69EEBDEFE0844A /* PrivateKeyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FDE2A021837D18D0871F /* PrivateKeyVC.swift */; };
@@ -75,6 +76,7 @@
 		C051FA62FD875D5F93EDDFD4 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F26E21CD42E0A1B5B53D /* Util.swift */; };
 		C051FACD1A0E01B4C40586F2 /* AlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F78260EE7AE0C72FAED1 /* AlertVC.swift */; };
 		C051FAE771AFBEEAFA7DE235 /* NormalAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F67188B96103A709A2FC /* NormalAlertView.swift */; };
+		C051FAFECCA32CA64FBA19D5 /* EthTXHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FD564ED667258A4FAC9E /* EthTXHistory.swift */; };
 		C051FB1FE29301C3EA68F93B /* KeypadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FD83FA4BAE07897C116D /* KeypadView.swift */; };
 		C051FB5E23902398DEF96B30 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F7AC902DA14D067B4A7E /* AppDelegate.swift */; };
 		C051FB797FD7A565861489AB /* Spinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FBC160B4197ACE73265E /* Spinner.swift */; };
@@ -89,6 +91,7 @@
 		C051FD6077E544C0242ACD61 /* Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FCFAB6F715D632781390 /* Checkbox.swift */; };
 		C051FE5F3EB1D13B43313058 /* TransparentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FE49AB23C38632F34583 /* TransparentView.swift */; };
 		C051FEC7D1FC02F093FF50B5 /* MnemonicVerificationGetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F6342A463F4E5602402A /* MnemonicVerificationGetVC.swift */; };
+		C051FEDE7102C06B73E0EF77 /* EthToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F3B3FF5E0625A2414188 /* EthToken.swift */; };
 		C051FF6C099B444A7C6B18D5 /* TXDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F8A729E9515650C206EC /* TXDetailVC.swift */; };
 		C051FF7241A205070C0A26B3 /* TransparentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F326270A0761F1E5315E /* TransparentButton.swift */; };
 /* End PBXBuildFile section */
@@ -141,6 +144,7 @@
 		C051F326270A0761F1E5315E /* TransparentButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransparentButton.swift; sourceTree = "<group>"; };
 		C051F3450FFF47B9DBC83C94 /* AccountCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountCell.swift; sourceTree = "<group>"; };
 		C051F395F27B1ABD90762B49 /* AddAccountVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAccountVC.swift; sourceTree = "<group>"; };
+		C051F3B3FF5E0625A2414188 /* EthToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthToken.swift; sourceTree = "<group>"; };
 		C051F3FDB4E39A417D318A93 /* AmountCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmountCell.swift; sourceTree = "<group>"; };
 		C051F4523162BC70026FFC86 /* AddNetworkVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNetworkVC.swift; sourceTree = "<group>"; };
 		C051F46ECA4D5C3D54C0F6B4 /* NetworkSettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkSettingVC.swift; sourceTree = "<group>"; };
@@ -170,6 +174,7 @@
 		C051F956AE867F6089FFE1BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
 		C051F96A941D724CEC53F3B1 /* FAQVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FAQVC.swift; sourceTree = "<group>"; };
 		C051F97A0E294E3AD06B4979 /* CustomWeb3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomWeb3.swift; sourceTree = "<group>"; };
+		C051F97B0F9CE93C94AD4963 /* EthAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthAddress.swift; sourceTree = "<group>"; };
 		C051F9B011B6E362F3C18BEB /* MainRightMenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainRightMenuVC.swift; sourceTree = "<group>"; };
 		C051FA21B0D87D905D0AD07E /* RightMenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightMenuCell.swift; sourceTree = "<group>"; };
 		C051FA6C9DECCACCA006C620 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -189,6 +194,7 @@
 		C051FCFAB6F715D632781390 /* Checkbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checkbox.swift; sourceTree = "<group>"; };
 		C051FD1BA4D050D26AE2DB72 /* MenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
 		C051FD3DE6EDBDC571CF0639 /* MOAH_WalletUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOAH_WalletUITests.swift; sourceTree = "<group>"; };
+		C051FD564ED667258A4FAC9E /* EthTXHistory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthTXHistory.swift; sourceTree = "<group>"; };
 		C051FD66F7A5E3DE5EF1F0B5 /* MOAH WalletUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MOAH WalletUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C051FD7C702D47C01C39269E /* MOAH WalletTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MOAH WalletTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C051FD83FA4BAE07897C116D /* KeypadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeypadView.swift; sourceTree = "<group>"; };
@@ -344,6 +350,9 @@
 				C051F2FC1D4AD78361437D8A /* KeychainService.swift */,
 				C051F478AD26EA7B007B6AF3 /* LeftMenuOption.swift */,
 				C051F97A0E294E3AD06B4979 /* CustomWeb3.swift */,
+				C051FD564ED667258A4FAC9E /* EthTXHistory.swift */,
+				C051F97B0F9CE93C94AD4963 /* EthAddress.swift */,
+				C051F3B3FF5E0625A2414188 /* EthToken.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -766,6 +775,9 @@
 				C051FE5F3EB1D13B43313058 /* TransparentView.swift in Sources */,
 				C051F50DD1F8B7D4B6B9E216 /* TXCell.swift in Sources */,
 				C051FF6C099B444A7C6B18D5 /* TXDetailVC.swift in Sources */,
+				C051FAFECCA32CA64FBA19D5 /* EthTXHistory.swift in Sources */,
+				C051F66E78ED71C296DF73DD /* EthAddress.swift in Sources */,
+				C051FEDE7102C06B73E0EF77 /* EthToken.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

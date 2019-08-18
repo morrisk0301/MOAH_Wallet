@@ -7,19 +7,21 @@ import Foundation
 import UIKit
 import AudioToolbox
 
-class TokenSelectVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class TokenSelectVC: UIViewController, UITableViewDelegate, UITableViewDataSource, TokenObserver {
 
     private let reuseIdentifier = "TokenSelectCell"
 
     let screenSize = UIScreen.main.bounds
-    let account: EthAccount = EthAccount.accountInstance
+    let ethToken = EthToken.token
 
     var alertTitle: String?
     var alertBody: String?
     var alertButtonTitle: String?
     var delegate: MainControllerDelegate?
-    var tokenArray: [CustomToken]!
-    var token: CustomToken!
+    var tokenArray: [TokenInfo]!
+    var token: CustomToken?
+    var isInit = false
+    var id: String = "TokenSelectVC"
 
     let alertView: UIView = {
         let view = UIView()
@@ -74,6 +76,17 @@ class TokenSelectVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         return imageView
     }()
 
+    init(){
+        self.token = ethToken.token
+        super.init(nibName: nil, bundle: nil)
+        ethToken.attachTokenObserver(self)
+        isInit = false
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -90,7 +103,17 @@ class TokenSelectVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         view.addSubview(tableView)
 
         setupLayout()
-        getToken()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        if(!isInit){
+            self.token = ethToken.token
+            ethToken.attachTokenObserver(self)
+        }
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        ethToken.detachTokenObserver(self)
     }
 
     private func setupLayout(){
@@ -110,10 +133,6 @@ class TokenSelectVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
 
-    private func getToken(){
-        token = account.getToken()
-    }
-
     private func addCheckImage(cell: UITableViewCell){
         cell.addSubview(checkImage)
 
@@ -130,10 +149,14 @@ class TokenSelectVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
             if(token == nil){ addCheckImage(cell: cell) }
             return cell
         }
-        let nameLabel = tokenArray[indexPath.row-1].symbol + " - " + tokenArray[indexPath.row-1].name
-        cell.setTokenValue(name: nameLabel, address: tokenArray[indexPath.row-1].address.address, logo: nil)
+        let name = tokenArray[indexPath.row-1].value(forKey: "name") as! String
+        let symbol = tokenArray[indexPath.row-1].value(forKey: "symbol") as! String
+        let address = tokenArray[indexPath.row-1].value(forKey: "address") as! String
 
-        if(token != nil && tokenArray[indexPath.row-1].address == token.address){
+        let nameLabel = symbol + " - " + name
+        cell.setTokenValue(name: nameLabel, address: address, logo: nil)
+
+        if(self.token != nil && address == self.token!.address){
             addCheckImage(cell: cell)
         }
 
@@ -151,14 +174,17 @@ class TokenSelectVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         AudioServicesPlaySystemSound(1519)
         if(indexPath.row == 0){
-            account.setToken(index: nil)
+            ethToken.setToken(index: nil)
         }
         else{
-            account.setToken(index: indexPath.row-1)
+            ethToken.setToken(index: indexPath.row-1)
         }
-        getToken()
         tableView.reloadData()
         self.delegate?.tokenEnded(selected: true)
+    }
+
+    func tokenChanged(token: CustomToken?) {
+        self.token = token
     }
 
     @objc func addPressed(_ sender: UIButton){

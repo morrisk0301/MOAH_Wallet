@@ -8,7 +8,7 @@ import web3swift
 import CryptoSwift
 import CoreData
 
-class EthAccount: NetworkObserver {
+class EthAccount: NetworkObserver, AddressObserver{
 
     static let accountInstance = EthAccount()
 
@@ -26,18 +26,8 @@ class EthAccount: NetworkObserver {
     private var _password: String?
     private var _isVerified: Bool = false
     private var _timer: Timer?
-    private var _address: EthereumAddress?
-    private var _addressArray: [CustomAddress] = [CustomAddress]()
-    private var _networkData: NetworkData?
-    private var network: CustomWeb3Network?
-
-    private var managedContext: NSManagedObjectContext? {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return nil
-        }
-
-        return appDelegate.persistentContainer.viewContext
-    }
+    private var _address: CustomAddress?
+    private var _network: CustomWeb3Network?
 
     private init() {
     }
@@ -141,41 +131,36 @@ class EthAccount: NetworkObserver {
     }
 
     func getPrivateKey() -> String {
-        guard let privateKey = _loadPrivateKey(name: getAddressName()!, password: _password!) else{
-            let privateKey2 = try! _keyStore?.UNSAFE_getPrivateKeyData(password: _password!, account: _address!)
+        guard let privateKey = _loadPrivateKey(name: _address!.name, password: _password!) else{
+            let privateKey2 = try! _keyStore?.UNSAFE_getPrivateKeyData(password: _password!, account: EthereumAddress(_address!.address)!)
 
             return privateKey2!.toHexString()
         }
         return privateKey
     }
 
-    func addToken(token: CustomToken){
-        _networkData!.tokenArray.append(token)
-        _saveNetworkData()
-    }
-
     func setAccount() -> Bool {
         _saveMnemonic(password: _password!)
         _generateKeyStore(password: _password!)
         _saveKeyStore()
-        _generateAddressArray()
-        setAddress(index: nil)
+        _initAccount()
 
         return true
     }
 
     func getAccount(key: String, name: String) throws -> Bool{
-        guard _checkAccount(name: name) else{ return false }
+        let ethAddress: EthAddress = EthAddress.address
+        guard !ethAddress.checkAddressName(name) else{ return false }
         guard let keyStore = PlainKeystore(privateKey: key) else{ throw GetAccountError.invalidPrivateKey }
         do{
-            if(!_checkAccount(account: keyStore.addresses!.first!.address)){
+            if(ethAddress.checkAddressExists(keyStore.addresses!.first!.address)){
                 throw GetAccountError.existingAccount
             }
 
-            let address = CustomAddress(address: keyStore.addresses!.first!.address, name: name, isPrivateKey: true, path: nil)
-            _savePrivateKey(key: key, name: address.name, password: _password!)
-            _addAddress(address: address)
-            setAddress(address: _addressArray.last!.address)
+            let ethAddress: EthAddress = EthAddress.address
+            let address = CustomAddress(address: keyStore.addresses!.first!.address, name: name, isPrivateKey: true, path: "")
+            ethAddress.addAddress(address)
+            _savePrivateKey(key: key, name: name, password: _password!)
             _loadPlainKeyStore()
         }
         catch GetAccountError.existingAccount{
@@ -189,11 +174,14 @@ class EthAccount: NetworkObserver {
     }
 
     func generateAccount(name: String) -> Bool {
-        guard _checkAccount(name: name) else{ return false }
+        let ethAddress: EthAddress = EthAddress.address
+        guard !ethAddress.checkAddressName(name) else{ return false }
+        guard !ethAddress.checkAddressCount() else{ return false }
 
         do {
             try _createAccount(name: name)
         } catch {
+            print(error)
             return false
         }
         return true
@@ -205,12 +193,12 @@ class EthAccount: NetworkObserver {
         }else{
             _delAddressFromPath(account: account)
         }
+        let ethAddress: EthAddress = EthAddress.address
+
         if(account.address == _address!.address){
-            setAddress(address: _addressArray.first!.address)
+            ethAddress.setAddress(index: nil)
         }
-        let index = _addressArray.firstIndex(where: {$0.name == account.name})
-        _addressArray.remove(at: index!)
-        _saveAddress()
+        ethAddress.deleteAddress(name: account.name)
     }
 
     func verifyAccount(){
@@ -222,107 +210,24 @@ class EthAccount: NetworkObserver {
         return _isVerified
     }
 
-    func setAddress(index: Int?) {
-        if (index == nil || index! > 9) {
-            _address = EthereumAddress(_addressArray.first!.address)
-        } else {
-            _address = EthereumAddress(_addressArray[index!].address)
-        }
-        _saveAddressSelected()
+    func _setPassword(_ password: String) {
+        _password = password
     }
 
-    func setAddress(address: String) {
-        _address = EthereumAddress(address)
-        _saveAddressSelected()
-    }
-
-    func getAddress() -> EthereumAddress? {
-        return _address
-    }
-
-    func getAddressArray() -> [CustomAddress]? {
-        return _addressArray
-    }
-
-    func getAddressName() -> String? {
-        for address in _addressArray{
-            if(_address!.address == address.address){
-                return address.name
-            }
-        }
-        return nil
-    }
-
-    func getTokenArray() -> [CustomToken]? {
-        return _networkData?.tokenArray
-    }
-
-    func getToken() -> CustomToken? {
-         return _networkData?.tokenSelected
-    }
-
-    func setToken(index: Int?) {
+    func connectNetwork(){
         let web3: CustomWeb3 = CustomWeb3.web3
-
-        if(index == nil) {
-            _networkData!.tokenSelected = nil
-        }
-        else{
-            _networkData!.tokenSelected = _networkData!.tokenArray[index!]
-        }
-
-        let getGas = web3.getGas()!
-        if(getGas.rate == "custom"){
-            web3.setGas(price: getGas.price!, limit: getGas.limit!)
-        }
-        else{
-            web3.setGas(rate: getGas.rate)
-        }
-        _saveNetworkData()
+        web3.attachNetworkObserver(self)
+        self._network = web3.network
+        web3.setOption()
     }
 
-    func setToken(token: CustomToken) {
-        let web3: CustomWeb3 = CustomWeb3.web3
-        _networkData!.tokenSelected = token
-
-        let getGas = web3.getGas()!
-        if(getGas.rate == "custom"){
-            web3.setGas(price: getGas.price!, limit: getGas.limit!)
-        }
-        else{
-            web3.setGas(rate: getGas.rate)
-        }
-        _saveNetworkData()
+    func networkChanged(network: CustomWeb3Network) {
+        self._network = network
     }
 
-    func checkToken(address: EthereumAddress) -> Bool{
-        for token in _networkData!.tokenArray{
-            if(token.address == address){
-                return true
-            }
-        }
-        return false
+    func addressChanged(address: CustomAddress) {
+        self._address = address
     }
-
-    func checkPrivate(checkAddress: String) -> Bool {
-        for address in _addressArray{
-            if(checkAddress == address.address && address.isPrivateKey){
-                return true
-            }
-        }
-        return false
-    }
-
-    /*
-    func saveTxInfo(txInfo: TXInfo){
-        _networkData!.txHistory.append(txInfo)
-        _saveNetworkData()
-    }
-
-    func getTxHistory() -> [TXInfo] {
-        return _networkData!.txHistory
-    }
-    */
 
     private func _encryptData(stringData: String, password: String) -> Data {
         let data: Data = stringData.data(using: String.Encoding.utf8)!
@@ -418,17 +323,20 @@ class EthAccount: NetworkObserver {
         _loadPlainKeyStore()
     }
 
-
     private func _loadPlainKeyStore(){
+        let ethAddress: EthAddress = EthAddress.address
+        let pkPredicate = NSPredicate(format: "isPrivateKey == true")
+
+        let addressArray = ethAddress.fetchAddress(pkPredicate)
+
         var plainArray: [PlainKeystore] = [PlainKeystore]()
-        for address in _addressArray{
-            if(address.isPrivateKey == true){
-                let privateKey = _loadPrivateKey(name: address.name, password: _password!)
-                let plainKeyStore = PlainKeystore(privateKey: privateKey!)!
-                plainArray.append(plainKeyStore)
-            }
+        for address in addressArray{
+            let privateKey = _loadPrivateKey(name: address.value(forKey: "name") as! String, password: _password!)
+            let plainKeyStore = PlainKeystore(privateKey: privateKey!)!
+            plainArray.append(plainKeyStore)
         }
         _plainKeyStoreManager = KeystoreManager(plainArray)
+
     }
 
     private func _regenerateKeyStore(oldPassword: String, password: String){
@@ -443,103 +351,15 @@ class EthAccount: NetworkObserver {
     }
 
     private func _reencryptPrivateKey(oldPassword: String, password: String){
-        for address in _addressArray{
-            if(address.isPrivateKey){
-                let privateKey = _loadPrivateKey(name: address.name, password: oldPassword)!
-                _savePrivateKey(key: privateKey, name: address.name, password: password)
-            }
+        let ethAddress: EthAddress = EthAddress.address
+        let pkPredicate = NSPredicate(format: "isPrivateKey == true")
+        let addressArray = ethAddress.fetchAddress(pkPredicate)
+
+        for address in addressArray{
+            let name = address.value(forKey: "name") as! String
+            let privateKey = _loadPrivateKey(name: name, password: oldPassword)!
+            _savePrivateKey(key: privateKey, name: name, password: password)
         }
-    }
-
-    func _setPassword(_ password: String) {
-        _password = password
-    }
-
-    func initTXInfo(tx: String, error: String, subInfo: TXSubInfo) {
-        guard let managedContext = managedContext else { return }
-        guard let entity = NSEntityDescription.entity(forEntityName: "TXInfo", in: managedContext) else { return }
-
-        let util = Util()
-        let newTX = NSManagedObject(entity: entity, insertInto: managedContext)
-        let status = error == "" ? "notYetProcessed" : "failed"
-        let amount = util.trimZero(balance: Web3Utils.formatToEthereumUnits(subInfo.amount, decimals: subInfo.decimals)!)
-        let gasPrice = util.trimZero(balance: Web3Utils.formatToEthereumUnits(subInfo.gasPrice, toUnits: .Gwei)!)
-        let gasLimit = util.trimZero(balance: Web3Utils.formatToEthereumUnits(subInfo.gasLimit, toUnits: .wei)!)
-
-        newTX.setValue(_address!.address, forKey: "account")
-        newTX.setValue(amount, forKey: "amount")
-        newTX.setValue(subInfo.category, forKey: "category")
-        newTX.setValue(Date(), forKey: "date")
-        newTX.setValue(subInfo.decimals, forKey: "decimals")
-        newTX.setValue(error, forKey: "error")
-        newTX.setValue(_address!.address, forKey: "from")
-        newTX.setValue(gasLimit, forKey: "gasLimit")
-        newTX.setValue(gasPrice, forKey: "gasPrice")
-        newTX.setValue(network!.name, forKey: "network")
-        newTX.setValue(status, forKey: "status")
-        newTX.setValue(subInfo.symbol, forKey: "symbol")
-        newTX.setValue(subInfo.to, forKey: "to")
-        newTX.setValue(tx, forKey: "txHash")
-
-        do {
-            try managedContext.save()
-        } catch let error as NSError {
-            print("error: \(error)")
-        }
-    }
-
-    func fetchTXInfo() -> [TXInfo] {
-        guard let managedContext = managedContext else {
-            return []
-        }
-
-        let fetchRequest = NSFetchRequest<TXInfo>(entityName: "TXInfo")
-        let networkPredicate = NSPredicate(format: "network = %@", network!.name)
-        let accountPredicate = NSPredicate(format: "account = %@", _address!.address)
-        let andPredicate = NSCompoundPredicate(type: .and, subpredicates: [networkPredicate, accountPredicate])
-        fetchRequest.predicate = andPredicate
-
-        do {
-            let result = try managedContext.fetch(fetchRequest)
-            return result
-        } catch let error as NSError {
-            print("error : \(error)")
-        }
-
-        return []
-    }
-
-    func updateTXStatus(tx: String, status: String){
-        guard let managedContext = managedContext else { return }
-
-        let fetchRequest = NSFetchRequest<TXInfo>(entityName: "TXInfo")
-        let hashPredicate = NSPredicate(format: "txHash = %@", tx)
-        fetchRequest.predicate = hashPredicate
-
-        do {
-            let result = try managedContext.fetch(fetchRequest)
-
-            let objectUpdate = result[0]
-            objectUpdate.setValue(status, forKey: "status")
-
-            try managedContext.save()
-
-        } catch let error as NSError {
-            print("error: \(error)")
-        }
-    }
-
-    func connectNetwork(){
-        let web3: CustomWeb3 = CustomWeb3.web3
-        web3.attachNetworkObserver(self)
-        self.network = web3.network
-        web3.setOption()
-        _loadNetworkData()
-    }
-
-    func networkChanged(network: CustomWeb3Network) {
-        self.network = network
-        _loadNetworkData()
     }
 
     private func _hashPassword(password: [UInt8], salt: [UInt8]) -> [UInt8] {
@@ -549,75 +369,21 @@ class EthAccount: NetworkObserver {
 
     private func _unlockAccount() {
         let keyHex = KeychainService.loadPassword(service: "moahWallet", account: "password")!
+        let ethAddress: EthAddress = EthAddress.address
+
         self._password = keyHex
-        _loadAddress()
-        _loadAddressSelected()
+        self._address = ethAddress.address
+        ethAddress.attachAddressObserver(self)
+
         _loadKeyStore()
         _loadIsVerified()
         connectNetwork()
     }
 
-    private func _saveAddressSelected() {
-        let addressSelected = _address?.address
-        userDefaults.set(addressSelected, forKey: "addressSelected")
-    }
-
-    private func _loadAddressSelected(){
-        let addressSelected = userDefaults.string(forKey: "addressSelected")
-        if (addressSelected == nil) {
-            setAddress(index: nil)
-        } else {
-            setAddress(address: addressSelected!)
-        }
-    }
-
-    private func _saveAddress() {
-        userDefaults.set(try! PropertyListEncoder().encode(_addressArray), forKey:"address")
-    }
-
-    private func _loadAddress(){
-        if let rawArray = UserDefaults.standard.value(forKey:"address") as? Data {
-            let addressArray = try! PropertyListDecoder().decode([CustomAddress].self, from: rawArray)
-            _addressArray = addressArray
-        }
-        else{
-            return
-        }
-    }
-
-    private func _addAddress(address: CustomAddress){
-        _addressArray.append(address)
-        _saveAddress()
-    }
-
-    private func _generateAddressArray(){
-        let address = CustomAddress(address: _getLastAddress().address, name: "주 계정", isPrivateKey: false, path: _getLastPath())
-        _addressArray = [address]
-        _saveAddress()
-    }
-
-    private func _getLastAddress() -> EthereumAddress{
-        let path = _keyStore!.paths
-        var pathKey = Array(path.keys)
-        pathKey = pathKey.sorted(by: <)
-        let lastAddress = path[pathKey.last!]
-
-        return lastAddress!
-    }
-
-    private func _saveNetworkData() {
-        userDefaults.set(try! PropertyListEncoder().encode(_networkData), forKey: network!.name)
-    }
-
-    private func _loadNetworkData() {
-        if let rawArray = UserDefaults.standard.value(forKey: network!.name) as? Data {
-            let networkData = try! PropertyListDecoder().decode(NetworkData.self, from: rawArray)
-            _networkData = networkData
-        }
-        else{
-            _networkData = NetworkData(network: network!.name, tokenSelected: nil, tokenArray: [])
-            _saveNetworkData()
-        }
+    private func _initAccount(){
+        let ethAddress: EthAddress = EthAddress.address
+        let address = CustomAddress(address: _getLastAddressFromPath().address, name: "주 계정", isPrivateKey: false, path: _getLastPath())
+        ethAddress.addAddress(address)
     }
 
     private func _getLastPath() -> String{
@@ -626,6 +392,15 @@ class EthAccount: NetworkObserver {
         pathKey = pathKey.sorted(by: <)
 
         return pathKey.last!
+    }
+
+    func _getLastAddressFromPath() -> EthereumAddress{
+        let path = _keyStore!.paths
+        var pathKey = Array(path.keys)
+        pathKey = pathKey.sorted(by: <)
+        let lastAddress = path[pathKey.last!]
+
+        return lastAddress!
     }
 
     private func _createAccount(name: String) throws {
@@ -653,13 +428,21 @@ class EthAccount: NetworkObserver {
             try _keyStore?.createNewCustomChildAccount(password: _password!, path: newPath)
             _saveKeyStore()
 
+            let ethAddress: EthAddress = EthAddress.address
             let address = CustomAddress(address: _keyStore!.paths[newPath]!.address, name: name, isPrivateKey: false, path: newPath)
-            _addAddress(address: address)
-            setAddress(address: _addressArray.last!.address)
+            ethAddress.addAddress(address)
         }
         catch{
             throw error
         }
+    }
+
+    private func _saveIsVerified(){
+        userDefaults.set(_isVerified, forKey: "isVerified")
+    }
+
+    private func _loadIsVerified(){
+        _isVerified = userDefaults.bool(forKey: "isVerified")
     }
 
     private func _delAddressFromPath(account: CustomAddress){
@@ -674,47 +457,18 @@ class EthAccount: NetworkObserver {
         _saveKeyStore()
     }
 
-    private func _checkAccount(name: String) -> Bool{
-        var count = 0
-        for address in _addressArray{
-            if(address.isPrivateKey == false){count += 1}
-            if(address.name == name){
-                return false
-            }
-        }
-        if(count > 9) { return false }
-        else{ return true }
-    }
-
-    private func _checkAccount(account: String) -> Bool{
-        for address in _addressArray{
-            if(address.address == account){ return false}
-        }
-        return true
-    }
-
-    private func _saveIsVerified(){
-        userDefaults.set(_isVerified, forKey: "isVerified")
-    }
-
-    private func _loadIsVerified(){
-        _isVerified = userDefaults.bool(forKey: "isVerified")
-    }
-
     private func _lockKeyData() {
+        let ethAddress: EthAddress = EthAddress.address
+        ethAddress.detachAddressObserver(self)
+
         if(_keyStore != nil){
             _saveKeyStore()
-            _saveAddress()
-            _saveAddressSelected()
-            _saveNetworkData()
             _saveIsVerified()
         }
         _password = nil
         _keyStore = nil
         _mnemonic = nil
         _address = nil
-        _networkData = nil
         _plainKeyStoreManager = nil
-        _addressArray = [CustomAddress]()
     }
 }

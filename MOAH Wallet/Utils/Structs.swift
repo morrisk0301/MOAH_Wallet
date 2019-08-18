@@ -16,7 +16,7 @@ struct CustomAddress: Codable {
     var address: String
     var name: String
     var isPrivateKey: Bool
-    var path: String?
+    var path: String
 }
 
 struct CustomGas: Codable {
@@ -25,26 +25,32 @@ struct CustomGas: Codable {
     var limit: BigUInt?
 }
 
+struct CustomToken: Codable {
+    var name: String
+    var symbol: String
+    var address: String
+    var decimals: Int
+    var network: String
+    var logo: Data?
+}
+
 struct CustomWeb3Network: Codable {
     var name: String
     var url: URL
 }
 
-struct TransferInfo: Codable {
+struct NetworkData: Codable {
+    var network: String
+    var tokenSelected: CustomToken?
+}
+
+struct TransferInfo {
     var amount: BigUInt
     var address: String
     var gas: BigUInt
     var total: BigUInt
     var symbol: String
     var decimals: Int
-}
-
-struct CustomToken: Codable {
-    var name: String
-    var symbol: String
-    var address: EthereumAddress
-    var decimals: BigUInt
-    var logo: Data?
 }
 
 struct TXSubInfo {
@@ -56,12 +62,6 @@ struct TXSubInfo {
     var decimals: Int
     var gasPrice: BigUInt
     var gasLimit: BigUInt
-}
-
-struct NetworkData: Codable {
-    var network: String
-    var tokenSelected: CustomToken?
-    var tokenArray: [CustomToken] = [CustomToken]()
 }
 
 func ==(left: CustomWeb3Network, right: CustomWeb3Network) -> Bool{

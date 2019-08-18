@@ -51,8 +51,8 @@ class TXFeeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIG
 
         view.addSubview(tableView)
 
-        let account: EthAccount = EthAccount.accountInstance
-        if(account.getToken() == nil){
+        let ethToken = EthToken.token
+        if(ethToken.token == nil){
             gasLimit = "21000"
         }
         else{
