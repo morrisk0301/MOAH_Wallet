@@ -42,6 +42,7 @@ class CreateAccountVC: UIViewController, UITextFieldDelegate {
         textField.backgroundColor = .clear
         textField.layer.borderColor = UIColor(key: "grey2").cgColor
         textField.layer.borderWidth = 0.5
+        textField.keyboardType = .asciiCapable
         textField.translatesAutoresizingMaskIntoConstraints = false
 
         return textField

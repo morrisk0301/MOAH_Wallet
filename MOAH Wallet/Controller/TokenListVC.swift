@@ -12,6 +12,26 @@ class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, U
 
     let screenSize = UIScreen.main.bounds
 
+    let searchField: UITextField = {
+        let textField = UITextField()
+
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.height))
+        textField.leftView = paddingView
+        textField.leftViewMode = .always
+        textField.placeholder = "토큰명/Contract 주소를 입력하세요."
+        textField.borderStyle = .none
+        textField.returnKeyType = .done
+        textField.textColor = UIColor(key: "darker")
+        textField.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
+        textField.layer.cornerRadius = 5
+        textField.backgroundColor = .clear
+        textField.layer.borderColor = UIColor(key: "grey2").cgColor
+        textField.layer.borderWidth = 0.5
+        textField.translatesAutoresizingMaskIntoConstraints = false
+
+        return textField
+    }()
+
     let tableView: UITableView = {
         let tableView = UITableView()
 
@@ -48,6 +68,8 @@ class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, U
 
         view.addSubview(tableView)
         view.addSubview(addButton)
+        view.addSubview(searchField)
+        searchField.delegate = self
 
         setupLayout()
         self.showSpinner()
@@ -62,7 +84,12 @@ class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, U
     }
 
     private func setupLayout(){
-        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        searchField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: screenSize.height/40).isActive = true
+        searchField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        searchField.widthAnchor.constraint(equalToConstant: screenSize.width*0.9).isActive = true
+        searchField.heightAnchor.constraint(equalToConstant: screenSize.height/20).isActive = true
+
+        tableView.topAnchor.constraint(equalTo: searchField.bottomAnchor, constant: screenSize.height/40).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: addButton.topAnchor).isActive = true
@@ -83,15 +110,9 @@ class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, U
 
         if(indexPath.row == 0){
             cell.logoImageView.isHidden = true
-            cell.addSubview(cell.searchField)
-            cell.searchField.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
-            cell.searchField.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
-            cell.searchField.widthAnchor.constraint(equalToConstant: screenSize.width*0.9).isActive = true
-            cell.searchField.heightAnchor.constraint(equalToConstant: screenSize.height/20).isActive = true
-            cell.searchField.delegate = self
         }
         else{
-            cell.setTokenValue(name: "NaraMalsamiToken", address: "0x9e45b139922836616459385088531ae2a24f49a1", logo: nil)
+            //cell.setTokenValue(name: "NaraMalsamiToken", address: "0x9e45b139922836616459385088531ae2a24f49a1", logo: nil)
         }
 
         return cell

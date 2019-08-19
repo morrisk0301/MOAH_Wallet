@@ -202,7 +202,13 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
-            account.deleteAccount(account: self.address)
+            let address = self.accounts[indexPath.section].value(forKey: "address") as! String
+            let name = self.accounts[indexPath.section].value(forKey: "name") as! String
+            let isPrivateKey = self.accounts[indexPath.section].value(forKey: "isPrivateKey") as! Bool
+            let path = self.accounts[indexPath.section].value(forKey: "path") as! String
+            let account = CustomAddress(address: address, name: name, isPrivateKey: isPrivateKey, path: path)
+
+            self.account.deleteAccount(account: account)
             getAccount()
             self.tableView.deleteSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
             self.balance.remove(at: indexPath.section)

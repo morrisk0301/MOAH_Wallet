@@ -96,7 +96,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Chec
         super.didReceiveMemoryWarning()
     }
 
-    func setupBarButton(){
+    private func setupBarButton(){
         let leftUIButton: UIButton = UIButton(type: .custom)
         leftUIButton.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
 
@@ -232,10 +232,6 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Chec
         let controller = TXDetailVC()
         controller.txInfo = self.txHistory[indexPath.row]
         self.present(UINavigationController(rootViewController: controller), animated: true)
-    }
-
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-
     }
 
     func checkClicked() {

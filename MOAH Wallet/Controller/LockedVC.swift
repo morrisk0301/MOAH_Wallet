@@ -95,8 +95,8 @@ class LockedVC: UIViewController {
                 attributes:[NSAttributedString.Key.foregroundColor: UIColor.white,
                             NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundB", size: 18)!,
                             NSAttributedString.Key.paragraphStyle: style])
-        attrText.append(NSAttributedString(string: "\n\n잠시 후에 다시 이용해주세요.", 
-                attributes: [NSAttributedString.Key.foregroundColor: UIColor(key: "grey"),
+        attrText.append(NSAttributedString(string: "\n\n\n잠시 후에 다시 이용해주세요.", 
+                attributes: [NSAttributedString.Key.foregroundColor: UIColor(rgb: 0xCCCCCC),
                              NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundR", size: 16)!,
                              NSAttributedString.Key.paragraphStyle: style]))
 

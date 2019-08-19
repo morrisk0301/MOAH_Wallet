@@ -22,30 +22,9 @@ class TokenCell: UITableViewCell {
     let logoImageView: UIImageView = {
 
         let imageView = UIImageView()
-        imageView.backgroundColor = UIColor.yellow
         imageView.translatesAutoresizingMaskIntoConstraints = false
 
         return imageView
-    }()
-
-    let searchField: UITextField = {
-        let textField = UITextField()
-
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.height))
-        textField.leftView = paddingView
-        textField.leftViewMode = .always
-        textField.placeholder = "토큰명/Contract 주소를 입력하세요."
-        textField.borderStyle = .none
-        textField.returnKeyType = .done
-        textField.textColor = UIColor(key: "darker")
-        textField.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
-        textField.layer.cornerRadius = 5
-        textField.backgroundColor = .clear
-        textField.layer.borderColor = UIColor(key: "grey2").cgColor
-        textField.layer.borderWidth = 0.5
-        textField.translatesAutoresizingMaskIntoConstraints = false
-
-        return textField
     }()
 
     override init(style: CellStyle, reuseIdentifier: String?) {
@@ -60,8 +39,8 @@ class TokenCell: UITableViewCell {
 
         logoImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         logoImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: screenSize.width/20).isActive = true
-        logoImageView.heightAnchor.constraint(equalToConstant: screenSize.width/10).isActive = true
-        logoImageView.widthAnchor.constraint(equalToConstant: screenSize.width/10).isActive = true
+        logoImageView.heightAnchor.constraint(equalToConstant: screenSize.width/12).isActive = true
+        logoImageView.widthAnchor.constraint(equalToConstant: screenSize.width/12).isActive = true
 
         tokenLabel.topAnchor.constraint(equalTo: topAnchor).isActive = true
         tokenLabel.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
@@ -73,9 +52,9 @@ class TokenCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func setTokenValue(name: String, address: String, logo: UIImage?){
+    func setTokenValue(name: String, address: String, logo: Data){
         let style = NSMutableParagraphStyle()
-        style.lineSpacing = 5
+        style.lineSpacing = 6
 
         let attrText = NSMutableAttributedString(string: name,
                 attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundB", size: 16, dynamic: true)!, 
@@ -85,6 +64,9 @@ class TokenCell: UITableViewCell {
                 attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRound", size: 11, dynamic: true)!, 
                              NSAttributedString.Key.foregroundColor: UIColor(key: "grey2")]))
         tokenLabel.attributedText = attrText
+
+        let logoImage = UIImage(data:logo,scale:1.0)
+        self.logoImageView.image = logoImage
     }
 
     func setAsEther(){
@@ -96,6 +78,8 @@ class TokenCell: UITableViewCell {
                              NSAttributedString.Key.foregroundColor: UIColor(key: "darker"),
                              NSAttributedString.Key.paragraphStyle: style])
         tokenLabel.attributedText = attrText
+
+        logoImageView.image = UIImage(named: "ether")
     }
 
     private func trimMiddle(address: String) -> String{

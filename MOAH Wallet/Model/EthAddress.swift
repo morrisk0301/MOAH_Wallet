@@ -122,9 +122,8 @@ class EthAddress {
     }
 
     func checkAddressCount() -> Bool {
-        let pkPredicate = NSPredicate(format: "isPrivateKey = %@", false)
+        let pkPredicate = NSPredicate(format: "isPrivateKey == false")
         let addressArray = self.fetchAddress(pkPredicate)
-
         return addressArray.count > 9
     }
 

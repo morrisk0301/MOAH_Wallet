@@ -12,7 +12,7 @@ import CoreData
 class CustomWeb3: AddressObserver {
 
     private let _web3Main = Web3.InfuraMainnetWeb3(accessToken: "7bdfe4d2582141ef8e00c2cf929c72ee")
-    private let _web3Robsten = Web3.InfuraRopstenWeb3(accessToken: "7bdfe4d2582141ef8e00c2cf929c72ee")
+    private let _web3Ropsten = Web3.InfuraRopstenWeb3(accessToken: "7bdfe4d2582141ef8e00c2cf929c72ee")
     private let _web3Rinkeby = Web3.InfuraRinkebyWeb3(accessToken: "7bdfe4d2582141ef8e00c2cf929c72ee")
     private var _customNetwork: [CustomWeb3Network] = [CustomWeb3Network]()
     private var _option: TransactionOptions?
@@ -46,7 +46,7 @@ class CustomWeb3: AddressObserver {
         ethAddress.attachAddressObserver(self)
         _loadNetwork()
         _loadNetworkArray()
-        if (network == nil || network!.name == "mainnet" || network!.name == "robsten" ||  network!.name == "rinkeby") {
+        if (network == nil || network!.name == "mainnet" || network!.name == "ropsten" ||  network!.name == "rinkeby") {
             setNetwork(network: network)
         } else {
             for network in _customNetwork {
@@ -196,8 +196,8 @@ class CustomWeb3: AddressObserver {
             _web3Ins = _web3Main
             self.network = network
             break
-        case "robsten":
-            _web3Ins = _web3Robsten
+        case "ropsten":
+            _web3Ins = _web3Ropsten
             self.network = network
             break
         case "rinkeby":
@@ -236,7 +236,7 @@ class CustomWeb3: AddressObserver {
     func getNetworks() -> [CustomWeb3Network] {
         var networks: [CustomWeb3Network] = [
             CustomWeb3Network(name: "mainnet", url: URL(string: "https://api.infura.io/v1/jsonrpc/mainnet")!),
-            CustomWeb3Network(name: "robsten", url: URL(string: "https://api.infura.io/v1/jsonrpc/robsten")!),
+            CustomWeb3Network(name: "ropsten", url: URL(string: "https://api.infura.io/v1/jsonrpc/ropsten")!),
             CustomWeb3Network(name: "rinkeby", url: URL(string: "https://api.infura.io/v1/jsonrpc/rinkeby")!)    
         ]
         networks.append(contentsOf: _customNetwork)
@@ -419,7 +419,7 @@ class CustomWeb3: AddressObserver {
     }
 
     private func _checkNetwork(name: String) -> Bool {
-        if(name == "mainnet" || name == "robsten" ||  name == "rinkeby"){
+        if(name == "mainnet" || name == "ropsten" ||  name == "rinkeby"){
             return false
         }
         for network in _customNetwork{

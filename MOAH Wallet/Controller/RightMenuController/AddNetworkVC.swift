@@ -74,6 +74,7 @@ class AddNetworkVC: UIViewController, UITextFieldDelegate{
         textField.backgroundColor = .clear
         textField.layer.borderColor = UIColor(key: "grey2").cgColor
         textField.layer.borderWidth = 0.5
+        textField.keyboardType = .URL
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.tag = 1
 

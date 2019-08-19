@@ -250,12 +250,16 @@ class TokenAddVC: UIViewController, UITextFieldDelegate {
 
         DispatchQueue.global(qos: .userInitiated).async {
             do {
-                let token = try token.getTokenInfo(address: self.contractField.text!)
+                let getToken = try token.getTokenInfo(address: self.contractField.text!)
+                let defaultImage = UIImage(named: "token")
+                let imageData = defaultImage!.pngData()
+                self.token = getToken
+                self.token!.logo = imageData
+
                 DispatchQueue.main.async {
-                    self.token = token
-                    self.symbolField.text = token.symbol
-                    self.decimalField.text = token.decimals.description
-                    self.nameField.text = token.name
+                    self.symbolField.text = getToken.symbol
+                    self.decimalField.text = getToken.decimals.description
+                    self.nameField.text = getToken.name
                     self.confirmButton.isEnabled = true
                     self.confirmButton.backgroundColor = UIColor(key: "regular")
                     self.hideSpinner()

@@ -62,7 +62,6 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
         if(isReload){
             self.showSpinner()
             if(isInit){
-                account.connectNetwork()
                 txQueue.refreshTX()
             }
             initVCs()

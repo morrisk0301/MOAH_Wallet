@@ -144,6 +144,7 @@ class EthAccount: NetworkObserver, AddressObserver{
         _generateKeyStore(password: _password!)
         _saveKeyStore()
         _initAccount()
+        _unlockAccount()
 
         return true
     }

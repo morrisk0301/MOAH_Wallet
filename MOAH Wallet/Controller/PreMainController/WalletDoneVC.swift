@@ -56,7 +56,7 @@ class WalletDoneVC: UIViewController{
         style.alignment = NSTextAlignment.center
 
         if(isTransfer){
-            let attrText = NSMutableAttributedString(string: "토큰 전송이 시작되었습니다!",
+            let attrText = NSMutableAttributedString(string: "암호화폐 전송이 시작되었습니다!",
                     attributes: [NSAttributedString.Key.paragraphStyle: style,
                                  NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundB", size: 22)!,
                                  NSAttributedString.Key.foregroundColor: UIColor.white])

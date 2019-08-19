@@ -394,7 +394,7 @@ class TXDetailVC: UIViewController{
         network = web3.network
         DispatchQueue.global(qos: .userInteractive).sync{
             let hash = self.txInfo.value(forKey: "txHash") as! String
-            if (network!.name == "mainnet" || network!.name == "robsten" ||  network!.name == "rinkeby") {
+            if (network!.name == "mainnet" || network!.name == "ropsten" ||  network!.name == "rinkeby") {
                 self.infura = true
             }
             if(hash == ""){

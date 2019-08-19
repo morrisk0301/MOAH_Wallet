@@ -28,6 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let key = userDefaults.string(forKey: "salt")
         let lock = userDefaults.bool(forKey: "useLock")
+        //userDefaults.removeObject(forKey: "lockTime")
         if let date = userDefaults.value(forKey: "lockTime") as? Date {
             self.lockTime = date
         }

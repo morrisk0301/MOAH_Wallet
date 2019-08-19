@@ -152,9 +152,10 @@ class TokenSelectVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         let name = tokenArray[indexPath.row-1].value(forKey: "name") as! String
         let symbol = tokenArray[indexPath.row-1].value(forKey: "symbol") as! String
         let address = tokenArray[indexPath.row-1].value(forKey: "address") as! String
+        let logo = tokenArray[indexPath.row-1].value(forKey: "logo") as! Data
 
         let nameLabel = symbol + " - " + name
-        cell.setTokenValue(name: nameLabel, address: address, logo: nil)
+        cell.setTokenValue(name: nameLabel, address: address, logo: logo)
 
         if(self.token != nil && address == self.token!.address){
             addCheckImage(cell: cell)
@@ -168,7 +169,7 @@ class TokenSelectVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return screenSize.height/15
+        return screenSize.height/12
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
