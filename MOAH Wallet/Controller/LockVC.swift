@@ -14,6 +14,7 @@ class LockVC: UIViewController, KeypadViewDelegate {
     let account: EthAccount = EthAccount.accountInstance
     let appDelegate: AppDelegate = (UIApplication.shared.delegate as? AppDelegate)!
     let userDefaults = UserDefaults.standard
+    let reachability = ReachabilityManager.shared
 
     let lock: LockView = {
         let lockView = LockView()
@@ -34,12 +35,16 @@ class LockVC: UIViewController, KeypadViewDelegate {
         view.addSubview(lock)
         lock.secureKeypad.delegate = self
 
-        let useBiometrics = userDefaults.bool(forKey: "useBiometrics")
-        if (useBiometrics) {
-            bioVerification()
-        }
-
         setupLayout()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        networkCheck(completion: {
+            let useBiometrics = userDefaults.bool(forKey: "useBiometrics")
+            if (useBiometrics) {
+                bioVerification()
+            }
+        })
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,6 +57,22 @@ class LockVC: UIViewController, KeypadViewDelegate {
         lock.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         lock.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         lock.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    }
+
+    func networkCheck(completion: () -> ()){
+        if(reachability.reachability.connection == .none){
+            let alertController = UIAlertController(title: "네트워크 오류", message: "네트워크를 사용할 수 없습니다.\n네트워크를 활성화해주세요.", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "재시도", style: .default){(_) in
+                if (self.reachability.reachability.connection == .none){
+                    self.networkCheck(completion: {})
+                }
+            }
+            alertController.addAction(ok)
+            self.present(alertController, animated: false)
+        }
+        else {
+            completion()
+        }
     }
 
     func cellPressed(_ cellItem: String) {
