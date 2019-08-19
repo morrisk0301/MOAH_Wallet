@@ -36,13 +36,12 @@ class TXQueue {
     func addTXTask(txHash: String){
         let web3 = CustomWeb3.web3
         let ethTXHistory = EthTXHistory()
-        _queue.async{
+        _queue.sync{
             while(true){
                 let hash = web3.getTXReceipt(hash: txHash)
                 if(hash != nil && hash!.status != .notYetProcessed){
                     ethTXHistory.updateTXStatus(tx: txHash, status: hash!.status.description)
                     self.delegate?.transactionComplete()
-                    //self._notifyUser()
                     break
                 }
                 sleep(10)

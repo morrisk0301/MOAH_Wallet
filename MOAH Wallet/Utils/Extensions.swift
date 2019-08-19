@@ -128,6 +128,17 @@ extension UIViewController {
         vc.isReload = true
     }
 
+    func lockUser(){
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        let userDefaults = UserDefaults.standard
+        let lockTime = Date()
+        let vc = LockedVC()
+        appDelegate?.lockTime = lockTime
+        appDelegate?.window?.rootViewController = vc
+
+        userDefaults.set(lockTime, forKey: "lockTime")
+    }
+
     @objc private func backPressed(_ sender: UIButton){
         self.navigationController?.popViewController(animated: true)
     }

@@ -47,6 +47,7 @@
 		C051F4F3C611CBCFBDA45DB2 /* MyAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F63AEAD075F1D9237EED /* MyAccountVC.swift */; };
 		C051F50DD1F8B7D4B6B9E216 /* TXCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FC04D836A1FFB447B213 /* TXCell.swift */; };
 		C051F522F4C576ED1BD31E84 /* LeftMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F90BE9924E9EE9462DC9 /* LeftMenuCell.swift */; };
+		C051F539B716B05D7F580EA2 /* LockedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FE6B2FA32E688B8B8FCF /* LockedVC.swift */; };
 		C051F557FB97A111AA701661 /* CustomWeb3.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F97A0E294E3AD06B4979 /* CustomWeb3.swift */; };
 		C051F58BA970A28F5148E884 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FF8E066A1CFE267725CC /* CustomButton.swift */; };
 		C051F5F80BB40708BAE58682 /* MnemonicVerificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FC2158395B4BF65E453E /* MnemonicVerificationVC.swift */; };
@@ -212,6 +213,7 @@
 		C051FE49AB23C38632F34583 /* TransparentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransparentView.swift; sourceTree = "<group>"; };
 		C051FE5AAB127B414BFB8543 /* CreateAccountVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAccountVC.swift; sourceTree = "<group>"; };
 		C051FE634D5A6B9DF45C940E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C051FE6B2FA32E688B8B8FCF /* LockedVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockedVC.swift; sourceTree = "<group>"; };
 		C051FECD2DA7B560A0904BBE /* LockView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockView.swift; sourceTree = "<group>"; };
 		C051FF117AB4DADC769782D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
 		C051FF7BB7B279B376C514A0 /* TokenSelectVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenSelectVC.swift; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 				C051F26B45756590CE49C8EC /* TokenListVC.swift */,
 				C051FB58794E833DEFDCEEC4 /* TokenAddVC.swift */,
 				C051F8A729E9515650C206EC /* TXDetailVC.swift */,
+				C051FE6B2FA32E688B8B8FCF /* LockedVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -792,6 +795,7 @@
 				C051F7CC4AF098F0F3DE03EB /* Structs.swift in Sources */,
 				C051F14485A28F4D212227A8 /* Error.swift in Sources */,
 				C051FC3CF284D34A1B4D3848 /* ReachabilityManager.swift in Sources */,
+				C051F539B716B05D7F580EA2 /* LockedVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

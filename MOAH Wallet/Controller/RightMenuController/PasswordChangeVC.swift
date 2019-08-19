@@ -90,7 +90,7 @@ class PasswordChangeVC: UIViewController, KeypadViewDelegate {
                     let animation = ShakeAnimation()
                     self.view.layer.add(animation, forKey: "position")
 
-                    lock.errorLabel.text = "비밀번호가 일치하지 않습니다.\n5회 오류시 지갑이 초기화됩니다."
+                    lock.errorLabel.text = "비밀번호가 일치하지 않습니다."
                     lock.pwLine6.image = changeImage
                     lock.pwLine5.image = changeImage
                     lock.pwLine4.image = changeImage

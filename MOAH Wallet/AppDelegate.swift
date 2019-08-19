@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var backgroundTime: Date?
     var foregroundTime: Date?
+    var lockTime: Date?
     var isInit = true
 
     let account: EthAccount = EthAccount.accountInstance
@@ -27,6 +28,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let key = userDefaults.string(forKey: "salt")
         let lock = userDefaults.bool(forKey: "useLock")
+        if let date = userDefaults.value(forKey: "lockTime") as? Date {
+            self.lockTime = date
+        }
+
+        if(lockTime != nil){
+            let lockedVC = LockedVC()
+            self.window?.rootViewController = lockedVC
+            self.window?.makeKeyAndVisible()
+            return true
+        }
 
         if(key != nil){
             if(lock){
@@ -77,6 +88,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let key = userDefaults.string(forKey: "salt")
         let lock = userDefaults.bool(forKey: "useLock")
         let compareDate = foregroundTime!.timeIntervalSinceReferenceDate - backgroundTime!.timeIntervalSinceReferenceDate
+
+        if let date = userDefaults.object(forKey: "lockTime") as? Date {
+            self.lockTime = date
+        }
+
+        if(lockTime != nil){
+            let lockedVC = LockedVC()
+            self.window?.rootViewController = lockedVC
+            return
+        }
+
         if(!isInit){
             if(key != nil){
                 if(compareDate > 180){

@@ -118,6 +118,14 @@ class WalletDoneVC: UIViewController{
     }
 
     @objc private func backPressed(_ sender: UIButton){
+        if(isTransfer){
+            let rootViewController = self.view.window?.rootViewController as! MainContainerVC
+            rootViewController.isReload = true
+            self.view.window?.rootViewController?.dismiss(animated: true)
+
+            return
+        }
+
         let mainContainerVC = MainContainerVC()
         self.appDelegate.window?.rootViewController = mainContainerVC
     }

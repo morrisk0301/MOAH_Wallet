@@ -11,6 +11,7 @@ class LockVC: UIViewController, KeypadViewDelegate {
 
     var toView: String!
     var password:String = ""
+    var count = 0
     let account: EthAccount = EthAccount.accountInstance
     let appDelegate: AppDelegate = (UIApplication.shared.delegate as? AppDelegate)!
     let userDefaults = UserDefaults.standard
@@ -85,12 +86,18 @@ class LockVC: UIViewController, KeypadViewDelegate {
                 self.appDelegate.window?.rootViewController = mainContainerVC
             }
             else{
+                count += 1
+                if(count > 4){
+                    self.lockUser()
+                    return
+                }
+
                 password = ""
                 let changeImage = UIImage(named: "pwLine")
                 let animation = ShakeAnimation()
                 self.view.layer.add(animation, forKey: "position")
 
-                lock.errorLabel.text = "비밀번호가 일치하지 않습니다.\n5회 오류시 지갑이 초기화됩니다."
+                lock.errorLabel.text = "비밀번호가 일치하지 않습니다.(\(self.count)/5)\n5회 오류시 지갑 이용이 제한됩니다."
                 lock.pwLine6.image = changeImage
                 lock.pwLine5.image = changeImage
                 lock.pwLine4.image = changeImage
