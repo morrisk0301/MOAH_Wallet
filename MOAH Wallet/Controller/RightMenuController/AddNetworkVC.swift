@@ -114,6 +114,9 @@ class AddNetworkVC: UIViewController, UITextFieldDelegate{
         nameField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
         urlField.delegate = self
 
+        nameField.clearButtonMode = .whileEditing
+        urlField.clearButtonMode = .whileEditing
+
         view.addSubview(nameLabel)
         view.addSubview(nameField)
         view.addSubview(urlLabel)

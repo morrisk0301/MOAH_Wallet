@@ -48,7 +48,7 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
         mainVC.signUp = self.signUp
         mainVC.tempMnemonic = self.tempMnemonic
         mainVC.delegate = self
-        mainVC.tokenView.delegate = self
+        mainVC.mainTopView.tokenView.delegate = self
         centerController = UINavigationController(rootViewController: mainVC)
 
         view.addSubview(centerController.view)
@@ -290,14 +290,16 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
                         self.mainVC.symbol = self.symbol
                         self.mainVC.decimals = self.decimals
                         self.mainVC.txHistory = self.txHistory!
-                        self.mainVC.tokenView.setTokenString(tokenString: name)
+                        self.mainVC.mainTopView.tokenView.setTokenString(tokenString: name)
                         self.mainVC.balanceString = balanceTrimmed
-                        self.mainVC.balanceLabel.text = balanceTrimmed + " " + self.symbol
+                        self.mainVC.mainTopView.balanceLabel.text = balanceTrimmed + " " + self.symbol
                         self.mainVC.txView.reloadData()
                         self.tokenSelectVC.tokenArray = tokenArray
                         self.tokenSelectVC.tableView.reloadData()
                         self.isReload = false
                         self.hideSpinner()
+                        self.mainVC.refreshControl.endRefreshing()
+                        self.hideTransparentView()
                     }
             })
         }
@@ -377,6 +379,11 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
             self.showSpinner()
             self.loadData()
         }
+    }
+
+    func reload() {
+        self.showTransparentView()
+        self.loadData()
     }
 
     @objc private func mainViewClicked(_ sender: UIGestureRecognizer) {

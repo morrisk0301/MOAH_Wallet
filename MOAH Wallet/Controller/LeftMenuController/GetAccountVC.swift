@@ -114,6 +114,9 @@ class GetAccountVC: UIViewController, UITextFieldDelegate {
         nameField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
         privateKeyField.delegate = self
 
+        nameField.clearButtonMode = .whileEditing
+        privateKeyField.clearButtonMode = .whileEditing
+
         view.addSubview(nameLabel)
         view.addSubview(privateKeyLabel)
         view.addSubview(nameField)

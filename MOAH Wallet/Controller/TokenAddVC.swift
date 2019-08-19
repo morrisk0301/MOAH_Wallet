@@ -176,6 +176,8 @@ class TokenAddVC: UIViewController, UITextFieldDelegate {
         decimalField.delegate = self
         nameField.delegate = self
 
+        contractField.clearButtonMode = .whileEditing
+
         setupLayout()
     }
 

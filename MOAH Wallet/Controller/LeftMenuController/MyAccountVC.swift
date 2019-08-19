@@ -90,6 +90,7 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
                 self.setupLayout()
 
+                self.refreshControl.tintColor = UIColor(key: "grey")
                 self.refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
                 self.tableView.addSubview(self.refreshControl)
 

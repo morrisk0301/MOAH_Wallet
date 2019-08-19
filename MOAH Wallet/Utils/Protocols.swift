@@ -17,6 +17,11 @@ protocol MainControllerDelegate {
     func tokenEnded(selected: Bool)
     func txFeeClicked()
     func isSignUp()
+    func reload()
+}
+
+protocol CheckVerifiedDelegate {
+    func checkClicked()
 }
 
 protocol TransactionDelegate {

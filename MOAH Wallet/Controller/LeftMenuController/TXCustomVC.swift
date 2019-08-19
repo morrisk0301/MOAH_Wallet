@@ -123,6 +123,9 @@ class TXCustomVC: UIViewController, UITextFieldDelegate {
         priceField.delegate = self
         limitField.delegate = self
 
+        priceField.clearButtonMode = .whileEditing
+        limitField.clearButtonMode = .whileEditing
+
         if(price != nil){
             priceField.text = Web3Utils.formatToEthereumUnits(price!, toUnits: .Gwei)
             limitField.text = limit?.description

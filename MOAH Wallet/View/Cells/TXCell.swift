@@ -42,7 +42,15 @@ class TXCell: UITableViewCell {
         statusLabel.isHidden = false
         txLabel.text = ""
         txLabel.textAlignment = .left
+        txLabel.isHidden = false
         blankConstraint.isActive = false
+        backgroundColor = UIColor(key: "light3")
+
+        for view in subviews{
+            if view is MainTopView{
+                view.removeFromSuperview()
+            }
+        }
     }
 
     override init(style: CellStyle, reuseIdentifier: String?) {
@@ -122,6 +130,11 @@ class TXCell: UITableViewCell {
 
         nonBlankConstraint.isActive = false
         blankConstraint.isActive = true
+        statusLabel.isHidden = true
+    }
+
+    func nonData(){
+        txLabel.isHidden = true
         statusLabel.isHidden = true
     }
 }

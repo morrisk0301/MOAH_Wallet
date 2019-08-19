@@ -72,6 +72,8 @@ class CreateAccountVC: UIViewController, UITextFieldDelegate {
         view.addSubview(nameField)
         view.addSubview(confirmButton)
 
+        nameField.clearButtonMode = .whileEditing
+
         setupLayout()
     }
 

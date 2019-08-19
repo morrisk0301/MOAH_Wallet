@@ -8,7 +8,7 @@ import UIKit
 import web3swift
 import BigInt
 
-class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
+class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CheckVerifiedDelegate{
 
     private let reuseIdentifier = "TXHistoryCell"
 
@@ -26,33 +26,12 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
     let screenSize = UIScreen.main.bounds
     let util = Util()
 
-    let tokenView: MainTokenView = {
-        let tokenView = MainTokenView()
-        tokenView.translatesAutoresizingMaskIntoConstraints = false
+    let mainTopView: MainTopView = {
+        let view = MainTopView()
 
-        return tokenView
-    }()
+        view.translatesAutoresizingMaskIntoConstraints = false
 
-    let balanceLabel: UILabel = {
-        let label = UILabel()
-
-        label.font = UIFont(name:"NanumSquareRoundB", size: 40, dynamic: true)
-        label.textColor = .white
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
-
-        return label
-    }()
-
-    let transferButton: TransparentButton = {
-        let button = TransparentButton(type: .system)
-        button.setTitle("전송", for: .normal)
-        button.titleLabel?.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(transferPressed(_:)), for: .touchUpInside)
-
-        return button
+        return view
     }()
 
     let txLabel: UILabel = {
@@ -63,7 +42,6 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
         label.textColor = UIColor(key: "darker")
         label.backgroundColor = .white
         label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
     }()
@@ -71,7 +49,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
     let txView: UITableView = {
         let tableView = UITableView()
 
-        tableView.backgroundColor = UIColor(key: "light3")
+        tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -89,26 +67,24 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
 
         self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(screenSize.height/300, for: .default)
 
-        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        //refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.tintColor = UIColor.white
         refreshControl.addTarget(self, action: #selector(refresh(_:)), for: UIControl.Event.valueChanged)
 
 
         setupBarButton()
 
-        view.addSubview(tokenView)
-        view.addSubview(balanceLabel)
-        view.addSubview(transferButton)
-        view.addSubview(txLabel)
+        view.addSubview(mainTopView)
         view.addSubview(txView)
-        balanceLabel.text = "0.00000 " + symbol
-        tokenView.setTokenString(tokenString: "Ethereum")
-        //tokenView.addSubview(refreshControl)
-
-        txLabel.applyShadow()
+        mainTopView.balanceLabel.text = "0.00000 " + symbol
+        mainTopView.tokenView.setTokenString(tokenString: "Ethereum")
+        mainTopView.delegate = self
 
         txView.delegate = self
         txView.dataSource = self
+        txView.showsVerticalScrollIndicator = false
         txView.register(TXCell.self, forCellReuseIdentifier: reuseIdentifier)
+        txView.addSubview(refreshControl)
 
         if(signUp){
             delegate?.isSignUp()
@@ -158,30 +134,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
     }
 
     private func setupLayout(){
-        let screenHeight = screenSize.height
-        let screenWidth = screenSize.width
-
-        tokenView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: screenHeight/20).isActive = true
-        tokenView.heightAnchor.constraint(equalToConstant: screenHeight/20).isActive = true
-        tokenView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/5).isActive = true
-        tokenView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/5).isActive = true
-
-        balanceLabel.topAnchor.constraint(equalTo: tokenView.bottomAnchor).isActive = true
-        balanceLabel.heightAnchor.constraint(equalToConstant: screenHeight/6).isActive = true
-        balanceLabel.centerXAnchor.constraint(equalTo: tokenView.centerXAnchor).isActive = true
-        balanceLabel.widthAnchor.constraint(equalToConstant: screenWidth*0.9).isActive = true
-
-        transferButton.topAnchor.constraint(equalTo: balanceLabel.bottomAnchor).isActive = true
-        transferButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        transferButton.heightAnchor.constraint(equalToConstant: screenHeight/20).isActive = true
-        transferButton.widthAnchor.constraint(equalToConstant: screenWidth/2.5).isActive = true
-
-        txLabel.topAnchor.constraint(equalTo: transferButton.bottomAnchor, constant: screenHeight/20).isActive = true
-        txLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        txLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        txLabel.heightAnchor.constraint(equalToConstant: screenHeight/20).isActive = true
-
-        txView.topAnchor.constraint(equalTo: txLabel.bottomAnchor).isActive = true
+        txView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         txView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         txView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         txView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
@@ -189,13 +142,31 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! TXCell
+        if(indexPath.section == 0){
+            cell.addSubview(mainTopView)
+            cell.backgroundColor = .clear
+            cell.statusLabel.isHidden = true
 
-        tableView.isScrollEnabled = true
-        if(self.txHistory.count == 0){
-            cell.nonTX()
-            tableView.isScrollEnabled = false
+            mainTopView.topAnchor.constraint(equalTo: cell.topAnchor).isActive = true
+            mainTopView.leadingAnchor.constraint(equalTo: cell.leadingAnchor).isActive = true
+            mainTopView.trailingAnchor.constraint(equalTo: cell.trailingAnchor).isActive = true
+            mainTopView.bottomAnchor.constraint(equalTo: cell.bottomAnchor).isActive = true
+
             return cell
         }
+
+        if(indexPath.row > self.txHistory.count-1){
+            if(indexPath.row == 0){
+                cell.nonTX()
+                return cell
+            }
+            else{
+                cell.nonData()
+                return cell
+            }
+        }
+
+
         cell.nonBlankConstraint.isActive = true
 
         let category = self.txHistory[indexPath.row].value(forKey: "category") as! String
@@ -207,22 +178,55 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
         return cell
     }
 
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+
+        if(section != 1){return 0}
+
+        return (screenSize.height)*0.05
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView()
+        view.backgroundColor = UIColor.white
+        view.applyShadow()
+        view.layer.cornerRadius = 0
+        view.addSubview(txLabel)
+        txLabel.centerInSuperview()
+
+        if(section != 1){return nil}
+
+        return view
+    }
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if(self.txHistory.count == 0){
+        if(section == 0){
             return 1
+        }
+        if(self.txHistory.count < 5){
+            return 5
         }
         return self.txHistory.count
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if(self.txHistory.count == 0){
-            return screenSize.height/10
+        if(indexPath.section == 0){
+            return (screenSize.height)*0.34
         }
-        return screenSize.height/12
+        return (screenSize.height)*0.10
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if(indexPath.section == 0){
+            return
+        }
         if(self.txHistory.count == 0){
+            return
+        }
+        if(indexPath.row > self.txHistory.count){
             return
         }
         let controller = TXDetailVC()
@@ -230,15 +234,11 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
         self.present(UINavigationController(rootViewController: controller), animated: true)
     }
 
-    @objc func leftMenuClicked(_ sender: UIBarButtonItem){
-        delegate?.leftSideMenuClicked(forMenuOption: nil)
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+
     }
 
-    @objc func rightMenuClicked(_ sender: UIBarButtonItem){
-        delegate?.rightSideMenuClicked(forMenuOption: nil)
-    }
-
-    @objc func transferPressed(_ sender: UIButton){
+    func checkClicked() {
         let account: EthAccount = EthAccount.accountInstance
         if(account.getIsVerified()){
             let controller = TransferVC()
@@ -259,10 +259,17 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
             })
             self.present(alertVC, animated: false)
         }
+    }
 
+    @objc func leftMenuClicked(_ sender: UIBarButtonItem){
+        delegate?.leftSideMenuClicked(forMenuOption: nil)
+    }
+
+    @objc func rightMenuClicked(_ sender: UIBarButtonItem){
+        delegate?.rightSideMenuClicked(forMenuOption: nil)
     }
 
     @objc private func refresh(_ sender: UIRefreshControl) {
-        print("refresh")
+        delegate?.reload()
     }
 }

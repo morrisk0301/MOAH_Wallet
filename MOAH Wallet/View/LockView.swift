@@ -92,7 +92,7 @@ class LockView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        setupBackground()
+        self.setupBackground()
 
         addSubview(passwordLabel)
         addSubview(pwLine)
@@ -109,17 +109,6 @@ class LockView: UIView {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    func setupBackground(){
-        let backgroundImage = UIImageView(image: UIImage(named: "background"))
-
-        addSubview(backgroundImage)
-        backgroundImage.translatesAutoresizingMaskIntoConstraints = false
-        backgroundImage.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        backgroundImage.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        backgroundImage.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        backgroundImage.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
     }
 
     func setupLayout(){
