@@ -105,7 +105,12 @@ class LockedVC: UIViewController {
 
     private func setupTimer(){
         let date = Date()
-        let difference = self.lockTime!.timeIntervalSinceReferenceDate - date.timeIntervalSinceReferenceDate + 3600
+        let difference = self.lockTime!.timeIntervalSinceReferenceDate - date.timeIntervalSinceReferenceDate + 10
+
+        guard Int(difference) >= 0 else {
+            self.seconds = 0
+            return
+        }
 
         self.seconds = Int(difference)
     }

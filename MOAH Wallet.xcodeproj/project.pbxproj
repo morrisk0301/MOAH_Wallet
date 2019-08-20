@@ -36,6 +36,7 @@
 		C051F361ACB751354EDEFC01 /* MOAH_WalletUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FD3DE6EDBDC571CF0639 /* MOAH_WalletUITests.swift */; };
 		C051F373B173AC54AF229DFB /* NetworkSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F46ECA4D5C3D54C0F6B4 /* NetworkSettingVC.swift */; };
 		C051F3B631C59EB4D329669E /* TransferVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F5A58B7F4264F9A38089 /* TransferVC.swift */; };
+		C051F3CA69AE7CD6C3B67B3A /* HTTPRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F7794353B3183DC631E7 /* HTTPRequest.swift */; };
 		C051F3E8704B988773687809 /* TokenSelectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FF7BB7B279B376C514A0 /* TokenSelectVC.swift */; };
 		C051F43CB8BBDF5876788661 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FA6C9DECCACCA006C620 /* MainViewController.swift */; };
 		C051F45046E2E4152EDD8712 /* MainTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F635779A9F378E8C0E45 /* MainTokenView.swift */; };
@@ -168,6 +169,7 @@
 		C051F6B167515CE9084BEF6C /* QRCodeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeVC.swift; sourceTree = "<group>"; };
 		C051F6D98183AFC7653F5DFE /* KeyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyCell.swift; sourceTree = "<group>"; };
 		C051F77538D102361B586D5F /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		C051F7794353B3183DC631E7 /* HTTPRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPRequest.swift; sourceTree = "<group>"; };
 		C051F78260EE7AE0C72FAED1 /* AlertVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertVC.swift; sourceTree = "<group>"; };
 		C051F7AC902DA14D067B4A7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C051F7E7608DA47B7C17D4F1 /* TokenCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenCell.swift; sourceTree = "<group>"; };
@@ -376,6 +378,7 @@
 				C051F97B0F9CE93C94AD4963 /* EthAddress.swift */,
 				C051F3B3FF5E0625A2414188 /* EthToken.swift */,
 				C051FAF4C47BBB7C2D364EEB /* TXQueue.swift */,
+				C051F7794353B3183DC631E7 /* HTTPRequest.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -644,6 +647,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-MOAH Wallet/Pods-MOAH Wallet-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
@@ -654,6 +658,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigInt.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
@@ -796,6 +801,7 @@
 				C051F14485A28F4D212227A8 /* Error.swift in Sources */,
 				C051FC3CF284D34A1B4D3848 /* ReachabilityManager.swift in Sources */,
 				C051F539B716B05D7F580EA2 /* LockedVC.swift in Sources */,
+				C051F3CA69AE7CD6C3B67B3A /* HTTPRequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

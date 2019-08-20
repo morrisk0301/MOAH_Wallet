@@ -17,6 +17,7 @@ target 'MOAH Wallet' do
     # Pods for testing
   end
 
+pod 'Alamofire', '~> 5.0.0-beta.5'
 pod 'ReachabilitySwift'
 pod 'web3.swift.pod', '~> 2.2.0'
 pod 'CryptoSwift', :git => "https://github.com/krzyzanowskim/CryptoSwift", :branch => "master"

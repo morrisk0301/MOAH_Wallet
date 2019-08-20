@@ -11,6 +11,7 @@ class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, U
     private let reuseIdentifier = "TokenCell"
 
     let screenSize = UIScreen.main.bounds
+    let httpRequest = HTTPRequest()
 
     let searchField: UITextField = {
         let textField = UITextField()
@@ -27,7 +28,9 @@ class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, U
         textField.backgroundColor = .clear
         textField.layer.borderColor = UIColor(key: "grey2").cgColor
         textField.layer.borderWidth = 0.5
+        textField.keyboardType = .asciiCapable
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.addTarget(self, action: #selector(searchToken(_:)), for: .editingDidEnd)
 
         return textField
     }()
@@ -70,6 +73,7 @@ class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, U
         view.addSubview(addButton)
         view.addSubview(searchField)
         searchField.delegate = self
+        searchField.clearButtonMode = .whileEditing
 
         setupLayout()
         self.showSpinner()
@@ -87,7 +91,7 @@ class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, U
         searchField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: screenSize.height/40).isActive = true
         searchField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         searchField.widthAnchor.constraint(equalToConstant: screenSize.width*0.9).isActive = true
-        searchField.heightAnchor.constraint(equalToConstant: screenSize.height/20).isActive = true
+        searchField.heightAnchor.constraint(equalToConstant: screenSize.height/15).isActive = true
 
         tableView.topAnchor.constraint(equalTo: searchField.bottomAnchor, constant: screenSize.height/40).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -146,5 +150,20 @@ class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, U
     @objc private func addPressed(_ sender: UIButton){
         let controller = TokenAddVC()
         self.navigationController?.pushViewController(controller, animated: true)
+    }
+
+    @objc private func searchToken(_ sender: UITextField){
+        self.showSpinner()
+        if(searchField.text!.count == 0){
+            httpRequest.tokenSearch(request: .searchAll, params: "", completion: { _ in
+
+            })
+        }
+        else{
+            httpRequest.tokenSearch(request: .search, params: searchField.text!, completion: { _ in
+
+            })
+        }
+
     }
 }
