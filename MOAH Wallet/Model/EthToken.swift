@@ -10,7 +10,7 @@ import BigInt
 
 class EthToken: NetworkObserver {
 
-    static let token = EthToken()
+    static let shared = EthToken()
 
     private let userDefaults = UserDefaults.standard
 
@@ -31,7 +31,7 @@ class EthToken: NetworkObserver {
     }
 
     private init(){
-        let web3 = CustomWeb3.web3
+        let web3 = CustomWeb3.shared
         self._network = web3.network
         web3.attachNetworkObserver(self)
         _loadTokenSelected()
@@ -110,7 +110,8 @@ class EthToken: NetworkObserver {
             _deleteTokenSelected()
         }
         else{
-            let tokenArray = self.fetchToken(nil)
+            let networkPredicate = NSPredicate(format: "network = %@", self._network!.name)
+            let tokenArray = self.fetchToken(networkPredicate)
             let address = tokenArray[index!].value(forKey: "address") as! String
             let name = tokenArray[index!].value(forKey: "name") as! String
             let symbol = tokenArray[index!].value(forKey: "symbol") as! String
@@ -145,7 +146,7 @@ class EthToken: NetworkObserver {
         if(self.checkTokenExists(address: address)){ throw GetTokenError.existingToken }
 
         do{
-            let web3 = CustomWeb3.web3
+            let web3 = CustomWeb3.shared
             let token = web3.getWeb3Ins()!.contract(Web3Utils.erc20ABI, at: EthereumAddress(address)!)
             let option = web3.getOption()
 
@@ -167,7 +168,7 @@ class EthToken: NetworkObserver {
     }
 
     func getTokenBalance(address: EthereumAddress) -> BigUInt{
-        let web3 = CustomWeb3.web3
+        let web3 = CustomWeb3.shared
         var option = web3.getOption()!
         let contract = web3.getWeb3Ins()!.contract(Web3Utils.erc20ABI, at: EthereumAddress(token!.address)!)
         option.from = address
@@ -197,7 +198,7 @@ class EthToken: NetworkObserver {
     }
 
     private func _setGasForToken(){
-        let web3: CustomWeb3 = CustomWeb3.web3
+        let web3: CustomWeb3 = CustomWeb3.shared
         let getGas = web3.getGas()!
         if(getGas.rate == "custom"){
             web3.setGas(price: getGas.price!, limit: getGas.limit!)

@@ -12,7 +12,7 @@ class TokenSelectVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     private let reuseIdentifier = "TokenSelectCell"
 
     let screenSize = UIScreen.main.bounds
-    let ethToken = EthToken.token
+    let ethToken = EthToken.shared
 
     var alertTitle: String?
     var alertBody: String?

@@ -145,7 +145,7 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
 
     @objc private func nextPressed(_ sender: UIButton){
         let passwordVC = PasswordVC()
-        let account: EthAccount = EthAccount.accountInstance
+        let account: EthAccount = EthAccount.shared
 
         if(account.setMnemonic(mnemonicString: mnemonicField.text!)){
             passwordVC.getWallet = true

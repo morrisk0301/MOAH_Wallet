@@ -15,7 +15,7 @@ class PasswordCheckVC: UIViewController, KeypadViewDelegate, UIGestureRecognizer
     var tempTx: WriteTransaction?
     var subInfo: TXSubInfo?
     var count = 0
-    let account: EthAccount = EthAccount.accountInstance
+    let account: EthAccount = EthAccount.shared
     let appDelegate: AppDelegate = (UIApplication.shared.delegate as? AppDelegate)!
     let userDefaults = UserDefaults.standard
 
@@ -143,7 +143,7 @@ class PasswordCheckVC: UIViewController, KeypadViewDelegate, UIGestureRecognizer
     }
 
     private func proceedTransfer(){
-        let web3: CustomWeb3 = CustomWeb3.web3
+        let web3: CustomWeb3 = CustomWeb3.shared
         web3.transfer(tx: tempTx!, subInfo: self.subInfo!)
 
         let controller = WalletDoneVC()

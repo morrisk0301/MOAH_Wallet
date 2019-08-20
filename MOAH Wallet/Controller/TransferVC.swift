@@ -13,7 +13,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
     private let reuseIdentifier = "AmountCell"
 
     let screenSize = UIScreen.main.bounds
-    let web3: CustomWeb3 = CustomWeb3.web3
+    let web3: CustomWeb3 = CustomWeb3.shared
     let util = Util()
     var amountVerified = false
     var balanceString: String!

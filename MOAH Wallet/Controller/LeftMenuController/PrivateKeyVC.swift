@@ -8,7 +8,7 @@ import UIKit
 
 class PrivateKeyVC: UIViewController {
 
-    let account: EthAccount = EthAccount.accountInstance
+    let account: EthAccount = EthAccount.shared
     let screenSize = UIScreen.main.bounds
 
     let explainLabel: UILabel = {

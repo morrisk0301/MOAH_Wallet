@@ -9,7 +9,7 @@ import CoreData
 
 class EthAddress {
 
-    static let address = EthAddress()
+    static let shared = EthAddress()
 
     private let userDefaults = UserDefaults.standard
 

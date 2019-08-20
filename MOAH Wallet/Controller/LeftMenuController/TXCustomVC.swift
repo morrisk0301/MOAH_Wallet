@@ -11,7 +11,7 @@ import web3swift
 class TXCustomVC: UIViewController, UITextFieldDelegate {
 
     let screenSize = UIScreen.main.bounds
-    let web3: CustomWeb3 = CustomWeb3.web3
+    let web3: CustomWeb3 = CustomWeb3.shared
 
     var keyboardHeight: CGFloat?
     var keyboardShown = false

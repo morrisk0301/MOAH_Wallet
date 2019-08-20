@@ -10,8 +10,12 @@ class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, U
 
     private let reuseIdentifier = "TokenCell"
 
+    var tokenArr: [CustomToken] = [CustomToken]()
+
     let screenSize = UIScreen.main.bounds
     let httpRequest = HTTPRequest()
+    let web3 = CustomWeb3.shared
+    let ethToken = EthToken.shared
 
     let searchField: UITextField = {
         let textField = UITextField()
@@ -75,8 +79,11 @@ class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, U
         searchField.delegate = self
         searchField.clearButtonMode = .whileEditing
 
+        if(web3.network!.name != "mainnet"){
+            self.searchField.isEnabled = false
+        }
+
         setupLayout()
-        self.showSpinner()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -88,7 +95,7 @@ class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, U
     }
 
     private func setupLayout(){
-        searchField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: screenSize.height/40).isActive = true
+        searchField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: screenSize.height/30).isActive = true
         searchField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         searchField.widthAnchor.constraint(equalToConstant: screenSize.width*0.9).isActive = true
         searchField.heightAnchor.constraint(equalToConstant: screenSize.height/15).isActive = true
@@ -112,39 +119,73 @@ class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, U
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! TokenCell
 
-        if(indexPath.row == 0){
-            cell.logoImageView.isHidden = true
+        tableView.isScrollEnabled = true
+
+        if(web3.network!.name != "mainnet"){
+            tableView.isScrollEnabled = false
+            self.searchField.isEnabled = false
+            cell.isUserInteractionEnabled = false
+            cell.noSearch()
+
+            return cell
         }
-        else{
-            //cell.setTokenValue(name: "NaraMalsamiToken", address: "0x9e45b139922836616459385088531ae2a24f49a1", logo: nil)
-        }
+
+        cell.setTokenValue(name: tokenArr[indexPath.row].name, address: tokenArr[indexPath.row].address, logo: tokenArr[indexPath.row].logo!)
 
         return cell
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        if(web3.network!.name != "mainnet"){
+            return 1
+        }
+
+        return tokenArr.count
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if(indexPath.row == 0){
-            return screenSize.height/10
-        }else{
-            return screenSize.height/15
-        }
+        return screenSize.height/12
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if(indexPath.row == 0){ return }
         let util = Util()
-        let alertVC = util.alert(title: "토큰 추가", body: "NMT 토큰 추가를 완료하였습니다.", buttonTitle: "확인", buttonNum: 1, completion: {_ in
+        guard !ethToken.checkTokenExists(address: self.tokenArr[indexPath.row].address) else{
+            let alertVC = util.alert(title: "토큰 추가 오류", body: "이미 추가된 토큰입니다.",
+                    buttonTitle: "확인", buttonNum: 1, completion: {_ in })
+            self.present(alertVC, animated: false)
 
-        })
+            return
+        }
+
+        ethToken.addToken(self.tokenArr[indexPath.row])
+
+        let alertVC = util.alert(title: "토큰 추가", body: tokenArr[indexPath.row].symbol+" 토큰 추가를 완료하였습니다.", 
+                buttonTitle: "추가", buttonNum: 1, completion: {_ in }) 
+
         self.present(alertVC, animated: false)
+        self.reloadMainContainerVC()
     }
 
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        self.hideSpinner()
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let deleteButton = UITableViewRowAction(style: .default, title: "삭제") { (action, indexPath) in
+            self.tableView.dataSource?.tableView!(self.tableView, commit: .delete, forRowAt: indexPath)
+            return
+        }
+        deleteButton.backgroundColor = UIColor(key: "dark")
+        return [deleteButton]
+    }
+
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if(indexPath.row < 1){ return false}
+        else { return true}
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            ethToken.deleteToken(address: tokenArr[indexPath.row].address)
+            self.tableView.deleteSections(IndexSet(arrayLiteral: indexPath.row), with: .automatic)
+            tableView.reloadData()
+        }
     }
 
     @objc private func addPressed(_ sender: UIButton){
@@ -155,13 +196,17 @@ class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, U
     @objc private func searchToken(_ sender: UITextField){
         self.showSpinner()
         if(searchField.text!.count == 0){
-            httpRequest.tokenSearch(request: .searchAll, params: "", completion: { _ in
-
+            httpRequest.tokenSearch(request: .searchAll, params: "", completion: { result in
+                self.tokenArr = result
+                self.tableView.reloadData()
+                self.hideSpinner()
             })
         }
         else{
-            httpRequest.tokenSearch(request: .search, params: searchField.text!, completion: { _ in
-
+            httpRequest.tokenSearch(request: .search, params: searchField.text!, completion: { result in
+                self.tokenArr = result
+                self.tableView.reloadData()
+                self.hideSpinner()
             })
         }
 

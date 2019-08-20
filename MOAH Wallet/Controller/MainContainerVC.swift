@@ -30,8 +30,8 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
 
     let txQueue = TXQueue.queue
     let screenSize = UIScreen.main.bounds
-    let web3: CustomWeb3 = CustomWeb3.web3
-    let account: EthAccount = EthAccount.accountInstance
+    let web3: CustomWeb3 = CustomWeb3.shared
+    let account: EthAccount = EthAccount.shared
     let util = Util()
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -265,8 +265,8 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
 
     func loadData(){
         DispatchQueue.global(qos: .userInitiated).async{
-            let ethToken = EthToken.token
-            let web3 = CustomWeb3.web3
+            let ethToken = EthToken.shared
+            let web3 = CustomWeb3.shared
             let networkPredicate = NSPredicate(format: "network = %@", web3.network!.name)
             let tokenArray = ethToken.fetchToken(networkPredicate)
             let ethTxHistory = EthTXHistory()

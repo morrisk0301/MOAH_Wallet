@@ -27,6 +27,19 @@ class TokenCell: UITableViewCell {
         return imageView
     }()
 
+    let noSearchLabel: UILabel = {
+        let label = UILabel()
+
+        label.text = "Ethereum 메인넷이 아닌경우,\n\n검색 기능을 지원하지않습니다."
+        label.font = UIFont(name:"NanumSquareRoundB", size: 15, dynamic: true)
+        label.textColor = UIColor(key: "darker")
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+
+        return label
+    }()
+
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
@@ -35,7 +48,7 @@ class TokenCell: UITableViewCell {
         addSubview(logoImageView)
         addSubview(tokenLabel)
 
-        selectionStyle = .none
+        selectionStyle = .default
 
         logoImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         logoImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: screenSize.width/20).isActive = true
@@ -50,6 +63,13 @@ class TokenCell: UITableViewCell {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func prepareForReuse() {
+        self.logoImageView.isHidden = false
+        self.tokenLabel.isHidden = false
+        self.noSearchLabel.isHidden = true
+        self.isUserInteractionEnabled = true
     }
 
     func setTokenValue(name: String, address: String, logo: Data){
@@ -80,6 +100,19 @@ class TokenCell: UITableViewCell {
         tokenLabel.attributedText = attrText
 
         logoImageView.image = UIImage(named: "ether")
+    }
+
+    func noSearch(){
+        logoImageView.isHidden = true
+        tokenLabel.isHidden = true
+
+        addSubview(noSearchLabel)
+        noSearchLabel.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        noSearchLabel.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        noSearchLabel.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        noSearchLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+
+        self.logoImageView.isHidden = true
     }
 
     private func trimMiddle(address: String) -> String{

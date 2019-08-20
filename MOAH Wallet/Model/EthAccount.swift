@@ -10,7 +10,7 @@ import CoreData
 
 class EthAccount: NetworkObserver, AddressObserver{
 
-    static let accountInstance = EthAccount()
+    static let shared = EthAccount()
 
     let util = Util()
     let userDefaults = UserDefaults.standard
@@ -150,7 +150,7 @@ class EthAccount: NetworkObserver, AddressObserver{
     }
 
     func getAccount(key: String, name: String) throws -> Bool{
-        let ethAddress: EthAddress = EthAddress.address
+        let ethAddress: EthAddress = EthAddress.shared
         guard !ethAddress.checkAddressName(name) else{ return false }
         guard let keyStore = PlainKeystore(privateKey: key) else{ throw GetAccountError.invalidPrivateKey }
         do{
@@ -158,7 +158,7 @@ class EthAccount: NetworkObserver, AddressObserver{
                 throw GetAccountError.existingAccount
             }
 
-            let ethAddress: EthAddress = EthAddress.address
+            let ethAddress: EthAddress = EthAddress.shared
             let address = CustomAddress(address: keyStore.addresses!.first!.address, name: name, isPrivateKey: true, path: "")
             ethAddress.addAddress(address)
             _savePrivateKey(key: key, name: name, password: _password!)
@@ -175,7 +175,7 @@ class EthAccount: NetworkObserver, AddressObserver{
     }
 
     func generateAccount(name: String) -> Bool {
-        let ethAddress: EthAddress = EthAddress.address
+        let ethAddress: EthAddress = EthAddress.shared
         guard !ethAddress.checkAddressName(name) else{ return false }
         guard !ethAddress.checkAddressCount() else{ return false }
 
@@ -194,7 +194,7 @@ class EthAccount: NetworkObserver, AddressObserver{
         }else{
             _delAddressFromPath(account: account)
         }
-        let ethAddress: EthAddress = EthAddress.address
+        let ethAddress: EthAddress = EthAddress.shared
 
         if(account.address == _address!.address){
             ethAddress.setAddress(index: nil)
@@ -216,7 +216,7 @@ class EthAccount: NetworkObserver, AddressObserver{
     }
 
     func connectNetwork(){
-        let web3: CustomWeb3 = CustomWeb3.web3
+        let web3: CustomWeb3 = CustomWeb3.shared
         web3.attachNetworkObserver(self)
         self._network = web3.network
         web3.setOption()
@@ -325,7 +325,7 @@ class EthAccount: NetworkObserver, AddressObserver{
     }
 
     private func _loadPlainKeyStore(){
-        let ethAddress: EthAddress = EthAddress.address
+        let ethAddress: EthAddress = EthAddress.shared
         let pkPredicate = NSPredicate(format: "isPrivateKey == true")
 
         let addressArray = ethAddress.fetchAddress(pkPredicate)
@@ -352,7 +352,7 @@ class EthAccount: NetworkObserver, AddressObserver{
     }
 
     private func _reencryptPrivateKey(oldPassword: String, password: String){
-        let ethAddress: EthAddress = EthAddress.address
+        let ethAddress: EthAddress = EthAddress.shared
         let pkPredicate = NSPredicate(format: "isPrivateKey == true")
         let addressArray = ethAddress.fetchAddress(pkPredicate)
 
@@ -370,7 +370,7 @@ class EthAccount: NetworkObserver, AddressObserver{
 
     private func _unlockAccount() {
         let keyHex = KeychainService.loadPassword(service: "moahWallet", account: "password")!
-        let ethAddress: EthAddress = EthAddress.address
+        let ethAddress: EthAddress = EthAddress.shared
 
         self._password = keyHex
         self._address = ethAddress.address
@@ -382,7 +382,7 @@ class EthAccount: NetworkObserver, AddressObserver{
     }
 
     private func _initAccount(){
-        let ethAddress: EthAddress = EthAddress.address
+        let ethAddress: EthAddress = EthAddress.shared
         let address = CustomAddress(address: _getLastAddressFromPath().address, name: "주 계정", isPrivateKey: false, path: _getLastPath())
         ethAddress.addAddress(address)
     }
@@ -429,7 +429,7 @@ class EthAccount: NetworkObserver, AddressObserver{
             try _keyStore?.createNewCustomChildAccount(password: _password!, path: newPath)
             _saveKeyStore()
 
-            let ethAddress: EthAddress = EthAddress.address
+            let ethAddress: EthAddress = EthAddress.shared
             let address = CustomAddress(address: _keyStore!.paths[newPath]!.address, name: name, isPrivateKey: false, path: newPath)
             ethAddress.addAddress(address)
         }
@@ -459,7 +459,7 @@ class EthAccount: NetworkObserver, AddressObserver{
     }
 
     private func _lockKeyData() {
-        let ethAddress: EthAddress = EthAddress.address
+        let ethAddress: EthAddress = EthAddress.shared
         ethAddress.detachAddressObserver(self)
 
         if(_keyStore != nil){

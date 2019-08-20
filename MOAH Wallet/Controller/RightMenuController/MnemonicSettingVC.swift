@@ -11,7 +11,7 @@ class MnemonicSettingVC: UIViewController, UITableViewDelegate, UITableViewDataS
     private let reuseIdentifier = "mnemonicCell"
 
     let screenSize = UIScreen.main.bounds
-    let account: EthAccount = EthAccount.accountInstance
+    let account: EthAccount = EthAccount.shared
     var isFinished = false
 
     let tableView: UITableView = {

@@ -12,7 +12,7 @@ class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     private let reuseIdentifier = "networkCell"
 
     let screenSize = UIScreen.main.bounds
-    let web3: CustomWeb3 = CustomWeb3.web3
+    let web3: CustomWeb3 = CustomWeb3.shared
 
     var networks: [CustomWeb3Network] = [CustomWeb3Network]()
     var network: CustomWeb3Network

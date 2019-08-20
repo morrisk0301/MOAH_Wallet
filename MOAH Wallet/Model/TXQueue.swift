@@ -34,7 +34,7 @@ class TXQueue {
     }
 
     func addTXTask(txHash: String){
-        let web3 = CustomWeb3.web3
+        let web3 = CustomWeb3.shared
         let ethTXHistory = EthTXHistory()
         _queue.sync{
             while(true){

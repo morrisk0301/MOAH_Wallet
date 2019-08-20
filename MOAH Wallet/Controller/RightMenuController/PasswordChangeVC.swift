@@ -11,7 +11,7 @@ class PasswordChangeVC: UIViewController, KeypadViewDelegate {
     var passwordNew: String?
     var password: String = ""
     var changeStatus = 0
-    let account: EthAccount = EthAccount.accountInstance
+    let account: EthAccount = EthAccount.shared
     let appDelegate: AppDelegate = (UIApplication.shared.delegate as? AppDelegate)!
     let userDefaults = UserDefaults.standard
 

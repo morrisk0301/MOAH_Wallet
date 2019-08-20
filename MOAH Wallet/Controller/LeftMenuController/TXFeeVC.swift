@@ -13,7 +13,7 @@ class TXFeeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIG
     private let reuseIdentifier = "TXCell"
 
     let screenSize = UIScreen.main.bounds
-    let web3: CustomWeb3 = CustomWeb3.web3
+    let web3: CustomWeb3 = CustomWeb3.shared
 
     var price: BigUInt?
     var limit: BigUInt?
@@ -51,7 +51,7 @@ class TXFeeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIG
 
         view.addSubview(tableView)
 
-        let ethToken = EthToken.token
+        let ethToken = EthToken.shared
         if(ethToken.token == nil){
             gasLimit = "21000"
         }

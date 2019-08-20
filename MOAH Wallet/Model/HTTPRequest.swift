@@ -46,25 +46,15 @@ class HTTPRequest {
 
         var tokenArr = [CustomToken]()
         for data in dataArray{
-            var logo: Data?
-
             let name = data["token_name"] as! String
             let symbol = data["token_symbol"] as! String
             let decimals = data["token_decimals"] as! Int
             let address = data["token_contract"] as! String
-
-            if let imageArray = data["token_logo"] as? [[String: Any]]{
-                print(imageArray)
-            }
-            else{
-                print("fail")
-                logo = nil
-            }
-
+            let logoEncoded = data["token_logo"] as! String
+            let logo : Data = Data(base64Encoded: logoEncoded, options: .ignoreUnknownCharacters)!
             let token = CustomToken(name: name, symbol: symbol, address: address, decimals: decimals, network: "mainnet", logo: logo)
             tokenArr.append(token)
         }
-        print(tokenArr)
-        return []
+        return tokenArr
     }
 }

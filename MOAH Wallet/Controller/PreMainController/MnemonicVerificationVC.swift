@@ -163,7 +163,7 @@ class MnemonicVerificationVC: UIViewController, UITextFieldDelegate{
     }
 
     @objc private func textInput(_ sender: UITextField) {
-        let account: EthAccount = EthAccount.accountInstance
+        let account: EthAccount = EthAccount.shared
         if(account.verifyMnemonic(index: wordIndex!, word: mnemonicField.text!.lowercased())){
             if(wordIndex! < 11) {
                 self.wordIndex! += 1
@@ -189,7 +189,7 @@ class MnemonicVerificationVC: UIViewController, UITextFieldDelegate{
     }
 
     @objc private func nextPressed(_ sender: UIButton){
-        let account: EthAccount = EthAccount.accountInstance
+        let account: EthAccount = EthAccount.shared
         if(account.verifyMnemonic(index: wordIndex!, word: mnemonicField.text!.lowercased())){
             if(wordIndex! < 11) {
                 self.wordIndex! += 1

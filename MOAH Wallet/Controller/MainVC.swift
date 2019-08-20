@@ -235,7 +235,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Chec
     }
 
     func checkClicked() {
-        let account: EthAccount = EthAccount.accountInstance
+        let account: EthAccount = EthAccount.shared
         if(account.getIsVerified()){
             let controller = TransferVC()
             controller.decimals = self.decimals

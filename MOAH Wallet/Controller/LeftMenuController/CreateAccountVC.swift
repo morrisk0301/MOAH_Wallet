@@ -9,7 +9,7 @@ import UIKit
 class CreateAccountVC: UIViewController, UITextFieldDelegate {
 
     let screenSize = UIScreen.main.bounds
-    let account: EthAccount = EthAccount.accountInstance
+    let account: EthAccount = EthAccount.shared
 
     var keyboardHeight: CGFloat?
     var keyboardShown = false

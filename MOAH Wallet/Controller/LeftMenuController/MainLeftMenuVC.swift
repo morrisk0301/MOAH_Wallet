@@ -12,8 +12,8 @@ class MainLeftMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     private let reuseIdentifier = "LeftMenuCell"
 
     let screenSize = UIScreen.main.bounds
-    let account: EthAccount = EthAccount.accountInstance
-    let ethAddress = EthAddress.address
+    let account: EthAccount = EthAccount.shared
+    let ethAddress = EthAddress.shared
     var address: CustomAddress
     let util = Util()
 

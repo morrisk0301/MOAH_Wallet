@@ -390,7 +390,7 @@ class TXDetailVC: UIViewController{
     }
 
     private func loadTxData(completion: @escaping () -> ()){
-        let web3: CustomWeb3 = CustomWeb3.web3
+        let web3: CustomWeb3 = CustomWeb3.shared
         network = web3.network
         DispatchQueue.global(qos: .userInteractive).sync{
             let hash = self.txInfo.value(forKey: "txHash") as! String

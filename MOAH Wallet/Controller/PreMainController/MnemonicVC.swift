@@ -93,7 +93,7 @@ class MnemonicVC: UIViewController, UIGestureRecognizerDelegate {
         var mnemonic: String!
 
         if(isSetting){
-            let account: EthAccount = EthAccount.accountInstance
+            let account: EthAccount = EthAccount.shared
 
             self.setNavigationTitle(title: "시드 구문 조회")
             self.replaceBackButton(color: "dark")

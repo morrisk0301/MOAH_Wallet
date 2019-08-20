@@ -243,7 +243,7 @@ class TokenAddVC: UIViewController, UITextFieldDelegate {
 
     @objc func contractInput(_ sender: UITextField){
         if(contractField.text!.count == 0){ return }
-        let token = EthToken.token
+        let token = EthToken.shared
         let util = Util()
         var errorBody: String?
         self.showSpinner()
@@ -288,7 +288,7 @@ class TokenAddVC: UIViewController, UITextFieldDelegate {
 
     @objc func nextPressed(_ sender: UIButton) {
         let util = Util()
-        let ethToken = EthToken.token
+        let ethToken = EthToken.shared
         ethToken.addToken(self.token!)
 
         let alertVC = util.alert(title: "토큰 추가", body: token!.symbol+" 토큰 추가를 완료하였습니다.", buttonTitle: "확인", buttonNum: 1, completion: {_ in

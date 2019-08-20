@@ -24,10 +24,10 @@ class CustomWeb3: AddressObserver {
     private var socketProvider: InfuraWebsocketProvider?
     private var httpProvider: Web3HttpProvider?
     var id: String = "CustomWeb3"
-    let account: EthAccount = EthAccount.accountInstance
+    let account: EthAccount = EthAccount.shared
     let userDefaults = UserDefaults.standard
 
-    static let web3 = CustomWeb3()
+    static let shared = CustomWeb3()
 
     var network: CustomWeb3Network? {
         set(value){
@@ -41,7 +41,7 @@ class CustomWeb3: AddressObserver {
     }
 
     private init() {
-        let ethAddress: EthAddress = EthAddress.address
+        let ethAddress: EthAddress = EthAddress.shared
         self._address = ethAddress.address
         ethAddress.attachAddressObserver(self)
         _loadNetwork()
@@ -75,7 +75,7 @@ class CustomWeb3: AddressObserver {
         }
 
         DispatchQueue.global(qos: .userInitiated).async {
-            let ethToken = EthToken.token
+            let ethToken = EthToken.shared
             let token = ethToken.token
             do {
                 if (addressModified == nil) {
@@ -105,7 +105,7 @@ class CustomWeb3: AddressObserver {
             addressModified = EthereumAddress(address!)
         }
 
-        let ethToken = EthToken.token
+        let ethToken = EthToken.shared
         let token = ethToken.token
 
         do {
@@ -140,7 +140,7 @@ class CustomWeb3: AddressObserver {
 
         DispatchQueue.global(qos: .userInteractive).async{
             do{
-                let ethToken = EthToken.token
+                let ethToken = EthToken.shared
                 let token = ethToken.token
                 let from = self._address!.address
                 let auto = self.getGasInWei() == nil
@@ -259,7 +259,7 @@ class CustomWeb3: AddressObserver {
         }
         var gas: CustomGas!
         var gasLimit: BigUInt!
-        let ethToken = EthToken.token
+        let ethToken = EthToken.shared
         let isToken = ethToken.token != nil
 
         if(isToken){
@@ -442,7 +442,7 @@ class CustomWeb3: AddressObserver {
 
 
     private func _transfer(tx: WriteTransaction?, subInfo: TXSubInfo){
-        let ethAddress: EthAddress = EthAddress.address
+        let ethAddress: EthAddress = EthAddress.shared
         var keystoreManager: KeystoreManager!
 
         if(ethAddress.checkPrivate(self._address!.address)){

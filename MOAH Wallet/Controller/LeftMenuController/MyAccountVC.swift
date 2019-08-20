@@ -13,10 +13,10 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
     private let reuseIdentifier = "AccountCell"
 
-    let account: EthAccount = EthAccount.accountInstance
+    let account: EthAccount = EthAccount.shared
     let screenSize = UIScreen.main.bounds
-    let web3: CustomWeb3 = CustomWeb3.web3
-    let ethAddress = EthAddress.address
+    let web3: CustomWeb3 = CustomWeb3.shared
+    let ethAddress = EthAddress.shared
     let util = Util()
 
     var accounts: [MOAHAddress] = [MOAHAddress]()

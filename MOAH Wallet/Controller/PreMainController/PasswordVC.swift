@@ -10,7 +10,7 @@ import LocalAuthentication
 class PasswordVC: UIViewController, KeypadViewDelegate, UIGestureRecognizerDelegate {
 
     var toView: String!
-    let account: EthAccount = EthAccount.accountInstance
+    let account: EthAccount = EthAccount.shared
     let appDelegate: AppDelegate = (UIApplication.shared.delegate as? AppDelegate)!
     let userDefaults = UserDefaults.standard
     var getWallet: Bool = false
