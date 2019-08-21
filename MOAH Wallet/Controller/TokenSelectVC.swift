@@ -13,6 +13,7 @@ class TokenSelectVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
 
     let screenSize = UIScreen.main.bounds
     let ethToken = EthToken.shared
+    let web3 = CustomWeb3.shared
 
     var alertTitle: String?
     var alertBody: String?
@@ -67,13 +68,6 @@ class TokenSelectVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         tableView.translatesAutoresizingMaskIntoConstraints = false
 
         return tableView
-    }()
-
-    let checkImage: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "checkDark"))
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-
-        return imageView
     }()
 
     init(){
@@ -133,20 +127,11 @@ class TokenSelectVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
 
-    private func addCheckImage(cell: UITableViewCell){
-        cell.addSubview(checkImage)
-
-        checkImage.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
-        checkImage.trailingAnchor.constraint(equalTo: cell.trailingAnchor, constant: -screenSize.width/15).isActive = true
-        checkImage.heightAnchor.constraint(equalToConstant: screenSize.width/30).isActive = true
-        checkImage.widthAnchor.constraint(equalToConstant: screenSize.width/22.5).isActive = true
-    }
-
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! TokenCell
         if(indexPath.row == 0){
             cell.setAsEther()
-            if(token == nil){ addCheckImage(cell: cell) }
+            if(token == nil){ cell.addCheckImage()}
             return cell
         }
         let name = tokenArray[indexPath.row-1].value(forKey: "name") as! String
@@ -158,7 +143,7 @@ class TokenSelectVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         cell.setTokenValue(name: nameLabel, address: address, logo: logo)
 
         if(self.token != nil && address == self.token!.address){
-            addCheckImage(cell: cell)
+            cell.addCheckImage()
         }
 
         return cell
@@ -184,9 +169,37 @@ class TokenSelectVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         self.delegate?.tokenEnded(selected: true)
     }
 
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let deleteButton = UITableViewRowAction(style: .default, title: "삭제") { (action, indexPath) in
+            self.tableView.dataSource?.tableView!(self.tableView, commit: .delete, forRowAt: indexPath)
+            return
+        }
+        deleteButton.backgroundColor = UIColor(key: "dark")
+        return [deleteButton]
+    }
+
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if(indexPath.row < 1){ return false}
+        else { return true}
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            delegate?.willReload()
+
+            let networkPredicate = NSPredicate(format: "network = %@", web3.network!.name)
+            let address = tokenArray[indexPath.row-1].value(forKey: "address") as! String
+            ethToken.deleteToken(address: address)
+            self.tokenArray = ethToken.fetchToken(networkPredicate)
+            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableView.reloadData()
+        }
+    }
+
     func tokenChanged(token: CustomToken?) {
         self.token = token
     }
+
 
     @objc func addPressed(_ sender: UIButton){
         self.delegate?.tokenEnded(selected: false)

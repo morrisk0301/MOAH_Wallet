@@ -64,7 +64,7 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
     let nextButton: CustomButton = {
         let button = CustomButton(type: .system)
         button.setTitle("다음", for: .normal)
-        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 20, dynamic: true)
+        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 18, dynamic: true)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(nextPressed(_:)), for: .touchUpInside)
 

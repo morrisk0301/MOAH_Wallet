@@ -87,6 +87,8 @@ class EthToken: NetworkObserver {
     func deleteToken(address: String){
         guard let managedContext = managedContext else { return }
 
+        _checkSelected(address: address)
+
         let fetchRequest = NSFetchRequest<TokenInfo>(entityName: "TokenInfo")
         let addressPredicate = NSPredicate(format: "address = %@", address)
         fetchRequest.predicate = addressPredicate
@@ -231,5 +233,12 @@ class EthToken: NetworkObserver {
         }
         let token = try! PropertyListDecoder().decode(CustomToken.self, from: rawArray)
         self.token = token
+    }
+
+    private func _checkSelected(address: String){
+        guard let _ = self.token else { return }
+        if(self.token?.address == address){
+            self.setToken(index: nil)
+        }
     }
 }

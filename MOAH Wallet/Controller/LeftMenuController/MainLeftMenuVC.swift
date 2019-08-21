@@ -13,7 +13,7 @@ class MainLeftMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     let screenSize = UIScreen.main.bounds
     let account: EthAccount = EthAccount.shared
-    let ethAddress = EthAddress.shared
+    let ethAddress = EthAddress.address
     var address: CustomAddress
     let util = Util()
 

@@ -105,7 +105,7 @@ class TXCustomVC: UIViewController, UITextFieldDelegate {
         let button = CustomButton(type: .system)
         button.setTitle("가스 설정하기", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 20, dynamic: true)
+        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 18, dynamic: true)
         button.addTarget(self, action: #selector(nextPressed(_:)), for: .touchUpInside)
 
         return button

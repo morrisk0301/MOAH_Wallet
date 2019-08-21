@@ -16,7 +16,7 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     let account: EthAccount = EthAccount.shared
     let screenSize = UIScreen.main.bounds
     let web3: CustomWeb3 = CustomWeb3.shared
-    let ethAddress = EthAddress.shared
+    let ethAddress = EthAddress.address
     let util = Util()
 
     var accounts: [MOAHAddress] = [MOAHAddress]()
@@ -41,7 +41,7 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         let button = CustomButton(type: .system)
         button.setTitle("계정 추가", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 20, dynamic: true)
+        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 18, dynamic: true)
         button.addTarget(self, action: #selector(addPressed(_:)), for: .touchUpInside)
 
         return button

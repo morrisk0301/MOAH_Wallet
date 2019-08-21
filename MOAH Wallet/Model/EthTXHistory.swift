@@ -26,7 +26,7 @@ class EthTXHistory: NetworkObserver, AddressObserver {
 
     init(){
         let web3: CustomWeb3 = CustomWeb3.shared
-        let ethAddress = EthAddress.shared
+        let ethAddress = EthAddress.address
         self.network = web3.network!
         self.address = ethAddress.address!
         web3.attachNetworkObserver(self)

@@ -18,6 +18,7 @@ protocol MainControllerDelegate {
     func txFeeClicked()
     func isSignUp()
     func reload()
+    func willReload()
 }
 
 protocol CheckVerifiedDelegate {

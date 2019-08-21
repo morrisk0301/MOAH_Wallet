@@ -160,7 +160,6 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
     }
 
     func didSelectRightMenuOption(menuOption: RightMenuOption) {
-
         switch menuOption {
         case .Welcome:
             self.style = .lightContent
@@ -366,7 +365,7 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
                 let controller = TokenListVC()
                 self.present(UINavigationController(rootViewController: controller), animated: true)
             }
-            else if(selected){
+            else if(selected || self.isReload){
                 self.showSpinner()
                 self.loadData()
             }
@@ -383,6 +382,10 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
     func reload() {
         self.showTransparentView()
         self.loadData()
+    }
+
+    func willReload() {
+        self.isReload = true
     }
 
     @objc private func mainViewClicked(_ sender: UIGestureRecognizer) {

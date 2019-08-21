@@ -97,7 +97,7 @@ class AccountCell: UITableViewCell{
     }
 
     func addSymbol(symbol: String){
-        self.balanceLabel.text = "0.00000 "+symbol
+        self.balanceLabel.text = "0.0000 "+symbol
     }
 
     private func addContentView(){

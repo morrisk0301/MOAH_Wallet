@@ -40,6 +40,13 @@ class TokenCell: UITableViewCell {
         return label
     }()
 
+    let checkImage: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "checkDark"))
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+
+        return imageView
+    }()
+
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
@@ -48,7 +55,7 @@ class TokenCell: UITableViewCell {
         addSubview(logoImageView)
         addSubview(tokenLabel)
 
-        selectionStyle = .default
+        selectionStyle = .none
 
         logoImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         logoImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: screenSize.width/20).isActive = true
@@ -70,6 +77,7 @@ class TokenCell: UITableViewCell {
         self.tokenLabel.isHidden = false
         self.noSearchLabel.isHidden = true
         self.isUserInteractionEnabled = true
+        self.checkImage.isHidden = true
     }
 
     func setTokenValue(name: String, address: String, logo: Data){
@@ -113,6 +121,17 @@ class TokenCell: UITableViewCell {
         noSearchLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
 
         self.logoImageView.isHidden = true
+    }
+
+    func addCheckImage(){
+        addSubview(checkImage)
+
+        checkImage.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        checkImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -screenSize.width/15).isActive = true
+        checkImage.heightAnchor.constraint(equalToConstant: screenSize.width/30).isActive = true
+        checkImage.widthAnchor.constraint(equalToConstant: screenSize.width/22.5).isActive = true
+
+        checkImage.isHidden = false
     }
 
     private func trimMiddle(address: String) -> String{

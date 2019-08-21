@@ -55,7 +55,7 @@ class PrivateKeyVC: UIViewController {
         let button = CustomButton()
 
         button.setTitle("개인키 복사하기", for: .normal)
-        button.titleLabel?.font = UIFont(name: "NanumSquareRoundB", size: 20, dynamic: true)
+        button.titleLabel?.font = UIFont(name: "NanumSquareRoundB", size: 18, dynamic: true)
         button.addTarget(self, action: #selector(copyPressed(_:)), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
 

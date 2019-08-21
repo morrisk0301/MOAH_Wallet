@@ -5,6 +5,7 @@
 
 import Foundation
 import UIKit
+import AudioToolbox
 
 class MainTokenView: UIView {
 
@@ -72,6 +73,7 @@ class MainTokenView: UIView {
     }
 
     @objc func viewClicked(_ sender: UITapGestureRecognizer) {
+        AudioServicesPlaySystemSound(1519)
         delegate?.tokenViewClicked()
     }
 }

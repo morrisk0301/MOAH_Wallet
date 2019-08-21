@@ -5,6 +5,7 @@
 
 import Foundation
 import UIKit
+import AudioToolbox
 
 class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate {
 
@@ -15,6 +16,7 @@ class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, U
     let screenSize = UIScreen.main.bounds
     let httpRequest = HTTPRequest()
     let web3 = CustomWeb3.shared
+    let util = Util()
     let ethToken = EthToken.shared
 
     let searchField: UITextField = {
@@ -53,7 +55,7 @@ class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, U
         let button = CustomButton(type: .system)
         button.setTitle("토큰 직접 추가", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 20, dynamic: true)
+        button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 18, dynamic: true)
         button.addTarget(self, action: #selector(addPressed(_:)), for: .touchUpInside)
 
         return button
@@ -63,7 +65,7 @@ class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, U
         super.viewDidLoad()
         self.transparentNavigationBar()
         self.replaceToQuitButton(color: "dark")
-        self.setNavigationTitle(title: "토큰 선택")
+        self.setNavigationTitle(title: "토큰 검색")
         self.hideKeyboardWhenTappedAround()
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
@@ -130,7 +132,8 @@ class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, U
             return cell
         }
 
-        cell.setTokenValue(name: tokenArr[indexPath.row].name, address: tokenArr[indexPath.row].address, logo: tokenArr[indexPath.row].logo!)
+        let nameLabel = tokenArr[indexPath.row].symbol + " - " + tokenArr[indexPath.row].name
+        cell.setTokenValue(name: nameLabel, address: tokenArr[indexPath.row].address, logo: tokenArr[indexPath.row].logo!)
 
         return cell
     }
@@ -148,43 +151,23 @@ class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, U
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let util = Util()
-        guard !ethToken.checkTokenExists(address: self.tokenArr[indexPath.row].address) else{
-            let alertVC = util.alert(title: "토큰 추가 오류", body: "이미 추가된 토큰입니다.",
-                    buttonTitle: "확인", buttonNum: 1, completion: {_ in })
+        DispatchQueue.main.async{
+            AudioServicesPlaySystemSound(1519)
+            guard !self.ethToken.checkTokenExists(address: self.tokenArr[indexPath.row].address) else{
+                let alertVC = self.util.alert(title: "토큰 추가 오류", body: "이미 추가된 토큰입니다.",
+                        buttonTitle: "확인", buttonNum: 1, completion: {_ in })
+                self.present(alertVC, animated: false)
+
+                return
+            }
+
+            self.ethToken.addToken(self.tokenArr[indexPath.row])
+
+            let alertVC = self.util.alert(title: "토큰 추가", body: self.tokenArr[indexPath.row].symbol+" 토큰 추가를 완료하였습니다.",
+                    buttonTitle: "추가", buttonNum: 1, completion: {_ in })
+
             self.present(alertVC, animated: false)
-
-            return
-        }
-
-        ethToken.addToken(self.tokenArr[indexPath.row])
-
-        let alertVC = util.alert(title: "토큰 추가", body: tokenArr[indexPath.row].symbol+" 토큰 추가를 완료하였습니다.", 
-                buttonTitle: "추가", buttonNum: 1, completion: {_ in }) 
-
-        self.present(alertVC, animated: false)
-        self.reloadMainContainerVC()
-    }
-
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let deleteButton = UITableViewRowAction(style: .default, title: "삭제") { (action, indexPath) in
-            self.tableView.dataSource?.tableView!(self.tableView, commit: .delete, forRowAt: indexPath)
-            return
-        }
-        deleteButton.backgroundColor = UIColor(key: "dark")
-        return [deleteButton]
-    }
-
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if(indexPath.row < 1){ return false}
-        else { return true}
-    }
-
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if (editingStyle == .delete) {
-            ethToken.deleteToken(address: tokenArr[indexPath.row].address)
-            self.tableView.deleteSections(IndexSet(arrayLiteral: indexPath.row), with: .automatic)
-            tableView.reloadData()
+            self.reloadMainContainerVC()
         }
     }
 

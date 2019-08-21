@@ -41,7 +41,7 @@ class CustomWeb3: AddressObserver {
     }
 
     private init() {
-        let ethAddress: EthAddress = EthAddress.shared
+        let ethAddress: EthAddress = EthAddress.address
         self._address = ethAddress.address
         ethAddress.attachAddressObserver(self)
         _loadNetwork()
@@ -442,7 +442,7 @@ class CustomWeb3: AddressObserver {
 
 
     private func _transfer(tx: WriteTransaction?, subInfo: TXSubInfo){
-        let ethAddress: EthAddress = EthAddress.shared
+        let ethAddress: EthAddress = EthAddress.address
         var keystoreManager: KeystoreManager!
 
         if(ethAddress.checkPrivate(self._address!.address)){
