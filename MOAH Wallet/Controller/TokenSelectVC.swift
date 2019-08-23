@@ -185,6 +185,7 @@ class TokenSelectVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
+            AudioServicesPlaySystemSound(1519)
             delegate?.willReload()
 
             let networkPredicate = NSPredicate(format: "network = %@", web3.network!.name)

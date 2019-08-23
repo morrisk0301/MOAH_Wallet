@@ -134,6 +134,14 @@ extension UIViewController {
         let userDefaults = UserDefaults.standard
         let vc = LockedVC()
         var lockTime: Date!
+        var lockCount = 0
+        if var count = userDefaults.value(forKey: "lockCount") as? Int {
+            if(count > 3){
+                count = 3
+            }
+            lockCount = count
+        }
+
         httpRequest.getDate(request: HTTPRequest.Request.date, completion: {(date) in
             if(date == nil){
                 lockTime = Date()
@@ -141,8 +149,11 @@ extension UIViewController {
             else{
                 lockTime = date
             }
+            vc.lockCount = lockCount
+            vc.isInit = true
             appDelegate?.lockTime = lockTime
             appDelegate?.window?.rootViewController = vc
+
             userDefaults.set(lockTime, forKey: "lockTime")
         })
     }
@@ -520,5 +531,41 @@ extension UIApplication {
             return topViewController(controller: presented)
         }
         return controller
+    }
+}
+
+extension UITableView {
+
+    public func reloadData(_ completion: @escaping ()->()) {
+        UIView.animate(withDuration: 0, animations: {
+            self.reloadData()
+        }, completion:{ _ in
+            completion()
+        })
+    }
+
+    func scroll(to: scrollsTo, animated: Bool) {
+        DispatchQueue.main.async{
+            let numberOfSections = self.numberOfSections
+            let numberOfRows = self.numberOfRows(inSection: numberOfSections-1)
+            switch to{
+            case .top:
+                if numberOfRows > 0 {
+                    let indexPath = IndexPath(row: 0, section: 0)
+                    self.scrollToRow(at: indexPath, at: .top, animated: animated)
+                }
+                break
+            case .bottom:
+                if numberOfRows > 0 {
+                    let indexPath = IndexPath(row: numberOfRows-1, section: (numberOfSections-1))
+                    self.scrollToRow(at: indexPath, at: .bottom, animated: animated)
+                }
+                break
+            }
+        }
+    }
+
+    enum scrollsTo {
+        case top,bottom
     }
 }

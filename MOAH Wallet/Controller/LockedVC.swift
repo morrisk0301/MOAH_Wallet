@@ -11,12 +11,14 @@ class LockedVC: UIViewController {
     let screenSize = UIScreen.main.bounds
     let appDelegate = UIApplication.shared.delegate as? AppDelegate
     let httpRequest: HTTPRequest = HTTPRequest()
+    let userDefaults = UserDefaults.standard
 
     var lockTime: Date?
+    var lockCount: Int!
     var currentTime: Date!
     var seconds: Int?
     var timer = Timer()
-    var isInit = true
+    var isInit = false
 
     let timeLabel: UILabel = {
         let label = UILabel()
@@ -53,6 +55,13 @@ class LockedVC: UIViewController {
 
         self.timeLabel.text = "00:00:00"
         self.lockTime = appDelegate?.lockTime
+
+        if(!isInit){
+            let count = userDefaults.value(forKey: "lockCount") as! Int
+            self.lockCount = count
+        }else{
+            userDefaults.set(self.lockCount, forKey: "lockCount")
+        }
 
         self.setupLabel()
         self.setupLayout()
@@ -103,7 +112,7 @@ class LockedVC: UIViewController {
                             NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundB", size: 18)!,
                             NSAttributedString.Key.paragraphStyle: style])
         attrText.append(NSAttributedString(string: "\n\n\n잠시 후에 다시 이용해주세요.", 
-                attributes: [NSAttributedString.Key.foregroundColor: UIColor(rgb: 0xCCCCCC),
+                attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 1, green: 1, blue: 1, alpha: 0.5),
                              NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundR", size: 16)!,
                              NSAttributedString.Key.paragraphStyle: style]))
 
@@ -111,7 +120,7 @@ class LockedVC: UIViewController {
     }
 
     private func setupTimer(){
-        let difference = self.lockTime!.timeIntervalSinceReferenceDate - currentTime.timeIntervalSinceReferenceDate + 10800
+        let difference = self.lockTime!.timeIntervalSinceReferenceDate - currentTime.timeIntervalSinceReferenceDate + LockTime(rawValue: self.lockCount)!.time
 
         guard Int(difference) >= 0 else {
             self.seconds = 0
@@ -129,6 +138,7 @@ class LockedVC: UIViewController {
     private func invalidateTimer(){
         timer.invalidate()
         UserDefaults.standard.removeObject(forKey: "lockTime")
+        userDefaults.set(self.lockCount+1, forKey: "lockCount")
         let lockVC = LockVC()
 
         self.appDelegate?.lockTime = nil

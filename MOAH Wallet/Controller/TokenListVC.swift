@@ -25,9 +25,9 @@ class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, U
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.height))
         textField.leftView = paddingView
         textField.leftViewMode = .always
-        textField.placeholder = "토큰명/Contract 주소를 입력하세요."
+        textField.placeholder = "토큰명/심볼/Contract 주소를 입력하세요."
         textField.borderStyle = .none
-        textField.returnKeyType = .done
+        textField.returnKeyType = .search
         textField.textColor = UIColor(key: "darker")
         textField.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
         textField.layer.cornerRadius = 5
@@ -36,7 +36,7 @@ class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, U
         textField.layer.borderWidth = 0.5
         textField.keyboardType = .asciiCapable
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.addTarget(self, action: #selector(searchToken(_:)), for: .editingDidEnd)
+        textField.addTarget(self, action: #selector(searchToken(_:)), for: .editingDidEndOnExit)
 
         return textField
     }()
@@ -113,11 +113,6 @@ class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, U
         addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -screenSize.height/20).isActive = true
     }
 
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.view.endEditing(true)
-        return false
-    }
-
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! TokenCell
 
@@ -178,6 +173,7 @@ class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, U
 
     @objc private func searchToken(_ sender: UITextField){
         self.showSpinner()
+        self.tableView.scroll(to: .top, animated: false)
         if(searchField.text!.count == 0){
             httpRequest.tokenSearch(request: .searchAll, params: "", completion: { result in
                 self.tokenArr = result

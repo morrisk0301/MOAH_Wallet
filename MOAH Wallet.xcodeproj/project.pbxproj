@@ -51,6 +51,7 @@
 		C051F539B716B05D7F580EA2 /* LockedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FE6B2FA32E688B8B8FCF /* LockedVC.swift */; };
 		C051F557FB97A111AA701661 /* CustomWeb3.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F97A0E294E3AD06B4979 /* CustomWeb3.swift */; };
 		C051F58BA970A28F5148E884 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FF8E066A1CFE267725CC /* CustomButton.swift */; };
+		C051F58F3BC7BCCE20D5BB64 /* LockTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F65B70D78C110BEE8C06 /* LockTime.swift */; };
 		C051F5F80BB40708BAE58682 /* MnemonicVerificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FC2158395B4BF65E453E /* MnemonicVerificationVC.swift */; };
 		C051F65CB21D06711E706AD4 /* KeyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F6D98183AFC7653F5DFE /* KeyCell.swift */; };
 		C051F66E78ED71C296DF73DD /* EthAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F97B0F9CE93C94AD4963 /* EthAddress.swift */; };
@@ -165,6 +166,7 @@
 		C051F6342A463F4E5602402A /* MnemonicVerificationGetVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicVerificationGetVC.swift; sourceTree = "<group>"; };
 		C051F635779A9F378E8C0E45 /* MainTokenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTokenView.swift; sourceTree = "<group>"; };
 		C051F63AEAD075F1D9237EED /* MyAccountVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAccountVC.swift; sourceTree = "<group>"; };
+		C051F65B70D78C110BEE8C06 /* LockTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockTime.swift; sourceTree = "<group>"; };
 		C051F67188B96103A709A2FC /* NormalAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NormalAlertView.swift; sourceTree = "<group>"; };
 		C051F6B167515CE9084BEF6C /* QRCodeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeVC.swift; sourceTree = "<group>"; };
 		C051F6D98183AFC7653F5DFE /* KeyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyCell.swift; sourceTree = "<group>"; };
@@ -379,6 +381,7 @@
 				C051F3B3FF5E0625A2414188 /* EthToken.swift */,
 				C051FAF4C47BBB7C2D364EEB /* TXQueue.swift */,
 				C051F7794353B3183DC631E7 /* HTTPRequest.swift */,
+				C051F65B70D78C110BEE8C06 /* LockTime.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -802,6 +805,7 @@
 				C051FC3CF284D34A1B4D3848 /* ReachabilityManager.swift in Sources */,
 				C051F539B716B05D7F580EA2 /* LockedVC.swift in Sources */,
 				C051F3CA69AE7CD6C3B67B3A /* HTTPRequest.swift in Sources */,
+				C051F58F3BC7BCCE20D5BB64 /* LockTime.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
