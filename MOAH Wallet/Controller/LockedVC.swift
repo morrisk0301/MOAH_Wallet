@@ -10,8 +10,10 @@ class LockedVC: UIViewController {
 
     let screenSize = UIScreen.main.bounds
     let appDelegate = UIApplication.shared.delegate as? AppDelegate
+    let httpRequest: HTTPRequest = HTTPRequest()
 
     var lockTime: Date?
+    var currentTime: Date!
     var seconds: Int?
     var timer = Timer()
     var isInit = true
@@ -49,25 +51,31 @@ class LockedVC: UIViewController {
         view.addSubview(warningLabel)
         view.addSubview(timeLabel)
 
+        self.timeLabel.text = "00:00:00"
         self.lockTime = appDelegate?.lockTime
+
+        self.setupLabel()
+        self.setupLayout()
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        setupTimer()
-        let hours = Int(self.seconds!) / 3600
-        let minutes = Int(self.seconds!) / 60
-        let seconds = Int(self.seconds!) % 60
-        let hourString = String(format: "%02d", hours)
-        let minString = String(format: "%02d", minutes)
-        let secString = String(format: "%02d", seconds)
+        self.showSpinner()
 
-        self.timeLabel.text = "\(hourString):\(minString):\(secString)"
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        setupLabel()
-        setupLayout()
-        runTimer()
+        httpRequest.getDate(request: HTTPRequest.Request.date, completion: {(date) in
+            if(date == nil){
+                self.currentTime = Date()
+            }
+            else{
+                self.currentTime = date
+            }
+            self.setupTimer()
+            self.setupTimeLabel()
+            self.runTimer()
+            self.hideSpinner()
+        })
     }
 
     override func didReceiveMemoryWarning() {
@@ -75,7 +83,6 @@ class LockedVC: UIViewController {
     }
 
     private func setupLayout(){
-
         timeLabel.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: -screenSize.height/20).isActive = true
         timeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenSize.width/20).isActive = true
         timeLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenSize.width/20).isActive = true
@@ -104,8 +111,7 @@ class LockedVC: UIViewController {
     }
 
     private func setupTimer(){
-        let date = Date()
-        let difference = self.lockTime!.timeIntervalSinceReferenceDate - date.timeIntervalSinceReferenceDate + 10
+        let difference = self.lockTime!.timeIntervalSinceReferenceDate - currentTime.timeIntervalSinceReferenceDate + 10800
 
         guard Int(difference) >= 0 else {
             self.seconds = 0
@@ -129,20 +135,23 @@ class LockedVC: UIViewController {
         self.appDelegate?.window?.rootViewController = lockVC
     }
 
-    @objc private func updateTimer(_ sender: Timer){
-        seconds = seconds! - 1
-        if(seconds! <= 0){
-            invalidateTimer()
-            return
-        }
-
+    private func setupTimeLabel(){
         let hours = Int(self.seconds!) / 3600
-        let minutes = Int(self.seconds!) / 60
+        let minutes = Int(self.seconds!) / 60 % 60
         let seconds = Int(self.seconds!) % 60
         let hourString = String(format: "%02d", hours)
         let minString = String(format: "%02d", minutes)
         let secString = String(format: "%02d", seconds)
 
         self.timeLabel.text = "\(hourString):\(minString):\(secString)"
+    }
+
+    @objc private func updateTimer(_ sender: Timer){
+        seconds = seconds! - 1
+        if(seconds! <= 0){
+            invalidateTimer()
+            return
+        }
+        self.setupTimeLabel()
     }
 }

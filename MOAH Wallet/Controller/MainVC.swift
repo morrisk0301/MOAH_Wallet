@@ -76,7 +76,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Chec
 
         view.addSubview(mainTopView)
         view.addSubview(txView)
-        mainTopView.balanceLabel.text = "0.00000 " + symbol
+        mainTopView.balanceLabel.text = "0.0000 " + symbol
         mainTopView.tokenView.setTokenString(tokenString: "Ethereum")
         mainTopView.delegate = self
 

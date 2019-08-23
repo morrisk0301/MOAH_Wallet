@@ -129,14 +129,22 @@ extension UIViewController {
     }
 
     func lockUser(){
+        let httpRequest = HTTPRequest()
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let userDefaults = UserDefaults.standard
-        let lockTime = Date()
         let vc = LockedVC()
-        appDelegate?.lockTime = lockTime
-        appDelegate?.window?.rootViewController = vc
-
-        userDefaults.set(lockTime, forKey: "lockTime")
+        var lockTime: Date!
+        httpRequest.getDate(request: HTTPRequest.Request.date, completion: {(date) in
+            if(date == nil){
+                lockTime = Date()
+            }
+            else{
+                lockTime = date
+            }
+            appDelegate?.lockTime = lockTime
+            appDelegate?.window?.rootViewController = vc
+            userDefaults.set(lockTime, forKey: "lockTime")
+        })
     }
 
     @objc private func backPressed(_ sender: UIButton){

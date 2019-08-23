@@ -48,7 +48,7 @@ class Util {
 
     func trimBalance(balance: BigUInt?) -> String {
         if(balance == nil || balance == 0){
-            return "0.00000"
+            return "0.0000"
         }
         var balanceString = Web3Utils.formatToEthereumUnits(balance!, toUnits: .eth)!
         if(balanceString.count > 24){

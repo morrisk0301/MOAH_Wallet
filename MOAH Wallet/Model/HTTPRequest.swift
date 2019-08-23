@@ -13,19 +13,48 @@ class HTTPRequest {
     enum Request{
         case search
         case searchAll
+        case date
 
-        var params: String{
+        var url: String{
             switch self{
             case .search:
                 return "api/token/search/"
             case .searchAll:
                 return "api/token/"
+            case .date:
+                return "api/date/"
+            }
+        }
+    }
+
+    func getDate(request: Request, completion: @escaping (Date?) -> ()){
+        let url = serverUrl + request.url
+        DispatchQueue.global(qos: .userInitiated).async{
+            AF.request(url, method: .get, encoding: JSONEncoding.default, headers: nil).responseJSON {
+                response in
+                switch response.result {
+                case .success(let value):
+                    if let date = value as? String {
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+                        dateFormatter.timeZone = TimeZone.autoupdatingCurrent
+
+                        let newDate:Date = dateFormatter.date(from: date)!
+                        completion(newDate)
+                    }
+                    else{
+                        completion(nil)
+                    }
+                case .failure(let error):
+                    print(error)
+                    completion(nil)
+                }
             }
         }
     }
 
     func tokenSearch(request: Request, params: String, completion: @escaping ([CustomToken]) -> ()){
-        let url = serverUrl + request.params + params
+        let url = serverUrl + request.url + params
         DispatchQueue.global(qos: .userInitiated).async{
             AF.request(url, method: .get, encoding: JSONEncoding.default, headers: nil).responseJSON {
                 response in

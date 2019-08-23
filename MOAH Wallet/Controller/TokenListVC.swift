@@ -97,7 +97,7 @@ class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, U
     }
 
     private func setupLayout(){
-        searchField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: screenSize.height/30).isActive = true
+        searchField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: screenSize.height/40).isActive = true
         searchField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         searchField.widthAnchor.constraint(equalToConstant: screenSize.width*0.9).isActive = true
         searchField.heightAnchor.constraint(equalToConstant: screenSize.height/15).isActive = true
