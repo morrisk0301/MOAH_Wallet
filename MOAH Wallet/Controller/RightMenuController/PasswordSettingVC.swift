@@ -233,11 +233,11 @@ class PasswordSettingVC: UIViewController, UITableViewDelegate, UITableViewDataS
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return screenSize.height/10
+        return screenSize.height/12
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if(indexPath.section == 2){
+        if(indexPath.section == 3){
             let controller = PasswordChangeVC()
             self.navigationController?.pushViewController(controller, animated: true)
         }

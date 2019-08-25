@@ -35,7 +35,7 @@ class NoticeVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(NoticeCell.self, forCellReuseIdentifier: reuseIdentifier)
-        tableView.register(MenuBodyCell.self, forCellReuseIdentifier: reuseIdentifierBody)
+        tableView.register(NoticeBodyCell.self, forCellReuseIdentifier: reuseIdentifierBody)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -76,7 +76,7 @@ class NoticeVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             cell.setNoticeValue(name: self.notice[indexPath.section].head, date: self.notice[indexPath.section].createdAt)
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifierBody, for: indexPath) as! MenuBodyCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifierBody, for: indexPath) as! NoticeBodyCell
             self.notice[indexPath.section].height = cell.initBody(text: self.notice[indexPath.section].body)
             return cell
         }

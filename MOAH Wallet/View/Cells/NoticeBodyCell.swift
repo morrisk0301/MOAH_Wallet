@@ -6,7 +6,7 @@
 import Foundation
 import UIKit
 
-class MenuBodyCell: UITableViewCell {
+class NoticeBodyCell: UITableViewCell {
 
     let screenSize = UIScreen.main.bounds
 
@@ -30,7 +30,7 @@ class MenuBodyCell: UITableViewCell {
     func initBody(text: String) -> CGFloat {
         bodyLabel = UILabel(frame: CGRect(x: self.frame.width * 0.05, y: 0, width: self.frame.width * 0.9, height: CGFloat.greatestFiniteMagnitude))
         bodyLabel.text = text
-        bodyLabel.font = UIFont(name: "NanumSquareRoundR", size: 12, dynamic: true)
+        bodyLabel.font = UIFont(name: "NanumSquareRoundR", size: 14, dynamic: true)
         bodyLabel.textColor = UIColor(key: "darker")
         bodyLabel.numberOfLines = 0
         bodyLabel.lineBreakMode = NSLineBreakMode.byWordWrapping

@@ -46,13 +46,13 @@ class Util {
         return alertViewController
     }
 
-    func trimBalance(balance: BigUInt?) -> String {
+    func trimBalance(balance: BigUInt?, index: Int) -> String {
         if(balance == nil || balance == 0){
             return "0.0000"
         }
         var balanceString = Web3Utils.formatToEthereumUnits(balance!, toUnits: .eth)!
-        if(balanceString.count > 24){
-            balanceString.removeLast(balanceString.count - 24)
+        if(balanceString.count > index){
+            balanceString.removeLast(balanceString.count - index)
             balanceString += "..."
         }
 

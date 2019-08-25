@@ -135,7 +135,7 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                 //var balance = BigUInt(0)
                 let address = accounts[indexPath.section].value(forKey: "address") as! String
                 web3.getBalanceSync(address: address, completion: {(balance) in
-                    let balanceTrimmed = self.util.trimBalance(balance: balance)
+                    let balanceTrimmed = self.util.trimBalance(balance: balance, index: 13)
                     let text = balanceTrimmed + " " + self.symbol
                     self.balance.append(text)
                 })

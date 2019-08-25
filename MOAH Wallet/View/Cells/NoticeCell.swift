@@ -38,6 +38,10 @@ class NoticeCell: UITableViewCell {
         setupLayout()
     }
 
+    override func prepareForReuse() {
+        backgroundColor = UIColor(key: "light3")
+    }
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -48,7 +52,7 @@ class NoticeCell: UITableViewCell {
 
         menuLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         menuLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: frame.width/15).isActive = true
-        menuLabel.trailingAnchor.constraint(equalTo: arrowImage.leadingAnchor).isActive = true
+        menuLabel.trailingAnchor.constraint(equalTo: arrowImage.leadingAnchor, constant: -frame.width/15).isActive = true
         menuLabel.heightAnchor.constraint(equalToConstant: screenSize.height/12).isActive = true
 
         arrowImage.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
@@ -73,6 +77,17 @@ class NoticeCell: UITableViewCell {
         attrText.append(NSAttributedString(string: "\n"+newDate,
                 attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRound", size: 13, dynamic: true)!,
                              NSAttributedString.Key.foregroundColor: UIColor(key: "grey2")]))
+        menuLabel.attributedText = attrText
+    }
+
+    func setNoticeValue(name: String){
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 10
+
+        let attrText = NSMutableAttributedString(string: name,
+                attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundB", size: 16, dynamic: true)!,
+                             NSAttributedString.Key.foregroundColor: UIColor(key: "darker"),
+                             NSAttributedString.Key.paragraphStyle: style])
         menuLabel.attributedText = attrText
     }
 }

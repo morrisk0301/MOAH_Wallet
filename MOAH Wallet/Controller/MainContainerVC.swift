@@ -182,7 +182,7 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
             let controller = FAQVC()
             present(UINavigationController(rootViewController: controller), animated: true, completion: nil)
         case .CSAgreement:
-            let controller = AgreementCheckVC()
+            let controller = PolicyVC()
             present(UINavigationController(rootViewController: controller), animated: true, completion: nil)
         case .CSEmail:
             self.sendEmail()
@@ -282,7 +282,7 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
             self.checkChainNetwork()
             self.txHistory = ethTxHistory.fetchTXInfo()
             self.web3.getBalance(address: nil, completion: {(balance) in
-                let balanceTrimmed = self.util.trimBalance(balance: balance)
+                let balanceTrimmed = self.util.trimBalance(balance: balance, index: 24)
                     DispatchQueue.main.async {
                         self.mainVC.balance = balance
                         self.mainVC.symbol = self.symbol

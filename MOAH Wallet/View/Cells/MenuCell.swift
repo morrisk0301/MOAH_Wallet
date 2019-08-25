@@ -15,7 +15,7 @@ class MenuCell: UITableViewCell{
 
         label.text = ""
         label.textColor = UIColor(key: "darker")
-        label.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
+        label.font = UIFont(name:"NanumSquareRoundR", size: 15, dynamic: true)
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label

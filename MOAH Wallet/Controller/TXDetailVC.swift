@@ -443,7 +443,9 @@ class TXDetailVC: UIViewController{
         hashAttr.append(NSAttributedString(string: hash+"  ",
                 attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundR", size: 14, dynamic: true)!,
                              NSAttributedString.Key.foregroundColor: UIColor(key: "grey")]))
-        hashAttr.append(NSAttributedString(attachment: attachImage))
+        if(hash.count != 0){
+            hashAttr.append(NSAttributedString(attachment: attachImage))
+        }
 
         hashLabel.attributedText = hashAttr
 
@@ -601,6 +603,9 @@ class TXDetailVC: UIViewController{
     @objc private func hashPressed(_ sender: UITapGestureRecognizer){
         let util = Util()
         let hash = self.txInfo.value(forKey: "txHash") as! String
+        if(hash.count == 0){
+            return
+        }
         UIPasteboard.general.string = hash
         let alertVC = util.alert(title: "TX Hash 복사", body: "TX Hash가 클립보드에 복사되었습니다.", buttonTitle: "확인", buttonNum: 1, completion: {_ in})
         self.present(alertVC, animated: false)

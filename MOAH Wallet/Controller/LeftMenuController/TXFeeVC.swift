@@ -149,13 +149,13 @@ class TXFeeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIG
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return screenSize.height/10
+        return screenSize.height/12
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch (indexPath.row){
             case 0:
-
+                AudioServicesPlaySystemSound(1519)
                 web3.setGas(rate: "auto")
                 break
             case 1:

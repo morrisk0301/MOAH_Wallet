@@ -127,7 +127,7 @@ class AccountCell: UITableViewCell{
 
         balanceLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         balanceLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: screenSize.width/10).isActive = true
-        balanceLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -screenSize.width/3).isActive = true
+        balanceLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -screenSize.width/5).isActive = true
         balanceLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
 
         addressLabel.topAnchor.constraint(equalTo: balanceLabel.bottomAnchor).isActive = true

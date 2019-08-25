@@ -1,24 +1,25 @@
 //
-// Created by 김경인 on 2019-07-22.
+// Created by 김경인 on 2019-08-25.
 // Copyright (c) 2019 Sejong University Alom. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-class AgreementCheckVC: UIViewController {
+class PolicyDetailVC: UIViewController {
+
+    let screenSize = UIScreen.main.bounds
+    var type: String!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.replaceToQuitButton(color: "dark")
-        self.setNavigationTitle(title: "약관 및 정책")
         self.transparentNavigationBar()
+        self.replaceBackButton(color: "dark")
+        self.setNavigationTitle(title: type)
 
         view.backgroundColor = UIColor(key: "light3")
-        setupLayout()
-    }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+        setupLayout()
     }
 
     private func setupLayout(){

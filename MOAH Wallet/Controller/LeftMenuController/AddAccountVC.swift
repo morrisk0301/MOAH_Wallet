@@ -60,7 +60,7 @@ class AddAccountVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return screenSize.height/10
+        return screenSize.height/12
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -1,0 +1,103 @@
+//
+// Created by 김경인 on 2019-07-22.
+// Copyright (c) 2019 Sejong University Alom. All rights reserved.
+//
+
+import Foundation
+import UIKit
+
+class PolicyVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate {
+
+    private let reuseIdentifier = "PolicyCell"
+
+    let screenSize = UIScreen.main.bounds
+    var notice: [CustomNotice] = [CustomNotice]()
+
+    let tableView: UITableView = {
+        let tableView = UITableView()
+
+        tableView.backgroundColor = UIColor(key: "light3")
+        tableView.separatorStyle = .none
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+
+        return tableView
+    }()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.replaceToQuitButton(color: "dark")
+        self.setNavigationTitle(title: "약관 및 정책")
+        self.transparentNavigationBar()
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+
+        view.backgroundColor = UIColor(key: "light3")
+        view.addSubview(tableView)
+
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(MenuCell.self, forCellReuseIdentifier: reuseIdentifier)
+
+        setupLayout()
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+
+    private func setupLayout() {
+        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! MenuCell
+
+        switch (indexPath.row) {
+        case 0:
+            cell.menuLabel.text = "이용 약관"
+            break
+        case 1:
+            cell.menuLabel.text = "개인정보 보호정책"
+            break
+        case 2:
+            cell.menuLabel.text = "오픈소스 라이센스"
+            break
+        default:
+            break
+        }
+
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return screenSize.height / 12
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        var type: String!
+
+        switch (indexPath.row) {
+        case 0:
+            type = "이용 약관"
+            break
+        case 1:
+            type = "개인정보 보호정책"
+            break
+        case 2:
+            type = "오픈소스 라이센스"
+            break
+        default:
+            break
+        }
+
+        let controller = PolicyDetailVC()
+        controller.type = type
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
+}
