@@ -175,8 +175,8 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
             let controller = PasswordCheckVC()
             controller.toView = "password"
             present(UINavigationController(rootViewController: controller), animated: true, completion: nil)
-        case .CSAnnouncement:
-            let controller = AnnouncementVC()
+        case .CSNotice:
+            let controller = NoticeVC()
             present(UINavigationController(rootViewController: controller), animated: true, completion: nil)
         case .CSFAQ:
             let controller = FAQVC()

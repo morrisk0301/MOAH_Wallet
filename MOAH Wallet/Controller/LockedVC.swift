@@ -73,7 +73,7 @@ class LockedVC: UIViewController {
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        httpRequest.getDate(request: HTTPRequest.Request.date, completion: {(date) in
+        httpRequest.getDate(completion: {(date) in
             if(date == nil){
                 self.currentTime = Date()
             }

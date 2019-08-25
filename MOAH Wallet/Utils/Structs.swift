@@ -25,6 +25,14 @@ struct CustomGas: Codable {
     var limit: BigUInt?
 }
 
+struct CustomNotice {
+    var head: String
+    var body: String
+    var createdAt: Date
+    var opened: Bool
+    var height: CGFloat
+}
+
 struct CustomToken: Codable {
     var name: String
     var symbol: String

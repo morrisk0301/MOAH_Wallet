@@ -11,7 +11,7 @@ enum RightMenuOption: Int, CustomStringConvertible {
     case WalletNetwork
     case WalletMnemonic
     case WalletPassword
-    case CSAnnouncement
+    case CSNotice
     case CSFAQ
     case CSAgreement
     case CSEmail
@@ -22,7 +22,7 @@ enum RightMenuOption: Int, CustomStringConvertible {
         case .WalletNetwork: return "네트워크 설정"
         case .WalletMnemonic: return "비밀 시드 구문"
         case .WalletPassword: return "보안 및 알림"
-        case .CSAnnouncement: return "공지사항"
+        case .CSNotice: return "공지사항"
         case .CSFAQ: return "FAQ"
         case .CSAgreement: return "약관 및 정책"
         case .CSEmail: return "이메일 문의하기"

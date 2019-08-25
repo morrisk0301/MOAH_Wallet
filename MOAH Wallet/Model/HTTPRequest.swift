@@ -14,6 +14,7 @@ class HTTPRequest {
         case search
         case searchAll
         case date
+        case notice
 
         var url: String{
             switch self{
@@ -23,12 +24,31 @@ class HTTPRequest {
                 return "api/token/"
             case .date:
                 return "api/date/"
+            case .notice:
+                return "api/notice/"
             }
         }
     }
 
-    func getDate(request: Request, completion: @escaping (Date?) -> ()){
-        let url = serverUrl + request.url
+    func getNotice(completion: @escaping ([CustomNotice]) -> ()){
+        let url = serverUrl + Request.notice.url
+        DispatchQueue.global(qos: .userInitiated).async{
+            AF.request(url, method: .get, encoding: JSONEncoding.default, headers: nil).responseJSON {
+                response in
+                switch response.result {
+                case .success(let value):
+                    let noticeArr = self._parseNotice(response: value)
+                    completion(noticeArr)
+                case .failure(let error):
+                    print(error)
+                    completion([])
+                }
+            }
+        }
+    }
+
+    func getDate(completion: @escaping (Date?) -> ()){
+        let url = serverUrl + Request.date.url
         DispatchQueue.global(qos: .userInitiated).async{
             AF.request(url, method: .get, encoding: JSONEncoding.default, headers: nil).responseJSON {
                 response in
@@ -60,7 +80,7 @@ class HTTPRequest {
                 response in
                 switch response.result {
                 case .success(let value):
-                    let tokenArr = self._parseResponse(response: value)
+                    let tokenArr = self._parseToken(response: value)
                     completion(tokenArr)
                 case .failure(let error):
                     print(error)
@@ -70,7 +90,7 @@ class HTTPRequest {
         }
     }
 
-    private func _parseResponse(response: Any) -> [CustomToken]{
+    private func _parseToken(response: Any) -> [CustomToken]{
         guard let dataArray = response as? [[String: Any]] else { return [] }
 
         var tokenArr = [CustomToken]()
@@ -85,5 +105,25 @@ class HTTPRequest {
             tokenArr.append(token)
         }
         return tokenArr
+    }
+
+    private func _parseNotice(response: Any) -> [CustomNotice]{
+        guard let dataArray = response as? [[String: Any]] else { return [] }
+
+        var noticeArr = [CustomNotice]()
+        for data in dataArray{
+            let head = data["notice_head"] as! String
+            let body = data["notice_body"] as! String
+            let rawDate = data["created_at"] as! String
+
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+            dateFormatter.timeZone = TimeZone.autoupdatingCurrent
+
+            let date:Date = dateFormatter.date(from: rawDate)!
+            let notice = CustomNotice(head: head, body: body, createdAt: date, opened: false, height: 0.0)
+            noticeArr.append(notice)
+        }
+        return noticeArr
     }
 }

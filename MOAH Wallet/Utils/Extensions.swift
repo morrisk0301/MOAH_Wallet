@@ -142,7 +142,7 @@ extension UIViewController {
             lockCount = count
         }
 
-        httpRequest.getDate(request: HTTPRequest.Request.date, completion: {(date) in
+        httpRequest.getDate(completion: {(date) in
             if(date == nil){
                 lockTime = Date()
             }
