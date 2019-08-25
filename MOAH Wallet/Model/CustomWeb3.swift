@@ -137,7 +137,6 @@ class CustomWeb3: AddressObserver {
         guard let address = EthereumAddress(address) else { throw TransferError.invalidAddress }
         if(Web3Utils.parseToBigUInt(amount, decimals: 18) == nil){ throw TransferError.invalidAmount}
 
-
         DispatchQueue.global(qos: .userInteractive).async{
             do{
                 let ethToken = EthToken.shared
@@ -149,7 +148,6 @@ class CustomWeb3: AddressObserver {
                 var gasLimit = gas?.limit
 
                 self._option!.from = EthereumAddress(from)!
-
                 if(token == nil){
                     let amount = Web3Utils.parseToBigUInt(amount, decimals: 18)!
                     let tx =  self._web3Ins!.eth.sendETH(to: address, amount: amount, transactionOptions: self._option)!
@@ -299,8 +297,8 @@ class CustomWeb3: AddressObserver {
         if (_option == nil) {
             return
         }
-        _option!.gasLimit = .manual(price)
-        _option!.gasPrice = .manual(limit)
+        _option!.gasPrice = .manual(price)
+        _option!.gasLimit = .manual(limit)
 
         let gas = CustomGas(rate: "custom", price: price, limit: limit)
         _saveGas(gas: gas)

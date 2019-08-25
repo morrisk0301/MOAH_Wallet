@@ -37,13 +37,16 @@ class TXQueue {
         let web3 = CustomWeb3.shared
         let ethTXHistory = EthTXHistory()
         _queue.sync{
+            var count = 0
             while(true){
+                count += 1
                 let hash = web3.getTXReceipt(hash: txHash)
                 if(hash != nil && hash!.status != .notYetProcessed){
                     ethTXHistory.updateTXStatus(tx: txHash, status: hash!.status.description)
                     self.delegate?.transactionComplete()
                     break
                 }
+                if(count>10){break}
                 sleep(10)
             }
         }
