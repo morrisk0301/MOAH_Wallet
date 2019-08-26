@@ -426,6 +426,11 @@ extension MutableCollection {
 }
 
 extension String {
+
+    var localized: String {
+        return NSLocalizedString(self, tableName: "Localizable", value: self, comment: "")
+    }
+
     func replace(target: String, withString: String, offset: Int) -> String {
         let indexRange = self.startIndex..<self.index(self.startIndex, offsetBy: 3*offset-2)
         return self.replacingOccurrences(of: target, with: withString, options: NSString.CompareOptions.literal, range: indexRange)
@@ -435,7 +440,7 @@ extension String {
         return self.replacingOccurrences(of: target, with: withString, options: NSString.CompareOptions.literal, range: nil)
     }
 
-    func onlyAlphabet() -> String{
+    func onlyAlphabet() -> String {
         let pattern = "[^A-Za-z0-9]+"
         return self.replacingOccurrences(of: pattern, with: "", options: [.regularExpression])
     }

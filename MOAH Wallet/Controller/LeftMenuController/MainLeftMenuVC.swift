@@ -185,7 +185,7 @@ class MainLeftMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     @objc func buttonPressed(_ sender: UIButton){
         if(sender.tag == 0){
             UIPasteboard.general.string = self.address.address
-            let alertVC = util.alert(title: "주소 복사", body: "주소가 클립보드에 복사되었습니다.", buttonTitle: "확인", buttonNum: 1, completion: {_ in
+            let alertVC = util.alert(title: "Copy Address".localized, body: "Address has been copied to clipboard.".localized, buttonTitle: "확인", buttonNum: 1, completion: {_ in
             })
             self.present(alertVC, animated: false)
         }

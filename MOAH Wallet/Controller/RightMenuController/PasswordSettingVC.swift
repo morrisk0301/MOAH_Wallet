@@ -145,7 +145,7 @@ class PasswordSettingVC: UIViewController, UITableViewDelegate, UITableViewDataS
             self.present(alertVC, animated: false)
         }else{
             DispatchQueue.main.async {
-                let alertVC = self.util.alert(title: "생체인식 기능 오류", 
+                let alertVC = self.util.alert(title: "Error".localized, 
                         body: "생체인식 기능을 사용할 수 없습니다.\n단말기 -> 설정에서 MOAH Wallet의 생체인식 권한을 허용해주세요.", 
                         buttonTitle: "확인", buttonNum: 1, completion: { _ in
                     self.bioSwitch.isOn = false
@@ -172,7 +172,7 @@ class PasswordSettingVC: UIViewController, UITableViewDelegate, UITableViewDataS
                         })
                     } else if settings.authorizationStatus == .denied {
                         DispatchQueue.main.async {
-                            let alertVC = self.util.alert(title: "푸시 알림 오류",
+                            let alertVC = self.util.alert(title: "Error".localized,
                                     body: "푸시알림 기능을 사용할 수 없습니다.\n단말기 -> 설정에서 MOAH Wallet의 푸시알림 권한을 허용해주세요.",
                                     buttonTitle: "확인", buttonNum: 1, completion: { _ in
                                 self.userDefaults.set(false, forKey: "alarm")

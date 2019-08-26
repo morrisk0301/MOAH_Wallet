@@ -383,7 +383,7 @@ class EthAccount: NetworkObserver, AddressObserver{
 
     private func _initAccount(){
         let ethAddress: EthAddress = EthAddress.address
-        let address = CustomAddress(address: _getLastAddressFromPath().address, name: "주 계정", isPrivateKey: false, path: _getLastPath())
+        let address = CustomAddress(address: _getLastAddressFromPath().address, name: "My Account".localized, isPrivateKey: false, path: _getLastPath())
         ethAddress.addAddress(address)
     }
 

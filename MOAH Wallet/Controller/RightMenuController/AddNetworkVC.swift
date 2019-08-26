@@ -250,7 +250,7 @@ class AddNetworkVC: UIViewController, UITextFieldDelegate{
             }
             if(errorBody != nil){
                 DispatchQueue.main.async{
-                    let alertVC = util.alert(title: "네트워크 추가 오류", body: errorBody!, buttonTitle: "확인", buttonNum: 1, completion: {_ in
+                    let alertVC = util.alert(title: "Error".localized, body: errorBody!, buttonTitle: "확인", buttonNum: 1, completion: {_ in
                         self.hideSpinner()
                     })
                     self.present(alertVC, animated: false)

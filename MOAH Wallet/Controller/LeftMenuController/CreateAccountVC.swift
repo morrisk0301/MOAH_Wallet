@@ -21,7 +21,7 @@ class CreateAccountVC: UIViewController, UITextFieldDelegate {
 
         label.font = UIFont(name:"NanumSquareRoundB", size: 14, dynamic: true)
         label.textColor = UIColor(key: "darker")
-        label.text = "  계정 이름"
+        label.text = "  " + "Account Name".localized
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
@@ -33,7 +33,7 @@ class CreateAccountVC: UIViewController, UITextFieldDelegate {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.height))
         textField.leftView = paddingView
         textField.leftViewMode = .always
-        textField.placeholder = "계정 이름을 입력해주세요."
+        textField.placeholder = "Enter your account's name".localized
         textField.borderStyle = .none
         textField.returnKeyType = .done
         textField.textColor = UIColor(key: "darker")
@@ -50,7 +50,7 @@ class CreateAccountVC: UIViewController, UITextFieldDelegate {
 
     let confirmButton: CustomButton = {
         let button = CustomButton(type: .system)
-        button.setTitle("생성하기", for: .normal)
+        button.setTitle("Create Account".localized, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 18, dynamic: true)
         button.addTarget(self, action: #selector(nextPressed(_:)), for: .touchUpInside)
@@ -62,7 +62,7 @@ class CreateAccountVC: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         self.replaceBackButton(color: "dark")
         self.transparentNavigationBar()
-        self.setNavigationTitle(title: "계정 생성")
+        self.setNavigationTitle(title: "Create Account".localized)
         self.hideKeyboardWhenTappedAround()
 
         view.backgroundColor = UIColor(key: "light3")
@@ -165,7 +165,7 @@ class CreateAccountVC: UIViewController, UITextFieldDelegate {
         let util = Util()
         let name = nameField.text!
         if(nameField.text?.count == 0){
-            let alertVC = util.alert(title: "생성 오류", body: "계정 이름을 입력해주세요.", buttonTitle: "확인", buttonNum: 1, completion: {_ in})
+            let alertVC = util.alert(title: "Error".localized, body: "Enter your account's name".localized, buttonTitle: "확인", buttonNum: 1, completion: {_ in})
             self.present(alertVC, animated: false)
         }
         else if(account.generateAccount(name: name)){
@@ -176,7 +176,7 @@ class CreateAccountVC: UIViewController, UITextFieldDelegate {
             }
         }
         else{
-            let alertVC = util.alert(title: "생성 오류", body: "계정 이름이 중복되었거나, 최대 계정 개수(10개)를 초과하였습니다.", buttonTitle: "확인", buttonNum: 1, completion: {_ in})
+            let alertVC = util.alert(title: "Error".localized, body: "Duplicate account name or exceeded maximum account number".localized, buttonTitle: "확인", buttonNum: 1, completion: {_ in})
             self.present(alertVC, animated: false)
         }
     }

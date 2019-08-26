@@ -37,7 +37,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Chec
     let txLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "거래내역"
+        label.text = "Transaction History".localized
         label.font = UIFont(name:"NanumSquareRoundB", size: 14, dynamic: true)
         label.textColor = UIColor(key: "darker")
         label.backgroundColor = .white

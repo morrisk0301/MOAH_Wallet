@@ -153,7 +153,7 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
         }
         else{
             let util = Util()
-            let alertVC = util.alert(title: "시드 구문 오류", body: "올바르지 않은 시드 구문입니다.", buttonTitle: "확인", buttonNum: 1, completion: {_ in})
+            let alertVC = util.alert(title: "Error".localized, body: "올바르지 않은 시드 구문입니다.", buttonTitle: "확인", buttonNum: 1, completion: {_ in})
             self.present(alertVC, animated: false)
         }
 

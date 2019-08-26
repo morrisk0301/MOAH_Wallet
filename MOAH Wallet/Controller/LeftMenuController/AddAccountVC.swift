@@ -26,7 +26,7 @@ class AddAccountVC: UIViewController, UITableViewDataSource, UITableViewDelegate
         super.viewDidLoad()
         self.replaceBackButton(color: "dark")
         self.transparentNavigationBar()
-        self.setNavigationTitle(title: "계정 추가")
+        self.setNavigationTitle(title: "Add Account".localized)
 
         tableView.delegate = self
         tableView.dataSource = self
@@ -46,10 +46,10 @@ class AddAccountVC: UIViewController, UITableViewDataSource, UITableViewDelegate
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! MenuCell
 
         if(indexPath.row == 0){
-            cell.menuLabel.text = "계정 생성"
+            cell.menuLabel.text = "Create Account".localized
         }
         else{
-            cell.menuLabel.text = "개인키로 가져오기"
+            cell.menuLabel.text = "Get Account with Private Key".localized;
         }
 
         return cell

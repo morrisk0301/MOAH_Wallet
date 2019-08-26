@@ -38,7 +38,7 @@ class ReachabilityManager: NSObject {
     }
 
     func alertUser(){
-        let alertController = UIAlertController(title: "네트워크 오류", message: "네트워크를 사용할 수 없습니다.\n네트워크를 활성화해주세요.", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Error".localized, message: "네트워크를 사용할 수 없습니다.\n네트워크를 활성화해주세요.", preferredStyle: .alert)
         let ok = UIAlertAction(title: "재시도", style: .default){(_) in
             if (self.reachability.connection == .none){
                 self.alertUser()

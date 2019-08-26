@@ -110,7 +110,7 @@ class TXDetailVC: UIViewController{
     let gasPriceTag: UILabel = {
         let label = UILabel()
 
-        label.text = "가스 가격: "
+        label.text = "Gas Price".localized+": "
         label.textColor = UIColor(key: "grey")
         label.font = UIFont(name: "NanumSquareRoundB", size: 14, dynamic: true)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -129,7 +129,7 @@ class TXDetailVC: UIViewController{
     let gasLimitTag: UILabel = {
         let label = UILabel()
 
-        label.text = "가스 한도: "
+        label.text = "Gas Limit".localized+": "
         label.textColor = UIColor(key: "grey")
         label.font = UIFont(name: "NanumSquareRoundB", size: 14, dynamic: true)
         label.translatesAutoresizingMaskIntoConstraints = false

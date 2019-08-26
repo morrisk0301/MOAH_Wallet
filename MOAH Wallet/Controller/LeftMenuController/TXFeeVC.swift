@@ -39,7 +39,7 @@ class TXFeeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIG
     override func viewDidLoad() {
         super.viewDidLoad()
         self.transparentNavigationBar()
-        self.setNavigationTitle(title: "전송 수수료 설정")
+        self.setNavigationTitle(title: "Set Gas Price".localized)
         self.replaceToQuitButton(color: "dark")
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
@@ -95,44 +95,44 @@ class TXFeeVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIG
         switch(indexPath.row){
         case 0:
             if(gas?.rate == "auto"){ addCheckImage(cell: cell)}
-            let attrText = NSMutableAttributedString(string: "자동",
+            let attrText = NSMutableAttributedString(string: "Automatic".localized,
                     attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)!,
                                  NSAttributedString.Key.foregroundColor: UIColor(key: "darker")])
             cell.menuLabel.attributedText = attrText
             break
         case 1:
             if(gas?.rate == "low"){ addCheckImage(cell: cell)}
-            let attrText = NSMutableAttributedString(string: "낮음", 
+            let attrText = NSMutableAttributedString(string: "Low".localized, 
                     attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)!, 
                                  NSAttributedString.Key.foregroundColor: UIColor(key: "darker")])
-            attrText.append(NSAttributedString(string: " (가스 가격: 4 GWei / 가스 한도 "+self.gasLimit+")",
+            attrText.append(NSAttributedString(string: " ("+"Gas Price".localized+": 4 GWei / "+"Gas Limit".localized+": "+self.gasLimit+")",
                     attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12),
                                  NSAttributedString.Key.foregroundColor: UIColor(key: "darker")]))
             cell.menuLabel.attributedText = attrText
             break
         case 2:
             if(gas?.rate == "mid"){ addCheckImage(cell: cell)}
-            let attrText = NSMutableAttributedString(string: "보통",
+            let attrText = NSMutableAttributedString(string: "Normal".localized,
                     attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)!,
                                  NSAttributedString.Key.foregroundColor: UIColor(key: "darker")])
-            attrText.append(NSAttributedString(string: " (가스 가격: 10 GWei / 가스 한도 "+self.gasLimit+")",
+            attrText.append(NSAttributedString(string: " ("+"Gas Price".localized+": 10 GWei / "+"Gas Limit".localized+": "+self.gasLimit+")",
                     attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12),
                                  NSAttributedString.Key.foregroundColor: UIColor(key: "darker")]))
             cell.menuLabel.attributedText = attrText
             break
         case 3:
             if(gas?.rate == "high"){ addCheckImage(cell: cell)}
-            let attrText = NSMutableAttributedString(string: "높음",
+            let attrText = NSMutableAttributedString(string: "High".localized,
                     attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)!,
                                  NSAttributedString.Key.foregroundColor: UIColor(key: "darker")])
-            attrText.append(NSAttributedString(string: " (가스 가격: 20 GWei / 가스 한도 "+self.gasLimit+")",
+            attrText.append(NSAttributedString(string: " ("+"Gas Price".localized+": 20 GWei / "+"Gas Limit".localized+": "+self.gasLimit+")",
                     attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12),
                                  NSAttributedString.Key.foregroundColor: UIColor(key: "darker")]))
             cell.menuLabel.attributedText = attrText
             break
         case 4:
             if(gas?.rate == "custom"){ addCheckImage(cell: cell)}
-            cell.menuLabel.text = "사용자 지정"
+            cell.menuLabel.text = "Custom".localized
             self.price = gas?.price
             self.limit = gas?.limit
 

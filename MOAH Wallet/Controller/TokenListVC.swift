@@ -149,7 +149,7 @@ class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, U
         DispatchQueue.main.async{
             AudioServicesPlaySystemSound(1519)
             guard !self.ethToken.checkTokenExists(address: self.tokenArr[indexPath.row].address) else{
-                let alertVC = self.util.alert(title: "토큰 추가 오류", body: "이미 추가된 토큰입니다.",
+                let alertVC = self.util.alert(title: "Error".localized, body: "이미 추가된 토큰입니다.",
                         buttonTitle: "확인", buttonNum: 1, completion: {_ in })
                 self.present(alertVC, animated: false)
 

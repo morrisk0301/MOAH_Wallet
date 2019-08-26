@@ -15,9 +15,9 @@ enum LeftMenuOption: Int, CustomStringConvertible {
 
     var description: String {
         switch self {
-        case .AccountName: return "주 계정"
-        case .MyAccount: return "내 계정"
-        case .PrivateKey: return "개인키 조회"
+        case .AccountName: return "Main Account".localized
+        case .MyAccount: return "My Account".localized
+        case .PrivateKey: return "View Private Key".localized
         case .TxFee: return ""
         }
     }

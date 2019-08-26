@@ -172,7 +172,7 @@ class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                 } catch {
                     let util = Util()
                     DispatchQueue.main.async {
-                        let alertVC = util.alert(title: "네트워크 오류", body: "네트워크에 연결할 수 없습니다.", buttonTitle: "확인", buttonNum: 1, completion: { _ in
+                        let alertVC = util.alert(title: "Error".localized, body: "네트워크에 연결할 수 없습니다.", buttonTitle: "확인", buttonNum: 1, completion: { _ in
                             self.hideSpinner()
                         })
                         self.present(alertVC, animated: false)

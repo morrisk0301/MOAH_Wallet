@@ -65,7 +65,7 @@ class PrivateKeyVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.replaceToQuitButton(color: "dark")
-        self.setNavigationTitle(title: "개인키 조회")
+        self.setNavigationTitle(title: "View Private Key".localized)
         self.transparentNavigationBar()
 
         view.backgroundColor = UIColor(key: "light3")

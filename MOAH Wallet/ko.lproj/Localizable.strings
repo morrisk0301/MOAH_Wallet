@@ -1,0 +1,45 @@
+/* 
+  Localizable.strings
+  MOAH Wallet
+
+  Created by 김경인 on 26/08/2019.
+  Copyright © 2019 Sejong University Alom. All rights reserved.
+*/
+
+"Transfer" = "전송";
+"Transaction History" = "거래내역";
+"Empty transaction history." = "거래내역이 없습니다.";
+"My Account" = "내 계정";
+"View Private Key" = "개인키 조회";
+"Main Account" = "주 계정";
+"Add Account" = "계정 추가";
+"Create Account" = "계정 생성";
+"Get Account with Private Key" = "개인키로 가져오기";
+"Get Account with PK" = "개인키로 가져오기";
+"Get Account" = "가져오기";
+"Error" = "오류";
+"Unknown Error" = "알수없는 오류";
+"Account Name" = "계정 이름";
+"Enter your account's name" = "계정 이름을 입력해주세요.";
+"Duplicate account name or exceeded maximum account number" = "계정 이름이 중복되었거나, 최대 계정 개수(10개)를 초과하였습니다.";
+"Duplicate account name" = "계정 이름이 중복되었습니다.";
+"Account already exists in your wallet" = "이미 존재하는 계정입니다.";
+"Private Key" = "개인키";
+"Private Key is invalid." = "올바르지 않은 개인키입니다.";
+"Enter your private key." = "개인키를 입력해주세요.";
+"MOAH Wallet does not collect users' private key. Your private key will be securely stored in to your device after being encrypted." = "MOAH Wallet은 사용자의 개인키를 수집하지 않습니다. 개인키는 암호화 되어 안전하게 보관됩니다.";
+"Hide" = "숨기기";
+"Copy Address" = "주소 복사";
+"Address has been copied to clipboard." = "주소가 클립보드에 복사되었습니다.";
+"Gas Price" = "가스 가격";
+"Gas Limit" = "가스 한도";
+"Automatic" = "자동";
+"Low" = "낮음";
+"Normal" = "보통";
+"High" = "높음";
+"Custom" = "사용자 지정";
+"Custom Gas" = "사용자 지정";
+"Set Gas Price" = "전송 수수료 설정";
+"Set Custom Gas" = "가스 설정하기";
+"Enter gas price." = "가스 가격을 입력해주세요.";
+"Enter gas limit." = "가스 한도를 입력해주세요.";

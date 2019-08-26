@@ -1,0 +1,46 @@
+/* 
+  Localizable.strings
+  MOAH Wallet
+
+  Created by 김경인 on 26/08/2019.
+  Copyright © 2019 Sejong University Alom. All rights reserved.
+*/
+
+"Transfer" = "Transfer";
+"Transaction History" = "Transaction History";
+"Empty transaction history." = "Empty Transaction History.";
+"My Account" = "My Account";
+"View Private Key" = "View Private Key";
+"Main Account" = "Main Account";
+"Add Account" = "Add Account";
+"Create Account" = "Create Account";
+"Get Account with Private Key" = "Get Account with Private Key";
+"Get Account with PK" = "Get Account with PK";
+"Get Account" = "Get Account";
+"Error" = "Error";
+"Unknown Error" = "Unknown Error";
+"Account Name" = "Account Name";
+"Enter your account's name" = "Enter your account's name";
+"Duplicate account name or exceeded maximum account number" = "Duplicate account name or exceeded maximum account number";
+"Duplicate account name" = "Duplicate account name";
+"Account already exists in your wallet" = "Account already exists in your wallet";
+"Private Key" = "Private Key";
+"Private Key is invalid." = "Private Key is invalid.";
+"Enter your private key." = "Enter your private key.";
+"MOAH Wallet does not collect users' private key. Your private key will be securely stored in to your device after being encrypted." = "MOAH Wallet does not collect users' private key. Your private key will be securely stored in to your device after being encrypted.";
+"Hide" = "Hide";
+"Copy Address" = "Copy Address";
+"Address has been copied to clipboard." = "Address has been copied to clipboard";
+"Gas Price" = "Gas Price";
+"Gas Limit" = "Gas Limit";
+"Automatic" = "Automatic";
+"Low" = "Low";
+"Normal" = "Normal";
+"High" = "High";
+"Custom" = "Custom";
+"Custom Gas" = "Custom Gas";
+"Set Gas Price" = "Set Gas Price";
+"Set Custom Gas" = "Set Custom Gas";
+"Enter gas price." = "Enter gas price.";
+"Enter gas limit." = "Enter gas limit.";
+

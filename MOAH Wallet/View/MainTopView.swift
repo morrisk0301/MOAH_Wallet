@@ -33,7 +33,7 @@ class MainTopView: UIView {
 
     let transferButton: TransparentButton = {
         let button = TransparentButton(type: .system)
-        button.setTitle("전송", for: .normal)
+        button.setTitle("Transfer".localized, for: .normal)
         button.titleLabel?.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(transferPressed(_:)), for: .touchUpInside)

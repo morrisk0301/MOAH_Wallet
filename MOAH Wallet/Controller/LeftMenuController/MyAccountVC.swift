@@ -39,7 +39,7 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
     let addButton: CustomButton = {
         let button = CustomButton(type: .system)
-        button.setTitle("계정 추가", for: .normal)
+        button.setTitle("Add Account".localized, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 18, dynamic: true)
         button.addTarget(self, action: #selector(addPressed(_:)), for: .touchUpInside)
@@ -61,7 +61,7 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     override func viewDidLoad() {
         super.viewDidLoad()
         self.replaceToQuitButton(color: "dark")
-        self.setNavigationTitle(title: "내 계정")
+        self.setNavigationTitle(title: "My Account".localized)
         self.transparentNavigationBar()
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
@@ -187,7 +187,7 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     }
 
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let deleteButton = UITableViewRowAction(style: .default, title: "숨기기") { (action, indexPath) in
+        let deleteButton = UITableViewRowAction(style: .default, title: "Hide".localized) { (action, indexPath) in
             self.tableView.dataSource?.tableView!(self.tableView, commit: .delete, forRowAt: indexPath)
             return
         }

@@ -21,7 +21,7 @@ class GetAccountVC: UIViewController, UITextFieldDelegate {
 
         label.font = UIFont(name:"NanumSquareRoundB", size: 14, dynamic: true)
         label.textColor = UIColor(key: "darker")
-        label.text = "  계정 이름"
+        label.text = "  " + "Account Name".localized
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
@@ -32,7 +32,7 @@ class GetAccountVC: UIViewController, UITextFieldDelegate {
 
         label.font = UIFont(name:"NanumSquareRoundB", size: 14, dynamic: true)
         label.textColor = UIColor(key: "darker")
-        label.text = "  개인키"
+        label.text = "  " + "Private Key".localized
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
@@ -44,7 +44,7 @@ class GetAccountVC: UIViewController, UITextFieldDelegate {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.height))
         textField.leftView = paddingView
         textField.leftViewMode = .always
-        textField.placeholder = "계정 이름을 입력해주세요."
+        textField.placeholder = "Enter your account's name".localized
         textField.borderStyle = .none
         textField.returnKeyType = .done
         textField.textColor = UIColor(key: "darker")
@@ -66,7 +66,7 @@ class GetAccountVC: UIViewController, UITextFieldDelegate {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.height))
         textField.leftView = paddingView
         textField.leftViewMode = .always
-        textField.placeholder = "개인키를 입력해주세요."
+        textField.placeholder = "Enter your private key.".localized
         textField.borderStyle = .none
         textField.returnKeyType = .done
         textField.textColor = UIColor(key: "darker")
@@ -84,7 +84,7 @@ class GetAccountVC: UIViewController, UITextFieldDelegate {
     let warningLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "MOAH Wallet은 사용자의 개인키를 저장하지 않습니다. 개인키는 암호화 되어 안전하게 보관됩니다."
+        label.text = "MOAH Wallet does not collect users' private key. Your private key will be securely stored in to your device after being encrypted.".localized
         label.textColor = UIColor(key: "darker")
         label.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
         label.numberOfLines = 0
@@ -95,7 +95,7 @@ class GetAccountVC: UIViewController, UITextFieldDelegate {
 
     let confirmButton: CustomButton = {
         let button = CustomButton(type: .system)
-        button.setTitle("가져오기", for: .normal)
+        button.setTitle("Get Account".localized, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 18, dynamic: true)
         button.addTarget(self, action: #selector(nextPressed(_:)), for: .touchUpInside)
@@ -107,7 +107,7 @@ class GetAccountVC: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         self.replaceBackButton(color: "dark")
         self.transparentNavigationBar()
-        self.setNavigationTitle(title: "개인키로 가져오기")
+        self.setNavigationTitle(title: "Get Account with PK".localized)
         self.hideKeyboardWhenTappedAround()
 
         view.backgroundColor = UIColor(key: "light3")
@@ -227,7 +227,7 @@ class GetAccountVC: UIViewController, UITextFieldDelegate {
         var errorBody: String?
 
         if(nameField.text?.count == 0){
-            let alertVC = util.alert(title: "가져오기 오류", body: "계정 이름을 입력해주세요.", buttonTitle: "확인", buttonNum: 1, completion: {_ in})
+            let alertVC = util.alert(title: "Error".localized, body: "Enter your account's name".localized, buttonTitle: "확인", buttonNum: 1, completion: {_ in})
             self.present(alertVC, animated: false)
             return
         }
@@ -241,19 +241,19 @@ class GetAccountVC: UIViewController, UITextFieldDelegate {
                     return
                 }
             }else{
-                errorBody = "계정 이름이 중복되었습니다."
+                errorBody = "Duplicate account name".localized
             }
         }
         catch GetAccountError.invalidPrivateKey {
-            errorBody = "올바르지 않은 개인키입니다."
+            errorBody = "Private Key is invalid.".localized
         }
         catch GetAccountError.existingAccount {
-            errorBody = "이미 존재하는 계정입니다."
+            errorBody = "Account already exists in your wallet".localized
         }
         catch{
-            errorBody = "계정 오류입니다."
+            errorBody = "Unknown Error".localized
         }
-        let alertVC = util.alert(title: "가져오기 오류", body: errorBody!, buttonTitle: "확인", buttonNum: 1, completion: {_ in})
+        let alertVC = util.alert(title: "Error".localized, body: errorBody!, buttonTitle: "확인", buttonNum: 1, completion: {_ in})
         self.present(alertVC, animated: false)
     }
 }

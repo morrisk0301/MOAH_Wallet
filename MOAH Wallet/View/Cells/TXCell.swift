@@ -123,7 +123,7 @@ class TXCell: UITableViewCell {
     }
 
     func nonTX(){
-        txLabel.text = "거래내역이 없습니다."
+        txLabel.text = "Empty transaction history.".localized
         txLabel.font = UIFont(name: "NanumSquareRoundB", size: 14, dynamic: true)
         txLabel.textColor = UIColor(key: "darker")
         txLabel.textAlignment = .center

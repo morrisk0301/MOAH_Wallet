@@ -26,7 +26,7 @@ class TXCustomVC: UIViewController, UITextFieldDelegate {
 
         label.font = UIFont(name:"NanumSquareRoundB", size: 14, dynamic: true)
         label.textColor = UIColor(key: "darker")
-        label.text = "가스 가격"
+        label.text = "Gas Price".localized
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
@@ -37,7 +37,7 @@ class TXCustomVC: UIViewController, UITextFieldDelegate {
 
         label.font = UIFont(name:"NanumSquareRoundB", size: 14, dynamic: true)
         label.textColor = UIColor(key: "darker")
-        label.text = "가스 한도"
+        label.text = "Gas Limit".localized
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
@@ -49,7 +49,7 @@ class TXCustomVC: UIViewController, UITextFieldDelegate {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.height))
         textField.leftView = paddingView
         textField.leftViewMode = .always
-        textField.placeholder = "가스 가격을 입력해주세요."
+        textField.placeholder = "Enter gas price.".localized
         textField.borderStyle = .none
         textField.returnKeyType = .done
         textField.textColor = UIColor(key: "darker")
@@ -70,7 +70,7 @@ class TXCustomVC: UIViewController, UITextFieldDelegate {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.height))
         textField.leftView = paddingView
         textField.leftViewMode = .always
-        textField.placeholder = "가스 한도를 입력해주세요."
+        textField.placeholder = "Enter gas limit.".localized
         textField.borderStyle = .none
         textField.textColor = UIColor(key: "darker")
         textField.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
@@ -103,7 +103,7 @@ class TXCustomVC: UIViewController, UITextFieldDelegate {
 
     let confirmButton: CustomButton = {
         let button = CustomButton(type: .system)
-        button.setTitle("가스 설정하기", for: .normal)
+        button.setTitle("Set Custom Gas".localized, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 18, dynamic: true)
         button.addTarget(self, action: #selector(nextPressed(_:)), for: .touchUpInside)
@@ -115,7 +115,7 @@ class TXCustomVC: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         self.replaceBackButton(color: "dark")
         self.transparentNavigationBar()
-        self.setNavigationTitle(title: "사용자 지정")
+        self.setNavigationTitle(title: "Custom Gas".localized)
         self.hideKeyboardWhenTappedAround()
 
         view.backgroundColor = UIColor(key: "light3")
@@ -245,12 +245,12 @@ class TXCustomVC: UIViewController, UITextFieldDelegate {
     @objc private func nextPressed(_ sender:UIButton){
         let util = Util()
         if(priceField.text?.count == 0 || BigUInt(priceField.text!) == nil){
-            let alertVC = util.alert(title: "가스 설정 오류", body: "가스 가격 값이 올바르지 않습니다. 가스 가격 값을 확인해주세요.", buttonTitle: "확인", buttonNum: 1, completion: {_ in
+            let alertVC = util.alert(title: "Error".localized, body: "가스 가격 값이 올바르지 않습니다. 가스 가격 값을 확인해주세요.", buttonTitle: "확인", buttonNum: 1, completion: {_ in
             })
             self.present(alertVC, animated: false)
         }
         else if(limitField.text?.count == 0) || BigUInt(limitField.text!) == nil {
-            let alertVC = util.alert(title: "가스 설정 오류", body: "가스 한도 값이 올바르지 않습니다. 가스 한도 값을 확인해주세요.", buttonTitle: "확인", buttonNum: 1, completion: { _ in
+            let alertVC = util.alert(title: "Error".localized, body: "가스 한도 값이 올바르지 않습니다. 가스 한도 값을 확인해주세요.", buttonTitle: "확인", buttonNum: 1, completion: { _ in
             })
             self.present(alertVC, animated: false)
         }
