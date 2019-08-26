@@ -10,6 +10,7 @@ class AgreementVC: UIViewController, UIGestureRecognizerDelegate {
 
     var getWallet = false
     var checked = false
+    var bodyView: UITextView!
 
     let screenSize = UIScreen.main.bounds
     let agreement: String = "이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. 이용약관 입니다. "
@@ -87,17 +88,11 @@ class AgreementVC: UIViewController, UIGestureRecognizerDelegate {
 
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.barStyle = .default
+        self.showSpinner()
     }
 
-    override func viewDidLayoutSubviews() {
-        let agreementView = UITextView(frame: CGRect(x: 10, y: 10, width: agreementScroll.frame.width*(0.95), height: agreementScroll.frame.height))
-        agreementView.backgroundColor = .clear
-        agreementView.text = agreement
-        agreementView.isEditable = false
-        agreementView.font = UIFont(name:"NanumSquareRoundR", size: 12, dynamic: true)
-        agreementView.textColor = UIColor(key: "darker")
-
-        agreementScroll.addSubview(agreementView)
+    override func viewDidAppear(_ animated: Bool) {
+        loadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -132,6 +127,24 @@ class AgreementVC: UIViewController, UIGestureRecognizerDelegate {
         nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -screenHeight/20).isActive = true
         nextButton.heightAnchor.constraint(equalToConstant: screenSize.height/16).isActive = true
+    }
+
+    private func loadData(){
+        let httpRequest = HTTPRequest()
+        httpRequest.getPolicy(request: HTTPRequest.Request.policy, completion: {(policy) in
+            self.initBody(text: policy)
+        })
+    }
+
+    private func initBody(text: String){
+        bodyView = UITextView(frame: CGRect(x: agreementScroll.frame.width * 0.025, y: 0, width: agreementScroll.frame.width * 0.95, height: agreementScroll.frame.height))
+        bodyView.text = "\n"+text+"\n"
+        bodyView.font = UIFont(name: "NanumSquareRoundR", size: 14, dynamic: true)
+        bodyView.textColor = UIColor(key: "darker")
+        bodyView.isEditable = false
+        bodyView.backgroundColor = .clear
+        self.agreementScroll.addSubview(bodyView)
+        self.hideSpinner()
     }
 
     @objc private func checkboxPressed(_ sender: CheckBox){

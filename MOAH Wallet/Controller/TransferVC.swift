@@ -500,7 +500,10 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
             errorBody = "기타 오류."
         }
         if(errorBody != nil){
-
+            let alertVC = util.alert(title: "암호화폐 전송 오류", body: errorBody!, buttonTitle: "확인", buttonNum: 1, completion: {_ in
+                self.hideSpinner()
+            })
+            self.present(alertVC, animated: false)
         }
     }
 }

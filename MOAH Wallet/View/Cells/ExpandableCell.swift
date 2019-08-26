@@ -16,7 +16,7 @@ class ExpandableCell: UITableViewCell {
         let label = UILabel()
 
         label.numberOfLines = 0
-        label.font = UIFont(name:"NanumSquareRoundB", size: 14, dynamic: true)
+        label.font = UIFont(name:"NanumSquareRoundB", size: 13, dynamic: true)
         label.textColor = UIColor(key: "darker")
         label.translatesAutoresizingMaskIntoConstraints = false
 
@@ -59,7 +59,7 @@ class ExpandableCell: UITableViewCell {
         addSubview(arrowImage)
 
         menuLabel.centerYAnchor.constraint(equalTo: topAnchor, constant: screenSize.height/24).isActive = true
-        menuLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: frame.width/15).isActive = true
+        menuLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: screenSize.width * 0.07).isActive = true
         menuLabel.trailingAnchor.constraint(equalTo: arrowImage.leadingAnchor, constant: -frame.width/15).isActive = true
         menuLabel.heightAnchor.constraint(equalToConstant: screenSize.height/12).isActive = true
 
@@ -76,7 +76,7 @@ class ExpandableCell: UITableViewCell {
         style.lineSpacing = 5
 
         let attrText = NSMutableAttributedString(string: "\n\n\n\n"+body,
-                attributes:[NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundR", size: 14, dynamic: true)!, 
+                attributes:[NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundR", size: 13, dynamic: true)!, 
                            NSAttributedString.Key.foregroundColor: UIColor(rgb: 0x777777),
                            NSAttributedString.Key.paragraphStyle: style])
 

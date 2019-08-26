@@ -29,7 +29,7 @@ class NoticeBodyCell: UITableViewCell {
 
     func initBody(text: String) -> CGFloat {
         bodyLabel = UILabel(frame: CGRect(x: self.frame.width * 0.05, y: 0, width: self.frame.width * 0.9, height: CGFloat.greatestFiniteMagnitude))
-        bodyLabel.text = text
+        bodyLabel.text = "\n\n"+text
         bodyLabel.font = UIFont(name: "NanumSquareRoundR", size: 14, dynamic: true)
         bodyLabel.textColor = UIColor(key: "darker")
         bodyLabel.numberOfLines = 0
@@ -37,6 +37,6 @@ class NoticeBodyCell: UITableViewCell {
         bodyLabel.sizeToFit()
         addSubview(bodyLabel)
 
-        return bodyLabel.frame.height
+        return bodyLabel.frame.height + screenSize.height/20
     }
 }

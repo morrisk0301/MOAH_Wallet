@@ -85,7 +85,7 @@ class NoticeCell: UITableViewCell {
         style.lineSpacing = 10
 
         let attrText = NSMutableAttributedString(string: name,
-                attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundB", size: 16, dynamic: true)!,
+                attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundB", size: 15, dynamic: true)!,
                              NSAttributedString.Key.foregroundColor: UIColor(key: "darker"),
                              NSAttributedString.Key.paragraphStyle: style])
         menuLabel.attributedText = attrText

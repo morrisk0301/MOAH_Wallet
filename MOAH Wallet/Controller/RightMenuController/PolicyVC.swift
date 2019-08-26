@@ -61,9 +61,6 @@ class PolicyVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         case 1:
             cell.menuLabel.text = "개인정보 보호정책"
             break
-        case 2:
-            cell.menuLabel.text = "오픈소스 라이센스"
-            break
         default:
             break
         }
@@ -72,7 +69,7 @@ class PolicyVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 2
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -84,13 +81,10 @@ class PolicyVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
 
         switch (indexPath.row) {
         case 0:
-            type = "이용 약관"
+            type = "policy"
             break
         case 1:
-            type = "개인정보 보호정책"
-            break
-        case 2:
-            type = "오픈소스 라이센스"
+            type = "privacy"
             break
         default:
             break

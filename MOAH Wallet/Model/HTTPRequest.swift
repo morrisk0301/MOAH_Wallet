@@ -15,6 +15,8 @@ class HTTPRequest {
         case searchAll
         case date
         case notice
+        case policy
+        case privacy
 
         var url: String{
             switch self{
@@ -26,6 +28,31 @@ class HTTPRequest {
                 return "api/date/"
             case .notice:
                 return "api/notice/"
+            case .policy:
+                return "api/policy/"
+            case .privacy:
+                return "api/privacy/"
+            }
+        }
+    }
+
+    func getPolicy(request: Request, completion: @escaping (String) -> ()){
+        let url = serverUrl + request.url
+        DispatchQueue.global(qos: .userInitiated).async{
+            AF.request(url, method: .get, encoding: JSONEncoding.default, headers: nil).responseJSON {
+                response in
+                switch response.result {
+                case .success(let value):
+                    if let policy = value as? [String: Any] {
+                        let policyString: String = policy["policy_body"] as! String
+                        completion(policyString)
+                    }else{
+                        completion("")
+                    }
+                case .failure(let error):
+                    print(error)
+                    completion("")
+                }
             }
         }
     }
