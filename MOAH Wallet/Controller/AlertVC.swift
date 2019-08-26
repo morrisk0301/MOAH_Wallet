@@ -43,7 +43,7 @@ class AlertVC: UIViewController{
 
     let backButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("취소", for: .normal)
+        button.setTitle("Cancel".localized, for: .normal)
         button.setTitleColor(UIColor(red: 130, green: 130, blue: 130), for: .normal)
         button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 16, dynamic: true)
         button.backgroundColor = UIColor(red: 230, green: 230, blue: 230)

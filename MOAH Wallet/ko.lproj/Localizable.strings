@@ -62,3 +62,15 @@
 "Biometrics Verification" = "생체인식 기능 사용";
 "Push Notifications" = "푸시 알림 설정";
 "Change Password" = "비밀번호 변경";
+"Enter lock password for MOAH Wallet." = "MOAH Wallet 잠금\n비밀번호를 설정해주세요.";
+"Enter password one more time." = "비밀번호를 한번 더 입력해주세요.";
+"MOAH Wallet biometrics verification" = "MOAH Wallet 생체인식";
+"Use biometrics" ="생체인식 기능 사용";
+"Allow" = "사용하기";
+"Cancel" = "취소";
+"Do you want to allow biometrics verification?" = "빠른 앱 실행을 위해\n생체인식 기능을 사용하시겠습니까?";
+"Enter current password." = "기존 비밀번호를 입력해주세요.";
+"Enter new password." = "새로운 비밀번호를 입력해주세요.";
+"Password Change" = "비밀번호 변경";
+"Password has been successfully changed" = "비밀번호가 성공적으로 변경되었습니다.";
+"Confirm" = "확인";

@@ -31,13 +31,13 @@ class PasswordChangeVC: UIViewController, KeypadViewDelegate {
         lock.secureKeypad.delegate = self
 
         if(changeStatus == 0){
-            lock.passwordLabel.text = "기존 비밀번호를 입력해주세요."
+            lock.passwordLabel.text = "Enter current password.".localized
         }
         else if(changeStatus == 1){
-            lock.passwordLabel.text = "새로운 비밀번호를 입력해주세요."
+            lock.passwordLabel.text = "Enter new password.".localized
         }
         else if(changeStatus == 2){
-            lock.passwordLabel.text = "비밀번호를 한번 더 입력해주세요."
+            lock.passwordLabel.text = "Enter password one more time.".localized
         }
 
         setupLayout()
@@ -113,7 +113,7 @@ class PasswordChangeVC: UIViewController, KeypadViewDelegate {
                 if(password == passwordNew){
                     let util = Util()
                     account.changePassword(passwordNew!)
-                    let alertVC = util.alert(title: "비밀번호 변경", body: "비밀번호가 성공적으로 변경되었습니다.", buttonTitle: "확인", buttonNum: 1, completion: {_ in
+                    let alertVC = util.alert(title: "Password Change".localized, body: "Password has been successfully changed".localized, buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in
                         for controller in self.navigationController!.viewControllers{
                             guard let vc = controller as? PasswordSettingVC else { continue }
                             self.navigationController?.popToViewController(vc, animated: true)

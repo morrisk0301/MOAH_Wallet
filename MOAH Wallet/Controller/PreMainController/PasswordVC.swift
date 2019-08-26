@@ -47,10 +47,10 @@ class PasswordVC: UIViewController, KeypadViewDelegate, UIGestureRecognizerDeleg
         }
 
         if(!confirm){
-            lock.passwordLabel.text = "MOAH Wallet 잠금\n비밀번호를 설정해주세요."
+            lock.passwordLabel.text = "Enter lock password for MOAH Wallet.".localized
         }
         else{
-            lock.passwordLabel.text = "비밀번호를 한번 더 입력해주세요."
+            lock.passwordLabel.text = "Enter password one more time.".localized
         }
 
         setupLayout()
@@ -134,7 +134,7 @@ class PasswordVC: UIViewController, KeypadViewDelegate, UIGestureRecognizerDeleg
 
     private func bioVerification() {
         let autoContext = LAContext()
-        autoContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "MOAH Wallet 생체인식") { (success, error) in
+        autoContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "MOAH Wallet biometrics verification".localized) { (success, error) in
             DispatchQueue.main.async {
                 if (success) {
                     self.account.bioProceed()
@@ -174,9 +174,9 @@ class PasswordVC: UIViewController, KeypadViewDelegate, UIGestureRecognizerDeleg
 
     private func authBiometrics(){
         if(autoContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)){
-            let alertVC = util.alert(title: "생체인식 기능 사용", body: "빠른 앱 실행을 위해\n생체인식 기능을 사용하시겠습니까?", buttonTitle: "사용하기", buttonNum: 2){(next) in
+            let alertVC = util.alert(title: "Use biometrics".localized, body: "Do you want to allow biometrics verification?".localized, buttonTitle: "Allow".localized, buttonNum: 2){(next) in
                 if(next){
-                    self.autoContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "MOAH Wallet 생체인식"){(success, error) in
+                    self.autoContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "MOAH Wallet biometrics verification".localized){(success, error) in
                         DispatchQueue.main.async {
                             if (success) {
                                 self.useBiometrics = true

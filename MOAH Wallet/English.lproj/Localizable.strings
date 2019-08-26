@@ -62,3 +62,15 @@
 "Biometrics Verification" = "Biometrics Verification";
 "Push Notifications" = "Push Notifications";
 "Change Password" = "Change Password";
+"Enter lock password for MOAH Wallet." = "Enter lock password for MOAH Wallet.";
+"Enter password one more time." = "Enter password one more time.";
+"MOAH Wallet biometrics verification" = "MOAH Wallet biometrics verification";
+"Use biometrics" = "Use biometrics";
+"Allow" = "Allow";
+"Cancel" = "Cancel";
+"Do you want to allow biometrics verification?" = "Do you want to allow biometrics verification?";
+"Enter current password." = "Enter current password.";
+"Enter new password." = "Enter new password.";
+"Password Change" = "Password Change";
+"Password has been successfully changed" = "Password has been successfully changed";
+"Confirm" = "Confirm";
