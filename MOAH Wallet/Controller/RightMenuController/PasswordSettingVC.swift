@@ -67,7 +67,7 @@ class PasswordSettingVC: UIViewController, UITableViewDelegate, UITableViewDataS
     override func viewDidLoad() {
         super.viewDidLoad()
         self.replaceToQuitButton(color: "dark")
-        self.setNavigationTitle(title: "보안 및 알림 설정")
+        self.setNavigationTitle(title: "Security and Notifications".localized)
         self.transparentNavigationBar()
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
@@ -204,22 +204,22 @@ class PasswordSettingVC: UIViewController, UITableViewDelegate, UITableViewDataS
 
         switch(indexPath.section){
             case 0:
-                cell.menuLabel.text = "앱 잠금"
+                cell.menuLabel.text = "Application Lock".localized
                 cell.arrowImage.isHidden = true
                 addSwitch(cell: cell, uiSwitch: lockSwitch)
                 break
             case 1:
-                cell.menuLabel.text = "생체인식 기능 사용"
+                cell.menuLabel.text = "Biometrics Verification".localized
                 cell.arrowImage.isHidden = true
                 addSwitch(cell: cell, uiSwitch: bioSwitch)
                 break
             case 2:
-                cell.menuLabel.text = "푸시 알림 설정"
+                cell.menuLabel.text = "Push Notifications".localized
                 cell.arrowImage.isHidden = true
                 addSwitch(cell: cell, uiSwitch: pushSwitch)
                 break
             case 3:
-                cell.menuLabel.text = "비밀번호 변경"
+                cell.menuLabel.text = "Change Password".localized
                 break
             default:
                 break

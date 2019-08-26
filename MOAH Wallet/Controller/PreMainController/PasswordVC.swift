@@ -114,7 +114,7 @@ class PasswordVC: UIViewController, KeypadViewDelegate, UIGestureRecognizerDeleg
                 let animation = ShakeAnimation()
                 self.view.layer.add(animation, forKey: "position")
 
-                lock.errorLabel.text = "비밀번호가 일치하지 않습니다."
+                lock.errorLabel.text = "Invalid Password".localized
                 lock.pwLine6.image = changeImage
                 lock.pwLine5.image = changeImage
                 lock.pwLine4.image = changeImage

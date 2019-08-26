@@ -14,7 +14,7 @@ class LockView: UIView {
     let passwordLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
 
-        label.text = "MOAH Wallet\n비밀번호를 입력해주세요"
+        label.text = "MOAH Wallet\nPlease enter your password.".localized
         label.font = UIFont(name:"NanumSquareRoundB", size: 20, dynamic: true)
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false

@@ -26,7 +26,7 @@ class PolicyVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         self.replaceToQuitButton(color: "dark")
-        self.setNavigationTitle(title: "약관 및 정책")
+        self.setNavigationTitle(title: "Terms and Policy")
         self.transparentNavigationBar()
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
@@ -56,10 +56,10 @@ class PolicyVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
 
         switch (indexPath.row) {
         case 0:
-            cell.menuLabel.text = "이용 약관"
+            cell.menuLabel.text = "Terms and Conditions".localized
             break
         case 1:
-            cell.menuLabel.text = "개인정보 보호정책"
+            cell.menuLabel.text = "Privacy Policy".localized
             break
         default:
             break

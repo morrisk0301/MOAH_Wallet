@@ -27,7 +27,7 @@ class NoticeVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.replaceToQuitButton(color: "dark")
-        self.setNavigationTitle(title: "공지사항")
+        self.setNavigationTitle(title: "Notice".localized)
         self.transparentNavigationBar()
 
         view.backgroundColor = UIColor(key: "light3")

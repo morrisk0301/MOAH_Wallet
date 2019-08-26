@@ -27,10 +27,10 @@ class PolicyDetailVC: UIViewController {
         self.transparentNavigationBar()
         self.replaceBackButton(color: "dark")
         if(type == "policy"){
-            self.setNavigationTitle(title: "이용 약관")    
+            self.setNavigationTitle(title: "Terms and Conditions".localized)    
         }
         else{
-            self.setNavigationTitle(title: "개인정보 보호정책")
+            self.setNavigationTitle(title: "Privacy Policy".localized)
         }
 
 

@@ -71,7 +71,6 @@
 		C051F8498EC8FC795AC7B2F9 /* QRCodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F6B167515CE9084BEF6C /* QRCodeVC.swift */; };
 		C051F85ADEC72DC60A48E614 /* AddNetworkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F4523162BC70026FFC86 /* AddNetworkVC.swift */; };
 		C051F8797CD2A83CE4969E3D /* MainTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FB81260FFCE364020ECD /* MainTopView.swift */; };
-		C051F9325D53C154295B5522 /* AgreementViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FD974D93686134C5B4E6 /* AgreementViewVC.swift */; };
 		C051F93D1BFE68F450C3B94C /* MainRightMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F9B011B6E362F3C18BEB /* MainRightMenuVC.swift */; };
 		C051F941E7A54B8B22D52A81 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FD1BA4D050D26AE2DB72 /* MenuCell.swift */; };
 		C051F9448783D3EBAEEE3701 /* TXFeeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F1FBAE02F542E6EB725F /* TXFeeVC.swift */; };
@@ -226,7 +225,6 @@
 		C051FD7C702D47C01C39269E /* MOAH WalletTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MOAH WalletTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C051FD83FA4BAE07897C116D /* KeypadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeypadView.swift; sourceTree = "<group>"; };
 		C051FD9079AB28E40C022FDD /* AgreementVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgreementVC.swift; sourceTree = "<group>"; };
-		C051FD974D93686134C5B4E6 /* AgreementViewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgreementViewVC.swift; sourceTree = "<group>"; };
 		C051FDAF143D94C8A37998D7 /* MOAH_WalletTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOAH_WalletTests.swift; sourceTree = "<group>"; };
 		C051FDE2A021837D18D0871F /* PrivateKeyVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateKeyVC.swift; sourceTree = "<group>"; };
 		C051FE49AB23C38632F34583 /* TransparentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransparentView.swift; sourceTree = "<group>"; };
@@ -408,7 +406,6 @@
 			isa = PBXGroup;
 			children = (
 				C051FD9079AB28E40C022FDD /* AgreementVC.swift */,
-				C051FD974D93686134C5B4E6 /* AgreementViewVC.swift */,
 				C051F1995FE3594C44DEA5F6 /* WalletDoneVC.swift */,
 				C051FC2158395B4BF65E453E /* MnemonicVerificationVC.swift */,
 				C051F6342A463F4E5602402A /* MnemonicVerificationGetVC.swift */,
@@ -760,7 +757,6 @@
 				C051F955E6F8A508A82CB7E8 /* EthAccount.swift in Sources */,
 				C051FC4AF7558DDA3AA8C5A6 /* KeychainService.swift in Sources */,
 				C051F6991830583F5D879C9C /* AgreementVC.swift in Sources */,
-				C051F9325D53C154295B5522 /* AgreementViewVC.swift in Sources */,
 				C051F159ABCE211D65F59FE8 /* WalletDoneVC.swift in Sources */,
 				C051F5F80BB40708BAE58682 /* MnemonicVerificationVC.swift in Sources */,
 				C051FEC7D1FC02F093FF50B5 /* MnemonicVerificationGetVC.swift in Sources */,
