@@ -20,7 +20,7 @@ enum RightMenuOption: Int, CustomStringConvertible {
         switch self {
         case .Welcome: return "\nWelcome,\nThis is MOAH Wallet!".localized
         case .WalletNetwork: return "Network Settings".localized
-        case .WalletMnemonic: return "Memonic Phrase".localized
+        case .WalletMnemonic: return "Mnemonic Phrase".localized
         case .WalletPassword: return "Security and Notifications".localized
         case .CSNotice: return "Notice".localized
         case .CSFAQ: return "FAQ"

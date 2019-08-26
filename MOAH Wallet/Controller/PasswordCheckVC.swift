@@ -118,7 +118,7 @@ class PasswordCheckVC: UIViewController, KeypadViewDelegate, UIGestureRecognizer
 
     private func bioVerification() {
         let autoContext = LAContext()
-        autoContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "MOAH Wallet 생체인식") { (success, error) in
+        autoContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "MOAH Wallet Biometrics Verification".localized) { (success, error) in
             DispatchQueue.main.async {
                 if (success) {
                     if(self.toView == "mnemonic"){

@@ -31,7 +31,7 @@ class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSo
 
     let addButton: CustomButton = {
         let button = CustomButton(type: .system)
-        button.setTitle("네트워크 추가", for: .normal)
+        button.setTitle("Add Network".localized, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 20, dynamic: true)
         button.addTarget(self, action: #selector(addPressed(_:)), for: .touchUpInside)
@@ -53,7 +53,7 @@ class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
         self.replaceToQuitButton(color: "dark")
-        self.setNavigationTitle(title: "네트워크 설정")
+        self.setNavigationTitle(title: "Network Settings".localized)
         self.transparentNavigationBar()
 
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
@@ -123,13 +123,13 @@ class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSo
 
         switch(networks[indexPath.section].name){
         case "mainnet":
-            cell.networkLabel.text = "Etheruem 메인넷"
+            cell.networkLabel.text = "Ethereum Mainnet".localized
             break
         case "ropsten":
-            cell.networkLabel.text = "Ropsten 테스트넷"
+            cell.networkLabel.text = "Ropsten Testnet".localized;
             break
         case "rinkeby":
-            cell.networkLabel.text = "Rinkeby 테스트넷"
+            cell.networkLabel.text = "Rinkeby Testnet".localized;
             break
         default:
             cell.networkLabel.text = networks[indexPath.section].name
@@ -172,7 +172,7 @@ class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                 } catch {
                     let util = Util()
                     DispatchQueue.main.async {
-                        let alertVC = util.alert(title: "Error".localized, body: "네트워크에 연결할 수 없습니다.", buttonTitle: "확인", buttonNum: 1, completion: { _ in
+                        let alertVC = util.alert(title: "Error".localized, body: "Unable to connect to network".localized, buttonTitle: "Confirm".localized, buttonNum: 1, completion: { _ in
                             self.hideSpinner()
                         })
                         self.present(alertVC, animated: false)
@@ -188,7 +188,7 @@ class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     }
 
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let deleteButton = UITableViewRowAction(style: .default, title: "삭제") { (action, indexPath) in
+        let deleteButton = UITableViewRowAction(style: .default, title: "Delete".localized) { (action, indexPath) in
             self.tableView.dataSource?.tableView!(self.tableView, commit: .delete, forRowAt: indexPath)
             return
         }

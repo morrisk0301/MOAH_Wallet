@@ -134,7 +134,7 @@ class PasswordVC: UIViewController, KeypadViewDelegate, UIGestureRecognizerDeleg
 
     private func bioVerification() {
         let autoContext = LAContext()
-        autoContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "MOAH Wallet biometrics verification".localized) { (success, error) in
+        autoContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "MOAH Wallet Biometrics Verification".localized) { (success, error) in
             DispatchQueue.main.async {
                 if (success) {
                     self.account.bioProceed()
@@ -176,7 +176,7 @@ class PasswordVC: UIViewController, KeypadViewDelegate, UIGestureRecognizerDeleg
         if(autoContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)){
             let alertVC = util.alert(title: "Use biometrics".localized, body: "Do you want to allow biometrics verification?".localized, buttonTitle: "Allow".localized, buttonNum: 2){(next) in
                 if(next){
-                    self.autoContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "MOAH Wallet biometrics verification".localized){(success, error) in
+                    self.autoContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "MOAH Wallet Biometrics Verification".localized){(success, error) in
                         DispatchQueue.main.async {
                             if (success) {
                                 self.useBiometrics = true

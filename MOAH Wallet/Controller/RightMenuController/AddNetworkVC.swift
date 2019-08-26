@@ -21,7 +21,7 @@ class AddNetworkVC: UIViewController, UITextFieldDelegate{
 
         label.font = UIFont(name:"NanumSquareRoundB", size: 14, dynamic: true)
         label.textColor = UIColor(key: "darker")
-        label.text = "  네트워크 이름"
+        label.text = "  " + "Network Name".localized
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
@@ -44,7 +44,7 @@ class AddNetworkVC: UIViewController, UITextFieldDelegate{
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.height))
         textField.leftView = paddingView
         textField.leftViewMode = .always
-        textField.placeholder = "네트워크 이름을 입력해주세요."
+        textField.placeholder = "Enter network name.".localized
         textField.borderStyle = .none
         textField.returnKeyType = .done
         textField.textColor = UIColor(key: "darker")
@@ -84,7 +84,7 @@ class AddNetworkVC: UIViewController, UITextFieldDelegate{
     let warningLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "MOAH Wallet은 RPC URL을 활용한 사용자 지정 블록체인 망 접근 기능을 제공합니다.\n\n사용자 지정 네트워크(Ganache, Local, Private 등)의 암호화폐를 관리할 수 있습니다."
+        label.text = "MOAH Wallet provides access to custom block chain network through RPC URL.\n\nYou can manage tokens in custom networks such as Ganache, local, private etc.".localized
         label.textColor = UIColor(key: "darker")
         label.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
         label.numberOfLines = 0
@@ -95,7 +95,7 @@ class AddNetworkVC: UIViewController, UITextFieldDelegate{
 
     let confirmButton: CustomButton = {
         let button = CustomButton(type: .system)
-        button.setTitle("추가하기", for: .normal)
+        button.setTitle("Add Network".localized, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 18, dynamic: true)
         button.addTarget(self, action: #selector(nextPressed(_:)), for: .touchUpInside)
@@ -107,7 +107,7 @@ class AddNetworkVC: UIViewController, UITextFieldDelegate{
         super.viewDidLoad()
         self.replaceBackButton(color: "dark")
         self.transparentNavigationBar()
-        self.setNavigationTitle(title: "네트워크 추가")
+        self.setNavigationTitle(title: "Add Network".localized)
         self.hideKeyboardWhenTappedAround()
 
         view.backgroundColor = UIColor(key: "light3")
@@ -237,13 +237,13 @@ class AddNetworkVC: UIViewController, UITextFieldDelegate{
                 }
             }
             catch AddNetworkError.invalidURL{
-                errorBody = "올바르지 않은 URL 형식입니다."
+                errorBody = "URL format is invalid.".localized
             }
             catch AddNetworkError.invalidName {
-                errorBody = "네트워크 이름이 중복되었거나,\n사용할 수 없는 네트워크 이름입니다."
+                errorBody = "Network name is either duplicate or unavailable.".localized
             }
             catch AddNetworkError.invalidNetwork{
-                errorBody = "네트워크에 연결할 수 없습니다."
+                errorBody = "Unable to connect to network".localized
             }
             catch{
                 print(error)

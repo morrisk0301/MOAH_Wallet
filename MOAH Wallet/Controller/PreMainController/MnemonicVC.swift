@@ -17,7 +17,7 @@ class MnemonicVC: UIViewController, UIGestureRecognizerDelegate {
     let headLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 120))
 
-        label.text = "비밀 시드 구문"
+        label.text = "Mnemonic Phrase".localized
         label.font = UIFont(name: "NanumSquareRoundB", size: 20, dynamic: true)
         label.textColor = UIColor(key: "darker")
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -55,7 +55,7 @@ class MnemonicVC: UIViewController, UIGestureRecognizerDelegate {
     let warningLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "비밀 시드 구문으로 지갑을 백업하고, 복원할 수 있습니다.\n\n시드 구문을 절대 공개하지 마십시오. 시드 구문을 사용하여 사용자의 암호화폐를 탈취할 수 있습니다.\n\nMOAH Wallet은 사용자의 시드 구문을 수집하지 않으며, 시드 구문은 암호화 되어 안전하게 저장됩니다."
+        label.text = "Mnemonic phrase is used to back up and restore your wallet.\n\nAnyone can access your wallet through mnemonic phrase. Be careful not to disclose it.\n\nMOAH Wallet does not collect users' mnemonic phrase. Your mnemonic phrase will be securely stored in to your device after being encrypted.".localized
         label.font = UIFont(name: "NanumSquareRoundR", size: 15, dynamic: true)
         label.textColor = UIColor(key: "darker")
         label.numberOfLines = 0
@@ -67,7 +67,7 @@ class MnemonicVC: UIViewController, UIGestureRecognizerDelegate {
 
     let nextButton: CustomButton = {
         let button = CustomButton(type: .system)
-        button.setTitle("시드 구문 복사하기", for: .normal)
+        button.setTitle("Copy Mnemonic Phrase".localized, for: .normal)
         button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 18, dynamic: true)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(nextPressed(_:)), for: .touchUpInside)
@@ -95,12 +95,12 @@ class MnemonicVC: UIViewController, UIGestureRecognizerDelegate {
         if(isSetting){
             let account: EthAccount = EthAccount.shared
 
-            self.setNavigationTitle(title: "시드 구문 조회")
+            self.setNavigationTitle(title: "View Mnemonic Phrase".localized)
             self.replaceBackButton(color: "dark")
 
             headLabel.isHidden = true
             mnemonic = account.getMnemonic()
-            explainLabel.text = "다음은 회원님의 비밀 시드 구문입니다."
+            explainLabel.text = "Following text is your mnemonic phrase.".localized
 
             var navCounter = 0
             for controller in self.navigationController!.viewControllers{
@@ -136,7 +136,7 @@ class MnemonicVC: UIViewController, UIGestureRecognizerDelegate {
 
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.barStyle = .default
-        self.nextButton.setTitle("시드 구문 복사하기", for: .normal) 
+        self.nextButton.setTitle("Copy Mnemonic Phrase".localized, for: .normal) 
         self.isCopied = false
     }
 
@@ -172,7 +172,7 @@ class MnemonicVC: UIViewController, UIGestureRecognizerDelegate {
         warningLabel.topAnchor.constraint(equalTo: mnemonicLabel.bottomAnchor, constant: screenSize.height/20).isActive = true
         warningLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenSize.width/15).isActive = true
         warningLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenSize.width/15).isActive = true
-        warningLabel.heightAnchor.constraint(equalToConstant: screenSize.height/5).isActive = true
+        warningLabel.heightAnchor.constraint(equalToConstant: screenSize.height/4).isActive = true
 
         nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -screenHeight/20).isActive = true
         nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -184,10 +184,10 @@ class MnemonicVC: UIViewController, UIGestureRecognizerDelegate {
         if(!isCopied){
             let util = Util()
             UIPasteboard.general.string = self.mnemonicLabel.text
-            let alertVC = util.alert(title: "시드 구문 복사", body: "시드 구문이 클립보드에 복사되었습니다.", buttonTitle: "확인", buttonNum: 1, completion: {_ in
+            let alertVC = util.alert(title: "Copy Mnemonic Phrase".localized, body: "Mnemonic phrase has been copied to clipboard.".localized, buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in
                 DispatchQueue.main.async{
                     if(self.isSetting){ return }
-                    self.nextButton.setTitle("시드 구문 인증하기", for: .normal)
+                    self.nextButton.setTitle("Verify Mnemonic Phrase".localized, for: .normal)
                     self.isCopied = true
                 }
             })

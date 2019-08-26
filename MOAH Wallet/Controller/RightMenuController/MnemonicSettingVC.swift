@@ -36,7 +36,7 @@ class MnemonicSettingVC: UIViewController, UITableViewDelegate, UITableViewDataS
     override func viewDidLoad() {
         super.viewDidLoad()
         self.replaceToQuitButton(color: "dark")
-        self.setNavigationTitle(title: "시드 구문 관리")
+        self.setNavigationTitle(title: "Mnemonic Phrase".localized)
         self.transparentNavigationBar()
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
@@ -60,7 +60,7 @@ class MnemonicSettingVC: UIViewController, UITableViewDelegate, UITableViewDataS
 
     override func viewDidAppear(_ animated: Bool) {
         if(isFinished){
-            self.verifiedButton.setTitle("인증완료", for: .normal)
+            self.verifiedButton.setTitle("Verified".localized, for: .normal)
             self.verifiedButton.setTitleColor(UIColor(key: "dark"), for: .normal)
             self.verifiedButton.layer.borderColor = UIColor(key: "dark").cgColor
             self.verifiedButton.layer.borderWidth = 1.0
@@ -68,7 +68,7 @@ class MnemonicSettingVC: UIViewController, UITableViewDelegate, UITableViewDataS
 
 
             let util = Util()
-            let alertVC = util.alert(title: "시드 구문 인증 완료", body: "지금부터 MOAH Wallet의 모든 기능을 사용할 수 있습니다.", buttonTitle: "확인", buttonNum: 1, completion: {_ in
+            let alertVC = util.alert(title: "Mnemonic Verified".localized, body: "All features of MOAH Wallet has been enabled.".localized, buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in
                 self.reloadMainContainerVC()
                 self.isFinished = false
             })
@@ -87,12 +87,12 @@ class MnemonicSettingVC: UIViewController, UITableViewDelegate, UITableViewDataS
         let isVerified = account.getIsVerified()
 
         if(isVerified){
-            verifiedButton.setTitle("인증완료", for: .normal)
+            verifiedButton.setTitle("Verified".localized, for: .normal)
             verifiedButton.setTitleColor(UIColor(key: "dark"), for: .normal)
             verifiedButton.layer.borderColor = UIColor(key: "dark").cgColor
             verifiedButton.layer.borderWidth = 1.0
         }else{
-            verifiedButton.setTitle("인증하기", for: .normal)
+            verifiedButton.setTitle("Verify".localized, for: .normal)
             verifiedButton.setTitleColor(UIColor.white, for: .normal)
             verifiedButton.backgroundColor = UIColor(key: "regular")
         }
@@ -110,12 +110,12 @@ class MnemonicSettingVC: UIViewController, UITableViewDelegate, UITableViewDataS
 
         switch (indexPath.row){
             case 0:
-                cell.menuLabel.text = "시드 구문 조회"
+                cell.menuLabel.text = "View Mnemonic Phrase".localized
                 break
             case 1:
                 setVerifyButton(cell: cell)
                 cell.arrowImage.isHidden = true
-                cell.menuLabel.text = "시드 구문 인증"
+                cell.menuLabel.text = "Verify Mnemonic Phrase".localized
                 break
             default:
                 break

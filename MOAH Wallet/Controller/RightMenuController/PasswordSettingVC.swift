@@ -124,7 +124,7 @@ class PasswordSettingVC: UIViewController, UITableViewDelegate, UITableViewDataS
         if(autoContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)){
             let alertVC = util.alert(title: "Use biometrics".localized, body: "Do you want to allow biometrics verification?".localized, buttonTitle: "Allow".localized, buttonNum: 2){(next) in
                 if(next){
-                    self.autoContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "MOAH Wallet biometrics verification".localized){(success, error) in
+                    self.autoContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "MOAH Wallet Biometrics Verification".localized){(success, error) in
                         DispatchQueue.main.async {
                             if (success) {
                                 self.userDefaults.set(true, forKey: "useBiometrics")
@@ -146,8 +146,8 @@ class PasswordSettingVC: UIViewController, UITableViewDelegate, UITableViewDataS
         }else{
             DispatchQueue.main.async {
                 let alertVC = self.util.alert(title: "Error".localized, 
-                        body: "생체인식 기능을 사용할 수 없습니다.\n단말기 -> 설정에서 MOAH Wallet의 생체인식 권한을 허용해주세요.", 
-                        buttonTitle: "확인", buttonNum: 1, completion: { _ in
+                        body: "Not available.\nSetting -> MOAH Wallet -> Allow Biometrics Verification".localized, 
+                        buttonTitle: "Confirm".localized, buttonNum: 1, completion: { _ in
                     self.bioSwitch.isOn = false
                 })
                 self.present(alertVC, animated: false)
@@ -156,7 +156,7 @@ class PasswordSettingVC: UIViewController, UITableViewDelegate, UITableViewDataS
     }
 
     private func useAlarm(){
-        let alertVC = util.alert(title: "푸시 알림 설정", body: "MOAH Wallet의 푸시 알림을 원하시면 동의 버튼을 눌러주세요.", buttonTitle: "동의", buttonNum: 2, completion: {(agree) in
+        let alertVC = util.alert(title: "Push Notification".localized, body: "Do you want to allow push notification?".localized, buttonTitle: "Allow".localized, buttonNum: 2, completion: {(agree) in
             if(agree){
                 UNUserNotificationCenter.current().getNotificationSettings { settings in
                     if settings.authorizationStatus == .notDetermined {
@@ -173,8 +173,8 @@ class PasswordSettingVC: UIViewController, UITableViewDelegate, UITableViewDataS
                     } else if settings.authorizationStatus == .denied {
                         DispatchQueue.main.async {
                             let alertVC = self.util.alert(title: "Error".localized,
-                                    body: "푸시알림 기능을 사용할 수 없습니다.\n단말기 -> 설정에서 MOAH Wallet의 푸시알림 권한을 허용해주세요.",
-                                    buttonTitle: "확인", buttonNum: 1, completion: { _ in
+                                    body: "Not available.\nSetting -> MOAH Wallet -> Allow Push Notification".localized,
+                                    buttonTitle: "Confirm".localized, buttonNum: 1, completion: { _ in
                                 self.userDefaults.set(false, forKey: "alarm")
                                 self.pushSwitch.isOn = false
                             })
