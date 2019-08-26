@@ -84,9 +84,14 @@ class GetAccountVC: UIViewController, UITextFieldDelegate {
     let warningLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "MOAH Wallet does not collect users' private key. Your private key will be securely stored in to your device after being encrypted.".localized
-        label.textColor = UIColor(key: "darker")
-        label.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 10
+
+        let attrText = NSMutableAttributedString(string: "MOAH Wallet does not collect users' private key. Your private key will be securely stored in to your device after being encrypted.".localized, 
+                attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)!, 
+                             NSAttributedString.Key.foregroundColor: UIColor(key: "darker"), 
+                             NSAttributedString.Key.paragraphStyle: style])
+        label.attributedText = attrText
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
 

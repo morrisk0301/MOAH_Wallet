@@ -87,12 +87,7 @@ class TXCustomVC: UIViewController, UITextFieldDelegate {
     let warningLabel: UILabel = {
         let label = UILabel()
 
-        label.text = """
-                     가스 가격이 높아질수록 전송 속도가 빨라 집니다.\n
-                     가스 한도는 사용할 가스의 최대치를 의미합니다.\n
-                     가스 한도가 너무 낮으면 전송이 거절될 수 있으니, 적절한 한도를 설정하시기 바랍니다.\n
-                     가스 한도나 가격을 너무 높게 설정하면 Block Gas Limit을 초과하여 전송이 불가할 수 있습니다.\n  
-                     """
+        label.text = "If you set your gas price higher, transaction speed will be faster.\n\nGas limit defines maximum amount of gas to be used per transaction.\n\nTransaction can be denied if your gas limit is too low.\n\nTransaction can be denied if your gas price and gas limit is too high, exceeding Block Gas Limit.".localized
         label.textColor = UIColor(key: "darker")
         label.font = UIFont(name:"NanumSquareRoundR", size: 14, dynamic: true)
         label.numberOfLines = 0
@@ -245,12 +240,12 @@ class TXCustomVC: UIViewController, UITextFieldDelegate {
     @objc private func nextPressed(_ sender:UIButton){
         let util = Util()
         if(priceField.text?.count == 0 || BigUInt(priceField.text!) == nil){
-            let alertVC = util.alert(title: "Error".localized, body: "가스 가격 값이 올바르지 않습니다. 가스 가격 값을 확인해주세요.", buttonTitle: "확인", buttonNum: 1, completion: {_ in
+            let alertVC = util.alert(title: "Error".localized, body: "Gas price is invalid.".localized, buttonTitle: "확인", buttonNum: 1, completion: {_ in
             })
             self.present(alertVC, animated: false)
         }
         else if(limitField.text?.count == 0) || BigUInt(limitField.text!) == nil {
-            let alertVC = util.alert(title: "Error".localized, body: "가스 한도 값이 올바르지 않습니다. 가스 한도 값을 확인해주세요.", buttonTitle: "확인", buttonNum: 1, completion: { _ in
+            let alertVC = util.alert(title: "Error".localized, body: "Gas limit is invalid.".localized, buttonTitle: "확인", buttonNum: 1, completion: { _ in
             })
             self.present(alertVC, animated: false)
         }

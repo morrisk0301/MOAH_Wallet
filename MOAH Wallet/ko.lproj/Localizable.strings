@@ -8,7 +8,7 @@
 
 "Transfer" = "전송";
 "Transaction History" = "거래내역";
-"Empty transaction history." = "거래내역이 없습니다.";
+"Transaction history is empty" = "거래내역이 없습니다.";
 "My Account" = "내 계정";
 "View Private Key" = "개인키 조회";
 "Main Account" = "주 계정";
@@ -43,3 +43,6 @@
 "Set Custom Gas" = "가스 설정하기";
 "Enter gas price." = "가스 가격을 입력해주세요.";
 "Enter gas limit." = "가스 한도를 입력해주세요.";
+"If you set your gas price higher, transaction speed will be faster.\n\nGas limit defines maximum amount of gas to be used per transaction.\n\nTransaction can be denied if your gas limit is too low.\n\nTransaction can be denied if your gas price and gas limit is too high, exceeding Block Gas Limit." = "가스 가격이 높아질수록 전송 속도가 빨라 집니다.\n\n가스 한도는 사용할 가스의 최대치를 의미합니다.\n\n가스 한도가 너무 낮으면 전송이 거절될 수 있으니, 적절한 한도를 설정하시기 바랍니다.\n\n가스 한도나 가격을 너무 높게 설정하면 Block Gas Limit을 초과하여 전송이 불가할 수 있습니다.";
+"Gas price is invalid." = "가스 가격 값이 올바르지 않습니다. 가스 가격 값을 확인해주세요.";
+"Gas limit is invalid." = "가스 한도 값이 올바르지 않습니다. 가스 한도 값을 확인해주세요.";

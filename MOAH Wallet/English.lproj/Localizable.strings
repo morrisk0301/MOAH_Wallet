@@ -8,7 +8,7 @@
 
 "Transfer" = "Transfer";
 "Transaction History" = "Transaction History";
-"Empty transaction history." = "Empty Transaction History.";
+"Transaction history is empty" = "Transaction history is empty";
 "My Account" = "My Account";
 "View Private Key" = "View Private Key";
 "Main Account" = "Main Account";
@@ -43,4 +43,6 @@
 "Set Custom Gas" = "Set Custom Gas";
 "Enter gas price." = "Enter gas price.";
 "Enter gas limit." = "Enter gas limit.";
-
+"If you set your gas price higher, transaction speed will be faster.\n\nGas limit defines maximum amount of gas to be used per transaction.\n\nTransaction can be denied if your gas limit is too low.\n\nTransaction can be denied if your gas price and gas limit is too high, exceeding Block Gas Limit." = "If you set your gas price higher, transaction speed will be faster.\n\nGas limit defines maximum amount of gas to be used per transaction.\n\nTransaction can be denied if your gas limit is too low.\n\nTransaction can be denied if your gas price and gas limit is too high, exceeding Block Gas Limit.";
+"Gas price is invalid." = "가스 가격 값이 올바르지 않습니다. 가스 가격 값을 확인해주세요.";
+"Gas limit is invalid." = "Gas limit is invalid.";
