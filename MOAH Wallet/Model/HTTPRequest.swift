@@ -9,6 +9,7 @@ import Alamofire
 class HTTPRequest {
 
     private let serverUrl = "http://13.125.53.194:3000/"
+    private let engText = "?lang=en"
 
     enum Request{
         case search
@@ -37,15 +38,24 @@ class HTTPRequest {
     }
 
     func getPolicy(request: Request, completion: @escaping (String) -> ()){
-        let url = serverUrl + request.url
+        var url = serverUrl + request.url
+        if(Locale.current.languageCode == "en"){
+            url += engText
+        }
         DispatchQueue.global(qos: .userInitiated).async{
             AF.request(url, method: .get, encoding: JSONEncoding.default, headers: nil).responseJSON {
                 response in
                 switch response.result {
                 case .success(let value):
                     if let policy = value as? [String: Any] {
-                        let policyString: String = policy["policy_body"] as! String
-                        completion(policyString)
+                        if(Locale.current.languageCode == "en"){
+                            let policyString: String = policy["policy_body_eng"] as! String
+                            completion(policyString)
+                        }
+                        else{
+                            let policyString: String = policy["policy_body"] as! String
+                            completion(policyString)
+                        }
                     }else{
                         completion("")
                     }
@@ -58,7 +68,10 @@ class HTTPRequest {
     }
 
     func getNotice(completion: @escaping ([CustomNotice]) -> ()){
-        let url = serverUrl + Request.notice.url
+        var url = serverUrl + Request.notice.url
+        if(Locale.current.languageCode == "en"){
+            url += engText
+        }
         DispatchQueue.global(qos: .userInitiated).async{
             AF.request(url, method: .get, encoding: JSONEncoding.default, headers: nil).responseJSON {
                 response in
@@ -139,8 +152,17 @@ class HTTPRequest {
 
         var noticeArr = [CustomNotice]()
         for data in dataArray{
-            let head = data["notice_head"] as! String
-            let body = data["notice_body"] as! String
+            var head: String
+            var body: String
+            if(Locale.current.languageCode == "en"){
+                head = data["notice_head_eng"] as! String
+                body = data["notice_body_eng"] as! String    
+            }
+            else{
+                head = data["notice_head"] as! String
+                body = data["notice_body"] as! String
+            }
+
             let rawDate = data["created_at"] as! String
 
             let dateFormatter = DateFormatter()
