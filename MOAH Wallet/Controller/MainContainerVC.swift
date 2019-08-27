@@ -306,7 +306,7 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
     func checkChainNetwork(){
         if(web3.getWeb3Ins() == nil){
             self.hideSpinner()
-            let alertVC = util.alert(title: "Error".localized, body: "네트워크에 연결할 수 없습니다.\n네트워크를 재설정해주세요.", buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in
+            let alertVC = util.alert(title: "Error".localized, body: "Network is unreachable.\nPlease check your network.".localized, buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in
                 let controller = NetworkSettingVC()
                 let transition = LeftTransition()
 
@@ -335,7 +335,7 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
     func sendEmail(){
         if(MFMailComposeViewController.canSendMail()){
             let emailTitle = ""
-            let messageBody = "문의하기: "
+            let messageBody = "Inquiry".localized + ": "
             let toRecipents = ["moahwallet_official@naver.com"]
             let mc: MFMailComposeViewController = MFMailComposeViewController()
             mc.mailComposeDelegate = self

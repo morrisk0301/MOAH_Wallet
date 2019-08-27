@@ -183,4 +183,7 @@
 "Token Search" = "토큰 검색";
 "Enter name, symbol or contract address." = "토큰명/심볼/Contract 주소를 입력하세요.";
 "Your wallet has been locked." = "비밀번호 오류로 이용이 제한됩니다.";
-"Please try again in few moments." = "잠시 후에 다시 이용해주세요.";
+"Please try again in a few moments." = "잠시 후에 다시 이용해주세요.";
+"Unverified Wallet" = "미인증 지갑";
+"Please continue after getting your wallet verified." = "비밀 시드 구문 미인증 지갑입니다.\n인증 후 이용해주시기 바랍니다.";
+"Inquiry" = "문의하기";
