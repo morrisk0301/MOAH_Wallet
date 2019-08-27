@@ -16,7 +16,7 @@ class TokenAddVC: UIViewController, UITextFieldDelegate {
 
         label.font = UIFont(name:"NanumSquareRoundB", size: 14, dynamic: true)
         label.textColor = UIColor(key: "darker")
-        label.text = "  컨트랙트 주소"
+        label.text = "  " + "Contract Address".localized
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
@@ -27,7 +27,7 @@ class TokenAddVC: UIViewController, UITextFieldDelegate {
 
         label.font = UIFont(name:"NanumSquareRoundB", size: 14, dynamic: true)
         label.textColor = UIColor(key: "darker")
-        label.text = "  토큰 심볼"
+        label.text = "  " + "Symbol".localized
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
@@ -38,7 +38,7 @@ class TokenAddVC: UIViewController, UITextFieldDelegate {
 
         label.font = UIFont(name:"NanumSquareRoundB", size: 14, dynamic: true)
         label.textColor = UIColor(key: "darker")
-        label.text = "  소숫점 자리수"
+        label.text = "  " + "Decimals".localized
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
@@ -49,7 +49,7 @@ class TokenAddVC: UIViewController, UITextFieldDelegate {
 
         label.font = UIFont(name:"NanumSquareRoundB", size: 14, dynamic: true)
         label.textColor = UIColor(key: "darker")
-        label.text = "  토큰명"
+        label.text = "  " + "Token Name".localized
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
@@ -61,7 +61,7 @@ class TokenAddVC: UIViewController, UITextFieldDelegate {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.height))
         textField.leftView = paddingView
         textField.leftViewMode = .always
-        textField.placeholder = "토큰 컨트랙트 주소를 입력해주세요."
+        textField.placeholder = "Enter contract address.".localized
         textField.borderStyle = .none
         textField.returnKeyType = .done
         textField.textColor = UIColor(key: "darker")
@@ -142,7 +142,7 @@ class TokenAddVC: UIViewController, UITextFieldDelegate {
 
     let confirmButton: CustomButton = {
         let button = CustomButton(type: .system)
-        button.setTitle("추가하기", for: .normal)
+        button.setTitle("Add Token".localized, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 18, dynamic: true)
         button.isEnabled = false
@@ -156,7 +156,7 @@ class TokenAddVC: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         self.transparentNavigationBar()
         self.replaceBackButton(color: "dark")
-        self.setNavigationTitle(title: "토큰 직접 추가")
+        self.setNavigationTitle(title: "Custom Token".localized)
         self.hideKeyboardWhenTappedAround()
 
         view.backgroundColor = UIColor(key: "light3")
@@ -266,13 +266,13 @@ class TokenAddVC: UIViewController, UITextFieldDelegate {
                     return
                 }
             } catch GetTokenError.invalidAddress {
-                errorBody = "올바르지 않은 주소입니다.\n주소를 확인해주세요."
+                errorBody = "Contract address is invalid.".localized
             } catch GetTokenError.tokenNil {
-                errorBody = "토큰을 확인할 수 없습니다."
+                errorBody = "Unidentified Token".localized
             } catch GetTokenError.existingToken{
-                errorBody = "이미 추가된 토큰입니다."
+                errorBody = "Token has already been added to your wallet.".localized
             } catch {
-                errorBody = "토큰을 확인할 수 없습니다."
+                errorBody = "Unidentified Token".localized
             }
             if(errorBody != nil){
                 DispatchQueue.main.async {
@@ -291,7 +291,7 @@ class TokenAddVC: UIViewController, UITextFieldDelegate {
         let ethToken = EthToken.shared
         ethToken.addToken(self.token!)
 
-        let alertVC = util.alert(title: "토큰 추가", body: token!.symbol+" 토큰 추가를 완료하였습니다.", buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in
+        let alertVC = util.alert(title: "Add Token".localized, body: token!.symbol+" " + "token has been successfully added.".localized, buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in
             self.reloadMainContainerVC()
             self.navigationController?.popViewController(animated: true)
         })

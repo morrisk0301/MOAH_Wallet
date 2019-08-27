@@ -41,9 +41,9 @@ class TXDetailVC: UIViewController{
     let dateTag: UILabel = {
         let label = UILabel()
 
-        label.text = "거래 시간: "
+        label.text = "TX Time".localized + ": "
         label.textColor = UIColor(key: "grey")
-        label.font = UIFont(name: "NanumSquareRoundB", size: 14, dynamic: true)
+        label.font = UIFont(name: "NanumSquareRoundR", size: 14, dynamic: true)
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
@@ -60,9 +60,9 @@ class TXDetailVC: UIViewController{
     let statusTag: UILabel = {
         let label = UILabel()
 
-        label.text = "거래 상태: "
+        label.text = "TX Status".localized + ": "
         label.textColor = UIColor(key: "grey")
-        label.font = UIFont(name: "NanumSquareRoundB", size: 14, dynamic: true)
+        label.font = UIFont(name: "NanumSquareRoundR", size: 14, dynamic: true)
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
@@ -79,7 +79,7 @@ class TXDetailVC: UIViewController{
     let txLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "트렌젝션"
+        label.text = "Transaction2".localized
         label.textAlignment = .center
         label.textColor = UIColor(key: "darker")
         label.font = UIFont(name: "NanumSquareRoundB", size: 20, dynamic: true)
@@ -91,9 +91,9 @@ class TXDetailVC: UIViewController{
     let amountTag: UILabel = {
         let label = UILabel()
 
-        label.text = "전송 금액: "
+        label.text = "Amount".localized + ": "
         label.textColor = UIColor(key: "grey")
-        label.font = UIFont(name: "NanumSquareRoundB", size: 14, dynamic: true)
+        label.font = UIFont(name: "NanumSquareRoundR", size: 14, dynamic: true)
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
@@ -112,7 +112,7 @@ class TXDetailVC: UIViewController{
 
         label.text = "Gas Price".localized+": "
         label.textColor = UIColor(key: "grey")
-        label.font = UIFont(name: "NanumSquareRoundB", size: 14, dynamic: true)
+        label.font = UIFont(name: "NanumSquareRoundR", size: 14, dynamic: true)
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
@@ -131,7 +131,7 @@ class TXDetailVC: UIViewController{
 
         label.text = "Gas Limit".localized+": "
         label.textColor = UIColor(key: "grey")
-        label.font = UIFont(name: "NanumSquareRoundB", size: 14, dynamic: true)
+        label.font = UIFont(name: "NanumSquareRoundR", size: 14, dynamic: true)
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
@@ -148,9 +148,9 @@ class TXDetailVC: UIViewController{
     let gasUsedTag: UILabel = {
         let label = UILabel()
 
-        label.text = "사용한 가스: "
+        label.text = "Gas Used".localized + ": "
         label.textColor = UIColor(key: "grey")
-        label.font = UIFont(name: "NanumSquareRoundB", size: 14, dynamic: true)
+        label.font = UIFont(name: "NanumSquareRoundR", size: 14, dynamic: true)
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
@@ -167,9 +167,9 @@ class TXDetailVC: UIViewController{
     let gasFinalTag: UILabel = {
         let label = UILabel()
 
-        label.text = "총 가스 비용: "
+        label.text = "Gas Fee".localized + ": "
         label.textColor = UIColor(key: "grey")
-        label.font = UIFont(name: "NanumSquareRoundB", size: 14, dynamic: true)
+        label.font = UIFont(name: "NanumSquareRoundR", size: 14, dynamic: true)
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
@@ -186,7 +186,7 @@ class TXDetailVC: UIViewController{
     let totalTag: UILabel = {
         let label = UILabel()
 
-        label.text = "총 비용: "
+        label.text = "Total" + ": "
         label.textColor = UIColor(key: "grey")
         label.font = UIFont(name: "NanumSquareRoundB", size: 20, dynamic: true)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -205,7 +205,7 @@ class TXDetailVC: UIViewController{
 
     let nextButton: CustomButton = {
         let button = CustomButton(type: .system)
-        button.setTitle("이더스캔에서 보기", for: .normal)
+        button.setTitle("View in Etherscan".localized, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 18, dynamic: true)
         button.addTarget(self, action: #selector(nextPressed(_:)), for: .touchUpInside)
@@ -217,7 +217,7 @@ class TXDetailVC: UIViewController{
         super.viewDidLoad()
         self.transparentNavigationBar()
         self.replaceToQuitButton(color: "dark")
-        self.setNavigationTitle(title: "거래 상세정보")
+        self.setNavigationTitle(title: "Transaction Detail".localized)
 
         view.backgroundColor = UIColor(key: "light3")
 
@@ -287,7 +287,7 @@ class TXDetailVC: UIViewController{
 
         dateTag.topAnchor.constraint(equalTo: toLabel.bottomAnchor, constant: screenSize.height/80).isActive = true
         dateTag.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenSize.width/15).isActive = true
-        dateTag.widthAnchor.constraint(equalToConstant: screenSize.width/5).isActive = true
+        dateTag.widthAnchor.constraint(equalToConstant: screenSize.width/3).isActive = true
         dateTag.heightAnchor.constraint(equalToConstant: screenSize.height/30).isActive = true
 
         dateLabel.topAnchor.constraint(equalTo: toLabel.bottomAnchor, constant: screenSize.height/80).isActive = true
@@ -297,7 +297,7 @@ class TXDetailVC: UIViewController{
 
         statusTag.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: screenSize.height/80).isActive = true
         statusTag.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenSize.width/15).isActive = true
-        statusTag.widthAnchor.constraint(equalToConstant: screenSize.width/5).isActive = true
+        statusTag.widthAnchor.constraint(equalToConstant: screenSize.width/2.5).isActive = true
         statusTag.heightAnchor.constraint(equalToConstant: screenSize.height/30).isActive = true
 
         statusLabel.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: screenSize.height/80).isActive = true
@@ -437,7 +437,7 @@ class TXDetailVC: UIViewController{
         let style = NSMutableParagraphStyle()
         style.alignment = .right
 
-        let hashAttr = NSMutableAttributedString(string: "거래 Hash: ",
+        let hashAttr = NSMutableAttributedString(string: "TX Hash".localized + ": ",
                 attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundR", size: 14, dynamic: true)!,
                              NSAttributedString.Key.foregroundColor: UIColor(key: "grey")])
         hashAttr.append(NSAttributedString(string: hash+"  ",
@@ -450,7 +450,7 @@ class TXDetailVC: UIViewController{
         hashLabel.attributedText = hashAttr
 
 
-        let toAttr = NSMutableAttributedString(string: "전송 계정: ",
+        let toAttr = NSMutableAttributedString(string: "Transfer Address".localized + ": ",
                 attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundR", size: 14, dynamic: true)!,
                              NSAttributedString.Key.foregroundColor: UIColor(key: "grey")])
         toAttr.append(NSAttributedString(string: to,
@@ -555,25 +555,25 @@ class TXDetailVC: UIViewController{
 
         switch(txInfo.status){
         case "ok":
-            let attrText = NSMutableAttributedString(string: "거래 완료",
+            let attrText = NSMutableAttributedString(string: "Success2".localized,
                     attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundB", size: 16, dynamic: true)!,
                                  NSAttributedString.Key.foregroundColor: UIColor(key: "regular"),
                                  NSAttributedString.Key.paragraphStyle: style])
             statusLabel.attributedText = attrText
             break
         case "notYetProcessed":
-            let attrText = NSMutableAttributedString(string: "거래 승인중",
+            let attrText = NSMutableAttributedString(string: "Pending2".localized,
                     attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundB", size: 16, dynamic: true)!,
                                  NSAttributedString.Key.foregroundColor: UIColor(key: "grey"),
                                  NSAttributedString.Key.paragraphStyle: style])
-            attrText.append(NSAttributedString(string: "(승인 후 비용 정보가 업데이트 됩니다)",
+            attrText.append(NSAttributedString(string: "(" + "TX info will be updated shortly.".localized + ")",
                     attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundB", size: 10, dynamic: true)!,
                                  NSAttributedString.Key.foregroundColor: UIColor(key: "grey2"),
                                  NSAttributedString.Key.paragraphStyle: style]))
             statusLabel.attributedText = attrText
             break
         case "failed":
-            let attrText = NSMutableAttributedString(string: "거래 실패",
+            let attrText = NSMutableAttributedString(string: "Failed2".localized,
                     attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundB", size: 16, dynamic: true)!,
                                  NSAttributedString.Key.foregroundColor: UIColor.red,
                                  NSAttributedString.Key.paragraphStyle: style])
@@ -607,7 +607,7 @@ class TXDetailVC: UIViewController{
             return
         }
         UIPasteboard.general.string = hash
-        let alertVC = util.alert(title: "TX Hash 복사", body: "TX Hash가 클립보드에 복사되었습니다.", buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in})
+        let alertVC = util.alert(title: "Copy TX Hash".localized, body: "TX Hash has been copied to clipboard.".localized, buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in})
         self.present(alertVC, animated: false)
     }
 }

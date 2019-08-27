@@ -25,7 +25,7 @@ class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, U
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.height))
         textField.leftView = paddingView
         textField.leftViewMode = .always
-        textField.placeholder = "토큰명/심볼/Contract 주소를 입력하세요."
+        textField.placeholder = "Enter name, symbol or contract address.".localized
         textField.borderStyle = .none
         textField.returnKeyType = .search
         textField.textColor = UIColor(key: "darker")
@@ -53,7 +53,7 @@ class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, U
 
     let addButton: CustomButton = {
         let button = CustomButton(type: .system)
-        button.setTitle("토큰 직접 추가", for: .normal)
+        button.setTitle("Custom Token".localized, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 18, dynamic: true)
         button.addTarget(self, action: #selector(addPressed(_:)), for: .touchUpInside)
@@ -65,7 +65,7 @@ class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, U
         super.viewDidLoad()
         self.transparentNavigationBar()
         self.replaceToQuitButton(color: "dark")
-        self.setNavigationTitle(title: "토큰 검색")
+        self.setNavigationTitle(title: "Token Search".localized)
         self.hideKeyboardWhenTappedAround()
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
@@ -149,8 +149,8 @@ class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, U
         DispatchQueue.main.async{
             AudioServicesPlaySystemSound(1519)
             guard !self.ethToken.checkTokenExists(address: self.tokenArr[indexPath.row].address) else{
-                let alertVC = self.util.alert(title: "Error".localized, body: "이미 추가된 토큰입니다.",
-                        buttonTitle: "확인", buttonNum: 1, completion: {_ in })
+                let alertVC = self.util.alert(title: "Error".localized, body: "Token has already been added to your wallet.".localized,
+                        buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in })
                 self.present(alertVC, animated: false)
 
                 return
@@ -158,8 +158,8 @@ class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, U
 
             self.ethToken.addToken(self.tokenArr[indexPath.row])
 
-            let alertVC = self.util.alert(title: "토큰 추가", body: self.tokenArr[indexPath.row].symbol+" 토큰 추가를 완료하였습니다.",
-                    buttonTitle: "추가", buttonNum: 1, completion: {_ in })
+            let alertVC = self.util.alert(title: "Add Token", body: self.tokenArr[indexPath.row].symbol+" " + "token has been successfully added.".localized,
+                    buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in })
 
             self.present(alertVC, animated: false)
             self.reloadMainContainerVC()

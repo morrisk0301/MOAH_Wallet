@@ -98,7 +98,7 @@ class LockVC: UIViewController, KeypadViewDelegate {
                 let animation = ShakeAnimation()
                 self.view.layer.add(animation, forKey: "position")
 
-                lock.errorLabel.text = "Invalid Password".localized + "(\(self.count)/5)\n" + "Account will be locked after 5 tries".localized
+                lock.errorLabel.text = "Invalid Password".localized + "(\(self.count)/5)\n" + "Account will be locked after 5 tries.".localized
                 lock.pwLine6.image = changeImage
                 lock.pwLine5.image = changeImage
                 lock.pwLine4.image = changeImage

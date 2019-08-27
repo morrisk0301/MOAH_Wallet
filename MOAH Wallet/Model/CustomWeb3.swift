@@ -158,7 +158,7 @@ class CustomWeb3: AddressObserver {
                     }
 
 
-                    let subInfo = TXSubInfo(to: address.address, from: from, category: "Ether Transfer".localized, 
+                    let subInfo = TXSubInfo(to: address.address, from: from, category: "Ether Transfer", 
                             amount: amount, symbol: "ETH", decimals: 18, gasPrice: gasPrice!, gasLimit: gasLimit!)
                     completion(tx, gasLimit!*gasPrice!, subInfo)
                 }else{
@@ -174,7 +174,7 @@ class CustomWeb3: AddressObserver {
                         gasPrice = try self._web3Ins?.eth.getGasPrice()
                     }
 
-                    let subInfo = TXSubInfo(to: address.address, from: from, category: "Token Transfer".localized, 
+                    let subInfo = TXSubInfo(to: address.address, from: from, category: "Token Transfer", 
                             amount: amount, symbol: token!.symbol, decimals: Int(token!.decimals.description)!,
                             gasPrice: gasPrice!, gasLimit: gasLimit!)
 

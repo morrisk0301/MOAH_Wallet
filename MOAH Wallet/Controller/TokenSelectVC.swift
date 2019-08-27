@@ -42,7 +42,7 @@ class TokenSelectVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         label.textColor = UIColor(key: "darker")
         label.textAlignment = .center
         label.font = UIFont(name:"NanumSquareRoundB", size: 20, dynamic: true)
-        label.text = "암호화폐 선택"
+        label.text = "Select Token".localized
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
@@ -50,7 +50,7 @@ class TokenSelectVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
 
     let addButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("추가", for: .normal)
+        button.setTitle("Add".localized, for: .normal)
         button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 16, dynamic: true)
         button.setTitleColor(UIColor(key: "dark"), for: .normal)
         button.tag = 1
@@ -170,7 +170,7 @@ class TokenSelectVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     }
 
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let deleteButton = UITableViewRowAction(style: .default, title: "삭제") { (action, indexPath) in
+        let deleteButton = UITableViewRowAction(style: .default, title: "Delete".localized) { (action, indexPath) in
             self.tableView.dataSource?.tableView!(self.tableView, commit: .delete, forRowAt: indexPath)
             return
         }

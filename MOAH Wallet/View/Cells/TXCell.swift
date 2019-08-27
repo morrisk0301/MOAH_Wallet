@@ -25,7 +25,7 @@ class TXCell: UITableViewCell {
     let statusLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "Loading".localized
+        label.text = "Pending".localized
         label.textColor = UIColor(key: "grey2")
         label.layer.borderColor = UIColor(key: "grey2").cgColor
         label.font = UIFont(name:"NanumSquareRoundB", size: 14, dynamic: true)
@@ -91,7 +91,7 @@ class TXCell: UITableViewCell {
                 attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundR", size: 12, dynamic: true)!,
                              NSAttributedString.Key.foregroundColor: UIColor(key: "grey2"),
                              NSAttributedString.Key.paragraphStyle: style])
-        attrText.append(NSAttributedString(string: "\n"+category,
+        attrText.append(NSAttributedString(string: "\n"+category.localized,
                 attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundB", size: 16, dynamic: true)!,
                              NSAttributedString.Key.foregroundColor: UIColor(key: "darker")]))
         txLabel.attributedText = attrText
@@ -105,7 +105,7 @@ class TXCell: UITableViewCell {
             statusLabel.layer.borderColor = UIColor(key: "regular").cgColor
             break
         case "notYetProcessed":
-            statusLabel.text = "Loading".localized
+            statusLabel.text = "Pending".localized
             statusLabel.textColor = UIColor(key: "grey2")
             statusLabel.layer.borderColor = UIColor(key: "grey2").cgColor
             break

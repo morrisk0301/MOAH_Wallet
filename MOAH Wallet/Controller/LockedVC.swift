@@ -107,11 +107,11 @@ class LockedVC: UIViewController {
         let style = NSMutableParagraphStyle()
         style.alignment = .center
 
-        let attrText = NSMutableAttributedString(string: "비밀번호 오류로 이용이 제한됩니다.", 
+        let attrText = NSMutableAttributedString(string: "Your wallet has been locked.".localized, 
                 attributes:[NSAttributedString.Key.foregroundColor: UIColor.white,
                             NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundB", size: 18)!,
                             NSAttributedString.Key.paragraphStyle: style])
-        attrText.append(NSAttributedString(string: "\n\n\n잠시 후에 다시 이용해주세요.", 
+        attrText.append(NSAttributedString(string: "\n\n\n" + "Please try again in a few moments.".localized, 
                 attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 1, green: 1, blue: 1, alpha: 0.5),
                              NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundR", size: 16)!,
                              NSAttributedString.Key.paragraphStyle: style]))
