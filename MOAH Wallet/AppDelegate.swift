@@ -120,9 +120,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             }
             else{
-                let mainView = MainViewController(nibName: nil, bundle: nil)
-                self.window!.rootViewController = mainView
-                self.window?.makeKeyAndVisible()
+                if(compareDate > 180){
+                    let mainView = MainViewController(nibName: nil, bundle: nil)
+                    self.window!.rootViewController = mainView
+                    self.window?.makeKeyAndVisible()
+                }
             }
         }
         backgroundTime = nil

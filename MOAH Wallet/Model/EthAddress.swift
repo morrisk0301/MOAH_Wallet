@@ -112,10 +112,10 @@ class EthAddress {
         }
     }
 
-    func checkPrivate(_ name: String) -> Bool {
-        let namePredicate = NSPredicate(format: "name = %@", name)
+    func checkPrivate(_ address: String) -> Bool {
+        let addressPredicate = NSPredicate(format: "address = %@", address)
         let pkPredicate = NSPredicate(format: "isPrivateKey == true")
-        let andPredicate = NSCompoundPredicate(type: .and, subpredicates: [namePredicate, pkPredicate])
+        let andPredicate = NSCompoundPredicate(type: .and, subpredicates: [addressPredicate, pkPredicate])
         let addressArray = self.fetchAddress(andPredicate)
 
         return addressArray.count != 0
@@ -139,6 +139,16 @@ class EthAddress {
         let addressArray = self.fetchAddress(addressPredicate)
 
         return addressArray.count != 0
+    }
+
+    func delIfGetAccountExists(_ address: String) {
+        let addressPredicate = NSPredicate(format: "address = %@", address)
+        let addressArray = self.fetchAddress(addressPredicate)
+        if(addressArray.count > 0){
+            let name = addressArray.first!.value(forKey: "name") as! String
+            self.deleteAddress(name: name)
+            userDefaults.removeObject(forKey: "private_key"+name)
+        }
     }
 
     func attachAddressObserver(_ observer: AddressObserver){

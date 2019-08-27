@@ -29,7 +29,7 @@ class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, U
         textField.borderStyle = .none
         textField.returnKeyType = .search
         textField.textColor = UIColor(key: "darker")
-        textField.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
+        textField.font = UIFont(name:"NanumSquareRoundR", size: 15, dynamic: true)
         textField.layer.cornerRadius = 5
         textField.backgroundColor = .clear
         textField.layer.borderColor = UIColor(key: "grey2").cgColor

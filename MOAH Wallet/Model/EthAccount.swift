@@ -383,7 +383,7 @@ class EthAccount: NetworkObserver, AddressObserver{
 
     private func _initAccount(){
         let ethAddress: EthAddress = EthAddress.address
-        let address = CustomAddress(address: _getLastAddressFromPath().address, name: "Main Account".localized, isPrivateKey: false, path: _getLastPath())
+        let address = CustomAddress(address: _getLastAddressFromPath().address, name: "Main Account", isPrivateKey: false, path: _getLastPath())
         ethAddress.addAddress(address)
     }
 
@@ -429,9 +429,12 @@ class EthAccount: NetworkObserver, AddressObserver{
             try _keyStore?.createNewCustomChildAccount(password: _password!, path: newPath)
             _saveKeyStore()
 
+            let address = _keyStore!.paths[newPath]!.address
             let ethAddress: EthAddress = EthAddress.address
-            let address = CustomAddress(address: _keyStore!.paths[newPath]!.address, name: name, isPrivateKey: false, path: newPath)
-            ethAddress.addAddress(address)
+            ethAddress.delIfGetAccountExists(address)
+
+            let addressFinal = CustomAddress(address: address, name: name, isPrivateKey: false, path: newPath)
+            ethAddress.addAddress(addressFinal)
         }
         catch{
             throw error

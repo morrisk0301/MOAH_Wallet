@@ -189,6 +189,18 @@ class TokenAddVC: UIViewController, UITextFieldDelegate {
         super.didReceiveMemoryWarning()
     }
 
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if(textField.tag != 0) {return true}
+        guard let textFieldText = textField.text,
+              let rangeOfTextToReplace = Range(range, in: textFieldText) else {
+            return false
+        }
+
+        let substringToReplace = textFieldText[rangeOfTextToReplace]
+        let count = textFieldText.count - substringToReplace.count + string.count
+        return count <= 42
+    }
+
     private func setupLayout(){
         contractLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: screenSize.height/30).isActive = true
         contractLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true

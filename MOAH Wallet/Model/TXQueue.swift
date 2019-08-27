@@ -12,6 +12,7 @@ class TXQueue {
     static let queue = TXQueue()
 
     private var _queue = DispatchQueue.global(qos: .utility)
+    private var _task = [String]()
 
     var delegate: TransactionDelegate?
 
@@ -36,6 +37,8 @@ class TXQueue {
     func addTXTask(txHash: String){
         let web3 = CustomWeb3.shared
         let ethTXHistory = EthTXHistory()
+        if(_checkTask(txHash)) { return }
+
         _queue.sync{
             var count = 0
             while(true){
@@ -43,12 +46,33 @@ class TXQueue {
                 let hash = web3.getTXReceipt(hash: txHash)
                 if(hash != nil && hash!.status != .notYetProcessed){
                     ethTXHistory.updateTXStatus(tx: txHash, status: hash!.status.description)
+                    _popTask(txHash)
                     self.delegate?.transactionComplete()
                     break
                 }
-                if(count>10){break}
+                if(count>10 || txHash.count == 0){break}
                 sleep(10)
             }
+        }
+    }
+
+    private func _checkTask(_ txHash: String) -> Bool{
+        for task in _task{
+            if(task == txHash){
+                return true
+            }
+        }
+        _addTask(txHash)
+        return false
+    }
+
+    private func _addTask(_ task: String){
+        _task.append(task)
+    }
+
+    private func _popTask(_ task: String){
+        if let index = _task.firstIndex(of: task) {
+            _task.remove(at: index)
         }
     }
 

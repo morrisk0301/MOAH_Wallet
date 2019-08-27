@@ -381,6 +381,7 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
 
     func reload() {
         self.showTransparentView()
+        txQueue.refreshTX()
         self.loadData()
     }
 
