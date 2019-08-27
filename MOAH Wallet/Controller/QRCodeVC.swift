@@ -46,7 +46,7 @@ class QRCodeVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.replaceToQuitButton(color: "dark")
-        self.setNavigationTitle(title: "QR Code 인식")
+        self.setNavigationTitle(title: "QR Code Scan".localized)
         self.navigationController?.navigationBar.barTintColor = UIColor(key: "light3")
 
         view.backgroundColor = UIColor(key: "light3")
@@ -100,10 +100,10 @@ class QRCodeVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     func failed(error: String) {
         var errorBody: String?
         if(error == "auth"){
-            errorBody = "카메라를 사용할 수 없습니다.\n단말기 -> 설정에서 MOAH Wallet의 카메라 권한을 허용해주세요."
+            errorBody = "Camera is unavailable.\nSetting -> MOAH Wallet -> Allow camera.".localized
         }
         else{
-            errorBody = "카메라를 사용할 수 없습니다."
+            errorBody = "Camera is unavailable.".localized
         }
         let util = Util()
         let alertVC = util.alert(title: "Error".localized, body: errorBody!, buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in})

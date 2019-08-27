@@ -13,7 +13,7 @@ class NetworkCell: UITableViewCell{
     let networkLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "Ethereum 메인넷"
+        label.text = "Ethereum Mainnet".localized
         label.textColor = UIColor(key: "darker")
         label.font = UIFont(name:"NanumSquareRoundB", size: 20, dynamic: true)
         label.translatesAutoresizingMaskIntoConstraints = false

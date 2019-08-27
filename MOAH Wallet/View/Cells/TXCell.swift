@@ -25,7 +25,7 @@ class TXCell: UITableViewCell {
     let statusLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "승인중"
+        label.text = "Loading".localized
         label.textColor = UIColor(key: "grey2")
         label.layer.borderColor = UIColor(key: "grey2").cgColor
         label.font = UIFont(name:"NanumSquareRoundB", size: 14, dynamic: true)
@@ -71,7 +71,7 @@ class TXCell: UITableViewCell {
         statusLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         statusLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -screenSize.width/20).isActive = true
         statusLabel.heightAnchor.constraint(equalToConstant: screenSize.height/30).isActive = true
-        statusLabel.widthAnchor.constraint(equalToConstant: screenSize.width/7).isActive = true
+        statusLabel.widthAnchor.constraint(equalToConstant: screenSize.width/5).isActive = true
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -100,22 +100,22 @@ class TXCell: UITableViewCell {
     func setStatusLabel(status: String){
         switch(status){
         case "ok":
-            statusLabel.text = "완료"
+            statusLabel.text = "Success".localized
             statusLabel.textColor = UIColor(key: "regular")
             statusLabel.layer.borderColor = UIColor(key: "regular").cgColor
             break
         case "notYetProcessed":
-            statusLabel.text = "승인중"
+            statusLabel.text = "Loading".localized
             statusLabel.textColor = UIColor(key: "grey2")
             statusLabel.layer.borderColor = UIColor(key: "grey2").cgColor
             break
         case "failed":
-            statusLabel.text = "실패"
+            statusLabel.text = "Failed".localized
             statusLabel.textColor = UIColor.red
             statusLabel.layer.borderColor = UIColor.red.cgColor
             break
         default:
-            statusLabel.text = "완료"
+            statusLabel.text = "Success".localized
             statusLabel.textColor = UIColor(key: "regular")
             statusLabel.layer.borderColor = UIColor(key: "regular").cgColor
             break

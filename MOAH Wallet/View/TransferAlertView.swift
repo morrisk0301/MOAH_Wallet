@@ -43,7 +43,7 @@ class TransferAlertView: UIView {
     let amountTagLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "전송 금액:"
+        label.text = "Amount".localized + ":"
         label.font = UIFont(name: "NanumSquareRoundR", size: 12, dynamic: true)
         label.textColor = UIColor(key: "grey")
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -54,7 +54,7 @@ class TransferAlertView: UIView {
     let gasTagLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "가스 비용:"
+        label.text = "Gas Fee".localized + ":"
         label.font = UIFont(name: "NanumSquareRoundR", size: 12, dynamic: true)
         label.textColor = UIColor(key: "grey")
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -65,7 +65,7 @@ class TransferAlertView: UIView {
     let totalTagLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "총 비용:"
+        label.text = "Total".localized + ":"
         label.font = UIFont(name: "NanumSquareRoundB", size: 20, dynamic: true)
         label.textColor = UIColor(key: "grey")
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -98,7 +98,7 @@ class TransferAlertView: UIView {
     let warningLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "전송하시겠습니까?"
+        label.text = "Do you wish to transfer?".localized
         label.font = UIFont(name: "NanumSquareRoundB", size: 14, dynamic: true)
         label.textColor = UIColor(key: "darker")
         label.numberOfLines = 0
@@ -219,7 +219,7 @@ class TransferAlertView: UIView {
         let style = NSMutableParagraphStyle()
         style.alignment = .right
 
-        let addressAttr = NSMutableAttributedString(string: "전송 계정: ",
+        let addressAttr = NSMutableAttributedString(string: "Transfer Address".localized + ": ",
                 attributes: [NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundR", size: 12, dynamic: true)!,
                              NSAttributedString.Key.foregroundColor: UIColor(key: "grey")])
         addressAttr.append(NSAttributedString(string: self.address,

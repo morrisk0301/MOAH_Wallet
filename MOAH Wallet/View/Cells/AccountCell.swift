@@ -15,7 +15,7 @@ class AccountCell: UITableViewCell{
     let accountLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "보조 계정"
+        label.text = ""
         label.textColor = UIColor(key: "darker")
         label.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -48,7 +48,7 @@ class AccountCell: UITableViewCell{
     let privateKeyLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "가져온 계정"
+        label.text = "External".localized
         label.textColor = UIColor(key: "dark")
         label.font = UIFont(name:"NanumSquareRoundB", size: 10, dynamic: true)
         label.textAlignment = .center

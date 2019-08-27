@@ -33,7 +33,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
 
         label.font = UIFont(name: "NanumSquareRoundB", size: 14, dynamic: true)
         label.textColor = UIColor(key: "darker")
-        label.text = "  전송 금액"
+        label.text = "  " + "Amount".localized
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
@@ -44,7 +44,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
 
         label.font = UIFont(name: "NanumSquareRoundB", size: 14, dynamic: true)
         label.textColor = UIColor(key: "darker")
-        label.text = "  전송 계정 주소"
+        label.text = "  " + "Transfer Address".localized
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
@@ -56,7 +56,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.height))
         textField.leftView = paddingView
         textField.leftViewMode = .always
-        textField.placeholder = "전송할 금액을 입력해주세요."
+        textField.placeholder = "Enter amount.".localized
         textField.borderStyle = .none
         textField.returnKeyType = .done
         textField.textColor = UIColor(key: "darker")
@@ -103,7 +103,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.height))
         textField.leftView = paddingView
         textField.leftViewMode = .always
-        textField.placeholder = "전송할 계정 주소를 입력해주세요."
+        textField.placeholder = "Enter transfer address.".localized
         textField.borderStyle = .none
         textField.returnKeyType = .done
         textField.textColor = UIColor(key: "darker")
@@ -122,7 +122,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
     let warningLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "암호화폐 특성상, 전송 후 어떠한 경우에도 취소가 불가능합니다.\n\n지갑 주소와 전송 금액을 신중하게 입력해주세요."
+        label.text = "Cancelling transaction is not available under any circumstances.\n\nBe sure to check amount and address one more time.".localized
         label.font = UIFont(name: "NanumSquareRoundR", size: 15, dynamic: true)
         label.textColor = UIColor(key: "darker")
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -133,7 +133,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
 
     let confirmButton: CustomButton = {
         let button = CustomButton(type: .system)
-        button.setTitle("전송하기", for: .normal)
+        button.setTitle("Transfer".localized, for: .normal)
         button.backgroundColor = UIColor(key: "light")
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleLabel?.font = UIFont(name: "NanumSquareRoundB", size: 18, dynamic: true)
@@ -147,7 +147,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
         super.viewDidLoad()
         self.transparentNavigationBar()
         self.replaceToQuitButton(color: "dark")
-        self.setNavigationTitle(title: "암호화폐 전송")
+        self.setNavigationTitle(title: "Transaction".localized)
         self.hideKeyboardWhenTappedAround()
 
         view.backgroundColor = UIColor(key: "light3")
@@ -246,7 +246,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
         warningLabel.topAnchor.constraint(equalTo: addressField.bottomAnchor, constant: screenSize.height / 12).isActive = true
         warningLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenSize.width / 15).isActive = true
         warningLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenSize.width / 15).isActive = true
-        warningLabel.heightAnchor.constraint(equalToConstant: screenSize.height / 10).isActive = true
+        warningLabel.heightAnchor.constraint(equalToConstant: screenSize.height / 8).isActive = true
 
         confirmButton.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         confirmButton.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
@@ -291,7 +291,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
 
     private func checkAmount() {
         guard let balanceBig = Web3Utils.parseToBigUInt(amountField.text!, decimals: decimals) else {
-            self.errorLabel.text = "올바르지 않은 형식입니다."
+            self.errorLabel.text = "Format is invalid.".localized
             changeAmountStatus(verify: false)
             return
         }
@@ -301,7 +301,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
             return
         }
         if (self.balance! < balanceBig) {
-            self.errorLabel.text = "보유 잔액이 부족합니다."
+            self.errorLabel.text = "Insufficient Funds".localized
             changeAmountStatus(verify: false)
             return
         }
@@ -421,7 +421,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
     }
 
     func qrFail(){
-        let alertVC = util.alert(title: "Error".localized, body: "올바른 주소 형식이 아닙니다.", buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in})
+        let alertVC = util.alert(title: "Error".localized, body: "Transfer address is invalid.".localized, buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in})
         self.present(alertVC, animated: false)
     }
 
@@ -464,7 +464,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
             try web3.preTransfer(address: address, amount: amount, completion: {(tx, estimateGas, subInfo) in
                 DispatchQueue.main.async{
                     guard let _ = tx else{
-                        let alertVC = util.alert(title: "Error".localized, body: "올바르지 않은 주소입니다. 주소를 확인해주세요.", buttonTitle: "Confirm".localized, buttonNum: 1, completion: { _ in
+                        let alertVC = util.alert(title: "Error".localized, body: "Transfer address is invalid.".localized, buttonTitle: "Confirm".localized, buttonNum: 1, completion: { _ in
                             self.hideSpinner()
                         })
                         self.present(alertVC, animated: false)
@@ -475,8 +475,8 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
                     let total = Web3Utils.parseToBigUInt(amount, decimals: self.decimals)! + estimateGas!
                     let info = TransferInfo(amount: Web3Utils.parseToBigUInt(amount, decimals: self.decimals)!,
                             address: address, gas: estimateGas!, total: total, symbol: self.symbol, decimals: self.decimals)
-                    let confirmVC = util.alert(use: "transfer", title: "전송 확인", info: info, balance: self.balance, isToken: self.symbol != "ETH",
-                            buttonTitle: "전송", buttonNum: 2, completion: { (confirm) in
+                    let confirmVC = util.alert(use: "transfer", title: "Confirm Transfer".localized, info: info, balance: self.balance, isToken: self.symbol != "ETH",
+                            buttonTitle: "Transfer".localized, buttonNum: 2, completion: { (confirm) in
                         if(confirm){
                             let controller = PasswordCheckVC()
                             controller.toView = "transfer"
@@ -489,15 +489,15 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
                 }
             })
         } catch TransferError.invalidAmount {
-            errorBody = "전송 금액을 확인해주세요."
+            errorBody = "Amount is invalid.".localized
         } catch TransferError.invalidAddress {
-            errorBody = "올바르지 않은 주소입니다. 주소를 확인해주세요."
+            errorBody = "Transfer address is invalid.".localized
         } catch TransferError.insufficientAmount {
-            errorBody = "잔액이 부족합니다."
+            errorBody = "Insufficient Funds".localized
         } catch TransferError.transferToSelf{
-            errorBody = "자기 자신에게는 송금할 수 없습니다."
+            errorBody = "You cannot make transaction to yourself,".localized
         } catch {
-            errorBody = "기타 오류."
+            errorBody = "Unknown Error".localized
         }
         if(errorBody != nil){
             let alertVC = util.alert(title: "Error".localized, body: errorBody!, buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in

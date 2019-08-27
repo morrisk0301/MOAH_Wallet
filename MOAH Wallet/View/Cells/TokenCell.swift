@@ -30,7 +30,7 @@ class TokenCell: UITableViewCell {
     let noSearchLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "Ethereum 메인넷이 아닌경우,\n\n검색 기능을 지원하지않습니다."
+        label.text = "Token search is only available\n\nin Ethereum mainnet.".localized
         label.font = UIFont(name:"NanumSquareRoundB", size: 15, dynamic: true)
         label.textColor = UIColor(key: "darker")
         label.textAlignment = .center

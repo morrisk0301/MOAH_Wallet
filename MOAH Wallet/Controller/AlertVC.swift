@@ -93,14 +93,14 @@ class AlertVC: UIViewController{
 
             if(self.isToken){
                 if(self.info!.gas > self.balance!){
-                    transferAlertView?.warningLabel.text = "가스 비용이 부족합니다."
+                    transferAlertView?.warningLabel.text = "Gas fee is insufficient.".localized
                     transferAlertView?.warningLabel.textColor = UIColor.red
                     nextButton.isEnabled = false
                     nextButton.setTitleColor(UIColor(red: 130, green: 130, blue: 130), for: .normal)
                 }
             }else{
                 if(self.info!.total > self.balance!){
-                    transferAlertView?.warningLabel.text = "가스 비용이 부족합니다."
+                    transferAlertView?.warningLabel.text = "Gas fee is insufficient.".localized
                     transferAlertView?.warningLabel.textColor = UIColor.red
                     nextButton.isEnabled = false
                     nextButton.setTitleColor(UIColor(red: 130, green: 130, blue: 130), for: .normal)

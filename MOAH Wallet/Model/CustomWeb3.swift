@@ -158,7 +158,7 @@ class CustomWeb3: AddressObserver {
                     }
 
 
-                    let subInfo = TXSubInfo(to: address.address, from: from, category: "이더리움 전송", 
+                    let subInfo = TXSubInfo(to: address.address, from: from, category: "Ether Transfer".localized, 
                             amount: amount, symbol: "ETH", decimals: 18, gasPrice: gasPrice!, gasLimit: gasLimit!)
                     completion(tx, gasLimit!*gasPrice!, subInfo)
                 }else{
@@ -174,7 +174,7 @@ class CustomWeb3: AddressObserver {
                         gasPrice = try self._web3Ins?.eth.getGasPrice()
                     }
 
-                    let subInfo = TXSubInfo(to: address.address, from: from, category: "토큰 전송", 
+                    let subInfo = TXSubInfo(to: address.address, from: from, category: "Token Transfer".localized, 
                             amount: amount, symbol: token!.symbol, decimals: Int(token!.decimals.description)!,
                             gasPrice: gasPrice!, gasLimit: gasLimit!)
 
@@ -466,7 +466,7 @@ class CustomWeb3: AddressObserver {
             }
             catch{
                 print(error)
-                self._saveTxResult(error: "기타 오류", subInfo: subInfo)
+                self._saveTxResult(error: "Unknown Error".localized, subInfo: subInfo)
             }
         }
     }
