@@ -26,7 +26,7 @@ class WalletDoneVC: UIViewController{
 
     let backButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("메인 화면", for: .normal)
+        button.setTitle("Main Menu".localized, for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont(name:"NanumSquareRoundR", size: 20)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -56,36 +56,36 @@ class WalletDoneVC: UIViewController{
         style.alignment = NSTextAlignment.center
 
         if(isTransfer){
-            let attrText = NSMutableAttributedString(string: "암호화폐 전송이 시작되었습니다!",
+            let attrText = NSMutableAttributedString(string: "Your transaction has been started!".localized,
                     attributes: [NSAttributedString.Key.paragraphStyle: style,
                                  NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundB", size: 22)!,
                                  NSAttributedString.Key.foregroundColor: UIColor.white])
-            attrText.append(NSAttributedString(string: "\n\n\n거래내역 탭에서 전송 내역을\n조회할 수 있습니다.",
+            attrText.append(NSAttributedString(string: "\n\n\n\n" + "You can check your TX status in TX History Tab.".localized,
                     attributes: [NSAttributedString.Key.paragraphStyle: style,
                                  NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundR", size: 16)!,
-                                 NSAttributedString.Key.foregroundColor: UIColor.white]))
+                                 NSAttributedString.Key.foregroundColor: UIColor(red: 1, green: 1, blue: 1, alpha: 0.5)]))
             doneLabel.attributedText = attrText
         }
         else {
             if (getWallet) {
-                let attrText = NSMutableAttributedString(string: "지갑 복원이 완료되었습니다!",
+                let attrText = NSMutableAttributedString(string: "Your wallet has been restored!".localized,
                         attributes: [NSAttributedString.Key.paragraphStyle: style,
                                      NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundB", size: 22)!,
                                      NSAttributedString.Key.foregroundColor: UIColor.white])
-                attrText.append(NSAttributedString(string: "\n\n\n지금부터 MOAH Wallet의 모든 기능을\n사용할 수 있습니다.",
+                attrText.append(NSAttributedString(string: "\n\n\n\n" + "You can now access your Ethereum wallet.".localized,
                         attributes: [NSAttributedString.Key.paragraphStyle: style,
                                      NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundR", size: 16)!,
-                                     NSAttributedString.Key.foregroundColor: UIColor.white]))
+                                     NSAttributedString.Key.foregroundColor: UIColor(red: 1, green: 1, blue: 1, alpha: 0.5)]))
                 doneLabel.attributedText = attrText
             } else {
-                let attrText = NSMutableAttributedString(string: "지갑 생성이 완료되었습니다!",
+                let attrText = NSMutableAttributedString(string: "Your wallet has been created!".localized,
                         attributes: [NSAttributedString.Key.paragraphStyle: style,
                                      NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundB", size: 22)!,
                                      NSAttributedString.Key.foregroundColor: UIColor.white])
-                attrText.append(NSAttributedString(string: "\n\n\n지금부터 MOAH Wallet의 모든 기능을\n사용할 수 있습니다.",
+                attrText.append(NSAttributedString(string: "\n\n\n\n" + "You can now access your Ethereum wallet.".localized,
                         attributes: [NSAttributedString.Key.paragraphStyle: style,
                                      NSAttributedString.Key.font: UIFont(name: "NanumSquareRoundR", size: 16)!,
-                                     NSAttributedString.Key.foregroundColor: UIColor.white]))
+                                     NSAttributedString.Key.foregroundColor: UIColor(red: 1, green: 1, blue: 1, alpha: 0.5)]))
                 doneLabel.attributedText = attrText
             }
         }
@@ -107,8 +107,8 @@ class WalletDoneVC: UIViewController{
         let screenHeight = screenSize.height
 
         doneLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -screenHeight/10).isActive = true
-        doneLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/10).isActive = true
-        doneLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/10).isActive = true
+        doneLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/15).isActive = true
+        doneLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/15).isActive = true
         doneLabel.heightAnchor.constraint(equalToConstant: 200).isActive = true
 
         backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/20).isActive = true

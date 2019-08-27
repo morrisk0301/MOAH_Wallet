@@ -14,7 +14,7 @@ class PrivateKeyVC: UIViewController {
     let explainLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 300))
 
-        label.text = "다음은 회원님의 개인키입니다."
+        label.text = "Following text is your private key.".localized
         label.font = UIFont(name: "NanumSquareRoundR", size: 17, dynamic: true)
         label.textColor = UIColor(key: "darker")
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -41,7 +41,7 @@ class PrivateKeyVC: UIViewController {
     let warningLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "계정의 개인키를 절대 공개하지 마십시오. 개인키를 사용하여 사용자의 암호화폐를 탈취할 수 있습니다.\n\n\nMOAH Wallet은 사용자의 개인키 정보를 수집하지 않으며, 개인키 정보는 암호화 되어 안전하게 저장됩니다."
+        label.text = "Anyone can access your wallet through private key. Be careful not to disclose it.\n\nMOAH Wallet does not collect users' private key. Your private key will be securely stored in to your device after being encrypted.".localized
         label.font = UIFont(name: "NanumSquareRoundR", size: 14, dynamic: true)
         label.textColor = UIColor(key: "darker")
         label.numberOfLines = 0
@@ -54,7 +54,7 @@ class PrivateKeyVC: UIViewController {
     let copyButton: CustomButton = {
         let button = CustomButton()
 
-        button.setTitle("개인키 복사하기", for: .normal)
+        button.setTitle("Copy Private Key".localized, for: .normal)
         button.titleLabel?.font = UIFont(name: "NanumSquareRoundB", size: 18, dynamic: true)
         button.addTarget(self, action: #selector(copyPressed(_:)), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -121,7 +121,7 @@ class PrivateKeyVC: UIViewController {
         let util = Util()
         UIPasteboard.general.string = self.privateKeyLabel.text
 
-        let alertVC = util.alert(title: "개인키 복사", body: "개인키가 클립보드에 복사되었습니다.", buttonTitle: "확인", buttonNum: 1, completion: {_ in
+        let alertVC = util.alert(title: "Copy Private Key".localized, body: "Private key has been copied to clipboard.".localized, buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in
         })
         self.present(alertVC, animated: false)
     }

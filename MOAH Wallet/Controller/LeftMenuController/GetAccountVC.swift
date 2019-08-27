@@ -84,14 +84,9 @@ class GetAccountVC: UIViewController, UITextFieldDelegate {
     let warningLabel: UILabel = {
         let label = UILabel()
 
-        let style = NSMutableParagraphStyle()
-        style.lineSpacing = 10
-
-        let attrText = NSMutableAttributedString(string: "MOAH Wallet does not collect users' private key. Your private key will be securely stored in to your device after being encrypted.".localized, 
-                attributes: [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)!, 
-                             NSAttributedString.Key.foregroundColor: UIColor(key: "darker"), 
-                             NSAttributedString.Key.paragraphStyle: style])
-        label.attributedText = attrText
+        label.text = "MOAH Wallet does not collect users' private key.\n\nYour private key will be securely stored into your device after being encrypted.".localized
+        label.textColor = UIColor(key: "darker")
+        label.font = UIFont(name:"NanumSquareRoundR", size: 15, dynamic: true)
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
 
@@ -170,7 +165,7 @@ class GetAccountVC: UIViewController, UITextFieldDelegate {
 
         warningLabel.topAnchor.constraint(equalTo: privateKeyField.bottomAnchor, constant: screenSize.height/30).isActive = true
         warningLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        warningLabel.heightAnchor.constraint(equalToConstant: screenSize.height/10).isActive = true
+        warningLabel.heightAnchor.constraint(equalToConstant: screenSize.height/6).isActive = true
         warningLabel.widthAnchor.constraint(equalToConstant: screenSize.width*0.9).isActive = true
 
         confirmButton.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -232,7 +227,7 @@ class GetAccountVC: UIViewController, UITextFieldDelegate {
         var errorBody: String?
 
         if(nameField.text?.count == 0){
-            let alertVC = util.alert(title: "Error".localized, body: "Enter your account's name".localized, buttonTitle: "확인", buttonNum: 1, completion: {_ in})
+            let alertVC = util.alert(title: "Error".localized, body: "Enter your account's name".localized, buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in})
             self.present(alertVC, animated: false)
             return
         }
@@ -258,7 +253,7 @@ class GetAccountVC: UIViewController, UITextFieldDelegate {
         catch{
             errorBody = "Unknown Error".localized
         }
-        let alertVC = util.alert(title: "Error".localized, body: errorBody!, buttonTitle: "확인", buttonNum: 1, completion: {_ in})
+        let alertVC = util.alert(title: "Error".localized, body: errorBody!, buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in})
         self.present(alertVC, animated: false)
     }
 }

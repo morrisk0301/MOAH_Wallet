@@ -421,7 +421,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
     }
 
     func qrFail(){
-        let alertVC = util.alert(title: "Error".localized, body: "올바른 주소 형식이 아닙니다.", buttonTitle: "확인", buttonNum: 1, completion: {_ in})
+        let alertVC = util.alert(title: "Error".localized, body: "올바른 주소 형식이 아닙니다.", buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in})
         self.present(alertVC, animated: false)
     }
 
@@ -464,7 +464,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
             try web3.preTransfer(address: address, amount: amount, completion: {(tx, estimateGas, subInfo) in
                 DispatchQueue.main.async{
                     guard let _ = tx else{
-                        let alertVC = util.alert(title: "Error".localized, body: "올바르지 않은 주소입니다. 주소를 확인해주세요.", buttonTitle: "확인", buttonNum: 1, completion: { _ in
+                        let alertVC = util.alert(title: "Error".localized, body: "올바르지 않은 주소입니다. 주소를 확인해주세요.", buttonTitle: "Confirm".localized, buttonNum: 1, completion: { _ in
                             self.hideSpinner()
                         })
                         self.present(alertVC, animated: false)
@@ -500,7 +500,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
             errorBody = "기타 오류."
         }
         if(errorBody != nil){
-            let alertVC = util.alert(title: "Error".localized, body: errorBody!, buttonTitle: "확인", buttonNum: 1, completion: {_ in
+            let alertVC = util.alert(title: "Error".localized, body: errorBody!, buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in
                 self.hideSpinner()
             })
             self.present(alertVC, animated: false)

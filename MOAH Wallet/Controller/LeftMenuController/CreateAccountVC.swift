@@ -165,7 +165,7 @@ class CreateAccountVC: UIViewController, UITextFieldDelegate {
         let util = Util()
         let name = nameField.text!
         if(nameField.text?.count == 0){
-            let alertVC = util.alert(title: "Error".localized, body: "Enter your account's name".localized, buttonTitle: "확인", buttonNum: 1, completion: {_ in})
+            let alertVC = util.alert(title: "Error".localized, body: "Enter your account's name".localized, buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in})
             self.present(alertVC, animated: false)
         }
         else if(account.generateAccount(name: name)){
@@ -176,7 +176,7 @@ class CreateAccountVC: UIViewController, UITextFieldDelegate {
             }
         }
         else{
-            let alertVC = util.alert(title: "Error".localized, body: "Duplicate account name or exceeded maximum account number".localized, buttonTitle: "확인", buttonNum: 1, completion: {_ in})
+            let alertVC = util.alert(title: "Error".localized, body: "Duplicate account name or exceeded maximum account number".localized, buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in})
             self.present(alertVC, animated: false)
         }
     }

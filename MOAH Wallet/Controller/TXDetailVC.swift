@@ -607,7 +607,7 @@ class TXDetailVC: UIViewController{
             return
         }
         UIPasteboard.general.string = hash
-        let alertVC = util.alert(title: "TX Hash 복사", body: "TX Hash가 클립보드에 복사되었습니다.", buttonTitle: "확인", buttonNum: 1, completion: {_ in})
+        let alertVC = util.alert(title: "TX Hash 복사", body: "TX Hash가 클립보드에 복사되었습니다.", buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in})
         self.present(alertVC, animated: false)
     }
 }

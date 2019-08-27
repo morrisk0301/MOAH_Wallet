@@ -30,7 +30,7 @@ class MnemonicVC: UIViewController, UIGestureRecognizerDelegate {
     let explainLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 300))
 
-        label.text = "다음은 회원님의 비밀 시드 구문입니다.\n\n비밀 시드 구문을 순서대로 입력하여, 지갑 인증을 진행해 주세요."
+        label.text = "Following text is your mnemonic phrase.".localized + "\n\n" + "Type mnemonic phrase in order to verify your wallet.".localized
         label.font = UIFont(name: "NanumSquareRoundR", size: 17, dynamic: true)
         label.textColor = UIColor(key: "darker")
         label.translatesAutoresizingMaskIntoConstraints = false

@@ -106,7 +106,7 @@ class QRCodeVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
             errorBody = "카메라를 사용할 수 없습니다."
         }
         let util = Util()
-        let alertVC = util.alert(title: "Error".localized, body: errorBody!, buttonTitle: "확인", buttonNum: 1, completion: {_ in})
+        let alertVC = util.alert(title: "Error".localized, body: errorBody!, buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in})
         self.present(alertVC, animated: false)
     }
 

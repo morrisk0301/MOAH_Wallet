@@ -16,7 +16,7 @@ class AgreementVC: UIViewController, UIGestureRecognizerDelegate {
 
     let agreementLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 60))
-        label.text = "MOAH Wallet \n서비스 약관에 동의해주세요."
+        label.text = "MOAH Wallet\nTerms and Conditions".localized
         label.font = UIFont(name:"NanumSquareRoundB", size: 18, dynamic: true)
         label.numberOfLines = 0
         label.textColor = UIColor(key: "darker")
@@ -36,7 +36,7 @@ class AgreementVC: UIViewController, UIGestureRecognizerDelegate {
 
     let checkboxLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 30))
-        label.text = "MOAH Wallet 이용약관 전체 동의"
+        label.text = "I agree to the Terms and Conditions.".localized
         label.font = UIFont(name:"NanumSquareRoundB", size: 15, dynamic: true)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = UIColor(key: "darker")
@@ -58,7 +58,7 @@ class AgreementVC: UIViewController, UIGestureRecognizerDelegate {
 
     let nextButton: CustomButton = {
         let button = CustomButton(type: .system)
-        button.setTitle("다음", for: .normal)
+        button.setTitle("Next".localized, for: .normal)
         button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 18, dynamic: true)
         button.backgroundColor = UIColor(key: "light")
         button.translatesAutoresizingMaskIntoConstraints = false

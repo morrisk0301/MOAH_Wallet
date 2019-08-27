@@ -47,7 +47,7 @@ class PasswordVC: UIViewController, KeypadViewDelegate, UIGestureRecognizerDeleg
         }
 
         if(!confirm){
-            lock.passwordLabel.text = "Enter lock password for MOAH Wallet.".localized
+            lock.passwordLabel.text = "Enter password for MOAH Wallet.".localized
         }
         else{
             lock.passwordLabel.text = "Enter password one more time.".localized

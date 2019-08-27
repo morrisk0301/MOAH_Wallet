@@ -13,7 +13,7 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
     let mnemonicLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 30))
 
-        label.text = "비밀 시드 구문 인증"
+        label.text = "Verify Mnemonic Phrase".localized
         label.font = UIFont(name:"NanumSquareRoundB", size: 20, dynamic: true)
         label.textColor = UIColor(key: "darker")
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -24,7 +24,7 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
     let explainLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 50))
 
-        label.text = "복원하실 지갑의 12자리 비밀 시드 구문을 띄어쓰기 포함하여 순서대로 입력해주세요."
+        label.text = "Type 12 word mnemonic phrase in order with no capital letters.".localized
         label.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
         label.textColor = UIColor(key: "darker")
         label.numberOfLines = 0
@@ -51,7 +51,7 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
     let warningLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "비밀 시드 구문으로 기존 계정을 복원할 수 있습니다.\n\nMOAH Wallet은 사용자의 개인키 정보를 수집하지 않으며, 개인키 정보는 암호화 되어 안전하게 저장됩니다."
+        label.text = "You can restore your wallet through mnemonic phrase.\n\nMOAH Wallet does not collect users' mnemonic phrase. Your mnemonic phrase will be securely stored in to your device after being encrypted.".localized
         label.font = UIFont(name: "NanumSquareRoundR", size: 14, dynamic: true)
         label.textColor = UIColor(key: "darker")
         label.numberOfLines = 0
@@ -63,7 +63,7 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
 
     let nextButton: CustomButton = {
         let button = CustomButton(type: .system)
-        button.setTitle("다음", for: .normal)
+        button.setTitle("Next".localized, for: .normal)
         button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 18, dynamic: true)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(nextPressed(_:)), for: .touchUpInside)
@@ -135,7 +135,7 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
         warningLabel.topAnchor.constraint(equalTo: mnemonicField.bottomAnchor, constant: screenHeight/40).isActive = true
         warningLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenSize.width/15).isActive = true
         warningLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenSize.width/15).isActive = true
-        warningLabel.heightAnchor.constraint(equalToConstant: screenSize.height/8).isActive = true
+        warningLabel.heightAnchor.constraint(equalToConstant: screenSize.height/6).isActive = true
 
         nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -screenHeight/20).isActive = true
         nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -153,7 +153,7 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
         }
         else{
             let util = Util()
-            let alertVC = util.alert(title: "Error".localized, body: "올바르지 않은 시드 구문입니다.", buttonTitle: "확인", buttonNum: 1, completion: {_ in})
+            let alertVC = util.alert(title: "Error".localized, body: "Mnemonic phrase is invalid.".localized, buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in})
             self.present(alertVC, animated: false)
         }
 

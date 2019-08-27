@@ -306,7 +306,7 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
     func checkChainNetwork(){
         if(web3.getWeb3Ins() == nil){
             self.hideSpinner()
-            let alertVC = util.alert(title: "Error".localized, body: "네트워크에 연결할 수 없습니다.\n네트워크를 재설정해주세요.", buttonTitle: "확인", buttonNum: 1, completion: {_ in
+            let alertVC = util.alert(title: "Error".localized, body: "네트워크에 연결할 수 없습니다.\n네트워크를 재설정해주세요.", buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in
                 let controller = NetworkSettingVC()
                 let transition = LeftTransition()
 

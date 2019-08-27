@@ -30,7 +30,7 @@ class MainViewController: UIViewController {
 
     let explainLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 60))
-        label.text = "MOAH Wallet은 이더리움 및 이더리움 토큰과\ndApp을 위한 암호화폐 지갑입니다."
+        label.text = "Decentralized wallet for Ethereum,\nEthereum tokens and dApp.".localized
         label.font = UIFont(name: "NanumSquareRoundB", size: 16, dynamic: true)
         label.backgroundColor = .clear
         label.textColor = .white
@@ -43,7 +43,7 @@ class MainViewController: UIViewController {
 
     lazy var newWalletButton: TransparentButton = {
         let button = TransparentButton(type: .system)
-        button.setTitle("새로운 지갑 만들기", for: .normal)
+        button.setTitle("New Wallet".localized, for: .normal)
         button.titleLabel?.font = UIFont(name:"NanumSquareRoundR", size: 20, dynamic: true)
         button.tag = 1
         button.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
@@ -54,7 +54,7 @@ class MainViewController: UIViewController {
 
     lazy var getWalletButton: TransparentButton = {
         let button = TransparentButton(type: .system)
-        button.setTitle("기존 지갑 복원하기", for: .normal)
+        button.setTitle("Restore Wallet".localized, for: .normal)
         button.titleLabel?.font = UIFont(name:"NanumSquareRoundR", size: 20, dynamic: true)
         button.tag = 2
         button.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
@@ -83,7 +83,7 @@ class MainViewController: UIViewController {
         let check = userDefaults.bool(forKey: "alarmCheck")
         if(!check) {
             let util = Util()
-            let alertVC = util.alert(title: "푸시 알림 설정", body: "MOAH Wallet의 푸시 알림을 원하시면 동의 버튼을 눌러주세요.", buttonTitle: "동의", buttonNum: 2, completion: {(agree) in 
+            let alertVC = util.alert(title: "Push Notifications".localized, body: "Do you want to allow push notification?".localized, buttonTitle: "Allow".localized, buttonNum: 2, completion: {(agree) in 
                 if(agree){
                     self.userDefaults.set(true, forKey: "alarm")
                     UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge], completionHandler: {(success, error) in

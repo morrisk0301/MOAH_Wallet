@@ -240,12 +240,12 @@ class TXCustomVC: UIViewController, UITextFieldDelegate {
     @objc private func nextPressed(_ sender:UIButton){
         let util = Util()
         if(priceField.text?.count == 0 || BigUInt(priceField.text!) == nil){
-            let alertVC = util.alert(title: "Error".localized, body: "Gas price is invalid.".localized, buttonTitle: "확인", buttonNum: 1, completion: {_ in
+            let alertVC = util.alert(title: "Error".localized, body: "Gas price is invalid.".localized, buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in
             })
             self.present(alertVC, animated: false)
         }
         else if(limitField.text?.count == 0) || BigUInt(limitField.text!) == nil {
-            let alertVC = util.alert(title: "Error".localized, body: "Gas limit is invalid.".localized, buttonTitle: "확인", buttonNum: 1, completion: { _ in
+            let alertVC = util.alert(title: "Error".localized, body: "Gas limit is invalid.".localized, buttonTitle: "Confirm".localized, buttonNum: 1, completion: { _ in
             })
             self.present(alertVC, animated: false)
         }

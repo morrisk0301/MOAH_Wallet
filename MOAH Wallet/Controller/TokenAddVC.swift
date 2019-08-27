@@ -276,7 +276,7 @@ class TokenAddVC: UIViewController, UITextFieldDelegate {
             }
             if(errorBody != nil){
                 DispatchQueue.main.async {
-                    let alertVC = util.alert(title: "Error".localized, body: errorBody!, buttonTitle: "확인", buttonNum: 1, completion: { _ in
+                    let alertVC = util.alert(title: "Error".localized, body: errorBody!, buttonTitle: "Confirm".localized, buttonNum: 1, completion: { _ in
                         self.hideSpinner()
                         self.contractField.text = ""
                     })
@@ -291,7 +291,7 @@ class TokenAddVC: UIViewController, UITextFieldDelegate {
         let ethToken = EthToken.shared
         ethToken.addToken(self.token!)
 
-        let alertVC = util.alert(title: "토큰 추가", body: token!.symbol+" 토큰 추가를 완료하였습니다.", buttonTitle: "확인", buttonNum: 1, completion: {_ in
+        let alertVC = util.alert(title: "토큰 추가", body: token!.symbol+" 토큰 추가를 완료하였습니다.", buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in
             self.reloadMainContainerVC()
             self.navigationController?.popViewController(animated: true)
         })

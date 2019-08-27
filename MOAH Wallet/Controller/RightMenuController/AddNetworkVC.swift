@@ -86,7 +86,7 @@ class AddNetworkVC: UIViewController, UITextFieldDelegate{
 
         label.text = "MOAH Wallet provides access to custom block chain network through RPC URL.\n\nYou can manage tokens in custom networks such as Ganache, local, private etc.".localized
         label.textColor = UIColor(key: "darker")
-        label.font = UIFont(name:"NanumSquareRoundR", size: 16, dynamic: true)
+        label.font = UIFont(name:"NanumSquareRoundR", size: 15, dynamic: true)
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
 
@@ -250,7 +250,7 @@ class AddNetworkVC: UIViewController, UITextFieldDelegate{
             }
             if(errorBody != nil){
                 DispatchQueue.main.async{
-                    let alertVC = util.alert(title: "Error".localized, body: errorBody!, buttonTitle: "확인", buttonNum: 1, completion: {_ in
+                    let alertVC = util.alert(title: "Error".localized, body: errorBody!, buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in
                         self.hideSpinner()
                     })
                     self.present(alertVC, animated: false)

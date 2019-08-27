@@ -17,7 +17,7 @@ class MnemonicVerificationVC: UIViewController, UITextFieldDelegate{
     let headLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 10, y: 100, width: 100, height: 120))
 
-        label.text = "비밀 시드 구문 인증"
+        label.text = "Verify Mnemonic Phrase".localized
         label.font = UIFont(name: "NanumSquareRoundB", size: 20, dynamic: true)
         label.textColor = UIColor(key: "darker")
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -57,7 +57,7 @@ class MnemonicVerificationVC: UIViewController, UITextFieldDelegate{
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.height))
         textField.leftView = paddingView
         textField.leftViewMode = .always
-        textField.placeholder = "비밀 시드 단어를 입력해주세요."
+        textField.placeholder = "Enter mnemonic phrase.".localized
         textField.borderStyle = .none
         textField.returnKeyType = .done
         textField.textColor = UIColor(key: "darker")
@@ -72,7 +72,7 @@ class MnemonicVerificationVC: UIViewController, UITextFieldDelegate{
 
     let nextButton: CustomButton = {
         let button = CustomButton(type: .system)
-        button.setTitle("다음", for: .normal)
+        button.setTitle("Next".localized, for: .normal)
         button.titleLabel?.font = UIFont(name:"NanumSquareRoundB", size: 18, dynamic: true)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(nextPressed(_:)), for: .touchUpInside)
@@ -157,8 +157,20 @@ class MnemonicVerificationVC: UIViewController, UITextFieldDelegate{
     }
 
     private func setVar(){
+        var tailText: String!
+        switch(wordIndex!){
+        case 0:
+            tailText = "st".localized
+        case 1:
+            tailText = "nd".localized
+        case 2:
+            tailText = "rd".localized
+        default:
+            tailText = "th".localized
+        }
+
         self.mnemonicField.text = ""
-        self.explainLabel.text = "\(wordIndex! + 1)번째 시드 단어를 입력해주세요."
+        self.explainLabel.text = "\(wordIndex! + 1)" + tailText + " " + "Word in Mnemonic Phrase".localized;
         self.mnemonicProgress.progress = Float(wordIndex!)/12
     }
 
@@ -213,7 +225,7 @@ class MnemonicVerificationVC: UIViewController, UITextFieldDelegate{
             }
         }
         else{
-            let alertVC = util.alert(title: "Error".localized, body: "올바르지 않은 시드 구문입니다.", buttonTitle: "확인", buttonNum: 1, completion: {_ in})
+            let alertVC = util.alert(title: "Error".localized, body: "Mnemonic phrase is invalid.".localized, buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in})
             self.present(alertVC, animated: false)
         }
 
