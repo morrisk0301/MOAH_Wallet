@@ -335,7 +335,7 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
     func sendEmail(){
         if(MFMailComposeViewController.canSendMail()){
             let emailTitle = ""
-            let messageBody = "Inquiry".localized + ": "
+            let messageBody = "iPhone Model".localized + ": \n" + "IOS Version".localized + ": \n" + "Problem".localized + ": "
             let toRecipents = ["moahwallet_official@naver.com"]
             let mc: MFMailComposeViewController = MFMailComposeViewController()
             mc.mailComposeDelegate = self

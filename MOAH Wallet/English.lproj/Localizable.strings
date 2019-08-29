@@ -186,7 +186,9 @@
 "Please try again in a few moments." = "Please try again in a few moments.";
 "Unverified Wallet" = "Unverified Wallet";
 "Please continue after getting your wallet verified." = "Please continue after getting your wallet verified.";
-"Inquiry" = "Inquiry";
+"Problem" = "Problem";
+"IOS Version" = "IOS Version";
+"iPhone Model" = "iPhone Model";
 
 "Accounts and Wallets" = "Accounts and Wallets";
 "Tokens" = "Tokens";

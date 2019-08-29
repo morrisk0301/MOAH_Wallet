@@ -55,7 +55,7 @@
 "Terms and Policy" = "약관 및 정책";
 "Email Inquiry" = "이메일 문의하기";
 "Terms and Conditions" = "이용 약관";
-"Privacy Policy" = "개인정보 취급방침";
+"Privacy Policy" = "개인정보 처리방침";
 "MOAH Wallet\nPlease enter your password." = "MOAH Wallet\n비밀번호를 입력해주세요.";
 "Invalid Password" = "비밀번호가 일치하지 않습니다.";
 "Account will be locked after 5 tries." = "5회 오류시 지갑 이용이 제한됩니다.";
@@ -186,7 +186,9 @@
 "Please try again in a few moments." = "잠시 후에 다시 이용해주세요.";
 "Unverified Wallet" = "미인증 지갑";
 "Please continue after getting your wallet verified." = "비밀 시드 구문 미인증 지갑입니다.\n인증 후 이용해주시기 바랍니다.";
-"Inquiry" = "문의하기";
+"Problem" = "문제점";
+"IOS Version" = "IOS 버전";
+"iPhone Model" = "아이폰 모델";
 
 "Accounts and Wallets" = "계정/지갑 관련 질문";
 "Tokens" = "토큰 관련 질문";

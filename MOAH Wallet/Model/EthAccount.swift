@@ -132,9 +132,13 @@ class EthAccount: NetworkObserver, AddressObserver{
 
     func getPrivateKey() -> String {
         guard let privateKey = _loadPrivateKey(name: _address!.name, password: _password!) else{
-            let privateKey2 = try! _keyStore?.UNSAFE_getPrivateKeyData(password: _password!, account: EthereumAddress(_address!.address)!)
-
-            return privateKey2!.toHexString()
+            do{
+                let privateKey2 = try _keyStore?.UNSAFE_getPrivateKeyData(password: _password!, account: EthereumAddress(_address!.address)!)
+                return privateKey2!.toHexString()
+            }
+            catch{
+                return ""
+            }
         }
         return privateKey
     }
