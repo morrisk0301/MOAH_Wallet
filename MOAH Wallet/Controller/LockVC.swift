@@ -62,8 +62,8 @@ class LockVC: UIViewController, KeypadViewDelegate {
 
     func networkCheck(completion: () -> ()){
         if(reachability.reachability.connection == .none){
-            let alertController = UIAlertController(title: "Error".localized, message: "네트워크를 사용할 수 없습니다.\n네트워크를 활성화해주세요.", preferredStyle: .alert)
-            let ok = UIAlertAction(title: "재시도", style: .default){(_) in
+            let alertController = UIAlertController(title: "Error".localized, message: "Network is unreachable.\nPlease check your network.".localized, preferredStyle: .alert)
+            let ok = UIAlertAction(title: "Retry".localized, style: .default){(_) in
                 if (self.reachability.reachability.connection == .none){
                     self.networkCheck(completion: {})
                 }

@@ -175,9 +175,13 @@ class EthToken: NetworkObserver {
         let contract = web3.getWeb3Ins()!.contract(Web3Utils.erc20ABI, at: EthereumAddress(token!.address)!)
         option.from = address
 
-        let balance = try! contract?.method("balanceOf", parameters: [address] as [AnyObject], transactionOptions: option)?.call()["0"] as! BigUInt
-
-        return balance
+        do{
+            let balance = try contract?.method("balanceOf", parameters: [address] as [AnyObject], transactionOptions: option)?.call()["0"] as! BigUInt
+            return balance
+        }
+        catch{
+            return BigUInt(0)
+        }
     }
 
     func detachTokenObserver(_ delObserver: TokenObserver){

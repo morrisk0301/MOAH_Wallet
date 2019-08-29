@@ -187,3 +187,58 @@
 "Unverified Wallet" = "Unverified Wallet";
 "Please continue after getting your wallet verified." = "Please continue after getting your wallet verified.";
 "Inquiry" = "Inquiry";
+
+"Accounts and Wallets" = "Accounts and Wallets";
+"Tokens" = "Tokens";
+"Transactions and Gas" = "Transactions and Gas";
+"Security" = "Security";
+
+"How do I create a new account?" = "How do I create a new account?";
+"You can create a new account in left tab of main menu -> My Account -> Add Account -> Create Account menu." = "You can create a new account in left tab of main menu -> My Account -> Add Account -> Create Account menu.";
+"How do I get external account with private key?" = "How do I get external account with private key?";
+"You can get your external account with private key in left tab of main menu -> My Account -> Add Account -> Get Account with Private Key menu." = "You can get your external account with private key in left tab of main menu -> My Account -> Add Account -> Get Account with Private Key menu.";
+"How do I delete my account?" = "How do I delete my account?";
+"You can delete your account in left tab of main menu -> My Account menu by swiping left on your account list." = "You can delete your account in left tab of main menu -> My Account menu by swiping left on your account list.";
+"What is the maximum number of accounts in my wallet?" = "What is the maximum number of accounts in my wallet?";
+"Maximum number of accounts to be created is 10. There is no limit for getting external account with private key." = "Maximum number of accounts to be created is 10. There is no limit for getting external account with private key.";
+"How do I find my account's address?" = "How do I find my account's address?";
+"You can find your accounts' address and it's QR Code in left tab of main menu" = "You can find your accounts' address and it's QR Code in left tab of main menu";
+"How do I restore my external wallet with mnemonic phrase?" = "How do I restore my external wallet with mnemonic phrase?";
+"You need to delete and reinstall MOAH Wallet in order to restore an external wallet." = "You need to delete and reinstall MOAH Wallet in order to restore an external wallet.";
+
+"What is a token?" = "What is a token?";
+"A token is a crypto currency created with Ethereum's Smart Contract." = "A token is a crypto currency created with Ethereum's Smart Contract.";
+"How do I add a token?" = "How do I add a token?";
+"Click the name of crypto currency in main menu -> Click add -> Search the name of the token you wish to add." = "Click the name of crypto currency in main menu -> Click add -> Search the name of the token you wish to add.";
+"How do I add token with it's contract address?" = "How do I add token with it's contract address?";
+"Click the name of crypto currency in main menu -> Click add -> Custom Token -> Enter contract address of the token you wish to add." = "Click the name of crypto currency in main menu -> Click add -> Custom Token -> Enter contract address of the token you wish to add.";
+"Can I search tokens in test network?" = "Can I search tokens in test network?";
+"Token searching is only available in Ethereum main network." = "Token searching is only available in Ethereum main network.";
+"How do I remove token that I have added?" = "How do I remove token that I have added?";
+"Click the name of crypto currency in main menu -> Swipe left on your token list and click delete button." = "Click the name of crypto currency in main menu -> Swipe left on your token list and click delete button.";
+
+"How do I transfer my Ether/Token?" = "How do I transfer my Ether/Token?";
+"Click transfer button on the main menu. Ether/Token transfers cannot be undone under any circumstances. Please beware of this." = "Click transfer button on the main menu. Ether/Token transfers cannot be undone under any circumstances. Please beware of this.";
+"Why does my transaction fails?" = "Why does my transaction fails?";
+"Invalid address, insufficient/excessive gas fee, block chain network error, or lock on your token can cause your transaction to fail. MOAH Wallet has no responsibility on gas fee of a failed transaction." = "Invalid address, insufficient/excessive gas fee, block chain network error, or lock on your token can cause your transaction to fail. MOAH Wallet has no responsibility on gas fee of a failed transaction.";
+"What is gas fee?" = "What is gas fee?";
+"Gas fee is a cost for making a transaction in Ethereum block chain network. Gas fee is a product of gas price and gas limit" = "Gas fee is a cost for making a transaction in Ethereum block chain network. Gas fee is a product of gas price and gas limit";
+"What is gas price?" = "What is gas price?";
+"Gas price is amount of Ether per gas. Transaction speed is proportional to gas price." = "Gas price is amount of Ether per gas. Transaction speed is proportional to gas price.";
+"What is gas limit?" = "What is gas limit?";
+"Gas limit is maximum amount of gas per transaction. Maximum amount of gas is withdrawn when making transaction and leftover gas will be refunded after transaction is complete." = "Gas limit is maximum amount of gas per transaction. Maximum amount of gas is withdrawn when making transaction and leftover gas will be refunded after transaction is complete.";
+"How do I set my gas fee?" = "How do I set my gas fee?";
+"You can set your gas fee in left tab of main menu -> TX Fee" = "You can set your gas fee in left tab of main menu -> TX Fee";
+
+"What is mnemonic phrase?" = "What is mnemonic phrase?";
+"Mnemonic phrase is a private key consists of 12 words. It is used to create/restore wallet and transfer Ether/Token. Be careful not to disclose it." = "Mnemonic phrase is a private key consists of 12 words. It is used to create/restore wallet and transfer Ether/Token. Be careful not to disclose it.";
+"How do I find my mnemonic phrase?" = "How do I find my mnemonic phrase?";
+"You can find your mnemonic phrase in right tab of main menu -> Mnemonic Phrase -> View Mnemonic Phrase." = "You can find your mnemonic phrase in right tab of main menu -> Mnemonic Phrase -> View Mnemonic Phrase.";
+"What is private key?" = "What is private key?";
+"Private key is a unique hash value for your account. It is used to getting external account and transfer Ether/Token. Be careful not to disclose it." = "Private key is a unique hash value for your account. It is used to getting external account and transfer Ether/Token. Be careful not to disclose it.";
+"How do I find my private key?" = "How do I find my private key?";
+"You can find your private key in left tab of main menu -> View Private Key." = "You can find your private key in left tab of main menu -> View Private Key.";
+"How do I change my app password?" = "How do I change my app password?";
+"You can change your app password in right tab of main menu -> Security and Notifications." = "You can change your app password in right tab of main menu -> Security and Notifications.";
+"I have lost my password. What can I do?" = "I have lost my password. What can I do?";
+"MOAH Wallet does not store user's password. Please reinstall application and restore your wallet with mnemonic phrase." = "MOAH Wallet does not store user's password. Please reinstall application and restore your wallet with mnemonic phrase.";

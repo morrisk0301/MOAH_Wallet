@@ -66,7 +66,7 @@ class FAQVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
             switch(index){
             case 0:
-                title = "계정/지갑 관련 질문"
+                title = "Accounts and Wallets".localized
                 for i in 0..<FAQData.account.allCases.count{
                     question.append(FAQData.account(rawValue: i)!.question)
                     answer.append(FAQData.account(rawValue: i)!.answer)
@@ -75,7 +75,7 @@ class FAQVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 }
                 break
             case 1:
-                title = "토큰 관련 질문"
+                title = "Tokens".localized
                 for i in 0..<FAQData.token.allCases.count{
                     question.append(FAQData.token(rawValue: i)!.question)
                     answer.append(FAQData.token(rawValue: i)!.answer)
@@ -84,7 +84,7 @@ class FAQVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 }
                 break
             case 2:
-                title = "암호화폐 전송/가스 비용 관련 질문"
+                title = "Transactions and Gas".localized
                 for i in 0..<FAQData.transfer.allCases.count{
                     question.append(FAQData.transfer(rawValue: i)!.question)
                     answer.append(FAQData.transfer(rawValue: i)!.answer)
@@ -93,7 +93,7 @@ class FAQVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 }
                 break
             case 3:
-                title = "보안 관련 질문"
+                title = "Security".localized
                 for i in 0..<FAQData.security.allCases.count{
                     question.append(FAQData.security(rawValue: i)!.question)
                     answer.append(FAQData.security(rawValue: i)!.answer)
