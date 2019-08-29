@@ -345,7 +345,10 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
             present(mc, animated: true, completion: nil)
         }
         else{
-            return
+            let alertVC = util.alert(title: "Error".localized, body: "Mail App is unavailable.".localized, buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in
+                return
+            })
+            self.present(alertVC, animated: false)
         }
     }
 

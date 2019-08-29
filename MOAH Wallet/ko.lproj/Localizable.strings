@@ -189,6 +189,7 @@
 "Problem" = "문제점";
 "IOS Version" = "IOS 버전";
 "iPhone Model" = "아이폰 모델";
+"Mail App is unavailable." = "메일 앱을 사용할 수 없습니다.";
 
 "Accounts and Wallets" = "계정/지갑 관련 질문";
 "Tokens" = "토큰 관련 질문";

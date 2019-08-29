@@ -136,8 +136,8 @@ extension UIViewController {
         var lockTime: Date!
         var lockCount = 0
         if var count = userDefaults.value(forKey: "lockCount") as? Int {
-            if(count > 3){
-                count = 3
+            if(count > 4){
+                count = 4
             }
             lockCount = count
         }
