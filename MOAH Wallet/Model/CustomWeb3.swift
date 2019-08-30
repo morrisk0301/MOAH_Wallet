@@ -66,7 +66,7 @@ class CustomWeb3: AddressObserver {
         return _web3Ins
     }
 
-    func getBalance(address: String?, completion: @escaping (BigUInt?) -> ()) {
+    func getBalance(address: String?, completion: @escaping (BigUInt?, BigUInt?) -> ()) {
         var addressModified: EthereumAddress?
         if (address == nil) {
             addressModified = EthereumAddress(_address!.address)!
@@ -79,20 +79,19 @@ class CustomWeb3: AddressObserver {
             let token = ethToken.token
             do {
                 if (addressModified == nil) {
-                    completion(nil)
+                    completion(nil, nil)
                 } else {
-                    if(token == nil){
-                        let balance = try self._web3Ins?.eth.getBalance(address: addressModified!)
-                        completion(balance)
-                    }
-                    else{
-                        let balance = ethToken.getTokenBalance(address: addressModified!)
-                        completion(balance)
+                    let ethBalance = try self._web3Ins?.eth.getBalance(address: addressModified!)
+                    if(token != nil){
+                        let tokenBalance = ethToken.getTokenBalance(address: addressModified!)
+                        completion(ethBalance, tokenBalance)
+                    }else{
+                        completion(ethBalance, nil)
                     }
                 }
             } catch {
                 print(error)
-                completion(nil)
+                completion(nil, nil)
             }
         }
     }
@@ -351,6 +350,7 @@ class CustomWeb3: AddressObserver {
     }
 
     func getTXReceipt(hash: String) -> TransactionReceipt? {
+        if(_web3Ins == nil) { return nil }
         var tx: TransactionReceipt?
         do{
             tx = try _web3Ins!.eth.getTransactionReceipt(hash)
@@ -362,6 +362,7 @@ class CustomWeb3: AddressObserver {
     }
 
     func getTXDetail(hash: String) -> TransactionDetails? {
+        if(_web3Ins == nil) { return nil }
         var tx: TransactionDetails?
         do{
             tx = try _web3Ins!.eth.getTransactionDetails(hash)

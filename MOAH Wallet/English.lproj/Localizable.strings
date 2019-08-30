@@ -191,6 +191,7 @@
 "iPhone Model" = "iPhone Model";
 "Mail App is unavailable." = "Mail App is unavailable.";
 "Gas required exceeds the gas limit." = "Gas required exceeds the gas limit.";
+"Block chain network is unreachable." = "Block chain network is unreachable.";
 
 "Accounts and Wallets" = "Accounts and Wallets";
 "Tokens" = "Tokens";

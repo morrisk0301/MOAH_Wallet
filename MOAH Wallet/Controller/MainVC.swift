@@ -17,6 +17,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Chec
     var tempMnemonic: String?
     var delegate: MainControllerDelegate?
     var balance: BigUInt?
+    var ethBalance: BigUInt?
     var balanceString: String?
     var decimals = 18
     var symbol = "ETH"
@@ -242,6 +243,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Chec
             controller.balance = self.balance!
             controller.balanceString = self.balanceString!
             controller.symbol = self.symbol
+            controller.ethBalance = self.ethBalance
             self.present(UINavigationController(rootViewController: controller), animated: true)
         }
         else{

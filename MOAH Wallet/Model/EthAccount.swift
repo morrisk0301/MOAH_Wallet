@@ -382,7 +382,6 @@ class EthAccount: NetworkObserver, AddressObserver{
 
         _loadKeyStore()
         _loadIsVerified()
-        connectNetwork()
     }
 
     private func _initAccount(){

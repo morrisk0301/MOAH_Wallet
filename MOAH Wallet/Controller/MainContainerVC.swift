@@ -8,6 +8,7 @@ import UIKit
 import MessageUI
 import web3swift
 import CoreData
+import BigInt
 
 class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeViewControllerDelegate, UIGestureRecognizerDelegate, TransactionDelegate{
 
@@ -30,7 +31,6 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
 
     let txQueue = TXQueue.queue
     let screenSize = UIScreen.main.bounds
-    let web3: CustomWeb3 = CustomWeb3.shared
     let account: EthAccount = EthAccount.shared
     let util = Util()
 
@@ -60,8 +60,8 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
 
     override func viewDidAppear(_ animated: Bool) {
         if(isReload){
-            self.showSpinner()
             if(isInit){
+                account.connectNetwork()
                 txQueue.refreshTX()
             }
             initVCs()
@@ -72,6 +72,9 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
     override func viewWillAppear(_ animated: Bool) {
         self.style = .lightContent
         self.setNeedsStatusBarAppearanceUpdate()
+        if(isReload){
+            self.showSpinner()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -281,10 +284,18 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
             }
             self.checkChainNetwork()
             self.txHistory = ethTxHistory.fetchTXInfo()
-            self.web3.getBalance(address: nil, completion: {(balance) in
-                let balanceTrimmed = self.util.trimBalance(balance: balance, index: 24)
+            web3.getBalance(address: nil, completion: {(ethBalance, tokenBalance) in
+                var finalBalance: BigUInt!
+                if(ethToken.token != nil) {
+                    finalBalance = tokenBalance
+                }
+                else{
+                    finalBalance = ethBalance
+                }
+                let balanceTrimmed = self.util.trimBalance(balance: finalBalance, index: 24)
                     DispatchQueue.main.async {
-                        self.mainVC.balance = balance
+                        self.mainVC.ethBalance = ethBalance
+                        self.mainVC.balance = finalBalance
                         self.mainVC.symbol = self.symbol
                         self.mainVC.decimals = self.decimals
                         self.mainVC.txHistory = self.txHistory!
@@ -304,18 +315,18 @@ class MainContainerVC: UIViewController, MainControllerDelegate, MFMailComposeVi
     }
 
     func checkChainNetwork(){
+        let web3: CustomWeb3 = CustomWeb3.shared
         if(web3.getWeb3Ins() == nil){
-            self.hideSpinner()
-            let alertVC = util.alert(title: "Error".localized, body: "Network is unreachable.\nPlease check your network.".localized, buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in
-                let controller = NetworkSettingVC()
-                let transition = LeftTransition()
-
-                DispatchQueue.main.async{
-                    self.view.window!.layer.add(transition, forKey: kCATransition)
-                    self.present(UINavigationController(rootViewController: controller), animated: false, completion: nil)
-                }
-            })
-            self.present(alertVC, animated: false)
+            DispatchQueue.main.async {
+                self.hideSpinner()
+                let alertVC = self.util.alert(title: "Error".localized, body: "Block chain network is unreachable.".localized, buttonTitle: "Confirm".localized, buttonNum: 1, completion: { _ in
+                    DispatchQueue.main.async {
+                        let controller = NetworkSettingVC()
+                        self.present(UINavigationController(rootViewController: controller), animated: true, completion: nil)
+                    }
+                })
+                self.present(alertVC, animated: false)
+            }
         }
     }
 

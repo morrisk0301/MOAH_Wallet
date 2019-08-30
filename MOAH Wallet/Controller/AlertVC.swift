@@ -24,6 +24,7 @@ class AlertVC: UIViewController{
     var use: String = "alert"
     var info: TransferInfo?
     var balance: BigUInt?
+    var ethBalance: BigUInt?
     var isToken = false
 
     let screenSize = UIScreen.main.bounds
@@ -92,7 +93,7 @@ class AlertVC: UIViewController{
             transferAlertView!.bottomAnchor.constraint(equalTo: nextButton.topAnchor).isActive = true
 
             if(self.isToken){
-                if(self.info!.gas > self.balance!){
+                if(self.info!.gas > self.ethBalance!){
                     transferAlertView?.warningLabel.text = "Gas fee is insufficient.".localized
                     transferAlertView?.warningLabel.textColor = UIColor.red
                     nextButton.isEnabled = false

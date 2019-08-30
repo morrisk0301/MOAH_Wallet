@@ -18,6 +18,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
     var amountVerified = false
     var balanceString: String!
     var balance: BigUInt!
+    var ethBalance: BigUInt!
     var symbol: String!
     var decimals: Int!
 
@@ -484,7 +485,8 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
                     let total = Web3Utils.parseToBigUInt(amount, decimals: self.decimals)! + estimateGas!
                     let info = TransferInfo(amount: Web3Utils.parseToBigUInt(amount, decimals: self.decimals)!,
                             address: address, gas: estimateGas!, total: total, symbol: self.symbol, decimals: self.decimals)
-                    let confirmVC = util.alert(use: "transfer", title: "Confirm Transaction".localized, info: info, balance: self.balance, isToken: self.symbol != "ETH",
+                    let confirmVC = util.alert(use: "transfer", title: "Confirm Transaction".localized, info: info, 
+                            balance: self.balance, ethBalance: self.ethBalance, isToken: self.symbol != "ETH",
                             buttonTitle: "Transfer".localized, buttonNum: 2, completion: { (confirm) in
                         if(confirm){
                             let controller = PasswordCheckVC()

@@ -171,8 +171,10 @@ class EthToken: NetworkObserver {
 
     func getTokenBalance(address: EthereumAddress) -> BigUInt{
         let web3 = CustomWeb3.shared
+        guard let web3Ins = web3.getWeb3Ins() else { return BigUInt(0)}
+
         var option = web3.getOption()!
-        let contract = web3.getWeb3Ins()!.contract(Web3Utils.erc20ABI, at: EthereumAddress(token!.address)!)
+        let contract = web3Ins.contract(Web3Utils.erc20ABI, at: EthereumAddress(token!.address)!)
         option.from = address
 
         do{
