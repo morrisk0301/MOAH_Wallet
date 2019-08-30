@@ -131,7 +131,7 @@ class CustomWeb3: AddressObserver {
         _transfer(tx: tx, subInfo: subInfo)
     }
 
-    func preTransfer(address: String, amount: String, completion: @escaping (WriteTransaction?, BigUInt?, TXSubInfo?) -> ()) throws {
+    func preTransfer(address: String, amount: String, completion: @escaping (WriteTransaction?, BigUInt?, TXSubInfo?, String?) -> ()) throws {
         if(amount.count == 0){ throw TransferError.invalidAmount}
         if(address == _address!.address){ throw TransferError.transferToSelf}
         guard let address = EthereumAddress(address) else { throw TransferError.invalidAddress }
@@ -150,40 +150,57 @@ class CustomWeb3: AddressObserver {
                 self._option!.from = EthereumAddress(from)!
                 if(token == nil){
                     let amount = Web3Utils.parseToBigUInt(amount, decimals: 18)!
-                    let tx =  self._web3Ins!.eth.sendETH(to: address, amount: amount, transactionOptions: self._option)!
+                    if let tx =  self._web3Ins!.eth.sendETH(to: address, amount: amount, transactionOptions: self._option){
+                        if(auto){
+                            gasLimit = try self._web3Ins!.eth.estimateGas(tx.transaction, transactionOptions: self._option!)
+                            gasPrice = try self._web3Ins?.eth.getGasPrice()
+                        }
 
-                    if(auto){
-                        gasLimit = try self._web3Ins!.eth.estimateGas(tx.transaction, transactionOptions: self._option!)
-                        gasPrice = try self._web3Ins?.eth.getGasPrice()
+
+                        let subInfo = TXSubInfo(to: address.address, from: from, category: "Ether Transfer",
+                                amount: amount, symbol: "ETH", decimals: 18, gasPrice: gasPrice!, gasLimit: gasLimit!)
+                        completion(tx, gasLimit!*gasPrice!, subInfo, nil)
+                    }
+                    else{
+                        completion(nil, nil, nil, nil)
                     }
 
-
-                    let subInfo = TXSubInfo(to: address.address, from: from, category: "Ether Transfer", 
-                            amount: amount, symbol: "ETH", decimals: 18, gasPrice: gasPrice!, gasLimit: gasLimit!)
-                    completion(tx, gasLimit!*gasPrice!, subInfo)
                 }else{
                     let tokenAddress = EthereumAddress(token!.address)!
                     let amount = Web3Utils.parseToBigUInt(amount, decimals: Int(token!.decimals.description)!)!
 
                     let tokenContract = self._web3Ins!.contract(Web3Utils.erc20ABI, at: tokenAddress)
-                    let tx = tokenContract!.write("transfer", parameters: [address, amount] as [AnyObject],
-                            extraData: Data(), transactionOptions: self._option)!
+                    if let tx = tokenContract!.write("transfer", parameters: [address, amount] as [AnyObject],
+                            extraData: Data(), transactionOptions: self._option){
 
-                    if(auto){
-                        gasLimit = try self._web3Ins!.eth.estimateGas(tx.transaction, transactionOptions: self._option!)
-                        gasPrice = try self._web3Ins?.eth.getGasPrice()
+                        if(auto){
+                            gasLimit = try self._web3Ins!.eth.estimateGas(tx.transaction, transactionOptions: self._option!)
+                            gasPrice = try self._web3Ins?.eth.getGasPrice()
+                        }
+
+                        let subInfo = TXSubInfo(to: address.address, from: from, category: "Token Transfer",
+                                amount: amount, symbol: token!.symbol, decimals: Int(token!.decimals.description)!,
+                                gasPrice: gasPrice!, gasLimit: gasLimit!)
+
+                        completion(tx, gasLimit!*gasPrice!, subInfo, nil)
                     }
-
-                    let subInfo = TXSubInfo(to: address.address, from: from, category: "Token Transfer", 
-                            amount: amount, symbol: token!.symbol, decimals: Int(token!.decimals.description)!,
-                            gasPrice: gasPrice!, gasLimit: gasLimit!)
-
-                    completion(tx, gasLimit!*gasPrice!, subInfo)
+                    else{
+                        completion(nil, nil, nil, nil)
+                    }
+                }
+            }
+            catch Web3Error.nodeError(let desc){
+                print(desc)
+                if(desc.contains("gas")){
+                    completion(nil, nil, nil, "gas")    
+                }
+                else if(desc.contains("address")){
+                    completion(nil, nil, nil, "address")
                 }
             }
             catch{
                 print(error)
-                completion(nil, nil, nil)
+                completion(nil, nil, nil, "unknown")
             }
         }
     }

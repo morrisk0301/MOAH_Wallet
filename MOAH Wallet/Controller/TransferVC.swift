@@ -461,10 +461,19 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
 
         do {
             self.showSpinner()
-            try web3.preTransfer(address: address, amount: amount, completion: {(tx, estimateGas, subInfo) in
+            try web3.preTransfer(address: address, amount: amount, completion: {(tx, estimateGas, subInfo, error) in
                 DispatchQueue.main.async{
                     guard let _ = tx else{
-                        let alertVC = util.alert(title: "Error".localized, body: "Transfer address is invalid.".localized, buttonTitle: "Confirm".localized, buttonNum: 1, completion: { _ in
+                        var errorBody: String!
+                        switch(error){
+                        case "gas":
+                            errorBody = "Gas required exceeds the gas limit.".localized
+                        case "address":
+                            errorBody = "Transfer address is invalid.".localized
+                        default:
+                            errorBody = "Unknown Error"
+                        }
+                        let alertVC = util.alert(title: "Error".localized, body: errorBody, buttonTitle: "Confirm".localized, buttonNum: 1, completion: { _ in
                             self.hideSpinner()
                         })
                         self.present(alertVC, animated: false)

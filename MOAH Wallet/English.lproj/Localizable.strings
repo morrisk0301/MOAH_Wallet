@@ -190,6 +190,7 @@
 "IOS Version" = "IOS Version";
 "iPhone Model" = "iPhone Model";
 "Mail App is unavailable." = "Mail App is unavailable.";
+"Gas required exceeds the gas limit." = "Gas required exceeds the gas limit.";
 
 "Accounts and Wallets" = "Accounts and Wallets";
 "Tokens" = "Tokens";

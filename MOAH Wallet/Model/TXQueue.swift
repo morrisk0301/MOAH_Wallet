@@ -43,15 +43,21 @@ class TXQueue {
             var count = 0
             while(true){
                 count += 1
-                let hash = web3.getTXReceipt(hash: txHash)
-                if(hash != nil && hash!.status != .notYetProcessed){
-                    ethTXHistory.updateTXStatus(tx: txHash, status: hash!.status.description)
+                let receipt = web3.getTXReceipt(hash: txHash)
+                if(receipt != nil && receipt!.status != .notYetProcessed){
+                    ethTXHistory.updateTXStatus(tx: txHash, status: receipt!.status.description)
                     _popTask(txHash)
                     self.delegate?.transactionComplete()
                     break
                 }
-                if(count>10 || txHash.count == 0){break}
-                sleep(10)
+                if(count>20){
+                    ethTXHistory.updateTXStatus(tx: txHash, status: "failed")
+                    _popTask(txHash)
+                    self.delegate?.transactionComplete()
+                    break
+                }
+                if(txHash.count == 0){ break }
+                sleep(5)
             }
         }
     }
