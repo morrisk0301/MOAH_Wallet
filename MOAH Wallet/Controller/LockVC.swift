@@ -82,13 +82,13 @@ class LockVC: UIViewController, KeypadViewDelegate {
 
         if(password.count >= 6){
             if(account.checkPassword(password)){
-                userDefaults.removeObject(forKey: "lockCount")
                 let mainContainerVC = MainContainerVC()
                 self.appDelegate.window?.rootViewController = mainContainerVC
             }
             else{
                 count += 1
                 if(count > 4){
+                    self.view.isUserInteractionEnabled = false
                     self.lockUser()
                     return
                 }
@@ -121,7 +121,6 @@ class LockVC: UIViewController, KeypadViewDelegate {
         autoContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "MOAH Wallet Biometrics Verification".localized) { (success, error) in
             DispatchQueue.main.async {
                 if (success) {
-                    self.userDefaults.removeObject(forKey: "lockCount")
                     self.account.bioProceed()
                     let mainContainerVC = MainContainerVC()
                     self.appDelegate.window?.rootViewController = mainContainerVC

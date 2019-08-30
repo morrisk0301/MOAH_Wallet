@@ -87,6 +87,10 @@ class LockedVC: UIViewController {
         })
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        timer.invalidate()
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }

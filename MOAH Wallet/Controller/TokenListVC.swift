@@ -158,7 +158,7 @@ class TokenListVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, U
 
             self.ethToken.addToken(self.tokenArr[indexPath.row])
 
-            let alertVC = self.util.alert(title: "Add Token", body: self.tokenArr[indexPath.row].symbol+" " + "token has been successfully added.".localized,
+            let alertVC = self.util.alert(title: "Add Token".localized, body: self.tokenArr[indexPath.row].symbol+" " + "token has been successfully added.".localized,
                     buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in })
 
             self.present(alertVC, animated: false)

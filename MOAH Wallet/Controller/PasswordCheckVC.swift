@@ -89,6 +89,7 @@ class PasswordCheckVC: UIViewController, KeypadViewDelegate, UIGestureRecognizer
             else{
                 count += 1
                 if(count > 4){
+                    self.view.isUserInteractionEnabled = false
                     self.lockUser()
                     return
                 }

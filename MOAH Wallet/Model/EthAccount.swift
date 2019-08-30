@@ -379,6 +379,7 @@ class EthAccount: NetworkObserver, AddressObserver{
         self._password = keyHex
         self._address = ethAddress.address
         ethAddress.attachAddressObserver(self)
+        userDefaults.removeObject(forKey: "lockCount")
 
         _loadKeyStore()
         _loadIsVerified()
