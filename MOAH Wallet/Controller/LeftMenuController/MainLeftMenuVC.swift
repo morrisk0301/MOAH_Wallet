@@ -33,7 +33,7 @@ class MainLeftMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     let versionLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "v0.0.1"
+        label.text = "v" + AppSetting.APPVERSION
         label.textColor = UIColor(key: "grey2")
         label.font = UIFont(name:"NanumSquareRoundR", size: 14, dynamic: true)
         label.textAlignment = .center

@@ -203,6 +203,7 @@ class NetworkSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSo
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
+            AudioServicesPlaySystemSound(1519)
             web3.delNetwork(network: networks[indexPath.section])
             getNetwork()
             self.tableView.deleteSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)

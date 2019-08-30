@@ -202,6 +202,7 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
+            AudioServicesPlaySystemSound(1519)
             let address = self.accounts[indexPath.section].value(forKey: "address") as! String
             let name = self.accounts[indexPath.section].value(forKey: "name") as! String
             let isPrivateKey = self.accounts[indexPath.section].value(forKey: "isPrivateKey") as! Bool

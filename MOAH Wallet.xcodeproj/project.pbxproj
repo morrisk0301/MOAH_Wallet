@@ -41,6 +41,7 @@
 		C051F3B631C59EB4D329669E /* TransferVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F5A58B7F4264F9A38089 /* TransferVC.swift */; };
 		C051F3CA69AE7CD6C3B67B3A /* HTTPRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F7794353B3183DC631E7 /* HTTPRequest.swift */; };
 		C051F3E8704B988773687809 /* TokenSelectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FF7BB7B279B376C514A0 /* TokenSelectVC.swift */; };
+		C051F3F389789D0BF3DFBC2B /* AppSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F2892919FFA8866E2805 /* AppSetting.swift */; };
 		C051F43CB8BBDF5876788661 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FA6C9DECCACCA006C620 /* MainViewController.swift */; };
 		C051F45046E2E4152EDD8712 /* MainTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051F635779A9F378E8C0E45 /* MainTokenView.swift */; };
 		C051F49194CE70570CBFED75 /* PasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C051FA989586C885176EA740 /* PasswordVC.swift */; };
@@ -151,6 +152,7 @@
 		C051F1FBAE02F542E6EB725F /* TXFeeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TXFeeVC.swift; sourceTree = "<group>"; };
 		C051F252F03BC7813457F213 /* TransferAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferAlertView.swift; sourceTree = "<group>"; };
 		C051F26B45756590CE49C8EC /* TokenListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenListVC.swift; sourceTree = "<group>"; };
+		C051F2892919FFA8866E2805 /* AppSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSetting.swift; sourceTree = "<group>"; };
 		C051F2A0436A8E675D322837 /* PasswordSettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordSettingVC.swift; sourceTree = "<group>"; };
 		C051F2C7AD63643BFDF3A9C6 /* NanumGothic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file.ttf; path = NanumGothic.ttf; sourceTree = "<group>"; };
 		C051F2FC1D4AD78361437D8A /* KeychainService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
@@ -398,6 +400,7 @@
 				C051F7794353B3183DC631E7 /* HTTPRequest.swift */,
 				C051F65B70D78C110BEE8C06 /* LockTime.swift */,
 				C051F4CE2653D71DD6AC28A9 /* FAQData.swift */,
+				C051F2892919FFA8866E2805 /* AppSetting.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -829,6 +832,7 @@
 				C051F0205C6CB3679A7345CF /* NoticeBodyCell.swift in Sources */,
 				C051FD663800533BEEB768FD /* PolicyDetailVC.swift in Sources */,
 				C051FF36741E9133CD2D2C82 /* ExpandableCell.swift in Sources */,
+				C051F3F389789D0BF3DFBC2B /* AppSetting.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
