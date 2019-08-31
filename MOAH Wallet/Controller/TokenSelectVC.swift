@@ -85,8 +85,9 @@ class TokenSelectVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         super.viewDidLoad()
 
         view.backgroundColor = UIColor(key: "light3")
+        view.clipsToBounds = true
         view.layer.cornerRadius = 20
-        view.layer.masksToBounds = true
+        view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
 
         tableView.delegate = self
         tableView.dataSource = self
