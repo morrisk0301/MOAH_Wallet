@@ -103,6 +103,7 @@ class PasswordVC: UIViewController, KeypadViewDelegate, UIGestureRecognizerDeleg
                 self.navigationController?.pushViewController(passwordVC, animated: true)
             }
             else if(confirm && password == passwordTemp){
+                self.view.isUserInteractionEnabled = false
                 account.savePassword(password!)
                 userDefaults.set(true, forKey: "useLock")
                 authBiometrics()

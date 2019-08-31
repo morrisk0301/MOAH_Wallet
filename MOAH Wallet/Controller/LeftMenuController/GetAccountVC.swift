@@ -222,11 +222,11 @@ class GetAccountVC: UIViewController, UITextFieldDelegate {
     @objc private func nextPressed(_ sender: UIButton){
         let util = Util()
 
-        let name = nameField.text!
+        let name = nameField.text!.trimWhiteSpaces()
         let key = privateKeyField.text!
         var errorBody: String?
 
-        if(nameField.text?.count == 0){
+        if(name.isEmpty){
             let alertVC = util.alert(title: "Error".localized, body: "Enter your account's name".localized, buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in})
             self.present(alertVC, animated: false)
             return

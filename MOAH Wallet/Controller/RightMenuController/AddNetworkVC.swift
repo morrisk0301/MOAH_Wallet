@@ -53,6 +53,7 @@ class AddNetworkVC: UIViewController, UITextFieldDelegate{
         textField.backgroundColor = .clear
         textField.layer.borderColor = UIColor(key: "grey2").cgColor
         textField.layer.borderWidth = 0.5
+        textField.keyboardType = .asciiCapable
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.tag = 0
 
@@ -222,13 +223,13 @@ class AddNetworkVC: UIViewController, UITextFieldDelegate{
     @objc private func nextPressed(_ sender:UIButton){
         self.showSpinner()
         let util = Util()
-        let name = nameField.text!
+        let name = nameField.text!.trimWhiteSpaces()
         let url = urlField.text!
         var errorBody: String?
 
         DispatchQueue.global(qos: .userInitiated).async{
             do{
-                if(name.count == 0){throw AddNetworkError.invalidName}
+                if(name.isEmpty){throw AddNetworkError.invalidName}
                 guard let url = URL(string: url.lowercased()) else { throw AddNetworkError.invalidURL }
                 try self.web3.setNetwork(network: CustomWeb3Network(name: name, url: url), new: true)
                 DispatchQueue.main.async{

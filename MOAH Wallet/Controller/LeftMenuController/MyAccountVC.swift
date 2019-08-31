@@ -132,7 +132,6 @@ class MyAccountVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         DispatchQueue.global(qos: .userInteractive).sync{
             for index in 0..<self.accounts.count{
                 let indexPath = IndexPath(row: 0, section: index)
-                //var balance = BigUInt(0)
                 let address = accounts[indexPath.section].value(forKey: "address") as! String
                 web3.getBalanceSync(address: address, completion: {(balance) in
                     let balanceTrimmed = self.util.trimBalance(balance: balance, index: 13)

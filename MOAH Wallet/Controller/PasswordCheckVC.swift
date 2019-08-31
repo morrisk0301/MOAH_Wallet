@@ -68,6 +68,7 @@ class PasswordCheckVC: UIViewController, KeypadViewDelegate, UIGestureRecognizer
         lock.changeLabel(password.count)
 
         if(password.count >= 6){
+            self.view.isUserInteractionEnabled = false
             if(account.checkPassword(password)){
                 if(self.toView == "mnemonic"){
                     let controller = MnemonicVC()
@@ -89,10 +90,10 @@ class PasswordCheckVC: UIViewController, KeypadViewDelegate, UIGestureRecognizer
             else{
                 count += 1
                 if(count > 4){
-                    self.view.isUserInteractionEnabled = false
                     self.lockUser()
                     return
                 }
+                self.view.isUserInteractionEnabled = true
 
                 password = ""
                 let changeImage = UIImage(named: "pwLine")
@@ -122,6 +123,7 @@ class PasswordCheckVC: UIViewController, KeypadViewDelegate, UIGestureRecognizer
         autoContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "MOAH Wallet Biometrics Verification".localized) { (success, error) in
             DispatchQueue.main.async {
                 if (success) {
+                    self.view.isUserInteractionEnabled = false
                     if(self.toView == "mnemonic"){
                         let controller = MnemonicVC()
                         controller.isSetting = true

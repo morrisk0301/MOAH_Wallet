@@ -199,7 +199,6 @@ class EthAccount: NetworkObserver, AddressObserver{
             _delAddressFromPath(account: account)
         }
         let ethAddress: EthAddress = EthAddress.address
-
         if(account.address == _address!.address){
             ethAddress.setAddress(index: nil)
         }
@@ -462,6 +461,7 @@ class EthAccount: NetworkObserver, AddressObserver{
             newPath[path.key] = path.value
         }
         _keyStore?.paths = newPath
+        try! _keyStore?.regenerate(oldPassword: self._password!, newPassword: self._password!)
         _saveKeyStore()
     }
 

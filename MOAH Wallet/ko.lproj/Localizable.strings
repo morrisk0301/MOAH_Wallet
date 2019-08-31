@@ -162,6 +162,7 @@
 "TX Time" = "거래 시간";
 "Gas Used" = "사용한 가스";
 "TX Detail" = "거래 상세정보";
+"Transaction Detail" = "거래 상세정보";
 "TX Hash" = "거래 Hash";
 "Copy TX Hash" = "TX Hash 복사";
 "TX Hash has been copied to clipboard." = "TX Hash가 클립보드에 복사되었습니다.";

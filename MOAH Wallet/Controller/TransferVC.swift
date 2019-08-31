@@ -455,6 +455,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
     }
 
     @objc private func nextPressed(_ sender: UIButton) {
+        self.view.isUserInteractionEnabled = false
         var errorBody: String?
         let util = Util()
         let amount = amountField.text!
@@ -495,6 +496,9 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
                             controller.subInfo = subInfo
                             self.navigationController?.pushViewController(controller, animated: true)
                         }
+                        else{
+                            self.view.isUserInteractionEnabled = true
+                        }
                     })
                     self.present(confirmVC, animated: false)
                 }
@@ -513,6 +517,7 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
         if(errorBody != nil){
             let alertVC = util.alert(title: "Error".localized, body: errorBody!, buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in
                 self.hideSpinner()
+                self.view.isUserInteractionEnabled = true
             })
             self.present(alertVC, animated: false)
         }

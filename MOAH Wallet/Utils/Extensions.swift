@@ -444,6 +444,11 @@ extension String {
         let pattern = "[^A-Za-z0-9]+"
         return self.replacingOccurrences(of: pattern, with: "", options: [.regularExpression])
     }
+
+    func trimWhiteSpaces() -> String {
+        return self.trimmingCharacters(in: CharacterSet.whitespaces)
+    }
+
 }
 
 extension UIDevice {

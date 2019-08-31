@@ -162,6 +162,7 @@
 "TX Time" = "TX Time";
 "Gas Used" = "Gas Used";
 "TX Detail" = "TX Detail";
+"Transaction Detail" = "Transaction Detail";
 "TX Hash" = "TX Hash";
 "Copy TX Hash" = "Copy TX Hash";
 "TX Hash has been copied to clipboard." = "TX Hash has been copied to clipboard.";

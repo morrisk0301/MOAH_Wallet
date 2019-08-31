@@ -163,8 +163,8 @@ class CreateAccountVC: UIViewController, UITextFieldDelegate {
 
     @objc private func nextPressed(_ sender: UIButton){
         let util = Util()
-        let name = nameField.text!
-        if(nameField.text?.count == 0){
+        let name = nameField.text!.trimWhiteSpaces()
+        if(name.isEmpty){
             let alertVC = util.alert(title: "Error".localized, body: "Enter your account's name".localized, buttonTitle: "Confirm".localized, buttonNum: 1, completion: {_ in})
             self.present(alertVC, animated: false)
         }
