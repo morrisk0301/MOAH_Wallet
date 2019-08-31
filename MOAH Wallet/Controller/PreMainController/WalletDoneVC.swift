@@ -35,7 +35,7 @@ class WalletDoneVC: UIViewController{
         button.layer.borderColor = UIColor.white.cgColor
         button.layer.borderWidth = 1.0
         button.tag = 2
-        button.addTarget(self, action: #selector(backPressed(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(backClicked(_:)), for: .touchUpInside)
 
         return button
     }()
@@ -48,9 +48,6 @@ class WalletDoneVC: UIViewController{
         super.viewDidLoad()
         self.replaceBackButton(color: "light")
         self.setupBackground()
-
-        self.navigationItem.leftBarButtonItem?.target = self
-        self.navigationItem.leftBarButtonItem?.action = #selector(backPressed(_:))
 
         let style = NSMutableParagraphStyle()
         style.alignment = NSTextAlignment.center
@@ -117,7 +114,7 @@ class WalletDoneVC: UIViewController{
         backButton.heightAnchor.constraint(equalToConstant: screenSize.height/16).isActive = true
     }
 
-    @objc private func backPressed(_ sender: UIButton){
+    @objc private func backClicked(_ sender: UIButton){
         if(isTransfer){
             let rootViewController = self.view.window?.rootViewController as! MainContainerVC
             rootViewController.isReload = true

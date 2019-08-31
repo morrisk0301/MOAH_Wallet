@@ -137,6 +137,7 @@
 		908A34CA5923A3A1D9426A42 /* Pods-MOAH Wallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MOAH Wallet.debug.xcconfig"; path = "Target Support Files/Pods-MOAH Wallet/Pods-MOAH Wallet.debug.xcconfig"; sourceTree = "<group>"; };
 		A50F201622DB97FA00466E8F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A540D1D122D792D600A6CE7B /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
+		A55F5A97231A50B000120A68 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A5A0C08B22DCD150006F2E83 /* NanumSquareRoundR.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRoundR.ttf; sourceTree = "<group>"; };
 		A5A0C08C22DCD150006F2E83 /* NanumSquareRoundB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRoundB.ttf; sourceTree = "<group>"; };
 		A5A0C08D22DCD150006F2E83 /* NanumSquareRoundEB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRoundEB.ttf; sourceTree = "<group>"; };
@@ -591,12 +592,13 @@
 			};
 			buildConfigurationList = C051FF304EA9E3D34B19C3EB /* Build configuration list for PBXProject "MOAH Wallet" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				English,
 				Base,
 				ko,
+				en,
 			);
 			mainGroup = C051F73525924B220178F7D1;
 			productRefGroup = C051F7D0608ECA7D56789C97 /* Products */;
@@ -882,6 +884,7 @@
 			children = (
 				A5A2AE052313AF35003C3E1A /* English */,
 				A5A2AE092313AF46003C3E1A /* ko */,
+				A55F5A97231A50B000120A68 /* en */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

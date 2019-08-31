@@ -146,11 +146,4 @@ class PasswordChangeVC: UIViewController, KeypadViewDelegate {
             password.removeLast()
         }
     }
-
-    @objc func backPressed(_ sender: UIButton){
-        for controller in self.navigationController!.viewControllers{
-            guard let vc = controller as? PasswordSettingVC else { continue }
-            self.navigationController?.popToViewController(vc, animated: true)
-        }
-    }
 }

@@ -450,10 +450,6 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
         self.present(UINavigationController(rootViewController: qrCodeVC), animated: true)
     }
 
-    @objc private func backPressed(_ sender: UIBarButtonItem) {
-        self.dismiss(animated: true)
-    }
-
     @objc private func nextPressed(_ sender: UIButton) {
         self.view.isUserInteractionEnabled = false
         var errorBody: String?
