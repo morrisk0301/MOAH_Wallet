@@ -34,7 +34,6 @@ class EthTXHistory: NetworkObserver, AddressObserver {
     }
 
     func initTXInfo(tx: String, error: String, subInfo: TXSubInfo) {
-        print(subInfo)
         guard let managedContext = managedContext else { return }
         guard let entity = NSEntityDescription.entity(forEntityName: "TXInfo", in: managedContext) else { return }
 

@@ -111,8 +111,13 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Chec
         leftUIButton.addTarget(self, action: #selector(leftMenuClicked(_:)), for: .touchUpInside)
 
         let leftButton = UIBarButtonItem(customView: leftUIButton)
-        leftButton.customView?.widthAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
-        leftButton.customView?.heightAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            leftButton.customView?.widthAnchor.constraint(equalToConstant: view.frame.width/20).isActive = true
+            leftButton.customView?.heightAnchor.constraint(equalToConstant: view.frame.width/20).isActive = true
+        }else{
+            leftButton.customView?.widthAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
+            leftButton.customView?.heightAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
+        }
 
         let rightUIButton: UIButton = UIButton(type: .custom)
         rightUIButton.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
@@ -127,8 +132,13 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Chec
         rightUIButton.addTarget(self, action: #selector(rightMenuClicked(_:)), for: .touchUpInside)
 
         let rightButton = UIBarButtonItem(customView: rightUIButton)
-        rightButton.customView?.widthAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
-        rightButton.customView?.heightAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            rightButton.customView?.widthAnchor.constraint(equalToConstant: view.frame.width/20).isActive = true
+            rightButton.customView?.heightAnchor.constraint(equalToConstant: view.frame.width/20).isActive = true
+        }else{
+            rightButton.customView?.widthAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
+            rightButton.customView?.heightAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
+        }
 
         navigationItem.leftBarButtonItem = leftButton
         navigationItem.rightBarButtonItem = rightButton

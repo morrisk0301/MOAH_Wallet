@@ -373,9 +373,13 @@ class TransferVC: UIViewController, UITextFieldDelegate, UICollectionViewDelegat
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let height = screenSize.height / 30
-        let width = screenSize.width * 0.18
-
-        return .init(width: width, height: height)
+        if UIDevice.current.userInterfaceIdiom != .pad {
+            let width = screenSize.width * 0.18
+            return .init(width: width, height: height)
+        }else{
+            let width = screenSize.width * 0.15
+            return .init(width: width, height: height)
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

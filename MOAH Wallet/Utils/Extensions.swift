@@ -42,8 +42,13 @@ extension UIViewController {
         button.addTarget(self, action: #selector(backPressed(_:)), for: .touchUpInside)
 
         let leftButton = UIBarButtonItem(customView: button)
-        leftButton.customView?.widthAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
-        leftButton.customView?.heightAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            leftButton.customView?.widthAnchor.constraint(equalToConstant: view.frame.width/20).isActive = true
+            leftButton.customView?.heightAnchor.constraint(equalToConstant: view.frame.width/20).isActive = true
+        } else{
+            leftButton.customView?.widthAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
+            leftButton.customView?.heightAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
+        }
 
         self.navigationItem.leftBarButtonItem = leftButton
     }
@@ -54,7 +59,6 @@ extension UIViewController {
         button.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
 
         let buttonImage = UIImageView(frame: CGRect(x: button.frame.width/2, y: button.frame.height/2, width: view.frame.width/25, height: view.frame.width/25))
-
         if(color == "dark"){
             buttonImage.image = UIImage(named: "quit")
         }else{
@@ -65,8 +69,14 @@ extension UIViewController {
         button.addTarget(self, action: #selector(quitPressed(_:)), for: .touchUpInside)
 
         let rightButton = UIBarButtonItem(customView: button)
-        rightButton.customView?.widthAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
-        rightButton.customView?.heightAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            rightButton.customView?.widthAnchor.constraint(equalToConstant: view.frame.width/20).isActive = true
+            rightButton.customView?.heightAnchor.constraint(equalToConstant: view.frame.width/20).isActive = true
+        } else{
+            rightButton.customView?.widthAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
+            rightButton.customView?.heightAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
+        }
+
 
         self.navigationItem.rightBarButtonItem = rightButton
     }
@@ -282,8 +292,7 @@ extension UIFont{
                 self.init(name: name, size: size)
                 break
             default:
-                print("not an iPhone")
-                self.init(name: name, size: size)
+                self.init(name: name, size: size*1.2)
                 break
             }
         }else{

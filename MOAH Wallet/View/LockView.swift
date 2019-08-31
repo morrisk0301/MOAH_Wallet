@@ -118,7 +118,7 @@ class LockView: UIView {
         passwordLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: screenHeight/10).isActive = true
         passwordLabel.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         passwordLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        passwordLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        passwordLabel.heightAnchor.constraint(equalToConstant: screenSize.height/10).isActive = true
 
         pwLine.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -screenHeight/10).isActive = true
         pwLine.leadingAnchor.constraint(equalTo: leadingAnchor, constant: screenWidth/8).isActive = true

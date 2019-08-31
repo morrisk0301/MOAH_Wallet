@@ -130,10 +130,10 @@ class MnemonicVerificationVC: UIViewController, UITextFieldDelegate{
         let screenWidth = screenSize.width
         let screenHeight = screenSize.height
 
-        headLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5).isActive = true
+        headLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: screenSize.height/40).isActive = true
         headLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/15).isActive = true
         headLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/15).isActive = true
-        headLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        headLabel.heightAnchor.constraint(equalToConstant: screenSize.height/20).isActive = true
 
         explainLabel.topAnchor.constraint(equalTo: headLabel.bottomAnchor).isActive = true
         explainLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/15).isActive = true

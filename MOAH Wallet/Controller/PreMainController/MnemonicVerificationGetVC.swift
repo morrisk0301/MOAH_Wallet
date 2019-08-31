@@ -120,7 +120,7 @@ class MnemonicVerificationGetVC: UIViewController, UITextViewDelegate {
         mnemonicLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         mnemonicLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/15).isActive = true
         mnemonicLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/15).isActive = true
-        mnemonicLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        mnemonicLabel.heightAnchor.constraint(equalToConstant: screenSize.height/20).isActive = true
 
         explainLabel.topAnchor.constraint(equalTo: mnemonicLabel.bottomAnchor).isActive = true
         explainLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/15).isActive = true

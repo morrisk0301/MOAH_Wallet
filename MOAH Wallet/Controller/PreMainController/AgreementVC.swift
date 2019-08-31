@@ -103,9 +103,9 @@ class AgreementVC: UIViewController, UIGestureRecognizerDelegate {
         let screenWidth = screenSize.width
 
         agreementLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        agreementLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
-        agreementLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
-        agreementLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        agreementLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenSize.width/10).isActive = true
+        agreementLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenSize.width/10).isActive = true
+        agreementLabel.heightAnchor.constraint(equalToConstant: screenSize.height/20).isActive = true
 
         agreementScroll.topAnchor.constraint(equalTo: agreementLabel.bottomAnchor, constant: 20).isActive = true
         agreementScroll.bottomAnchor.constraint(equalTo: agreementCheckbox.topAnchor, constant: -30).isActive = true
@@ -114,13 +114,13 @@ class AgreementVC: UIViewController, UIGestureRecognizerDelegate {
 
         agreementCheckbox.bottomAnchor.constraint(equalTo: nextButton.topAnchor, constant: -20).isActive = true
         agreementCheckbox.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/15).isActive = true
-        agreementCheckbox.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        agreementCheckbox.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        agreementCheckbox.widthAnchor.constraint(equalToConstant: screenSize.height/30).isActive = true
+        agreementCheckbox.heightAnchor.constraint(equalToConstant: screenSize.height/30).isActive = true
 
         checkboxLabel.bottomAnchor.constraint(equalTo: nextButton.topAnchor, constant: -21).isActive = true
-        checkboxLabel.leadingAnchor.constraint(equalTo: agreementCheckbox.trailingAnchor, constant: 10).isActive = true
+        checkboxLabel.leadingAnchor.constraint(equalTo: agreementCheckbox.trailingAnchor, constant: screenSize.width/30).isActive = true
         checkboxLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/15).isActive = true
-        checkboxLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        checkboxLabel.heightAnchor.constraint(equalToConstant: screenSize.height/30).isActive = true
 
         nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
