@@ -8,7 +8,7 @@ import Alamofire
 
 class HTTPRequest {
 
-    private let serverUrl = "http://54.180.108.59:3000/"
+    private let serverUrl = "http://54.180.108.59/"
     private let engText = "?lang=en"
 
     enum Request{

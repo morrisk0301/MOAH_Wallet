@@ -26,7 +26,7 @@ class PolicyVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         self.replaceToQuitButton(color: "dark")
-        self.setNavigationTitle(title: "Terms and Policy")
+        self.setNavigationTitle(title: "Terms and Policy".localized)
         self.transparentNavigationBar()
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
