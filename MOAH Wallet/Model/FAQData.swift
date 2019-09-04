@@ -35,7 +35,7 @@ enum FAQData {
         var answer: String {
             switch (self) {
             case .account1:
-                return "You can create a new account in left tab of main menu -> My Account -> Add Account -> Create Account tab.".localized
+                return "You can create a new account in left tab of main menu -> My Account -> Add Account -> Create Account menu.".localized
             case .account2:
                 return "You can get your external account with private key in left tab of main menu -> My Account -> Add Account -> Get Account with Private Key menu.".localized
             case .account3:
