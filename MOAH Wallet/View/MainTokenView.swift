@@ -47,7 +47,12 @@ class MainTokenView: UIView {
     func setTokenString(tokenString: String){
         let attachImage = NSTextAttachment()
         attachImage.image = UIImage(named: "downArrow")
-        attachImage.bounds = CGRect(x: 0, y: 0, width: (UIScreen.main.bounds.width/35)*1.5, height: (UIScreen.main.bounds.width/35))
+        if UIDevice.current.userInterfaceIdiom != .pad {
+            attachImage.bounds = CGRect(x: 0, y: 0, width: (UIScreen.main.bounds.width/35)*1.5, height: (UIScreen.main.bounds.width/35))
+        }else{
+            attachImage.bounds = CGRect(x: 0, y: 0, width: (UIScreen.main.bounds.width/60)*1.5, height: (UIScreen.main.bounds.width/60))
+        }
+
 
         let attrText = NSMutableAttributedString(string: tokenString+"  " , attributes: [
             NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundB", size: 20, dynamic: true)!,

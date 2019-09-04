@@ -66,9 +66,12 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Chec
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name:"NanumSquareRoundEB", size: 25, dynamic: true)!,
                                                                         NSAttributedString.Key.foregroundColor: UIColor.white]
 
-        self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(screenSize.height/300, for: .default)
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(screenSize.height/150, for: .default)
+        }else{
+            self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(screenSize.height/300, for: .default)
+        }
 
-        //refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.tintColor = UIColor.white
         refreshControl.addTarget(self, action: #selector(refresh(_:)), for: UIControl.Event.valueChanged)
 
@@ -104,17 +107,21 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Chec
         let leftBtnImage = UIImageView(image: UIImage(named: "menuIcon"))
         leftBtnImage.translatesAutoresizingMaskIntoConstraints = false
         leftUIButton.addSubview(leftBtnImage)
+        leftUIButton.addTarget(self, action: #selector(leftMenuClicked(_:)), for: .touchUpInside)
         leftBtnImage.centerYAnchor.constraint(equalTo: leftUIButton.centerYAnchor).isActive = true
         leftBtnImage.centerXAnchor.constraint(equalTo: leftUIButton.centerXAnchor).isActive = true
-        leftBtnImage.widthAnchor.constraint(equalToConstant: (view.frame.width/20)*1.2).isActive = true
-        leftBtnImage.heightAnchor.constraint(equalToConstant:(view.frame.height/60)*1.2).isActive = true
-        leftUIButton.addTarget(self, action: #selector(leftMenuClicked(_:)), for: .touchUpInside)
 
         let leftButton = UIBarButtonItem(customView: leftUIButton)
         if UIDevice.current.userInterfaceIdiom == .pad {
+            leftBtnImage.widthAnchor.constraint(equalToConstant: (view.frame.width/30)*1.2).isActive = true
+            leftBtnImage.heightAnchor.constraint(equalToConstant:(view.frame.height/90)*1.2).isActive = true
+
             leftButton.customView?.widthAnchor.constraint(equalToConstant: view.frame.width/20).isActive = true
             leftButton.customView?.heightAnchor.constraint(equalToConstant: view.frame.width/20).isActive = true
         }else{
+            leftBtnImage.widthAnchor.constraint(equalToConstant: (view.frame.width/20)*1.2).isActive = true
+            leftBtnImage.heightAnchor.constraint(equalToConstant:(view.frame.height/60)*1.2).isActive = true
+
             leftButton.customView?.widthAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
             leftButton.customView?.heightAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
         }
@@ -127,15 +134,19 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Chec
         rightUIButton.addSubview(rightBtnImage)
         rightBtnImage.centerYAnchor.constraint(equalTo: rightUIButton.centerYAnchor).isActive = true
         rightBtnImage.centerXAnchor.constraint(equalTo: rightUIButton.centerXAnchor).isActive = true
-        rightBtnImage.widthAnchor.constraint(equalToConstant: view.frame.width/12*1.2).isActive = true
-        rightBtnImage.heightAnchor.constraint(equalToConstant: view.frame.height/25*1.2).isActive = true
         rightUIButton.addTarget(self, action: #selector(rightMenuClicked(_:)), for: .touchUpInside)
 
         let rightButton = UIBarButtonItem(customView: rightUIButton)
         if UIDevice.current.userInterfaceIdiom == .pad {
+            rightBtnImage.widthAnchor.constraint(equalToConstant: view.frame.width/18*1.2).isActive = true
+            rightBtnImage.heightAnchor.constraint(equalToConstant: view.frame.height/37.5*1.2).isActive = true
+
             rightButton.customView?.widthAnchor.constraint(equalToConstant: view.frame.width/20).isActive = true
             rightButton.customView?.heightAnchor.constraint(equalToConstant: view.frame.width/20).isActive = true
         }else{
+            rightBtnImage.widthAnchor.constraint(equalToConstant: view.frame.width/12*1.2).isActive = true
+            rightBtnImage.heightAnchor.constraint(equalToConstant: view.frame.height/25*1.2).isActive = true
+
             rightButton.customView?.widthAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
             rightButton.customView?.heightAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
         }

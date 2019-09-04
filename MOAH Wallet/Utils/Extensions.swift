@@ -28,24 +28,35 @@ extension UIViewController {
     func replaceBackButton(color: String){
         self.navigationItem.hidesBackButton = true
         let button: UIButton = UIButton(type: .custom)
-        button.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-
-        let buttonImage = UIImageView(frame: CGRect(x: button.frame.width/2, y: button.frame.height/2, width: view.frame.width/35, height: (view.frame.width/35)*1.5))
-
-        if(color == "dark"){
-            buttonImage.image = UIImage(named: "back")    
-        }else{
-            buttonImage.image = UIImage(named: "whiteArrow")
-        }
-
-        button.addSubview(buttonImage)
-        button.addTarget(self, action: #selector(backPressed(_:)), for: .touchUpInside)
 
         let leftButton = UIBarButtonItem(customView: button)
         if UIDevice.current.userInterfaceIdiom == .pad {
+            button.frame = CGRect(x: 0, y: 0, width: view.frame.width/20, height: view.frame.width/20)
+
+            let buttonImage = UIImageView(frame: CGRect(x: (view.frame.width/20-view.frame.width/60)/2, y:(view.frame.width/20-(view.frame.width/60)*1.5)/2, width: view.frame.width/60, height: (view.frame.width/60)*1.5))
+            if(color == "dark"){
+                buttonImage.image = UIImage(named: "back")
+            }else{
+                buttonImage.image = UIImage(named: "whiteArrow")
+            }
+
+            button.addSubview(buttonImage)
+            button.addTarget(self, action: #selector(backPressed(_:)), for: .touchUpInside)
+
             leftButton.customView?.widthAnchor.constraint(equalToConstant: view.frame.width/20).isActive = true
             leftButton.customView?.heightAnchor.constraint(equalToConstant: view.frame.width/20).isActive = true
         } else{
+            button.frame = CGRect(x: 0, y: 0, width: view.frame.width/10, height: view.frame.width/10)
+
+            let buttonImage = UIImageView(frame: CGRect(x: (view.frame.width/10-view.frame.width/35)/2, y:(view.frame.width/10-(view.frame.width/35)*1.5)/2, width: view.frame.width/35, height: (view.frame.width/35)*1.5))
+            if(color == "dark"){
+                buttonImage.image = UIImage(named: "back")
+            }else{
+                buttonImage.image = UIImage(named: "whiteArrow")
+            }
+            button.addSubview(buttonImage)
+            button.addTarget(self, action: #selector(backPressed(_:)), for: .touchUpInside)
+
             leftButton.customView?.widthAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
             leftButton.customView?.heightAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
         }
@@ -56,27 +67,39 @@ extension UIViewController {
     func replaceToQuitButton(color: String){
         self.navigationItem.hidesBackButton = true
         let button: UIButton = UIButton(type: .custom)
-        button.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-
-        let buttonImage = UIImageView(frame: CGRect(x: button.frame.width/2, y: button.frame.height/2, width: view.frame.width/25, height: view.frame.width/25))
-        if(color == "dark"){
-            buttonImage.image = UIImage(named: "quit")
-        }else{
-            buttonImage.image = UIImage(named: "quitWhite")
-        }
-
-        button.addSubview(buttonImage)
-        button.addTarget(self, action: #selector(quitPressed(_:)), for: .touchUpInside)
 
         let rightButton = UIBarButtonItem(customView: button)
         if UIDevice.current.userInterfaceIdiom == .pad {
+            button.frame = CGRect(x: 0, y: 0, width: view.frame.width/20, height: view.frame.width/20)
+
+            let buttonImage = UIImageView(frame: CGRect(x: (view.frame.width/20-view.frame.width/40)/2, y:(view.frame.width/20-view.frame.width/40)/2, width: view.frame.width/40, height: view.frame.width/40))
+            if(color == "dark"){
+                buttonImage.image = UIImage(named: "quit")
+            }else{
+                buttonImage.image = UIImage(named: "quitWhite")
+            }
+
+            button.addSubview(buttonImage)
+            button.addTarget(self, action: #selector(quitPressed(_:)), for: .touchUpInside)
+
             rightButton.customView?.widthAnchor.constraint(equalToConstant: view.frame.width/20).isActive = true
             rightButton.customView?.heightAnchor.constraint(equalToConstant: view.frame.width/20).isActive = true
         } else{
+            button.frame = CGRect(x: 0, y: 0, width: view.frame.width/10, height: view.frame.width/10)
+
+            let buttonImage = UIImageView(frame: CGRect(x: (view.frame.width/10-view.frame.width/25)/2, y:(view.frame.width/10-view.frame.width/25)/2, width: view.frame.width/25, height: view.frame.width/25))
+            if(color == "dark"){
+                buttonImage.image = UIImage(named: "quit")
+            }else{
+                buttonImage.image = UIImage(named: "quitWhite")
+            }
+
+            button.addSubview(buttonImage)
+            button.addTarget(self, action: #selector(quitPressed(_:)), for: .touchUpInside)
+
             rightButton.customView?.widthAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
             rightButton.customView?.heightAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
         }
-
 
         self.navigationItem.rightBarButtonItem = rightButton
     }

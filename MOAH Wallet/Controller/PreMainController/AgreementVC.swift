@@ -105,7 +105,7 @@ class AgreementVC: UIViewController, UIGestureRecognizerDelegate {
         agreementLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         agreementLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenSize.width/10).isActive = true
         agreementLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenSize.width/10).isActive = true
-        agreementLabel.heightAnchor.constraint(equalToConstant: screenSize.height/20).isActive = true
+        agreementLabel.heightAnchor.constraint(equalToConstant: screenSize.height/15).isActive = true
 
         agreementScroll.topAnchor.constraint(equalTo: agreementLabel.bottomAnchor, constant: 20).isActive = true
         agreementScroll.bottomAnchor.constraint(equalTo: agreementCheckbox.topAnchor, constant: -30).isActive = true
